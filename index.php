@@ -2,7 +2,11 @@
 <html>
 <head>
 <?php
-include 'includes/conn_to_ctris.php';
+  session_start();
+	$_SESSION["token"] = bin2hex(random_bytes(32));
+	$_SESSION["token-expire"] = time() + 3600; // 1 hour = 3600 secs
+// include 'includes/conn_to_ctris.php';
+require_once('includes/init.php');
 include 'modal/registermodal.php';
    include 'includes/functions.php'; 
 ?>
@@ -72,11 +76,12 @@ include 'modal/registermodal.php';
             <div class="box-header with-border">
               <h3 class="box-title">Employee Information</h3>
             </div>
-              <form class="form-horizontal" method="POST">
+              <form class="form-horizontal" method="POST" action="addnew.php">
                 <div class="box-body">
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
+                      <input type="hidden" name="token" value="<?=$_SESSION["token"]?>">
                         <label for="LastName" class="col-sm-3 control-label">LAST NAME</label>
                         <div class="col-sm-9">
                           <input type="text" class="form-control" id="AddLastName" name="AddLastName" placeholder="LAST NAME" value="" style="text-transform: uppercase;" required="true" tabindex="1">
@@ -111,7 +116,7 @@ include 'modal/registermodal.php';
                         <div class="col-sm-9">
                         <select class="form-control select2" id="AddRegion" name="AddRegion" required="true" tabindex="11">
                           <?php
-                           echo fill_region($conn_ctris, null);
+                           echo fill_region($dbConn, null);
                            ?>
                         </select>
                         </div>
@@ -211,7 +216,7 @@ include 'modal/registermodal.php';
                         <div class="col-sm-9">
                           <select class="form-control select2" id="AddPosition" name="AddPosition" required="true" tabindex="15">
                             <?php
-                           echo fill_position($conn_ctris, null);
+                           echo fill_position($dbConn, null);
                            ?>
                           </select>
                         </div>
@@ -238,7 +243,7 @@ include 'modal/registermodal.php';
                         <div class="col-sm-9">
                           <select class="form-control select2" id="AddDivision" name="AddDivision" required="true" tabindex="16">
                             <?php
-                           echo fill_division($conn_ctris, null);
+                           echo fill_division($dbConn, null);
                            ?>
                           </select>
                         </div>
@@ -371,103 +376,33 @@ include 'modal/registermodal.php';
 <script src="dist/js/demo.js"></script>
 
 <?php
-if(isset($_POST['btn_sign_up']))
-{
- /* $_SESSION['form_data'] = $_POST;*/
-/*CODE*/  
-        if(empty($_POST['g-recaptcha-response']))
-        {
-          $_SESSION['error'] = 'Please verify you are not a robot';
-        }
 
-    else
-    {
-      if (isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response']))
-      {
-        $secret = "6Lev7iwhAAAAAO6bDFL_AcOEBv_TiqdhPT40HPQd";
-        $response=file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response']);
-      
-        $data=json_decode($response);
-        if ($data -> success)
-        {
-            $Add_LastName = strtoupper($_POST['AddLastName']);
-            $Add_FirstName = strtoupper($_POST['AddFirstName']);
-            $Add_MiddleName = strtoupper($_POST['AddMiddleName']);
-            $Add_ExtName = strtoupper($_POST['AddextName']);
-            $Add_Mobile_Number = $_POST['AddMobileNumber'];
-            $Add_Sex = $_POST['AddSex'];
-            $Add_Birthday = $_POST['AddBirthdate'];
-            $Add_Email_Address = $_POST['AddEmail'];
+if(isset($_SESSION['insert'])){
+  if($_SESSION['insert'] == 'success'){
+    echo "<script type='text/javascript'>
+    $(document).ready(function(){
+    $('#SuccessRegister').modal('show');
+    });
+    </script>";
+  }elseif($_SESSION['insert'] == 'error'){
+    echo "<script type='text/javascript'>
+    $(document).ready(function(){
+    $('#ErrorRegister').modal('show');
+    });
+    </script>";
+  }elseif($_SESSION['insert'] == 'exists'){
+    echo "
+    <script type='text/javascript'>
+    $(document).ready(function(){
+    $('#AlreadyExist').modal('show');
+    });
+    </script>";
+  }
 
-            $Add_Street = strtoupper($_POST['AddStreet']);
-            $Add_House_Number = strtoupper($_POST['AddHouseNumber']);
-            $Add_Region = $_POST['AddRegion'];
-            $Add_Province = $_POST['AddProvince'];
-            $Add_Municipality = $_POST['AddCity'];
-            $Add_Brgy = $_POST['AddBarangay'];
-            $Add_Position = $_POST['AddPosition'];
-            $Add_Division = $_POST['AddDivision'];
-            $Add_Unit = $_POST['AddUnit'];
-
-            $Add_Employee_Number = $_POST['EmployeeNumber'];
-            $Add_Password = md5($_POST['ConfirmPassword']);
-            
-            $Register_Sql = $conn_ctris -> query("SELECT * FROM userprofile WHERE empno = '$Add_Employee_Number'") or die(mysqli_error());
-           /* echo $Add_Employee_Number;
-            die();*/
-              $Add_New_Query = $Register_Sql -> num_rows;
-              if($Add_New_Query ==1)
-                {
-                  echo "
-                        <script type='text/javascript'>
-                        $(document).ready(function(){
-                        $('#AlreadyExist').modal('show');
-                        });
-                        </script>
-                        ";
-                }
-                  else
-                {
-
-                  $InsertQuery = $conn_ctris -> query(
-                  "INSERT INTO userprofile(fname,mname,sname,ename,mobile,sex,birthdate,eaddress,street,numAdd,region,province,city,barangay,position,division,unit,empno,password,date_registered,approved,user_level,isLog,last_update)           
-                  VALUES('$Add_FirstName','$Add_MiddleName','$Add_LastName','$Add_ExtName','$Add_Mobile_Number','$Add_Sex','$Add_Birthday','$Add_Email_Address','$Add_Street','$Add_House_Number','$Add_Region','$Add_Province','$Add_Municipality','$Add_Brgy','$Add_Position','$Add_Division','$Add_Unit','$Add_Employee_Number','$Add_Password',now(),0,0,0,now());"
-                                                    );
-                  if($InsertQuery){
-                  echo "
-                        <script type='text/javascript'>
-                        $(document).ready(function(){
-                        $('#SuccessRegister').modal('show');
-                        });
-                        </script>
-                        ";
-                  }
-                  else 
-                  {
-                  echo "
-                        <script type='text/javascript'>
-                        $(document).ready(function(){
-                        $('#ErrorRegister').modal('show');
-                        });
-                        </script>
-                        ";
-                  }
-                  
-                }                
-
-        }
-      }
-      else
-        {
-          $_SESSION['error'] = 'Invalid Captcha';
-        }
-
-    }
+  unset($_SESSION['insert']);
 }
-
-
-
 ?>
+
 <script type="text/javascript">
       function modalCloseConfirm(){
       $('#confirm_edit').modal('hide');
@@ -484,6 +419,7 @@ if(isset($_POST['btn_sign_up']))
                 method:"POST",
                 data:{regionAction:regionAction, region_id:region_id},
                 success:function(data){
+
                     jQuery('#AddProvince').html(data);
                     jQuery('#AddCity').html('<option value="">SELECT PROVINCE FIRST</option>');  
                 }
