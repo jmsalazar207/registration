@@ -37,6 +37,7 @@ include 'modal/registermodal.php';
 
   <link rel="stylesheet" href="includes/add.css">
 </head>
+
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
 <body class="hold-transition skin-blue layout-top-nav">
 <div class="wrapper">
@@ -72,7 +73,34 @@ include 'modal/registermodal.php';
 <!--CODE OF REGISTRATION HERE-->
             <!--Registration form-->
     <section class="content">
-          <div class="box box-info">
+          <div class="box box-info" id="SearchContent">
+            <div class="box-header with-border">
+              <h3 class="box-title">Search Employee Number</h3>
+            </div>
+            <form class="form-horizontal" method="POST" action="search.php">
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-md-9">
+                    <div class="form-group">
+                      <label for="Search" class="col-sm-3 control-label">Employee Number</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" name="txtSearch" id="txtSearch" placeholder="Employee Number" value="" style="text-transform: uppercase;" required="true" tabindex="1">
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                  <button type="submit" class="form-control btn btn-info" id="btn_search" name="btn_search">
+                    SEARCH 
+                  <i class="fa fa-search"></i>
+                  </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+
+          <div class="box box-info" id="RegisterContent">
             <div class="box-header with-border">
               <h3 class="box-title">Employee Information</h3>
             </div>
@@ -351,6 +379,7 @@ include 'modal/registermodal.php';
     <!-- /.container -->
   </footer>
 </div>
+
 <script type="text/javascript">
   function NumberOnly(evt) {
   var charCode = (evt.which) ? evt.which : evt.keyCode
@@ -374,6 +403,11 @@ include 'modal/registermodal.php';
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+<script type='text/javascript'>
+    $(document).ready(function(){
+    $('#RegisterContent').hide();
+    });
+    </script>
 
 <?php
 

@@ -25,16 +25,16 @@ if(isset($_POST['btn_sign_up'])){
         {
             if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["token-expire"])) 
             {
-                $_SESSION['error'] = 'System encounters and error, please try again after 2 weeks';
+                $_SESSION['error'] = 'System encounters and error, please try again later';
                 header('Location: index.php');
             }else
             {
-                $user = [];
-                $user['empno'] = $_POST['EmployeeNumber'];
-                $param['conditions'] = array('empno' => $user['empno']); 
-                $exists = $dbConn->findFirst('userprofile',$param);
-                if($dbConn->count() > 0)
-                {
+                // $user = [];
+                // $user['empno'] = $_POST['EmployeeNumber'];
+                // $param['conditions'] = array('empno' => $user['empno']); 
+                // $exists = $dbConn->findFirst('userprofile',$param);
+                // if($dbConn->count() > 0)
+                // {
                     // echo "
                     //     <script type='text/javascript'>
                     //     $(document).ready(function(){
@@ -42,11 +42,11 @@ if(isset($_POST['btn_sign_up'])){
                     //     });
                     //     </script>
                     //     ";
-                    $_SESSION['insert'] = 'exists';
-                    header('Location: index.php');
-                }
-                else
-                {
+                //     $_SESSION['insert'] = 'exists';
+                //     header('Location: index.php');
+                // }
+                // else
+                // {
                     $user['sname'] = sanitize(strtoupper($_POST['AddLastName']));
                     $user['fname'] = sanitize(strtoupper($_POST['AddFirstName']));
                     $user['mname'] = sanitize(strtoupper($_POST['AddMiddleName']));
@@ -81,7 +81,7 @@ if(isset($_POST['btn_sign_up'])){
                         $_SESSION['insert'] = 'error';
                         header('Location: index.php');
                     }
-                }  
+                // }  
             }              
 
         }
