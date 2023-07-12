@@ -10,19 +10,15 @@ $user = [];
             $exists = $dbConn->findFirst('userprofile',$param);
             if($dbConn->count() > 0)
             {
-                echo "
-                    <script type='text/javascript'>
-                    $(document).ready(function(){
-                    $('#AlreadyExist').modal('show');
-                    });
-                    </script>
-                    ";
-                $_SESSION['insert'] = 'exists';
+                // echo"meron";
+                $_SESSION['search'] = 'old';
                 header('Location: index.php');
             }
             else
             {
-
+                // echo"wala";
+                $_SESSION['search'] = 'new';
+                header('Location: index.php');  
             }
 }
 

@@ -100,7 +100,7 @@ include 'modal/registermodal.php';
           </div>
 
 
-          <div class="box box-info" id="RegisterContent">
+          <div class="box box-info" id="RegisterContent" hidden>
             <div class="box-header with-border">
               <h3 class="box-title">Employee Information</h3>
             </div>
@@ -404,13 +404,16 @@ include 'modal/registermodal.php';
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 <script type='text/javascript'>
-    $(document).ready(function(){
-    $('#RegisterContent').hide();
-    });
-    </script>
-
+    function RegisterYes(){
+      $('#RegisterConfirm').modal('hide');
+      $('#RegisterContent').show();
+    };
+    function UpdateYes(){
+      $('#UpdateConfirm').modal('hide');
+      location.replace("UpdateInfo.php")
+    };
+</script>
 <?php
-
 if(isset($_SESSION['insert'])){
   if($_SESSION['insert'] == 'success'){
     echo "<script type='text/javascript'>
@@ -432,11 +435,29 @@ if(isset($_SESSION['insert'])){
     });
     </script>";
   }
-
   unset($_SESSION['insert']);
 }
+if(isset($_SESSION['search'])){
+  if($_SESSION['search'] =='old'){
+    echo "
+    <script type='text/javascript'>
+    $(document).ready(function(){
+      $('#UpdateMessage').text('Old employee number detected! Would you like to update your information?')
+      $('#UpdateConfirm').modal('show');
+    });
+    </script>";
+  }elseif($_SESSION['search']=='new'){
+    echo "
+    <script type='text/javascript'>
+    $(document).ready(function(){
+      $('#WarningMessage').text('New employee number detected! Would you like to register?');
+      $('#RegisterConfirm').modal('show');
+    });
+    </script>";
+  }
+  unset($_SESSION['search']);
+}
 ?>
-
 <script type="text/javascript">
       function modalCloseConfirm(){
       $('#confirm_edit').modal('hide');
