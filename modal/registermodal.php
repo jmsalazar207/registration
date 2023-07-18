@@ -113,31 +113,10 @@
           </div>
           <!-- /.modal-dialog -->
         </div> 
+      
+
         
 
-        <!-- Modal confirm for new employee -->
-        <!--Generic-->
-        <!-- <div class="modal fade" id="ModalGen" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-            <div class="modal-contentexist">
-              <div class="modal-headerexist">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
-                <h3 class="modal-title">Information</h3>
-              </div>
-              <div class="modal-bodyexist">
-                <p align="center"><span class="glyphicon glyphicon-question-sign s_icon"></span></p>
-                <h4>New employee number detected! Would you like to register?</h4>
-              </div>
-              <div class="modal-footerexist">
-              <button type="button" class="btn btn-modalexist btn-sm" name="btnConfirm" onclick="RegisterYes()">Yes</button>
-                <button type="button" class="btn btn-modalexist btn-sm" data-dismiss="modal">No</button>
-              </div>
-            </div> -->
-            <!-- /.modal-content -->
-          <!-- </div> -->
-          <!-- /.modal-dialog -->
-        <!-- </div>  -->
 
 
        
