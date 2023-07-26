@@ -55,32 +55,7 @@ include 'modal/registermodal.php';
 <!--CODE OF REGISTRATION HERE-->
             <!--Registration form-->
     <section class="content">
-          <div class="box box-info" id="SearchContent">
-            <div class="box-header with-border">
-              <h3 class="box-title">Search Employee Number</h3>
-            </div>
-            <form class="form-horizontal" method="POST" id="contentsearch">
-              <div class="box-body">
-                <div class="row">
-                  <div class="col-md-9">
-                    <div class="form-group">
-                      <label for="Search" class="col-sm-3 control-label">Employee Number</label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" name="txtSearch" id="txtSearch" placeholder="Employee Number" value="" style="text-transform: uppercase;" required="true" tabindex="1">
-                        </div>
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                  <button type="submit" class="form-control btn btn-info" id="btn_search" name="btn_search">
-                    SEARCH 
-                  <i class="fa fa-search"></i>
-                  </button>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="box box-info" id="RegisterContent" hidden>
+          <div class="box box-info" id="RegisterContent">
             <div class="box-header with-border">
               <h3 class="box-title">Employee Information</h3>
             </div>
@@ -285,7 +260,7 @@ include 'modal/registermodal.php';
                         <div class="col-md-6">
                             <div class="input-group col-sm-12">
                               <label class="col-sm-12"></label>
-                                <input type="text" class="form-control col-sm-10" id="EmployeeNumber" name="EmployeeNumber" placeholder="Enter Employee Number" required="true">
+                                <input type="text" class="form-control col-sm-10" id="EmployeeNumber" name="EmployeeNumber" placeholder="Enter Employee Number" required="true" disabled>
                               <label for="DesiredPassword" class="col-sm-6" style="font-size: 15px;">Employee Number</label>
                             </div>                        
                             <div class="input-group has-feedback col-sm-12">
@@ -381,30 +356,5 @@ include 'modal/registermodal.php';
 <script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 <script src="pluginscript.js"></script>
 <!-- End Scripts calling -->
-<?php
-if(isset($_SESSION['insert'])){
-  if($_SESSION['insert'] == 'success'){
-    echo "<script type='text/javascript'>
-    $(document).ready(function(){
-    $('#SuccessRegister').modal('show');
-    });
-    </script>";
-  }elseif($_SESSION['insert'] == 'error'){
-    echo "<script type='text/javascript'>
-    $(document).ready(function(){
-    $('#ErrorRegister').modal('show');
-    });
-    </script>";
-  }elseif($_SESSION['insert'] == 'exists'){
-    echo "
-    <script type='text/javascript'>
-    $(document).ready(function(){
-    $('#AlreadyExist').modal('show');
-    });
-    </script>";
-  }
-  unset($_SESSION['insert']);
-}
-?>
 </body>
 </html>

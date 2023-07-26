@@ -63,11 +63,6 @@
           </div>
           <!-- /.modal-dialog -->
         </div>      
-
-
-
-
-
 <!-- Modal confirm for new employee -->
         <!--AlreadyExist-->
         <div class="modal fade" id="RegisterConfirm" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
