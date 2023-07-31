@@ -75,16 +75,6 @@ if(isset($_POST["divisionAction"])){
   echo $units_output; 
 }
 //
-if(isset($_POST["divisionAction"])){
-  $unit_output = '';
-  $unit_query = "SELECT unit_code, unit_name, unit_name_code, division_code FROM lib_unit WHERE division_code = '".$_POST["division_ids"]."'";
-  $unit_result = mysqli_query($conn_ctris, $unit_query);
-  $unit_output .= '<option value="">SELECT UNIT</option>';
-  while($row = mysqli_fetch_array($unit_result))  {
-   $unit_output .= '<option value="'.$row["unit_code"].'">'.$row["unit_name"].'</option>';
-  }
-  echo $unit_output;
-}
 function fill_position($dbConn,$position_id=0){
   // $region_sql="SELECT region_code, region_name, region_nick FROM lib_regions";
   $params['fields'] = "position_code, position_name";
@@ -111,5 +101,25 @@ function fill_division($dbConn,$division_id=0){
   }
  return $output;
 }
-
+//Information when old employee
+if(isset($_POST["empno"])){
+  $empNO = $_POST["empno"];
+  $params['conditions'] = array("empno" => $empNO);
+  $UpdateInfo=$dbConn->findFirst('userprofile',$params);
+  echo json_encode($UpdateInfo); 
+}
+if(isset($_POST["update_region_id"])){
+  $update_region_id = $_POST["update_region_id"];
+  $params['fields'] = "region_code, region_name";
+  // $params['conditions'] = array("region_code" => $update_region);
+  $update_regions=$dbConn->find('lib_regions',$params);
+  $update_regions_output = '<option value="">SELECT REGION</option>';
+  if($update_regions){
+    foreach($update_regions as $update_region){
+      $update_regions_output .= '<option value='.$update_region['region_code']. ($update_region_id==$update_region['region_code']?" selected":"") . ' >' .$update_region['region_name'].'</option>';
+      
+    }
+  }
+  echo $update_regions_output; 
+}
 ?>

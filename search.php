@@ -13,6 +13,5 @@ require_once("includes/helper.php");
     $data['count'] = $dbConn->count();
     $data['empno'] = $user['empno'];
     echo json_encode($data);
-
 //}
 ?>

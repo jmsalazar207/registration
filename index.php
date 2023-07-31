@@ -212,8 +212,8 @@ include 'modal/registermodal.php';
                         <div class="col-sm-9">
                           <select class="form-control select2" style="width: 100%;" id="AddSex" name="AddSex" tabindex="6">
                                     <option value="">--</option>
-                                    <option value="1">MALE</option>
-                                    <option value="2">FEMALE</option>
+                                    <option value="0">MALE</option>
+                                    <option value="1">FEMALE</option>
                           </select>
                         </div>
                       </div>                      

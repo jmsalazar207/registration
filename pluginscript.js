@@ -289,9 +289,38 @@ $( document ).ready(function() {
       function RegisterYes(){
         $('#RegisterConfirm').modal('hide');
         $('#RegisterContent').show();
+        
       };
       function UpdateYes(){
+        $.ajax({
+          url:"includes/functions.php",
+          method:"POST",
+          data:{empno:empno},
+          success:function(data){
+            const UpdateInfo = JSON.parse(data);
+            $("#AddLastName").val(UpdateInfo["sname"]);
+            $("#AddFirstName").val(UpdateInfo["fname"]);
+            $("#AddMiddleName").val(UpdateInfo["mname"]);
+            $("#AddMobileNumber").val(UpdateInfo["mobile"]);
+            $("#AddSex").val(UpdateInfo["sex"]);
+            $("#AddextName").val(UpdateInfo["ename"]);
+            $("#AddBirthdate").val(UpdateInfo["birthdate"]);
+            $("#AddStreet").val(UpdateInfo["street"]);
+            $("#AddHouseNumber").val(UpdateInfo["numAdd"]);
+            
+            var update_region_id = UpdateInfo["region"];
+            
+            $.ajax({
+                url:"includes/functions.php",
+                method:"POST",
+                data:{update_region_id:update_region_id},
+                success:function(data){
+                    $('#AddRegion').html(data);
+                }
+            });
+            
+          }
+        });
         $('#UpdateConfirm').modal('hide');
         $('#RegisterContent').show();
-        
       };
