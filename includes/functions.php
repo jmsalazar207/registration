@@ -122,4 +122,47 @@ if(isset($_POST["update_region_id"])){
   }
   echo $update_regions_output; 
 }
+if(isset($_POST["update_province_id"])&& isset($_POST['Where_region_ID'])){
+  $update_province_id = $_POST["update_province_id"];
+  $Where_region_id = $_POST["Where_region_ID"];
+  $params['fields'] = "prov_code, prov_name";
+  $params['conditions'] = array("region_code" => $Where_region_id);
+  $update_provinces=$dbConn->find('lib_provinces',$params);
+  $update_provinces_output = '<option value="">SELECT PROVINCE/option>';
+  if($update_provinces){
+    foreach($update_provinces as $update_province){
+      $update_provinces_output .= '<option value='.$update_province['prov_code']. ($update_province_id==$update_province['prov_code']?" selected":"") . ' >' .$update_province['prov_name'].'</option>';
+      
+    }
+  }
+  echo $update_provinces_output; 
+}
+if(isset($_POST["update_city_id"])&& isset($_POST['Where_province_ID'])){
+  $update_city_id = $_POST["update_city_id"];
+  $Where_province_id = $_POST["Where_province_ID"];
+  $params['fields'] = "city_code, city_name";
+  $params['conditions'] = array("prov_code" => $Where_province_id);
+  $update_cities=$dbConn->find('lib_cities',$params);
+  $update_city_output = '<option value="">SELECT MUNICIPALITY</option>';
+  if($update_cities){
+    foreach($update_cities as $update_city){
+      $update_city_output .= '<option value='.$update_city['city_code']. ($update_city_id==$update_city['city_code']?" selected":"") . ' >' .$update_city['city_name'].'</option>';
+    }
+  }
+  echo $update_city_output; 
+}
+if(isset($_POST["update_barangay_id"])&& isset($_POST['Where_city_ID'])){
+  $update_barangay_id = $_POST["update_barangay_id"];
+  $Where_city_id = $_POST["Where_city_ID"];
+  $params['fields'] = "brgy_code, brgy_name";
+  $params['conditions'] = array("city_code" => $Where_city_id);
+  $update_brgys=$dbConn->find('lib_brgy',$params);
+  $update_brgys_output = '<option value="">SELECT BARANGAY</option>';
+  if($update_brgys){
+    foreach($update_brgys as $update_brgy){
+      $update_brgys_output .= '<option value='.$update_brgy['brgy_code']. ($update_barangay_id==$update_brgy['brgy_code']?" selected":"") . ' >' .$update_brgy['brgy_name'].'</option>';
+    }
+  }
+  echo $update_brgys_output; 
+}
 ?>

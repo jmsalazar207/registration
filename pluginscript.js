@@ -305,11 +305,12 @@ $( document ).ready(function() {
             $("#AddSex").val(UpdateInfo["sex"]);
             $("#AddextName").val(UpdateInfo["ename"]);
             $("#AddBirthdate").val(UpdateInfo["birthdate"]);
+            $("#AddEmail").val(UpdateInfo["eaddress"]);
             $("#AddStreet").val(UpdateInfo["street"]);
             $("#AddHouseNumber").val(UpdateInfo["numAdd"]);
             
             var update_region_id = UpdateInfo["region"];
-            
+
             $.ajax({
                 url:"includes/functions.php",
                 method:"POST",
@@ -318,7 +319,36 @@ $( document ).ready(function() {
                     $('#AddRegion').html(data);
                 }
             });
-            
+            var update_province_id = UpdateInfo["province"];
+            $.ajax({
+              url:"includes/functions.php",
+              method:"POST",
+              data:{update_province_id:update_province_id,Where_region_ID:update_region_id},
+              success:function(data){
+                  $('#AddProvince').html(data);
+              }
+          });
+            var update_city_id = UpdateInfo["city"];
+            $.ajax({
+              url:"includes/functions.php",
+              method:"POST",
+              data:{update_city_id:update_city_id,Where_province_ID:update_province_id},
+              success:function(data){
+                  $('#AddCity').html(data);
+              }
+          });
+            var update_barangay_id = UpdateInfo["barangay"];
+            $.ajax({
+              url:"includes/functions.php",
+              method:"POST",
+              data:{update_barangay_id:update_barangay_id,Where_city_ID:update_city_id},
+              success:function(data){
+                  $('#AddBarangay').html(data);
+              }
+          });
+            var update_position_id = UpdateInfo["position"];
+            var update_division_id = UpdateInfo["division"];
+            var update_unit_id = UpdateInfo["unit"];
           }
         });
         $('#UpdateConfirm').modal('hide');
