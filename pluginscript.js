@@ -278,6 +278,7 @@ $( document ).ready(function() {
               $('#WarningMessage').text('New employee number detected! Would you like to register?');
               $('#RegisterConfirm').modal('show');
             }else{
+              //Here modal for confirming password
               $('#UpdateMessage').text('Old employee number detected! Would you like to update your information?');
               $('#UpdateConfirm').modal('show');
             }
@@ -288,8 +289,17 @@ $( document ).ready(function() {
       });
       function RegisterYes(){
         $('#RegisterConfirm').modal('hide');
+        $('#contentform').trigger("reset");
+        $('#AddRegion').val('').trigger('change');
+        $('#AddProvince').html('<option value="">SELECT REGION FIRST</option>');
+        $('#AddCity').html('<option value="">SELECT PROVINCE FIRST</option>');
+        $('#AddBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');
+        $('#AddPosition').val('').trigger('change');
+        $('#AddDivision').val('').trigger('change');
+        $('#AddUnit').html('<option value="">SELECT DIVISION FIRST</option>');
+        $('#btnSubmit').val('Register');
         $('#RegisterContent').show();
-        
+        $("#EmployeeNumber").val(empno);
       };
       function UpdateYes(){
         $.ajax({
@@ -297,7 +307,7 @@ $( document ).ready(function() {
           method:"POST",
           data:{empno:empno},
           success:function(data){
-            const UpdateInfo = JSON.parse(data);
+            UpdateInfo = JSON.parse(data);
             $("#AddLastName").val(UpdateInfo["sname"]);
             $("#AddFirstName").val(UpdateInfo["fname"]);
             $("#AddMiddleName").val(UpdateInfo["mname"]);
@@ -308,9 +318,9 @@ $( document ).ready(function() {
             $("#AddEmail").val(UpdateInfo["eaddress"]);
             $("#AddStreet").val(UpdateInfo["street"]);
             $("#AddHouseNumber").val(UpdateInfo["numAdd"]);
+            $("#EmployeeNumber").val(UpdateInfo["empno"]);
             
             var update_region_id = UpdateInfo["region"];
-
             $.ajax({
                 url:"includes/functions.php",
                 method:"POST",
@@ -347,10 +357,35 @@ $( document ).ready(function() {
               }
           });
             var update_position_id = UpdateInfo["position"];
+            $.ajax({
+              url:"includes/functions.php",
+              method:"POST",
+              data:{update_position_id:update_position_id},
+              success:function(data){
+                  $('#AddPosition').html(data);
+              }
+          });
             var update_division_id = UpdateInfo["division"];
+            $.ajax({
+              url:"includes/functions.php",
+              method:"POST",
+              data:{update_division_id:update_division_id},
+              success:function(data){
+                  $('#AddDivision').html(data);
+              }
+          });
             var update_unit_id = UpdateInfo["unit"];
+            $.ajax({
+              url:"includes/functions.php",
+              method:"POST",
+              data:{update_unit_id:update_unit_id,Where_division_ID:update_division_id},
+              success:function(data){
+                  $('#AddUnit').html(data);
+              }
+          });
           }
         });
         $('#UpdateConfirm').modal('hide');
+        $('#btnSubmit').val('Update');
         $('#RegisterContent').show();
       };

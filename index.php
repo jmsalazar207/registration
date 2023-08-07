@@ -84,7 +84,7 @@ include 'modal/registermodal.php';
             <div class="box-header with-border">
               <h3 class="box-title">Employee Information</h3>
             </div>
-              <form class="form-horizontal" method="POST" action="addnew.php">
+              <form class="form-horizontal" method="POST" action="addnew.php" id="contentform">
                 <div class="box-body">
                   <div class="row">
                     <div class="col-md-6">
@@ -285,8 +285,8 @@ include 'modal/registermodal.php';
                         <div class="col-md-6">
                             <div class="input-group col-sm-12">
                               <label class="col-sm-12"></label>
-                                <input type="text" class="form-control col-sm-10" id="EmployeeNumber" name="EmployeeNumber" placeholder="Enter Employee Number" required="true">
-                              <label for="DesiredPassword" class="col-sm-6" style="font-size: 15px;">Employee Number</label>
+                                <input type="text" class="form-control col-sm-10" id="EmployeeNumber" name="EmployeeNumber" placeholder="Enter Employee Number" readonly>
+                              <label for="EmployeeNumber" class="col-sm-6" style="font-size: 15px;">Employee Number</label>
                             </div>                        
                             <div class="input-group has-feedback col-sm-12">
                                 <input type="password" class="form-control col-sm-10" id="DesiredPassword" name="DesiredPassword" placeholder="Desired Password" required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
@@ -331,7 +331,7 @@ include 'modal/registermodal.php';
                         <div class="col-sm-1">
                         </div>                  
                         <div class="col-sm-1">
-                          <button type="submit" class="btn btn-info pull-right" id="btn_sign_up" name="btn_sign_up">Register</button>
+                          <input type="submit" class="btn btn-info pull-right" id="btnSubmit" name="btnSubmit" value="">
                         </div>
                   </div>
               </form>
@@ -404,6 +404,22 @@ if(isset($_SESSION['insert'])){
     </script>";
   }
   unset($_SESSION['insert']);
+}
+if(isset($_SESSION['update'])){
+  if($_SESSION['update'] == 'success'){
+    echo "<script type='text/javascript'>
+    $(document).ready(function(){
+    $('#SuccessUpdate').modal('show');
+    });
+    </script>";
+  }elseif($_SESSION['update'] == 'error'){
+    echo "<script type='text/javascript'>
+    $(document).ready(function(){
+    $('#ErrorUpdate').modal('show');
+    });
+    </script>";
+  }
+  unset($_SESSION['update']);
 }
 ?>
 </body>

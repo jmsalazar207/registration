@@ -108,8 +108,48 @@
           </div>
           <!-- /.modal-dialog -->
         </div> 
-      
-
+              <!--SuccessUpdate-->
+              <div class="modal fade" id="SuccessUpdate" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-contentsuccess">
+              <div class="modal-headersuccess">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title">Great!</h3>                
+              </div>
+              <div class="modal-bodysuccess">
+                  <p align="center"><span class="glyphicon glyphicon-ok s_icon"></span></p>
+             <h4>Your information successfully updated .</h4>
+              </div>
+              <div class="modal-footersuccess">
+                <button type="button" class="btn btn-modalsuccess btn-sm" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div> 
+              <!--ErrorRegister-->
+              <div class="modal fade" id="ErrorUpdate" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-contenterror">
+              <div class="modal-headererror">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title">Error!</h3>
+              </div>
+              <div class="modal-bodyerror">
+                <p align="center"><span class="glyphicon glyphicon-question-sign s_icon"></span></p>
+                <h4>Unfortunately, we encountered some issue in updating your information. Please try again later.</h4>
+              </div>
+              <div class="modal-footererror">
+                <button type="button" class="btn btn-modalerror btn-sm" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div> 
         
 
 

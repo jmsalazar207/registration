@@ -43,7 +43,6 @@ if(isset($_POST["provinceAction"])){
   }
   echo $city_output; 
 }
-
 //Kapag Onchange ning city
 if(isset($_POST["cityAction"])){
   $city_code = $_POST["city_id"];
@@ -58,7 +57,6 @@ if(isset($_POST["cityAction"])){
   }
   echo $brgy_output; 
 }
-
 //ONCHANGE Drop down menu for UNIT
 //Kapag Onchange ning city
 if(isset($_POST["divisionAction"])){
@@ -164,5 +162,45 @@ if(isset($_POST["update_barangay_id"])&& isset($_POST['Where_city_ID'])){
     }
   }
   echo $update_brgys_output; 
+}
+if(isset($_POST["update_position_id"])){
+  $update_position_id = $_POST["update_position_id"];
+  $params['fields'] = "position_code, position_name";
+  // $params['conditions'] = array("city_code" => $Where_city_id);
+  $update_positions=$dbConn->find('lib_position',$params);
+  $update_positions_output = '<option value="">SELECT POSITION</option>';
+  if($update_positions){
+    foreach($update_positions as $update_position){
+      $update_positions_output .= '<option value='.$update_position['position_code']. ($update_position_id==$update_position['position_code']?" selected":"") . ' >' .$update_position['position_name'].'</option>';
+    }
+  }
+  echo $update_positions_output; 
+}
+if(isset($_POST["update_division_id"])){
+  $update_division_id = $_POST["update_division_id"];
+  $params['fields'] = "division_code, division_name";
+  // $params['conditions'] = array("city_code" => $Where_city_id);
+  $update_divisions=$dbConn->find('lib_division',$params);
+  $update_divisions_output = '<option value="">SELECT DIVISION</option>';
+  if($update_divisions){
+    foreach($update_divisions as $update_division){
+      $update_divisions_output .= '<option value='.$update_division['division_code']. ($update_division_id==$update_division['division_code']?" selected":"") . ' >' .$update_division['division_name'].'</option>';
+    }
+  }
+  echo $update_divisions_output; 
+}
+if(isset($_POST["update_unit_id"])&& isset($_POST['Where_division_ID'])){
+  $update_unit_id = $_POST["update_unit_id"];
+  $Where_division_ID = $_POST["Where_division_ID"];
+  $params['fields'] = "unit_code, unit_name";
+  $params['conditions'] = array("division_code" => $Where_division_ID);
+  $update_units=$dbConn->find('lib_unit',$params);
+  $update_units_output = '<option value="">SELECT UNIT</option>';
+  if($update_units){
+    foreach($update_units as $update_unit){
+      $update_units_output .= '<option value='.$update_unit['unit_code']. ($update_unit_id==$update_unit['unit_code']?" selected":"") . ' >' .$update_unit['unit_name'].'</option>';
+    }
+  }
+  echo $update_units_output; 
 }
 ?>

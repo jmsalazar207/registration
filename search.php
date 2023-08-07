@@ -12,6 +12,7 @@ require_once("includes/helper.php");
 
     $data['count'] = $dbConn->count();
     $data['empno'] = $user['empno'];
+    $data['password_update'] = $user['password_update'];
     echo json_encode($data);
 //}
 ?>
