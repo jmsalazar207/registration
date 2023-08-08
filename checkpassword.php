@@ -6,9 +6,10 @@ require_once("includes/helper.php");
 //if(isset($_POST['btn_search'])){
     $data = [];
     $user = [];
-    $user['empno'] = $_POST['txtSearch'];
-    $param['conditions'] = array('empno' => $user['empno']); 
-    $exists = $dbConn->findFirst('userprofile',$param);
+    $user['empno'] = $_POST['SearchEmpno'];
+    $user['password'] = md5($_POST['SearchPassword']);
+    $param['conditions'] = array('empno' => $user['empno'],'password'=>$user['password']); 
+    $dbConn->findFirst('userprofile',$param);
 
     $data['count'] = $dbConn->count();
     $data['empno'] = $user['empno'];

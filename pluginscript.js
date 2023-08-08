@@ -279,13 +279,35 @@ $( document ).ready(function() {
               $('#RegisterConfirm').modal('show');
             }else{
               //Here modal for confirming password
-              $('#UpdateMessage').text('Old employee number detected! Would you like to update your information?');
-              $('#UpdateConfirm').modal('show');
+              $("#SearchEmpno").val(empno);
+              $('#UpdateMessage').text('This Employee Number is already registered. Please type in your password to continue. Thank you.');
+              $('#UpdateConfirm').modal('show'); 
             }
           },
           processData: false,
           contentType: false
-        });          
+        }); 
+      });
+      //Here
+      $("#contentcheck").on("submit",function(event){
+        event.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+          url:"checkpassword.php",
+          method:"POST",
+          dataType: "json",
+          data:formData,
+          success:function(data){
+            empno = data.empno;
+            if(data.count == 0){
+              $('#ErrorPassword').modal('show');
+            }else{
+              UpdateYes();
+            }
+          },
+          processData: false,
+          contentType: false
+        }); 
       });
       function RegisterYes(){
         $('#RegisterConfirm').modal('hide');
@@ -301,6 +323,7 @@ $( document ).ready(function() {
         $('#RegisterContent').show();
         $("#EmployeeNumber").val(empno);
       };
+
       function UpdateYes(){
         $.ajax({
           url:"includes/functions.php",
@@ -319,7 +342,8 @@ $( document ).ready(function() {
             $("#AddStreet").val(UpdateInfo["street"]);
             $("#AddHouseNumber").val(UpdateInfo["numAdd"]);
             $("#EmployeeNumber").val(UpdateInfo["empno"]);
-            
+            //md5 in jquery
+            $("#DesiredPassword").val(UpdateInfo["password"]);
             var update_region_id = UpdateInfo["region"];
             $.ajax({
                 url:"includes/functions.php",
