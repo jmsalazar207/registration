@@ -302,7 +302,8 @@ $( document ).ready(function() {
             if(data.count == 0){
               $('#ErrorPassword').modal('show');
             }else{
-              UpdateYes();
+              var password = data.password;
+              UpdateYes(password);
             }
           },
           processData: false,
@@ -324,7 +325,7 @@ $( document ).ready(function() {
         $("#EmployeeNumber").val(empno);
       };
 
-      function UpdateYes(){
+      function UpdateYes(password){
         $.ajax({
           url:"includes/functions.php",
           method:"POST",
@@ -335,15 +336,15 @@ $( document ).ready(function() {
             $("#AddFirstName").val(UpdateInfo["fname"]);
             $("#AddMiddleName").val(UpdateInfo["mname"]);
             $("#AddMobileNumber").val(UpdateInfo["mobile"]);
-            $("#AddSex").val(UpdateInfo["sex"]);
-            $("#AddextName").val(UpdateInfo["ename"]);
+            $("#AddSex").val(UpdateInfo["sex"]).trigger('change');
+            $("#AddextName").val(UpdateInfo["ename"]).trigger('change');
             $("#AddBirthdate").val(UpdateInfo["birthdate"]);
             $("#AddEmail").val(UpdateInfo["eaddress"]);
             $("#AddStreet").val(UpdateInfo["street"]);
             $("#AddHouseNumber").val(UpdateInfo["numAdd"]);
             $("#EmployeeNumber").val(UpdateInfo["empno"]);
             //md5 in jquery
-            $("#DesiredPassword").val(UpdateInfo["password"]);
+            $("#DesiredPassword").val(password);
             var update_region_id = UpdateInfo["region"];
             $.ajax({
                 url:"includes/functions.php",

@@ -13,6 +13,7 @@ require_once("includes/helper.php");
 
     $data['count'] = $dbConn->count();
     $data['empno'] = $user['empno'];
+    $data['password'] = $_POST['SearchPassword'];
     echo json_encode($data);
 //}
 ?>
