@@ -29,21 +29,9 @@
 			die($e->getMessage());
 		}
 	}
-
-
 	public static function connect(){
 	   return new self();
 	}
-
-
-
-
-
-
-
-
-
-
 	//=======================================query=======================================
 	private function query($sql, $params = []){            
 		$this->_error = false;
@@ -66,15 +54,6 @@
 		return $this;
 	}
 	//=======================================query=======================================
-
-
-
-
-
-
-
-
-
 
 	//=======================================sp_query=======================================
 	public function sp_query($sql){            
