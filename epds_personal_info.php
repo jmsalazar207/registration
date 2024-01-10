@@ -1,6 +1,4 @@
-<form method = "POST" action = "save_personal_info.php" enctype="multipart/form-data">	
-	<input type="hidden" name="empno" class="form-control"  value = "<?php echo $user['empno']; ?>">
-	
+<form method = "POST" action = "save_personal_info.php" enctype="multipart/form-data" id="contentform">	
 	<div class="box box-primary">
 		<div class="box-header with-border">
 			<h4 class="box-title">Personal Information</h4>
