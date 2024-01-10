@@ -1,18 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<?php
-  session_start();
-	$_SESSION["token"] = bin2hex(random_bytes(32));
-	$_SESSION["token-expire"] = time() + 3600; // 1 hour = 3600 secs
-// include 'includes/conn_to_ctris.php';
-require_once('includes/init.php');
-include 'modal/registermodal.php';
-   include 'includes/functions.php'; 
-?>
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-  <script src="includes/scripts.js" async defer></script>
-  
+      <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+      <script src="includes/scripts.js" async defer></script>
+          <?php
+          
+          ?>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="shortcut icon" href="images/dtricon.jpg">
@@ -36,20 +29,29 @@ include 'modal/registermodal.php';
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <link rel="stylesheet" href="plugins/iCheck/all.css">
-  <link rel="stylesheet" href="includes/add.css">
+ 
    <!-- Bootstrap Color Picker -->
    <link rel="stylesheet" href="bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
      <!-- Bootstrap time Picker -->
   <link rel="stylesheet" href="plugins/timepicker/bootstrap-timepicker.min.css">
+  <link rel="stylesheet" href="includes/add.css">
 </head>
-
+<?php
+ session_start();
+ $_SESSION["token"] = bin2hex(random_bytes(32));
+ $_SESSION["token-expire"] = time() + 3600; // 1 hour = 3600 secs
+// include 'includes/conn_to_ctris.php';
+include 'modal/registermodal.php';
+ require_once('includes/init.php');
+ include 'includes/functions.php'; 
+?>
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
 <body class="hold-transition skin-blue layout-top-nav">
 <div class="wrapper">
 <?php include 'includes/header.php';?>
   <!-- Full Width Column -->
   <div class="content-wrapper">
-    <div class="container">
+    <div class="container" style="width: 80%;">
       <!-- Main content -->
       <section class="content">
 <!--CODE OF REGISTRATION HERE-->
@@ -80,269 +82,81 @@ include 'modal/registermodal.php';
               </div>
             </form>
           </div>
-          <div class="box box-info" id="RegisterContent" hidden>
-            <div class="box-header with-border">
-              <h3 class="box-title">Employee Information</h3>
-            </div>
-              <form class="form-horizontal" method="POST" action="addnew.php" id="contentform">
-                <div class="box-body">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                      <input type="hidden" name="token" value="<?=$_SESSION["token"]?>">
-                        <label for="LastName" class="col-sm-3 control-label">LAST NAME</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="AddLastName" name="AddLastName" placeholder="LAST NAME" value="" style="text-transform: uppercase;" required="true" tabindex="1">
+          <!-- Content for form -->
+            <div class="box box-primary" id="RegisterContent" hidden>
+                  <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs" id="myTab">
+                      <li class="active"><a href="#personal" data-toggle="tab">Personal Information</a></li>
+                      <!-- <li><a href="#family" data-toggle="tab">Family Background</a></li>
+                      <li><a href="#education" data-toggle="tab">Educational Background</a></li>
+                      <li><a href="#eligibility" data-toggle="tab">Civil Service Eligibilty</a></li>
+                      <li><a href="#experience" data-toggle="tab">Work Experience</a></li>
+                      <li><a href="#voluntary" data-toggle="tab">Voluntary Work or Involvement</a></li>
+                      <li><a href="#learning" data-toggle="tab">Learning and Development</a></li>
+                      <li><a href="#other1" data-toggle="tab">Other Information 1</a></li>
+                      <li><a href="#other2" data-toggle="tab">Other Information 2</a></li>
+                      <li><a href="#references" data-toggle="tab">References</a></li> -->
+                        <!-- <a href="#print_preview" data-toggle="modal" class="btn btn-success btn-sm "> Print Preview</a> -->
+                    </ul>
+
+                    <div class="tab-content">
+                        <!-- PERSONAL -->
+                        <div class="active tab-pane" id="personal">
+                          <?php require_once('epds_personal_info.php')?>
                         </div>
-                      </div>                      
+                        	<!-- Family -->
+                          <div class="tab-pane" id="family">
+                          <?php require_once('epds_family.php'); ?>
+                        </div>
+                        <!-- Educational -->
+                        <div class="tab-pane" id="education">
+                          <?php require_once('epds_education.php'); ?>
+                        </div>
+                        <!-- Eligibility -->
+                        <div class="tab-pane" id="eligibility">
+                          <?php require_once('epds_eligibility.php'); ?>
+                        </div> 
+                         <!-- Experience -->
+                         <div class="tab-pane" id="experience">
+                          <?php require_once('epds_experience.php'); ?>
+                        </div>  
+                        <!-- Voluntary Work or Involvement -->
+                        <div class="tab-pane" id="voluntary">
+                          <?php require_once('epds_voluntary.php'); ?>
+                        </div>
+                        
+                        <!-- Learning and Development -->
+                        <div class="tab-pane" id="learning">
+                          <?php require_once('epds_learning.php'); ?>
+                        </div>
+                      
+                        <!-- Other Information 1 -->
+                        <div class="tab-pane" id="other1">
+                          <?php require_once('epds_other1.php'); ?>
+                        </div>
+                        
+                        <!-- Other Information 2 -->
+                        <div class="tab-pane" id="other2">
+                          <?php require_once('epds_other2.php'); ?>
+                        </div>
+                        
+                        <!-- References -->
+                        <div class="tab-pane" id="references">
+                          <?php require_once('epds_reference.php'); ?>
+                        </div> 
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">Street</label>
-                        <div class="col-sm-3">
-                          <input type="text" class="form-control" id="AddStreet" name="AddStreet" placeholder="Street" value="" style="text-transform: uppercase;" required="true" tabindex="9">
-                        </div>
-                        <label for="LastName" class="col-sm-3 control-label">House Number</label>
-                        <div class="col-sm-3">
-                          <input type="text" class="form-control" id="AddHouseNumber" name="AddHouseNumber" placeholder="House #" value="" style="text-transform: uppercase;" required="true" tabindex="10">
-                        </div>                        
-                      </div>                      
-                    </div>                    
+
                   </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">FIRST NAME</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="AddFirstName" name="AddFirstName" placeholder="FIRST NAME" value="" style="text-transform: uppercase;" required="true" tabindex="2">
-                        </div>
-                      </div>                      
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">Region</label>
-                        <div class="col-sm-9">
-                        <select class="form-control select2" style="width: 100%;"  id="AddRegion" name="AddRegion" required="true" tabindex="11">
-                          <?php
-                           echo fill_region($dbConn, null);
-                           ?>
-                        </select>
-                        </div>
-                      </div>                      
-                    </div>                    
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">MIDDLE NAME</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="AddMiddleName" name="AddMiddleName" placeholder="MIDDLE NAME" value="" style="text-transform: uppercase;" required="true" tabindex="3">
-                        </div>
-                      </div>                      
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">Province</label>
-                        <div class="col-sm-9">
-                          <select class="form-control select2" style="width: 100%;"  id="AddProvince" name="AddProvince" required="true" tabindex="12">
-                            <option>SELECT REGION FIRST</option>
-                          </select>
-                        </div>
-                      </div>                      
-                    </div>                    
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">EXT. NAME</label>
-                        <div class="col-sm-9">
-                                  <select class="form-control select2"style="width: 100%;"  id="AddextName" name="AddextName" tabindex="4">
-                                    <option value="">--</option>
-                                    <option value="I">I</option>
-                                    <option value="II">II</option>
-                                    <option value="III">III</option>
-                                    <option value="IV">IV</option>
-                                    <option value="V">V</option>
-                                    <option value="VI">VI</option>
-                                    <option value="VII">VII</option>
-                                    <option value="VIII">VIII</option>
-                                    <option value="IX">IX</option>
-                                    <option value="X">X</option>
-                                    <option value="Jr.">Jr</option>
-                                    <option value="Sr.">Sr</option>
-                                  </select>
-                        </div>
-                      </div>                      
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">Municipality</label>
-                        <div class="col-sm-9">
-                          <select class="form-control select2" style="width: 100%;" id="AddCity" name="AddCity" required="true" tabindex="13">
-                              <option>SELECT PROVINCE FIRST</option>
-                          </select>
-                        </div>
-                      </div>                      
-                    </div>                    
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">MOBILE NUMBER</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="AddMobileNumber" name="AddMobileNumber" placeholder="MOBILE NUMBER" value="" style="text-transform: uppercase;" required="true" tabindex="5" onkeypress="return NumberOnly(event)">
-                        </div>
-                      </div>                      
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">Barangay</label>
-                        <div class="col-sm-9">
-                          <select class="form-control select2"style="width: 100%;"  id="AddBarangay" name="AddBarangay" required="true" tabindex="14">
-                              <option>SELECT MUNICIPALITY FIRST</option>
-                          </select>
-                        </div>
-                      </div>                      
-                    </div>                    
-                  </div>   
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">Sex</label>
-                        <div class="col-sm-9">
-                          <select class="form-control select2" style="width: 100%;" id="AddSex" name="AddSex" tabindex="6">
-                                    <option value="">--</option>
-                                    <option value="0">MALE</option>
-                                    <option value="1">FEMALE</option>
-                          </select>
-                        </div>
-                      </div>                      
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">Position</label>
-                        <div class="col-sm-9">
-                          <select class="form-control select2"style="width: 100%;"  id="AddPosition" name="AddPosition" required="true" tabindex="15">
-                            <?php
-                           echo fill_position($dbConn, null);
-                           ?>
-                          </select>
-                        </div>
-                      </div>                      
-                    </div>                    
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">Birthdate</label>
-                        <div class="col-sm-9">
-                              <div class="input-group date col-sm-12">
-                                <div class="input-group-addon">
-                                  <i class="fa fa-calendar"></i>
-                                </div>
-                                <input type="date" class="form-control pull-right" name="AddBirthdate" id="AddBirthdate" required="true" tabindex="7">
-                              </div>
-                        </div>
-                      </div>                      
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">Division</label>
-                        <div class="col-sm-9">
-                          <select class="form-control select2"style="width: 100%;"  id="AddDivision" name="AddDivision" required="true" tabindex="16">
-                            <?php
-                           echo fill_division($dbConn, null);
-                           ?>
-                          </select>
-                        </div>
-                      </div>                      
-                    </div>                    
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">Email Address</label>
-                          <div class="col-sm-9">
-                            <input type="email" class="form-control" id="AddEmail" name="AddEmail" placeholder="Email Address" tabindex="8">
-                          </div> 
-                      </div>                      
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">Unit</label>
-                        <div class="col-sm-9">
-                          <select class="form-control select2"style="width: 100%;"  id="AddUnit" name="AddUnit" required="true" tabindex="17">
-                            <option>SELECT DIVISION FIRST</option>
-                          </select>
-                        </div>
-                      </div>                      
-                    </div>                    
-                  </div>
-                  <div class="box-header">
-                    <h3 class="box-title">Login Credentials</h3>
-                  </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                            <div class="input-group col-sm-12">
-                              <label class="col-sm-12"></label>
-                                <input type="text" class="form-control col-sm-10" id="EmployeeNumber" name="EmployeeNumber" placeholder="Enter Employee Number" readonly>
-                              <label for="EmployeeNumber" class="col-sm-6" style="font-size: 15px;">Employee Number</label>
-                            </div>                        
-                            <div class="input-group has-feedback col-sm-12">
-                                <input type="password" class="form-control col-sm-10" id="DesiredPassword" name="DesiredPassword" placeholder="Desired Password" required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
-                                <span class="input-group-addon"><i class="fa fa-eye-slash toggle-DesiredPassword " toggle = "#DesiredPassword"  id="toggleDesiredPassword"></i></span>
-                            </div>
-                            <label for="DesiredPassword" class="col-sm-6" style="font-size: 15px;">Desired Password</label>
-                            <div class="input-group has-feedback col-sm-12">
-                                <input type="password" class="form-control col-sm-10" id="ConfirmPassword" name = "ConfirmPassword" placeholder="Confirm Password" required="true">
-                                <span class="input-group-addon"><i class="fa fa-eye-slash toggle-ConfirmPassword " toggle = "#ConfirmPassword"  id="toggleConfirmPassword"></i></span>
-                            </div>
-                            <small id='checkmessage'></small>
-                            <label for="ConfirmPassword" class="col-sm-12" style="font-size: 15px;">Confirm Password</label>                            
-                        </div>
-                        <div class="col-md-6">
-                              <div class="col-sm-12" id="message">
-                                <h4>Password must contain the following:</h4>
-                                <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
-                                <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
-                                <p id="number" class="invalid">A <b>number</b></p>
-                                <p id="special_char" class="invalid">A <b>special character</b></p>
-                                <p id="length" class="invalid">Minimum <b>8 characters</b></p>
-                              </div>                                 
-                        </div>                        
-                      </div>                                                                                                                                       
-                </div> 
-                  <div class="box-footer">
-                      <div class="col-sm-5">
-                        <div class="g-recaptcha" data-sitekey="6Lev7iwhAAAAAIfzMgf0nI47mGKE9tGBnm-bq24r"></div>
-                      </div>
-                      <div class="col-sm-5">
-                        <?php
-                          if(isset($_SESSION['error'])){
-                            echo "
-                              <div class='callout callout-danger text-center mt20'>
-                                <p>".$_SESSION['error']."</p> 
-                              </div>
-                            ";
-                            unset($_SESSION['error']);
-                          }
-                        ?>                            
-                      </div>
-                        <div class="col-sm-1">
-                        </div>                  
-                        <div class="col-sm-1">
-                          <input type="submit" class="btn btn-info pull-right" id="btnSubmit" name="btnSubmit" value="">
-                        </div>
-                  </div>
-              </form>
-          </div>
+                                              
+            </div>  
     </section> 
-  
     <!--End Registration form-->
       </section>
       <!-- /.content -->
     </div>
     <!-- /.container -->
+ 
+                          
   </div>
   <!-- /.content-wrapper -->
   <?php 

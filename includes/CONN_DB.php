@@ -22,7 +22,9 @@
 		try{
 			// mysql:host=localhost;dbname=sample;charset=utf8', 'root', ''
 			// mysql:host=172.31.32.251;dbname=ctris;charset=utf8', 'remote_user', 'P@ssw0rd1.'
-			$this->_pdo = new PDO('mysql:host=localhost;dbname=ctris;charset=utf8', 'root', '');
+			// mysql:host=172.31.32.22;dbname=hrmis;charset=utf8', 'remote_user', 'P@ssw0rd1.'
+			//mysql:host=localhost;dbname=ctris;charset=utf8', 'root', ''
+			$this->_pdo = new PDO('mysql:host=172.31.32.22;dbname=hrmis;charset=utf8', 'dtr', 'P@ssw0rd1.'); //dtr is used only for account
 			$this->_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$this->_pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES,false);
 		} catch(PDOException $e){
