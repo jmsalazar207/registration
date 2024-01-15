@@ -126,7 +126,7 @@ if(isset($_POST["update_province_id"])&& isset($_POST['Where_region_ID'])){
   $params['fields'] = "prov_code, prov_name";
   $params['conditions'] = array("region_code" => $Where_region_id);
   $update_provinces=$dbConn->find('lib_provinces',$params);
-  $update_provinces_output = '<option value="">SELECT PROVINCE/option>';
+  $update_provinces_output = '<option value="">SELECT PROVINCE</option>';
   if($update_provinces){
     foreach($update_provinces as $update_province){
       $update_provinces_output .= '<option value='.$update_province['prov_code']. ($update_province_id==$update_province['prov_code']?" selected":"") . ' >' .$update_province['prov_name'].'</option>';
