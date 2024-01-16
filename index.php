@@ -80,7 +80,7 @@ include 'modal/registermodal.php';
               </div>
             </form>
           </div>
-          <div class="box box-info" id="RegisterContent" hidden>
+          <div class="box box-info" id="RegisterContent">
             <div class="box-header with-border">
               <h3 class="box-title">Employee Information</h3>
             </div>
@@ -316,17 +316,21 @@ include 'modal/registermodal.php';
                       <div class="col-sm-5">
                         <div class="g-recaptcha" data-sitekey="6Lev7iwhAAAAAIfzMgf0nI47mGKE9tGBnm-bq24r"></div>
                       </div>
-                      <div class="col-sm-5">
-                        <?php
-                          if(isset($_SESSION['error'])){
-                            echo "
-                              <div class='callout callout-danger text-center mt20'>
-                                <p>".$_SESSION['error']."</p> 
-                              </div>
-                            ";
-                            unset($_SESSION['error']);
-                          }
-                        ?>                            
+                      <div class="col-sm-6 ">
+                          <div class="info-box">
+                          <div class="checkbox">
+                            <label>
+                              <input type="checkbox" class="icheckbox_minimal-blue"> 
+                              <p>I hereby grant permission to DSWD Field Office III to utilize my information for the following purposes:</p>
+                              <p>
+                                *Claims notification
+                                  </br>
+                                * Up-to-date information for payroll and other HR concerns.
+                              </p>
+                            </label>
+                          </div>                                             
+                          </div>
+
                       </div>
                         <div class="col-sm-1">
                         </div>                  
