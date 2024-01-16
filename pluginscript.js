@@ -75,50 +75,51 @@ function NumberOnly(evt) {
   };  
   //for Residential
 //Kapag meg select Region
-     jQuery(document).ready(function() {
-      jQuery("#AddRegion").on('change',function(){
-          var regionAction = jQuery(this).attr("id");
-          var region_id = jQuery(this).val();
-          if(region_id){
-              jQuery.ajax({
-              url:"includes/functions.php",
-              method:"POST",
-              data:{regionAction:regionAction, region_id:region_id},
-              success:function(data){
+  jQuery(document).ready(function() {
+    jQuery("#AddRegion").on('change',function(){
+        var regionAction = jQuery(this).attr("id");
+        var region_id = jQuery(this).val();
+        if(region_id){
+            jQuery.ajax({
+            url:"includes/functions.php",
+            method:"POST",
+            data:{regionAction:regionAction, region_id:region_id},
+            success:function(data){
 
-                  jQuery('#AddProvince').html(data);
-                  jQuery('#AddCity').html('<option value="">SELECT PROVINCE FIRST</option>');  
-              }
-          });
-          }else{
-              jQuery('#AddProvince').html('<option value="">SELECT REGION FIRST</option>');
-              jQuery('#AddCity').html('<option value="">SELECT PROVINCE FIRST</option>');
-              jQuery('#AddBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');
-          }
-      });
+                jQuery('#AddProvince').html(data);
+                jQuery('#AddCity').html('<option value="">SELECT PROVINCE FIRST</option>');  
+            }
         });
+        }else{
+            jQuery('#AddProvince').html('<option value="">SELECT REGION FIRST</option>');
+            jQuery('#AddCity').html('<option value="">SELECT PROVINCE FIRST</option>');
+            jQuery('#AddBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');
+        }
+    });
+  });
 //End select Region
+
 //Kapag meg Select province
-        jQuery(document).ready(function() {
-      jQuery("#AddProvince").on('change',function(){
-          var provinceAction = jQuery(this).attr("id");
-          var province_id = jQuery(this).val();
-          if(province_id){
-              jQuery.ajax({
-              url:"includes/functions.php",
-              method:"POST",
-              data:{provinceAction:provinceAction, province_id:province_id},
-              success:function(data){
-                  jQuery('#AddCity').html(data);
-                  jQuery('#AddBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');  
-              }
-          });
-          }else{
-              jQuery('#AddCity').html('<option value="">SELECT PROVINCE FIRST</option>');
-              jQuery('#AddBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');
-          }
-      });
+  jQuery(document).ready(function() {
+    jQuery("#AddProvince").on('change',function(){
+        var provinceAction = jQuery(this).attr("id");
+        var province_id = jQuery(this).val();
+        if(province_id){
+            jQuery.ajax({
+            url:"includes/functions.php",
+            method:"POST",
+            data:{provinceAction:provinceAction, province_id:province_id},
+            success:function(data){
+                jQuery('#AddCity').html(data);
+                jQuery('#AddBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');  
+            }
         });
+        }else{
+            jQuery('#AddCity').html('<option value="">SELECT PROVINCE FIRST</option>');
+            jQuery('#AddBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');
+        }
+    });
+  });
 //end select city
 //kapag meg select barangay
         jQuery(document).ready(function() {
@@ -321,6 +322,7 @@ $( document ).ready(function() {
         $('#AddDivision').val('').trigger('change');
         $('#AddUnit').html('<option value="">SELECT DIVISION FIRST</option>');
         $('#btnSubmit').val('Register');
+        $('#processType').val('Register');
         $('#RegisterContent').show();
         $("#EmployeeNumber").val(empno);
       };
@@ -412,5 +414,40 @@ $( document ).ready(function() {
         });
         $('#UpdateConfirm').modal('hide');
         $('#btnSubmit').val('Update');
+        $('#processType').val('Update');
         $('#RegisterContent').show();
       };
+
+
+
+      //January 16, 2024
+      $("#contentform").on("submit",function(event){
+        event.preventDefault();
+        const mobile_no = $('#AddMobileNumber').val();
+
+        if((mobile_no.length != 11) || ((mobile_no.slice(0, 2)) !== "09")){
+          $('#alertMessage').text('The mobile number should adhere to the format starting with "09" and must consist of precisely 11 digits.');
+          $('#modalAlert').modal('show');
+        }else{
+          var formData = new FormData(this);
+          $.ajax({
+            url:"addnew.php",
+            method:"POST",
+            dataType: "json",
+            data:formData,
+            success:function(data){
+              const msg = data.msg;
+              const stat = data.status;
+              if(stat == "success"){
+                $('#alertMessage').text(msg);
+                $('#modalAlert').modal('show');
+              }else{
+                $('#alertMessage').text(msg);
+                $('#modalAlert').modal('show'); 
+              }
+            },
+            processData: false,
+            contentType: false
+          }); 
+        }
+      });

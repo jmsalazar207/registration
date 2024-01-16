@@ -84,7 +84,7 @@ include 'modal/registermodal.php';
             <div class="box-header with-border">
               <h3 class="box-title">Employee Information</h3>
             </div>
-              <form class="form-horizontal" method="POST" action="addnew.php" id="contentform">
+              <form class="form-horizontal" method="POST" id="contentform">
                 <div class="box-body">
                   <div class="row">
                     <div class="col-md-6">
@@ -331,7 +331,8 @@ include 'modal/registermodal.php';
                         <div class="col-sm-1">
                         </div>                  
                         <div class="col-sm-1">
-                          <input type="submit" class="btn btn-info pull-right" id="btnSubmit" name="btnSubmit" value="">
+                        <input type="hidden" class="form-control" id="processType" name="processType" style="text-transform: uppercase;" required="true">
+                          <input type="submit" class="btn btn-info pull-right" id="btnSubmit" name="btnSubmit">
                         </div>
                   </div>
               </form>
