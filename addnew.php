@@ -2,15 +2,13 @@
 session_start();
 require_once("includes/init.php");
 require_once("includes/helper.php");
-//include 'modal/registermodal.php';
+date_default_timezone_set('Asia/Manila');
 
-$today = date('d-m-y h:i:s');
+$today = date('Y-m-d H:i:s');
 $dataReturn = [];
 
 if(empty($_POST['g-recaptcha-response']))
 {
-    // $_SESSION['error'] = 'Please verify you are not a robot';
-    // header('Location: index.php');
     $dataReturn['status'] = "failed";
     $dataReturn['msg'] = "Please verify you are not a robot";
     echo json_encode($dataReturn);
@@ -21,18 +19,14 @@ if(empty($_POST['g-recaptcha-response']))
         $data=json_decode($response);
         if ($data -> success)
         {
-            if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["token-expire"])) 
-            {
-                // $_SESSION['error'] = 'System encounters and error, please try again later';
-                //header('Location: index.php');
+            if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["token-expire"])) {
+
                 $dataReturn['status'] = "failed";
                 $dataReturn['msg'] = "System encounters and error, please try again later";
                 echo json_encode($dataReturn);
-            }else
-            {
+            }else {
                 $process = $_POST['processType'];
-                if($process == 'Register')
-                {
+                if($process == 'Register'){
                     $user['sname'] = sanitize(strtoupper($_POST['AddLastName']));
                     $user['fname'] = sanitize(strtoupper($_POST['AddFirstName']));
                     $user['mname'] = sanitize(strtoupper($_POST['AddMiddleName']));
@@ -59,24 +53,15 @@ if(empty($_POST['g-recaptcha-response']))
                     $user['isLog'] = 0;
                     $InsertQuery = $dbConn->insert('userprofile',$user);
                     if($InsertQuery){
-                        // $_SESSION['insert'] = 'success';
-                        // header('Location: index.php');
                         $dataReturn['status'] = "success";
                         $dataReturn['msg'] = "Successfully Register";
                         echo json_encode($dataReturn);
-                    }
-                    else 
-                    {
-                        // $_SESSION['insert'] = 'error';
-                        // header('Location: index.php');
+                    }else {
                         $dataReturn['status'] = "failed";
                         $dataReturn['msg'] = "An error was encountered while saving data. Please try again later.";
                         echo json_encode($dataReturn);
                     }
-                }else if($process = 'Update')
-                {
-                    //update process here
-                   
+                }else if($process = 'Update'){                  
                     $id=$_POST['EmployeeNumber'];
 
                     $userUpdate['sname'] = sanitize(strtoupper($_POST['AddLastName']));
@@ -106,36 +91,21 @@ if(empty($_POST['g-recaptcha-response']))
     
                     $UpdateQuery = $dbConn->update('userprofile', 'empno', $id, $userUpdate);
                     if($UpdateQuery){
-                        // $_SESSION['update'] = 'success';
-                        // header('Location: index.php');
                         $dataReturn['status'] = "success";
                         $dataReturn['msg'] = "Info Successfully Updated";
                         echo json_encode($dataReturn);
-                    }
-                    else 
-                    {
-                        // $_SESSION['update'] = 'error';
-                        // header('Location: index.php');
+                    }else {
+
                         $dataReturn['status'] = "failed";
                         $dataReturn['msg'] = "An error was encountered while saving data. Please try again later.";
                         echo json_encode($dataReturn);
                     }
                 }
-                
-                    
             }
         }
-    }else
-    {
-        // $_SESSION['error'] = 'Invalid Captcha';
+    }else{
         $dataReturn['status'] = "failed";
         $dataReturn['msg'] = "Invalid Captcha";
         echo json_encode($dataReturn);
     }
-
 }
-
-
-
-
-?>
