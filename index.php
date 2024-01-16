@@ -147,7 +147,7 @@ include 'modal/registermodal.php';
                     </div>
 
                   </div>
-                                              
+                     <!-- form here  -->
             </div>  
     </section> 
     <!--End Registration form-->
