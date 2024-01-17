@@ -313,31 +313,26 @@ include 'modal/registermodal.php';
                       </div>                                                                                                                                       
                 </div> 
                   <div class="box-footer">
-                      <div class="col-sm-5">
+                      <div class="col-sm-3">
                         <div class="g-recaptcha" data-sitekey="6Lev7iwhAAAAAIfzMgf0nI47mGKE9tGBnm-bq24r"></div>
                       </div>
-                      <div class="col-sm-6 ">
-                          <div class="info-box">
-                          <div class="checkbox">
-                            <label>
-                              <input type="checkbox" class="icheckbox_minimal-blue"> 
-                              <p>I hereby grant permission to DSWD Field Office III to utilize my information for the following purposes:</p>
-                              <p>
-                                *Claims notification
-                                  </br>
-                                * Up-to-date information for payroll and other HR concerns.
-                              </p>
-                            </label>
-                          </div>                                             
+                      <div class="col-sm-7">
+                          <div class="info-box shadow p-3 mb-5 rounded" style="background-color: #f6f6f6;">
+                            <div class="checkbox" style="font-size: 12px;">     
+                                <label for="dataConsent"><strong>Data Privacy Notice</strong></label>                        
+                                <ul style="font-style: italic;font-weight: 900;">
+                                  <input type="checkbox" name="dataConsent" id="dataConsent" class="icheckbox_minimal-blue"> 
+                                  <p>I hereby grant permission to DSWD Field Office III to utilize my information for the following purposes:</p>
+                                  <li>Claims notification</li>
+                                  <li>Payroll and other HR concerns.</li>
+                                </ul>
+                            </div>                                             
                           </div>
-
-                      </div>
-                        <div class="col-sm-1">
-                        </div>                  
-                        <div class="col-sm-1">
+                      </div>                
+                      <div class="col-sm-2">
                         <input type="hidden" class="form-control" id="processType" name="processType" style="text-transform: uppercase;" required="true">
-                          <input type="submit" class="btn btn-info pull-right" id="btnSubmit" name="btnSubmit">
-                        </div>
+                        <input type="submit" class="btn btn-info pull-right btn-block" id="btnSubmit" name="btnSubmit">
+                      </div>
                   </div>
               </form>
           </div>

@@ -428,6 +428,9 @@ $( document ).ready(function() {
         if((mobile_no.length != 11) || ((mobile_no.slice(0, 2)) !== "09")){
           $('#alertMessage').text('The mobile number should adhere to the format starting with "09" and must consist of precisely 11 digits.');
           $('#modalAlert').modal('show');
+        }else if(!$("#dataConsent").is(":checked")){
+          $('#alertMessage').text('You need to agree to our data privacy notice to continue.');
+          $('#modalAlert').modal('show');
         }else{
           var formData = new FormData(this);
           $.ajax({
@@ -450,4 +453,5 @@ $( document ).ready(function() {
             contentType: false
           }); 
         }
+
       });
