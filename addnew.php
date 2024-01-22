@@ -54,11 +54,11 @@ if(empty($_POST['g-recaptcha-response']))
                     $InsertQuery = $dbConn->insert('userprofile',$user);
                     if($InsertQuery){
                         $dataReturn['status'] = "success";
-                        $dataReturn['msg'] = "Successfully Register";
+                        $dataReturn['msg'] = "Congratulations! You have successfully registered.";
                         echo json_encode($dataReturn);
                     }else {
                         $dataReturn['status'] = "failed";
-                        $dataReturn['msg'] = "An error was encountered while saving data. Please try again later.";
+                        $dataReturn['msg'] = "Oops! Something went wrong. Please try again later.";
                         echo json_encode($dataReturn);
                     }
                 }else if($process = 'Update'){                  
@@ -92,12 +92,12 @@ if(empty($_POST['g-recaptcha-response']))
                     $UpdateQuery = $dbConn->update('userprofile', 'empno', $id, $userUpdate);
                     if($UpdateQuery){
                         $dataReturn['status'] = "success";
-                        $dataReturn['msg'] = "Info Successfully Updated";
+                        $dataReturn['msg'] = "Your information has been updated successfully. Thanks for keeping your details current!";
                         echo json_encode($dataReturn);
                     }else {
 
                         $dataReturn['status'] = "failed";
-                        $dataReturn['msg'] = "An error was encountered while saving data. Please try again later.";
+                        $dataReturn['msg'] = "Oops! Something went wrong. Please try again later.";
                         echo json_encode($dataReturn);
                     }
                 }

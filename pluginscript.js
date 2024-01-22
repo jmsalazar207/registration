@@ -289,6 +289,7 @@ $( document ).ready(function() {
           contentType: false
         }); 
       });
+
       //Here
       $("#contentcheck").on("submit",function(event){
         event.preventDefault();
@@ -324,6 +325,7 @@ $( document ).ready(function() {
         $('#btnSubmit').val('Register');
         $('#processType').val('Register');
         $('#RegisterContent').show();
+        $('#SearchContent').hide();
         $("#EmployeeNumber").val(empno);
       };
 
@@ -416,6 +418,7 @@ $( document ).ready(function() {
         $('#btnSubmit').val('Update');
         $('#processType').val('Update');
         $('#RegisterContent').show();
+        $('#SearchContent').hide();
       };
 
 
@@ -442,8 +445,8 @@ $( document ).ready(function() {
               const msg = data.msg;
               const stat = data.status;
               if(stat == "success"){
-                $('#alertMessage').text(msg);
-                $('#modalAlert').modal('show');
+                $('#alertMessageSuccess').text(msg);
+                $('#modalAlertSuccess').modal('show');
               }else{
                 $('#alertMessage').text(msg);
                 $('#modalAlert').modal('show'); 
