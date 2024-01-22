@@ -168,10 +168,10 @@ $( document ).ready(function() {
         var confirmPassword = $("#ConfirmPassword").val();
         if (DesiredPassword != confirmPassword){
             $("#checkmessage").html("Passwords does not match!").css('color', 'red');
-            $("#btn_sign_up").attr('disabled', true);
+            $("#btnSubmit").attr('disabled', true);
         }else{
             $("#checkmessage").html("Passwords match.").css('color', 'green');
-            $("#btn_sign_up").attr('disabled', false);
+            $("#btnSubmit").attr('disabled', false);
         }
         if(DesiredPassword=='' || DesiredPassword == '') $("#checkmessage").html("");
     }
