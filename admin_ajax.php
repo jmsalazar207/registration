@@ -67,8 +67,8 @@ if($empRecords){
    $data[] = array(
       "Action" => $action,
       "empno" => $empno,
-      "fname" => $row['fname'],
       "sname" => $row['sname'],
+      "fname" => $row['fname'],
       "mname" => $row['mname'],
       "position" => $row['position_name'],
       "divison" => $row['division_name'],
