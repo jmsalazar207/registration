@@ -56,7 +56,7 @@ include 'modal/registermodal.php';
 <?php include 'includes/header.php';?>
   <!-- Full Width Column -->
   <div class="content-wrapper">
-    <div class="container">
+    <div class="container" style="width: 50%;">
       <!-- Main content -->
       <section class="content">
 <!--CODE OF REGISTRATION HERE-->
@@ -87,22 +87,63 @@ include 'modal/registermodal.php';
               </div>
             </form>
           </div>
-          <div class="box box-info" id="RegisterContent" hidden>
-            <div class="box-header with-border">
-              <h3 class="box-title">Employee Information</h3>
-            </div>
+          <div class="box box-info" id="RegisterContent">
               <form class="form-horizontal" method="POST" id="contentform">
                 <div class="box-body">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                      <input type="hidden" name="token" value="<?=$_SESSION["token"]?>">
-                        <label for="LastName" class="col-sm-3 control-label">LAST NAME<span class="requiredField">*</span></label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="AddLastName" name="AddLastName" placeholder="LAST NAME" value="" style="text-transform: uppercase;" required="true" tabindex="1">
+                <div class="box-header">
+                    <h3 class="box-title">Login Credentials</h3>
+                </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-group col-sm-12">
+                              <label class="col-sm-12"></label>
+                                <input type="text" class="form-control col-sm-10" id="EmployeeNumber" name="EmployeeNumber" placeholder="Enter Employee Number" readonly>
+                              <label for="EmployeeNumber" class="col-sm-6" style="font-size: 15px;">Employee Number<span class="requiredField">*</span></label>
+                            </div>                        
+                            <div class="input-group has-feedback col-sm-12">
+                                <input type="password" class="form-control col-sm-10" id="DesiredPassword" name="DesiredPassword" placeholder="Desired Password" required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
+                                <span class="input-group-addon"><i class="fa fa-eye-slash toggle-DesiredPassword " toggle = "#DesiredPassword"  id="toggleDesiredPassword"></i></span>
+                            </div>
+                            <label for="DesiredPassword" class="col-sm-6" style="font-size: 15px;">Desired Password<span class="requiredField">*</span></label>
+                            <div class="input-group has-feedback col-sm-12">
+                                <input type="password" class="form-control col-sm-10" id="ConfirmPassword" name = "ConfirmPassword" placeholder="Confirm Password" required="true">
+                                <span class="input-group-addon"><i class="fa fa-eye-slash toggle-ConfirmPassword " toggle = "#ConfirmPassword"  id="toggleConfirmPassword"></i></span>
+                            </div>
+                            <small id='checkmessage'></small>
+                            <label for="ConfirmPassword" class="col-sm-12" style="font-size: 15px;">Confirm Password<span class="requiredField">*</span></label>                            
                         </div>
-                      </div>                      
+                        <div class="col-md-12">
+                              <div class="col-sm-12" id="message">
+                                <h4>Password must contain the following:</h4>
+                                <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+                                <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+                                <p id="number" class="invalid">A <b>number</b></p>
+                                <p id="special_char" class="invalid">A <b>special character</b></p>
+                                <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+                              </div>                                 
+                        </div> 
+                  </div>                  
+                  <div class="row">
+                  <div class="box-header">
+                    <h3 class="box-title">Employee Information</h3>
+                </div>
+                <!-- Here -->
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <input type="hidden" name="token" value="<?=$_SESSION["token"]?>">
+                        <label for="AddLastName" class="col-sm-12" style="font-size: 15px;">Last Name<span class="requiredField">*</span></label>
+                          <div class="col-sm-12">
+                            <input type="text" class="form-control" id="AddLastName" name="AddLastName" placeholder="LAST NAME" value="" style="text-transform: uppercase;" required="true" tabindex="1">
+                          </div>
+                      </div> 
+                      <div class="form-group">
+                      <label for="AddFirstName" class="col-sm-12" style="font-size: 15px;">First Name<span class="requiredField">*</span></label>
+                        <div class="col-sm-12">
+                          <input type="text" class="form-control" id="AddFirstName" name="AddFirstName" placeholder="FIRST NAME" value="" style="text-transform: uppercase;" required="true" tabindex="2">
+                        </div>
+                      </div>                                            
                     </div>
+                    <!-- End -->
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="LastName" class="col-sm-3 control-label">Street<span class="requiredField">*</span></label>
