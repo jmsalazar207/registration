@@ -1,0 +1,180 @@
+
+  /*EXIST MODAL*/
+.modal-headerYellow {
+    background-color: #F7D060;
+    padding:9px 15px;
+    color:#FFF;
+    font-family:Verdana, sans-serif;
+    border-bottom:1px solid #eee;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+
+ }
+ .modal-contentYellow {
+  position: relative;
+  background-color: #fff;
+  -webkit-background-clip: padding-box;
+          background-clip: padding-box;
+  border: 1px solid #999;
+  border: 1px solid rgba(0, 0, 0, .2);
+  border-radius: 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  outline: 0;
+  -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+          box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+}
+.modal-bodyYellow {
+  position: relative;
+  padding: 15px;
+  font-family:Verdana, sans-serif;
+}
+.modal-footerYellow {
+  padding: 8px 15px;
+  text-align: right;
+  border-top: 1px solid #e5e5e5;
+}
+.btn-modalYellow {
+  color: #fff;
+  background-color: #F7D060;
+  border-color: #F7D060;
+  font-family:Comic Sans, sans-serif;
+}
+  /* END EXIST MODAL*/
+
+    /*SUCCESS MODAL*/
+.modal-headersuccess {
+    background-color: #59CE8F;
+    padding:9px 15px;
+    color:#FFF;
+    font-family:Verdana, sans-serif;
+    border-bottom:1px solid #eee;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+
+ }
+ .modal-contentsuccess {
+  position: relative;
+  background-color: #fff;
+  -webkit-background-clip: padding-box;
+          background-clip: padding-box;
+  border: 1px solid #999;
+  border: 1px solid rgba(0, 0, 0, .2);
+  border-radius: 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  outline: 0;
+  -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+          box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+}
+.modal-bodysuccess {
+  position: relative;
+  padding: 15px;
+  font-family:Verdana, sans-serif;
+}
+.modal-footersuccess {
+  padding: 8px 15px;
+  text-align: right;
+  border-top: 1px solid #e5e5e5;
+}
+.btn-modalsuccess {
+  color: #fff;
+  background-color: #59CE8F;
+  border-color: #59CE8F;
+  font-family:Comic Sans, sans-serif;
+}
+    /*END SUCCESS MODAL*/
+
+
+    /*ERROR MODAL*/
+.modal-headererror {
+    background-color: #DC3535;
+    padding:9px 15px;
+    color:#FFF;
+    font-family:Verdana, sans-serif;
+    border-bottom:1px solid #eee;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+
+ }
+ .modal-contenterror {
+  position: relative;
+  background-color: #fff;
+  -webkit-background-clip: padding-box;
+          background-clip: padding-box;
+  border: 1px solid #999;
+  border: 1px solid rgba(0, 0, 0, .2);
+  border-radius: 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  outline: 0;
+  -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+          box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+}
+.modal-bodyerror {
+  position: relative;
+  padding: 15px;
+  font-family:Verdana, sans-serif;
+}
+.modal-footererror {
+  padding: 8px 15px;
+  text-align: right;
+  border-top: 1px solid #e5e5e5;
+}
+.btn-modalerror {
+  color: #fff;
+  background-color: #DC3535;
+  border-color: #DC3535;
+  font-family:Comic Sans, sans-serif;
+}
+    /*END ERROR MODAL*/    
+.s_icon{
+  font-size: 30px;
+}
+/* The message box is shown when the user clicks on the password field */
+#message {
+  display:none;
+  background: #f1f1f1;
+  color: #000;
+  position: relative;
+  padding: -20px;
+  margin-top: 5px;
+}
+
+#message p {
+  padding: 0px 20px;
+  font-size: 12px;
+}
+
+/* Add a green text color and a checkmark when the requirements are right */
+.valid {
+  color: green;
+}
+
+.valid:before {
+  position: relative;
+  left: -10px;
+  content: "✔";
+}
+
+/* Add a red text color and an "x" when the requirements are wrong */
+.invalid {
+  color: red;
+}
+
+.invalid:before {
+  position: relative;
+  left: -10px;
+  content: "✖";
+}
+  .g-recaptcha {
+      transform:scale(0.77);
+      -webkit-transform:scale(0.77);
+      transform-origin:0 0;
+      -webkit-transform-origin:0 0;
+      
+    }
+  form i {
+    margin-left: -0px;
+    cursor: pointer;
+}    
