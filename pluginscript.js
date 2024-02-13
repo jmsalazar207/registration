@@ -161,7 +161,8 @@ function NumberOnly(evt) {
 });
 
 $( document ).ready(function() {
-    $("#ConfirmPassword").keyup(checkPasswordMatch);
+   
+    $("#ConfirmPassword").onkeyup(checkPasswordMatch);
   });
   function checkPasswordMatch() {
         var DesiredPassword = $("#DesiredPassword").val();
@@ -267,27 +268,34 @@ $( document ).ready(function() {
       var empno = '';
       $("#contentsearch").on("submit",function(event){
         event.preventDefault();
-        var formData = new FormData(this);
-        $.ajax({
-          url:"search.php",
-          method:"POST",
-          dataType: "json",
-          data:formData,
-          success:function(data){
-            empno = data.empno;
-            if(data.count == 0){
-              $('#WarningMessage').text('New employee number detected! Would you like to register?');
-              $('#RegisterConfirm').modal('show');
-            }else{
-              //Here modal for confirming password
-              $("#SearchEmpno").val(empno);
-              $('#UpdateMessage').text('This Employee Number is already registered. Please type in your password to continue. Thank you.');
-              $('#UpdateConfirm').modal('show'); 
-            }
-          },
-          processData: false,
-          contentType: false
-        }); 
+        const IDNumber = $('#txtSearch').val();
+        if ((IDNumber.length>5) || (IDNumber.length<4)){
+          $('#alertMessage').text('Invalid ID Number');
+          $('#modalAlert').modal('show');
+        }else{
+          var formData = new FormData(this);
+          $.ajax({
+            url:"search.php",
+            method:"POST",
+            dataType: "json",
+            data:formData,
+            success:function(data){
+              empno = data.empno;
+              if(data.count == 0){
+                $('#WarningMessage').text('New employee number detected! Would you like to register?');
+                $('#RegisterConfirm').modal('show');
+              }else{
+                //Here modal for confirming password
+                $("#SearchEmpno").val(empno);
+                $('#UpdateMessage').text('This Employee Number is already registered. Please type in your password to continue. Thank you.');
+                $('#UpdateConfirm').modal('show'); 
+              }
+            },
+            processData: false,
+            contentType: false
+          }); 
+        }
+       
       });
 
       //Here

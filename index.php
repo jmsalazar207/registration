@@ -56,7 +56,7 @@ include 'modal/registermodal.php';
 <?php include 'includes/header.php';?>
   <!-- Full Width Column -->
   <div class="content-wrapper">
-    <div class="container" style="width: 50%;">
+    <div class="container">
       <!-- Main content -->
       <section class="content">
 <!--CODE OF REGISTRATION HERE-->
@@ -69,13 +69,19 @@ include 'modal/registermodal.php';
             <form class="form-horizontal" method="POST" id="contentsearch">
               <div class="box-body">
                 <div class="row">
-                  <div class="col-md-9">
-                    <div class="form-group">
-                      <label for="Search" class="col-sm-3 control-label">Employee Number</label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" name="txtSearch" id="txtSearch" placeholder="Employee Number" value="" style="text-transform: uppercase;" required="true" tabindex="1">
-                        </div>
+                  <div class="col-md-2">
+                  <label for="Search" class="col-sm-12">Employee Number</label>
+                  </div>
+                  <div class="col-md-7">
+                    <div class="input-group col-sm-12">
+                      <div class="input-group-addon">
+                        <i>
+                          <label style="font-size: 15px; margin:auto" for="03-">03-</label>
+                        </i>
+                      </div>
+                      <input type="text" class="form-control" name="txtSearch" id="txtSearch" placeholder="Employee Number" value="" style="text-transform: uppercase;" required="true" onkeypress="return NumberOnly(event)" tabindex="1">
                     </div>
+                    
                   </div>
                   <div class="col-md-3">
                   <button type="submit" class="form-control btn btn-info" id="btn_search" name="btn_search">
@@ -88,267 +94,33 @@ include 'modal/registermodal.php';
             </form>
           </div>
           <div class="box box-info" id="RegisterContent">
-              <form class="form-horizontal" method="POST" id="contentform">
+          <form class="form-horizontal" method="POST" id="contentform">
                 <div class="box-body">
-                <div class="box-header">
-                    <h3 class="box-title">Login Credentials</h3>
-                </div>
-                      <div class="row">
-                        <div class="col-md-12">
-                            <div class="input-group col-sm-12">
-                              <label class="col-sm-12"></label>
-                                <input type="text" class="form-control col-sm-10" id="EmployeeNumber" name="EmployeeNumber" placeholder="Enter Employee Number" readonly>
-                              <label for="EmployeeNumber" class="col-sm-6" style="font-size: 15px;">Employee Number<span class="requiredField">*</span></label>
-                            </div>                        
-                            <div class="input-group has-feedback col-sm-12">
-                                <input type="password" class="form-control col-sm-10" id="DesiredPassword" name="DesiredPassword" placeholder="Desired Password" required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
-                                <span class="input-group-addon"><i class="fa fa-eye-slash toggle-DesiredPassword " toggle = "#DesiredPassword"  id="toggleDesiredPassword"></i></span>
-                            </div>
-                            <label for="DesiredPassword" class="col-sm-6" style="font-size: 15px;">Desired Password<span class="requiredField">*</span></label>
-                            <div class="input-group has-feedback col-sm-12">
-                                <input type="password" class="form-control col-sm-10" id="ConfirmPassword" name = "ConfirmPassword" placeholder="Confirm Password" required="true">
-                                <span class="input-group-addon"><i class="fa fa-eye-slash toggle-ConfirmPassword " toggle = "#ConfirmPassword"  id="toggleConfirmPassword"></i></span>
-                            </div>
-                            <small id='checkmessage'></small>
-                            <label for="ConfirmPassword" class="col-sm-12" style="font-size: 15px;">Confirm Password<span class="requiredField">*</span></label>                            
-                        </div>
-                        <div class="col-md-12">
-                              <div class="col-sm-12" id="message">
-                                <h4>Password must contain the following:</h4>
-                                <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
-                                <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
-                                <p id="number" class="invalid">A <b>number</b></p>
-                                <p id="special_char" class="invalid">A <b>special character</b></p>
-                                <p id="length" class="invalid">Minimum <b>8 characters</b></p>
-                              </div>                                 
-                        </div> 
-                  </div>                  
-                  <div class="row">
                   <div class="box-header">
-                    <h3 class="box-title">Employee Information</h3>
-                </div>
-                <!-- Here -->
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <input type="hidden" name="token" value="<?=$_SESSION["token"]?>">
-                        <label for="AddLastName" class="col-sm-12" style="font-size: 15px;">Last Name<span class="requiredField">*</span></label>
-                          <div class="col-sm-12">
-                            <input type="text" class="form-control" id="AddLastName" name="AddLastName" placeholder="LAST NAME" value="" style="text-transform: uppercase;" required="true" tabindex="1">
-                          </div>
-                      </div> 
-                      <div class="form-group">
-                      <label for="AddFirstName" class="col-sm-12" style="font-size: 15px;">First Name<span class="requiredField">*</span></label>
-                        <div class="col-sm-12">
-                          <input type="text" class="form-control" id="AddFirstName" name="AddFirstName" placeholder="FIRST NAME" value="" style="text-transform: uppercase;" required="true" tabindex="2">
-                        </div>
-                      </div>                                            
-                    </div>
-                    <!-- End -->
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">Street<span class="requiredField">*</span></label>
-                        <div class="col-sm-3">
-                          <input type="text" class="form-control" id="AddStreet" name="AddStreet" placeholder="Street" value="" style="text-transform: uppercase;" required="true" tabindex="9">
-                        </div>
-                        <label for="LastName" class="col-sm-3 control-label">House Number<span class="requiredField">*</span></label>
-                        <div class="col-sm-3">
-                          <input type="text" class="form-control" id="AddHouseNumber" name="AddHouseNumber" placeholder="House #" value="" style="text-transform: uppercase;" required="true" tabindex="10">
-                        </div>                        
-                      </div>                      
-                    </div>                    
+                      <h3 class="box-title">Login Credentials</h3>
                   </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">FIRST NAME<span class="requiredField">*</span></label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="AddFirstName" name="AddFirstName" placeholder="FIRST NAME" value="" style="text-transform: uppercase;" required="true" tabindex="2">
-                        </div>
-                      </div>                      
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">Region<span class="requiredField">*</span></label>
-                        <div class="col-sm-9">
-                        <select class="form-control select2" style="width: 100%;"  id="AddRegion" name="AddRegion" required="true" tabindex="11">
-                          <?php
-                           echo fill_region($dbConn, null);
-                           ?>
-                        </select>
-                        </div>
-                      </div>                      
-                    </div>                    
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">MIDDLE NAME</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="AddMiddleName" name="AddMiddleName" placeholder="MIDDLE NAME" value="" style="text-transform: uppercase;" required="true" tabindex="3">
-                        </div>
-                      </div>                      
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">Province<span class="requiredField">*</span></label>
-                        <div class="col-sm-9">
-                          <select class="form-control select2" style="width: 100%;"  id="AddProvince" name="AddProvince" required="true" tabindex="12">
-                            <option>SELECT REGION FIRST</option>
-                          </select>
-                        </div>
-                      </div>                      
-                    </div>                    
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">EXT. NAME</label>
-                        <div class="col-sm-9">
-                                  <select class="form-control select2"style="width: 100%;"  id="AddextName" name="AddextName" tabindex="4">
-                                    <option value="">--</option>
-                                    <option value="I">I</option>
-                                    <option value="II">II</option>
-                                    <option value="III">III</option>
-                                    <option value="IV">IV</option>
-                                    <option value="V">V</option>
-                                    <option value="VI">VI</option>
-                                    <option value="VII">VII</option>
-                                    <option value="VIII">VIII</option>
-                                    <option value="IX">IX</option>
-                                    <option value="X">X</option>
-                                    <option value="Jr.">Jr</option>
-                                    <option value="Sr.">Sr</option>
-                                  </select>
-                        </div>
-                      </div>                      
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">Municipality<span class="requiredField">*</span></label>
-                        <div class="col-sm-9">
-                          <select class="form-control select2" style="width: 100%;" id="AddCity" name="AddCity" required="true" tabindex="13">
-                              <option>SELECT PROVINCE FIRST</option>
-                          </select>
-                        </div>
-                      </div>                      
-                    </div>                    
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">MOBILE NO.<span class="requiredField">*</span></label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="AddMobileNumber" name="AddMobileNumber" placeholder="MOBILE NUMBER" value="" style="text-transform: uppercase;" required="true" tabindex="5" onkeypress="return NumberOnly(event)">
-                        </div>
-                      </div>                      
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">Barangay<span class="requiredField">*</span></label>
-                        <div class="col-sm-9">
-                          <select class="form-control select2"style="width: 100%;"  id="AddBarangay" name="AddBarangay" required="true" tabindex="14">
-                              <option>SELECT MUNICIPALITY FIRST</option>
-                          </select>
-                        </div>
-                      </div>                      
-                    </div>                    
-                  </div>   
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">Sex<span class="requiredField">*</span></label>
-                        <div class="col-sm-9">
-                          <select class="form-control select2" style="width: 100%;" id="AddSex" name="AddSex" tabindex="6">
-                                    <option value="">--</option>
-                                    <option value="0">MALE</option>
-                                    <option value="1">FEMALE</option>
-                          </select>
-                        </div>
-                      </div>                      
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">Position<span class="requiredField">*</span></label>
-                        <div class="col-sm-9">
-                          <select class="form-control select2"style="width: 100%;"  id="AddPosition" name="AddPosition" required="true" tabindex="15">
-                            <?php
-                           echo fill_position($dbConn, null);
-                           ?>
-                          </select>
-                        </div>
-                      </div>                      
-                    </div>                    
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">Birthdate<span class="requiredField">*</span></label>
-                        <div class="col-sm-9">
-                              <div class="input-group date col-sm-12">
-                                <div class="input-group-addon">
-                                  <i class="fa fa-calendar"></i>
-                                </div>
-                                <input type="date" class="form-control pull-right" name="AddBirthdate" id="AddBirthdate" required="true" tabindex="7">
+                      <div class="row">
+                        <div class="card col-md-12">
+                            <label for="EmployeeNumber" class="col-sm-6" style="font-size: 15px;">Employee Number<span class="requiredField">*</span></label>
+                              <div class="input-group col-sm-12">
+                                  <input type="text" class="form-control col-sm-10" id="EmployeeNumber" name="EmployeeNumber" placeholder="Enter Employee Number" readonly>
+                              </div>                        
+                            <label for="DesiredPassword" class="col-sm-6" style="font-size: 15px;">Desired Password<span class="requiredField">*</span></label>
+                              <div class="input-group has-feedback col-sm-12">
+                                  <input type="password" class="form-control col-sm-10" id="DesiredPassword" name="DesiredPassword" placeholder="Desired Password" required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
+                                  <span class="input-group-addon">
+                                    <i class="fa fa-eye-slash toggle-DesiredPassword " toggle = "#DesiredPassword"  id="toggleDesiredPassword">
+                                    </i>
+                                  </span>
                               </div>
-                        </div>
-                      </div>                      
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">Division<span class="requiredField">*</span></label>
-                        <div class="col-sm-9">
-                          <select class="form-control select2"style="width: 100%;"  id="AddDivision" name="AddDivision" required="true" tabindex="16">
-                            <?php
-                           echo fill_division($dbConn, null);
-                           ?>
-                          </select>
-                        </div>
-                      </div>                      
-                    </div>                    
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">Email Address<span class="requiredField">*</span></label>
-                          <div class="col-sm-9">
-                            <input type="email" class="form-control" id="AddEmail" name="AddEmail" placeholder="Email Address" tabindex="8">
-                          </div> 
-                      </div>                      
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="LastName" class="col-sm-3 control-label">Unit<span class="requiredField">*</span></label>
-                        <div class="col-sm-9">
-                          <select class="form-control select2"style="width: 100%;"  id="AddUnit" name="AddUnit" required="true" tabindex="17">
-                            <option>SELECT DIVISION FIRST</option>
-                          </select>
-                        </div>
-                      </div>                      
-                    </div>                    
-                  </div>
-                  <div class="box-header">
-                    <h3 class="box-title">Login Credentials</h3>
-                  </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                            <div class="input-group col-sm-12">
-                              <label class="col-sm-12"></label>
-                                <input type="text" class="form-control col-sm-10" id="EmployeeNumber" name="EmployeeNumber" placeholder="Enter Employee Number" readonly>
-                              <label for="EmployeeNumber" class="col-sm-6" style="font-size: 15px;">Employee Number<span class="requiredField">*</span></label>
-                            </div>                        
-                            <div class="input-group has-feedback col-sm-12">
-                                <input type="password" class="form-control col-sm-10" id="DesiredPassword" name="DesiredPassword" placeholder="Desired Password" required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
-                                <span class="input-group-addon"><i class="fa fa-eye-slash toggle-DesiredPassword " toggle = "#DesiredPassword"  id="toggleDesiredPassword"></i></span>
-                            </div>
-                            <label for="DesiredPassword" class="col-sm-6" style="font-size: 15px;">Desired Password<span class="requiredField">*</span></label>
-                            <div class="input-group has-feedback col-sm-12">
-                                <input type="password" class="form-control col-sm-10" id="ConfirmPassword" name = "ConfirmPassword" placeholder="Confirm Password" required="true">
-                                <span class="input-group-addon"><i class="fa fa-eye-slash toggle-ConfirmPassword " toggle = "#ConfirmPassword"  id="toggleConfirmPassword"></i></span>
-                            </div>
+                              <label for="ConfirmPassword" class="col-sm-12" style="font-size: 15px;">Confirm Password<span class="requiredField">*</span></label>                            
+                                <div class="input-group has-feedback col-sm-12">
+                                    <input type="password" class="form-control col-sm-10" id="ConfirmPassword" name = "ConfirmPassword" placeholder="Confirm Password" required="true">
+                                    <span class="input-group-addon"><i class="fa fa-eye-slash toggle-ConfirmPassword " toggle = "#ConfirmPassword"  id="toggleConfirmPassword"></i></span>
+                                </div>
                             <small id='checkmessage'></small>
-                            <label for="ConfirmPassword" class="col-sm-12" style="font-size: 15px;">Confirm Password<span class="requiredField">*</span></label>                            
                         </div>
-                        <div class="col-md-6">
+                        <div class="card col-md-12">
                               <div class="col-sm-12" id="message">
                                 <h4>Password must contain the following:</h4>
                                 <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
@@ -358,24 +130,193 @@ include 'modal/registermodal.php';
                                 <p id="length" class="invalid">Minimum <b>8 characters</b></p>
                               </div>                                 
                         </div> 
-                  </div>   
-                  
-                  <div class="col-md-12" style="background-color: #eee; padding:3px; border-radius:8px">
-                    <div class="form-check checkbox-lg" style="margin:10px;font-size: 15px;">
-                      <label for="dataConsent"><strong>Data Privacy Consent and Acknowledgment: </strong></label> 
-                      <h5 style="text-align:justify; font-weight: 900;font-size: 15px">
-                      <input type="checkbox" name="dataConsent" id="dataConsent" class="form-check-input">
-                      I, hereby acknowledge and consent to the collection, processing, and storage of my personal information and
-                      sensitive personal information by the Department of Social Welfare and Development (DSWD) FO3, in accordance
-                      with the RA 10173 or the Data Privacy Act of 2012 and existing DSWD Data Privacy Policies. I understand that
-                      the information provided on this platform may include, but is not limited to, personal details, contact information,
-                      birthdate, sex, and relevant data necessary for the processing of my records in the DSWD for the purposes of
-                      financial claims and other personnel/administrative transactions.</h5>
-                      <h5 style="text-align:justify; font-weight: 900;font-size: 15px">By submitting on this platform, I affirm that I have read and understood the terms outlined herein and voluntarily
-                          agree to the collection and processing of my personal information.</h5>
-                    </div>
-                  </div>
+                      </div>        
+                      <div class="row"> <!--row1-->
+                        <div class="card col-md-6"> <!--Card1-->
+                            <div class="form-group">
+                                <input type="hidden" name="token" value="<?=$_SESSION["token"]?>"> 
+                                <label for="AddFirstName" class="col-sm-12" style="font-size: 15px;">First Name<span class="requiredField">*</span></label>
+                                  <div class="col-sm-12">
+                                    <input type="text" class="form-control" id="AddFirstName" name="AddFirstName" placeholder="FIRST NAME" value="" style="text-transform: uppercase;" required="true" tabindex="2">
+                                  </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="AddMiddleName" class="col-sm-12" style="font-size: 15px;">Middle Name<span class="requiredField">*</span></label>
+                                <div class="col-sm-12">
+                                  <input type="text" class="form-control" id="AddMiddleName" name="AddMiddleName" placeholder="MIDDLE NAME" value="" style="text-transform: uppercase;" required="true" tabindex="3">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="AddLastName" class="col-sm-12" style="font-size: 15px;">Last Name<span class="requiredField">*</span></label>
+                                <div class="col-sm-12">
+                                  <input type="text" class="form-control" id="AddLastName" name="AddLastName" placeholder="LAST NAME" value="" style="text-transform: uppercase;" required="true" tabindex="1">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="AddextName" class="col-md-12" style="font-size: 15px;">Ext. Name
+                                <span class="requiredField">
+                                  *
+                                </span>
+                              </label>
+                              <div class="col-sm-12">
+                                <select class="form-control select2"style="width: 100%;"  id="AddextName" name="AddextName" tabindex="4">
+                                      <option value="">--</option>
+                                      <option value="I">I</option>
+                                      <option value="II">II</option>
+                                      <option value="III">III</option>
+                                      <option value="IV">IV</option>
+                                      <option value="V">V</option>
+                                      <option value="VI">VI</option>
+                                      <option value="VII">VII</option>
+                                      <option value="VIII">VIII</option>
+                                      <option value="IX">IX</option>
+                                      <option value="X">X</option>
+                                      <option value="Jr.">Jr</option>
+                                      <option value="Sr.">Sr</option>
+                                  </select>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="AddSex" class="col-sm-12" style="font-size: 15px;">Sex<span class="requiredField">*</span></label>
+                                <div class="col-sm-12">
+                                  <select class="form-control select2" style="width: 100%;" id="AddSex" name="AddSex" tabindex="6">
+                                        <option value="">--</option>
+                                        <option value="0">MALE</option>
+                                        <option value="1">FEMALE</option>
+                                  </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="AddBirthdate" class="col-sm-12" style="font-size: 15px;">Birthday<span class="requiredField">*</span></label>
+                                <div class="col-sm-12">
+                                  <div class="input-group date col-sm-12">
+                                    <div class="input-group-addon">
+                                      <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="date" class="form-control pull-right" name="AddBirthdate" id="AddBirthdate" required="true" tabindex="7">
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="AddEmail" class="col-sm-12" style="font-size: 15px;">Email Address<span class="requiredField">*</span></label>
+                                <div class="col-sm-12">
+                                  <input type="email" class="form-control" id="AddEmail" name="AddEmail" placeholder="Email Address" tabindex="8">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="AddMobileNumber" class="col-sm-12" style="font-size: 15px;">Mobile Number<span class="requiredField">*</span></label>
+                                <div class="col-sm-12">
+                                  <input type="text" class="form-control" id="AddMobileNumber" name="AddMobileNumber" placeholder="MOBILE NUMBER" value="" style="text-transform: uppercase;" required="true" tabindex="5" onkeypress="return NumberOnly(event)">
+                                </div>
+                            </div>                                
+                        </div> <!--End Card1-->
+                          <div class="card col-md-6"> <!--Card2-->
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-6">
+                                    <label for="AddHouseNumber" class="col-sm-12" style="font-size: 15px;">House Number<span class="requiredField"></span></label>
+                                      <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="AddHouseNumber" name="AddHouseNumber" placeholder="House #" value="" style="text-transform: uppercase;" required="true" tabindex="10">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <label for="AddStreet" class="col-sm-12" style="font-size: 15px;">Street<span class="requiredField"></span></label>
+                                      <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="AddStreet" name="AddStreet" placeholder="Street" value="" style="text-transform: uppercase;" tabindex="9">
+                                      </div>
+                                  </div>
+                              </div>
 
+                            </div>
+                            <div class="form-group">
+                                <label for="AddRegion" class="col-sm-12" style="font-size: 15px;">Region<span class="requiredField">*</span></label>
+                                  <div class="col-sm-12">
+                                    <select class="form-control select2" style="width: 100%;"  id="AddRegion" name="AddRegion" required="true" tabindex="11">
+                                      <?php
+                                      echo fill_region($dbConn, null);
+                                      ?>
+                                    </select>
+                                  </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="AddProvince" class="col-sm-12" style="font-size: 15px;">Province<span class="requiredField">*</span></label>
+                                  <div class="col-sm-12">
+                                    <select class="form-control select2" style="width: 100%;"  id="AddProvince" name="AddProvince" required="true" tabindex="12">
+                                      <option>SELECT REGION FIRST</option>
+                                    </select>
+                                  </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="AddCity" class="col-sm-12" style="font-size: 15px;">City<span class="requiredField">*</span></label>
+                                  <div class="col-sm-12">
+                                    <select class="form-control select2" style="width: 100%;" id="AddCity" name="AddCity" required="true" tabindex="13">
+                                      <option>SELECT PROVINCE FIRST</option>
+                                    </select>
+                                  </div>
+                            </div> 
+                            <div class="form-group">
+                                <label for="AddBarangay" class="col-sm-12" style="font-size: 15px;">Barangay<span class="requiredField">*</span></label>
+                                  <div class="col-sm-12">
+                                    <select class="form-control select2"style="width: 100%;"  id="AddBarangay" name="AddBarangay" required="true" tabindex="14">
+                                      <option>SELECT MUNICIPALITY FIRST</option>
+                                    </select> 
+                                  </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="AddPosition" class="col-sm-12" style="font-size: 15px;">Position<span class="requiredField">*</span></label>
+                                  <div class="col-sm-12">
+                                    <select class="form-control select2"style="width: 100%;"  id="AddPosition" name="AddPosition" required="true" tabindex="15">
+                                      <?php
+                                        echo fill_position($dbConn, null);
+                                      ?>
+                                    </select>
+                                  </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <label for="AddDivision" class="col-sm-12" style="font-size: 15px;">Division<span class="requiredField">*</span></label>
+                                    <div class="col-sm-12">
+                                      <select class="form-control select2"style="width: 100%;"  id="AddDivision" name="AddDivision" required="true" tabindex="16">
+                                        <?php
+                                          echo fill_division($dbConn, null);
+                                        ?>
+                                      </select>  
+                                    </div>                                  
+                                </div>
+                                <div class="col-md-6">
+                                  <label for="AddUnit" class="col-sm-12" style="font-size: 15px;">Unit/Section<span class="requiredField">*</span></label>
+                                    <div class="col-sm-12">
+                                      <select class="form-control select2"style="width: 100%;"  id="AddUnit" name="AddUnit" required="true" tabindex="17">
+                                        <option>SELECT DIVISION FIRST</option>
+                                      </select>  
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="AddFile" class="col-sm-12" style="font-size: 15px;">Upload ID<span class="requiredField">*</span></label>
+                                  <div class="col-sm-12">
+                                  <input type="file" class="form-control" id="AddFile" name="AddFile" value="" required="true">
+                                  </div>
+                            </div>  
+                          </div> <!--Card2-->
+                      </div> <!--End Row1--> 
+                      <div class="col-md-12" style="background-color: #eee; padding:3px; border-radius:8px">
+                        <div class="form-check checkbox-lg" style="margin:10px;font-size: 15px;">
+                          <label for="dataConsent"><strong>Data Privacy Consent and Acknowledgment: </strong></label> 
+                          <h5 style="text-align:justify; font-weight: 900;font-size: 15px">
+                          <input type="checkbox" name="dataConsent" id="dataConsent" class="form-check-input">
+                          I, hereby acknowledge and consent to the collection, processing, and storage of my personal information and
+                          sensitive personal information by the Department of Social Welfare and Development (DSWD) FO3, in accordance
+                          with the RA 10173 or the Data Privacy Act of 2012 and existing DSWD Data Privacy Policies. I understand that
+                          the information provided on this platform may include, but is not limited to, personal details, contact information,
+                          birthdate, sex, and relevant data necessary for the processing of my records in the DSWD for the purposes of
+                          financial claims and other personnel/administrative transactions.</h5>
+                          <h5 style="text-align:justify; font-weight: 900;font-size: 15px">By submitting on this platform, I affirm that I have read and understood the terms outlined herein and voluntarily
+                              agree to the collection and processing of my personal information.</h5>
+                        </div>
+                      </div>
                 </div> 
                   <div class="box-footer">
                       <div class="col-sm-10">
@@ -386,7 +327,7 @@ include 'modal/registermodal.php';
                         <input type="submit" class="btn btn-info pull-right btn-block" id="btnSubmit" name="btnSubmit">
                       </div>
                   </div>
-              </form>
+              </form>              
           </div>
     </section> 
   
