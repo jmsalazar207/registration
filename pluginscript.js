@@ -161,8 +161,7 @@ function NumberOnly(evt) {
 });
 
 $( document ).ready(function() {
-   
-    $("#ConfirmPassword").onkeyup(checkPasswordMatch);
+    $("#ConfirmPassword").keyup(checkPasswordMatch);
   });
   function checkPasswordMatch() {
         var DesiredPassword = $("#DesiredPassword").val();
@@ -264,15 +263,16 @@ $( document ).ready(function() {
           input.attr("type", "password");
         }
       });
-
       var empno = '';
       $("#contentsearch").on("submit",function(event){
         event.preventDefault();
         const IDNumber = $('#txtSearch').val();
         if ((IDNumber.length>5) || (IDNumber.length<4)){
-          $('#alertMessage').text('Invalid ID Number');
-          $('#modalAlert').modal('show');
+          $("#CheckIDmessage").html("Invalid Employee number. Please enter a number with a minimum of 4 digits and a maximum of 5 digits.").css('color', 'red');
+          $("#txtSearch").css('border-color', 'red');
         }else{
+          $("#txtSearch").css('border-color', '');
+          $("#CheckIDmessage").html("");
           var formData = new FormData(this);
           $.ajax({
             url:"search.php",
@@ -281,14 +281,30 @@ $( document ).ready(function() {
             data:formData,
             success:function(data){
               empno = data.empno;
+              fname = data.fname;
+              mname = data.mname;
+              sname = data.sname;
+              extname = data.extname;
+              fullname = fname+' '+mname+' '+sname+' '+extname;
               if(data.count == 0){
-                $('#WarningMessage').text('New employee number detected! Would you like to register?');
-                $('#RegisterConfirm').modal('show');
-              }else{
-                //Here modal for confirming password
-                $("#SearchEmpno").val(empno);
-                $('#UpdateMessage').text('This Employee Number is already registered. Please type in your password to continue. Thank you.');
-                $('#UpdateConfirm').modal('show'); 
+                $('#alertMessage').text('Oops! The employee number was not found in our database. Please reach out to the Personnel Section for assistance in verifying the information.');
+                $('#modalAlert').modal('show');
+              }else if(data.count ==1){
+
+                  if(data.registered =="No"){
+                    sessionStorage.setItem("empno",empno);
+                    sessionStorage.setItem("fname",fname);
+                    sessionStorage.setItem("mname",mname);
+                    sessionStorage.setItem("sname",sname);
+                    sessionStorage.setItem("extname",extname);
+                    $('#FullName').text(fullname);
+                    $('#WarningMessage').text('Employee Number found. Ready to proceed with registration?');
+                    $('#RegisterConfirm').modal('show');
+                    
+                  }else{
+                    $('#alertMessage').text('Registered naka siz');
+                    $('#modalAlert').modal('show');
+                  }
               }
             },
             processData: false,
@@ -321,6 +337,12 @@ $( document ).ready(function() {
         }); 
       });
       function RegisterYes(){
+        const EmpNumber = sessionStorage.getItem("empno")
+        const FirstName = sessionStorage.getItem("fname")
+        const MiddleName = sessionStorage.getItem("mname")
+        const LastName = sessionStorage.getItem("sname")
+        const ExtName = sessionStorage.getItem("extname")
+
         $('#RegisterConfirm').modal('hide');
         $('#contentform').trigger("reset");
         $('#AddRegion').val('').trigger('change');
@@ -333,8 +355,20 @@ $( document ).ready(function() {
         $('#btnSubmit').val('Register');
         $('#processType').val('Register');
         $('#RegisterContent').show();
+        $('#ContentTip').show();
+        
+
+        $('#AddFirstName').attr('disabled','disabled')
+        $('#AddLastName').attr('disabled','disabled')
+        $('#AddMiddleName').attr('disabled','disabled')
+        $('#AddextName').attr('disabled','disabled')
+
+        $("#EmployeeNumber").val(EmpNumber);
+        $("#AddFirstName").val(FirstName);
+        $("#AddLastName").val(LastName);
+        $("#AddMiddleName").val(MiddleName);
+        $("#AddextName").val(ExtName).trigger('change');
         $('#SearchContent').hide();
-        $("#EmployeeNumber").val(empno);
       };
 
       function UpdateYes(password){
@@ -435,14 +469,29 @@ $( document ).ready(function() {
       $("#contentform").on("submit",function(event){
         event.preventDefault();
         const mobile_no = $('#AddMobileNumber').val();
+        const FName = $('#AddFirstName').val();
+        const MName = $('#AddMiddleName').val();
+        const LName = $('#AddLastName').val();
 
         if((mobile_no.length != 11) || ((mobile_no.slice(0, 2)) !== "09")){
-          $('#alertMessage').text('The mobile number should adhere to the format starting with "09" and must consist of precisely 11 digits.');
-          $('#modalAlert').modal('show');
+          $("#CheckMobileNomessage").html("The mobile number should adhere to the format starting with '09' and must consist of precisely 11 digits.").css('color', 'red');
+          $("#AddMobileNumber").css('border-color', 'red');
         }else if(!$("#dataConsent").is(":checked")){
-          $('#alertMessage').text('You need to agree to our data privacy notice to continue.');
-          $('#modalAlert').modal('show');
+          $("#CheckDataConsentmessage").html("You need to agree to our data privacy notice to continue.").css('color', 'red');
+          $("#dataConsent").css('border-color', 'red');
+        }else if(FName.length <2){
+          $("#CheckFNamemessage").html("Please enter a First Name with at least 2 characters.").css('color', 'red');
+          $("#AddFirstName").css('border-color', 'red');
+        }else if(MName.length <2){
+          $("#CheckMNamemessage").html("Please enter a First Name with at least 2 characters.").css('color', 'red');
+          $("#AddMiddleName").css('border-color', 'red');
+        }else if(LName.length <2){
+          $("#CheckLNamemessage").html("Please enter a First Name with at least 2 characters.").css('color', 'red');
+          $("#AddLastName").css('border-color', 'red');
         }else{
+          $("#AddMobileNumber").css('border-color', '');
+          $("#CheckMobileNomessage").html("");
+          CheckLNamemessage
           var formData = new FormData(this);
           $.ajax({
             url:"addnew.php",

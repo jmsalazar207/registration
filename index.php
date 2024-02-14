@@ -81,7 +81,7 @@ include 'modal/registermodal.php';
                       </div>
                       <input type="text" class="form-control" name="txtSearch" id="txtSearch" placeholder="Employee Number" value="" style="text-transform: uppercase;" required="true" onkeypress="return NumberOnly(event)" tabindex="1">
                     </div>
-                    
+                    <small id='CheckIDmessage'></small>
                   </div>
                   <div class="col-md-3">
                   <button type="submit" class="form-control btn btn-info" id="btn_search" name="btn_search">
@@ -93,7 +93,12 @@ include 'modal/registermodal.php';
               </div>
             </form>
           </div>
-          <div class="box box-info" id="RegisterContent">
+          <div id="ContentTip" class="callout callout-info" hidden>
+          <h4>Tip!</h4>
+          <p style="font-size: medium;">The entered employee number belongs to <i style="color:black; font-weight:500; font-size:large;" id="FullName"></i>.
+             If you encounter any issues with the provided number, please contact the Personnel Section for verification.</p>
+        </div>
+          <div class="box box-info" id="RegisterContent" hidden>
           <form class="form-horizontal" method="POST" id="contentform">
                 <div class="box-body">
                   <div class="box-header">
@@ -107,7 +112,7 @@ include 'modal/registermodal.php';
                               </div>                        
                             <label for="DesiredPassword" class="col-sm-6" style="font-size: 15px;">Desired Password<span class="requiredField">*</span></label>
                               <div class="input-group has-feedback col-sm-12">
-                                  <input type="password" class="form-control col-sm-10" id="DesiredPassword" name="DesiredPassword" placeholder="Desired Password" required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
+                                  <input type="password" class="form-control col-sm-10" id="DesiredPassword" name="DesiredPassword" placeholder="Desired Password" required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" tabindex="1">
                                   <span class="input-group-addon">
                                     <i class="fa fa-eye-slash toggle-DesiredPassword " toggle = "#DesiredPassword"  id="toggleDesiredPassword">
                                     </i>
@@ -115,7 +120,7 @@ include 'modal/registermodal.php';
                               </div>
                               <label for="ConfirmPassword" class="col-sm-12" style="font-size: 15px;">Confirm Password<span class="requiredField">*</span></label>                            
                                 <div class="input-group has-feedback col-sm-12">
-                                    <input type="password" class="form-control col-sm-10" id="ConfirmPassword" name = "ConfirmPassword" placeholder="Confirm Password" required="true">
+                                    <input type="password" class="form-control col-sm-10" id="ConfirmPassword" name = "ConfirmPassword" placeholder="Confirm Password" required="true" tabindex="2">
                                     <span class="input-group-addon"><i class="fa fa-eye-slash toggle-ConfirmPassword " toggle = "#ConfirmPassword"  id="toggleConfirmPassword"></i></span>
                                 </div>
                             <small id='checkmessage'></small>
@@ -137,29 +142,32 @@ include 'modal/registermodal.php';
                                 <input type="hidden" name="token" value="<?=$_SESSION["token"]?>"> 
                                 <label for="AddFirstName" class="col-sm-12" style="font-size: 15px;">First Name<span class="requiredField">*</span></label>
                                   <div class="col-sm-12">
-                                    <input type="text" class="form-control" id="AddFirstName" name="AddFirstName" placeholder="FIRST NAME" value="" style="text-transform: uppercase;" required="true" tabindex="2">
+                                    <input type="text" class="form-control" id="AddFirstName" name="AddFirstName" placeholder="FIRST NAME" value="" style="text-transform: uppercase;" required="true" tabindex="3">
                                   </div>
+                                  <small id='CheckFNamemessage'></small>
                             </div>
                             <div class="form-group">
                               <label for="AddMiddleName" class="col-sm-12" style="font-size: 15px;">Middle Name<span class="requiredField">*</span></label>
                                 <div class="col-sm-12">
-                                  <input type="text" class="form-control" id="AddMiddleName" name="AddMiddleName" placeholder="MIDDLE NAME" value="" style="text-transform: uppercase;" required="true" tabindex="3">
+                                  <input type="text" class="form-control" id="AddMiddleName" name="AddMiddleName" placeholder="MIDDLE NAME" value="" style="text-transform: uppercase;" required="true" tabindex="4">
                                 </div>
+                                <small id='CheckMNamemessage'></small>
                             </div>
                             <div class="form-group">
                               <label for="AddLastName" class="col-sm-12" style="font-size: 15px;">Last Name<span class="requiredField">*</span></label>
                                 <div class="col-sm-12">
-                                  <input type="text" class="form-control" id="AddLastName" name="AddLastName" placeholder="LAST NAME" value="" style="text-transform: uppercase;" required="true" tabindex="1">
+                                  <input type="text" class="form-control" id="AddLastName" name="AddLastName" placeholder="LAST NAME" value="" style="text-transform: uppercase;" required="true" tabindex="5">
                                 </div>
+                                <small id='CheckLNamemessage'></small>
                             </div>
                             <div class="form-group">
                               <label for="AddextName" class="col-md-12" style="font-size: 15px;">Ext. Name
                                 <span class="requiredField">
-                                  *
+                                  
                                 </span>
                               </label>
                               <div class="col-sm-12">
-                                <select class="form-control select2"style="width: 100%;"  id="AddextName" name="AddextName" tabindex="4">
+                                <select class="form-control select2"style="width: 100%;"  id="AddextName" name="AddextName" tabindex="6">
                                       <option value="">--</option>
                                       <option value="I">I</option>
                                       <option value="II">II</option>
@@ -179,7 +187,7 @@ include 'modal/registermodal.php';
                             <div class="form-group">
                               <label for="AddSex" class="col-sm-12" style="font-size: 15px;">Sex<span class="requiredField">*</span></label>
                                 <div class="col-sm-12">
-                                  <select class="form-control select2" style="width: 100%;" id="AddSex" name="AddSex" tabindex="6">
+                                  <select class="form-control select2" style="width: 100%;" id="AddSex" name="AddSex" tabindex="7" required>
                                         <option value="">--</option>
                                         <option value="0">MALE</option>
                                         <option value="1">FEMALE</option>
@@ -193,21 +201,22 @@ include 'modal/registermodal.php';
                                     <div class="input-group-addon">
                                       <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input type="date" class="form-control pull-right" name="AddBirthdate" id="AddBirthdate" required="true" tabindex="7">
+                                    <input type="date" class="form-control pull-right" name="AddBirthdate" id="AddBirthdate" required="true" tabindex="8">
                                   </div>
                                 </div>
                             </div>
                             <div class="form-group">
                               <label for="AddEmail" class="col-sm-12" style="font-size: 15px;">Email Address<span class="requiredField">*</span></label>
                                 <div class="col-sm-12">
-                                  <input type="email" class="form-control" id="AddEmail" name="AddEmail" placeholder="Email Address" tabindex="8">
+                                  <input type="email" class="form-control" id="AddEmail" name="AddEmail" placeholder="Email Address" tabindex="9" required>
                                 </div>
                             </div>
                             <div class="form-group">
                               <label for="AddMobileNumber" class="col-sm-12" style="font-size: 15px;">Mobile Number<span class="requiredField">*</span></label>
                                 <div class="col-sm-12">
-                                  <input type="text" class="form-control" id="AddMobileNumber" name="AddMobileNumber" placeholder="MOBILE NUMBER" value="" style="text-transform: uppercase;" required="true" tabindex="5" onkeypress="return NumberOnly(event)">
+                                  <input type="text" class="form-control" id="AddMobileNumber" name="AddMobileNumber" placeholder="MOBILE NUMBER" value="" style="text-transform: uppercase;" required="true" tabindex="10" onkeypress="return NumberOnly(event)">
                                 </div>
+                                <small id='CheckMobileNomessage'></small>
                             </div>                                
                         </div> <!--End Card1-->
                           <div class="card col-md-6"> <!--Card2-->
@@ -216,13 +225,13 @@ include 'modal/registermodal.php';
                                 <div class="col-md-6">
                                     <label for="AddHouseNumber" class="col-sm-12" style="font-size: 15px;">House Number<span class="requiredField"></span></label>
                                       <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="AddHouseNumber" name="AddHouseNumber" placeholder="House #" value="" style="text-transform: uppercase;" required="true" tabindex="10">
+                                        <input type="text" class="form-control" id="AddHouseNumber" name="AddHouseNumber" placeholder="House #" value="" style="text-transform: uppercase;" required="true" tabindex="11">
                                       </div>
                                   </div>
                                   <div class="col-md-6">
                                     <label for="AddStreet" class="col-sm-12" style="font-size: 15px;">Street<span class="requiredField"></span></label>
                                       <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="AddStreet" name="AddStreet" placeholder="Street" value="" style="text-transform: uppercase;" tabindex="9">
+                                        <input type="text" class="form-control" id="AddStreet" name="AddStreet" placeholder="Street" value="" style="text-transform: uppercase;" tabindex="12">
                                       </div>
                                   </div>
                               </div>
@@ -231,7 +240,7 @@ include 'modal/registermodal.php';
                             <div class="form-group">
                                 <label for="AddRegion" class="col-sm-12" style="font-size: 15px;">Region<span class="requiredField">*</span></label>
                                   <div class="col-sm-12">
-                                    <select class="form-control select2" style="width: 100%;"  id="AddRegion" name="AddRegion" required="true" tabindex="11">
+                                    <select class="form-control select2" style="width: 100%;"  id="AddRegion" name="AddRegion" required="true" tabindex="13">
                                       <?php
                                       echo fill_region($dbConn, null);
                                       ?>
@@ -241,7 +250,7 @@ include 'modal/registermodal.php';
                             <div class="form-group">
                                 <label for="AddProvince" class="col-sm-12" style="font-size: 15px;">Province<span class="requiredField">*</span></label>
                                   <div class="col-sm-12">
-                                    <select class="form-control select2" style="width: 100%;"  id="AddProvince" name="AddProvince" required="true" tabindex="12">
+                                    <select class="form-control select2" style="width: 100%;"  id="AddProvince" name="AddProvince" required="true" tabindex="14">
                                       <option>SELECT REGION FIRST</option>
                                     </select>
                                   </div>
@@ -249,7 +258,7 @@ include 'modal/registermodal.php';
                             <div class="form-group">
                                 <label for="AddCity" class="col-sm-12" style="font-size: 15px;">City<span class="requiredField">*</span></label>
                                   <div class="col-sm-12">
-                                    <select class="form-control select2" style="width: 100%;" id="AddCity" name="AddCity" required="true" tabindex="13">
+                                    <select class="form-control select2" style="width: 100%;" id="AddCity" name="AddCity" required="true" tabindex="15">
                                       <option>SELECT PROVINCE FIRST</option>
                                     </select>
                                   </div>
@@ -257,7 +266,7 @@ include 'modal/registermodal.php';
                             <div class="form-group">
                                 <label for="AddBarangay" class="col-sm-12" style="font-size: 15px;">Barangay<span class="requiredField">*</span></label>
                                   <div class="col-sm-12">
-                                    <select class="form-control select2"style="width: 100%;"  id="AddBarangay" name="AddBarangay" required="true" tabindex="14">
+                                    <select class="form-control select2"style="width: 100%;"  id="AddBarangay" name="AddBarangay" required="true" tabindex="16">
                                       <option>SELECT MUNICIPALITY FIRST</option>
                                     </select> 
                                   </div>
@@ -265,7 +274,7 @@ include 'modal/registermodal.php';
                             <div class="form-group">
                                 <label for="AddPosition" class="col-sm-12" style="font-size: 15px;">Position<span class="requiredField">*</span></label>
                                   <div class="col-sm-12">
-                                    <select class="form-control select2"style="width: 100%;"  id="AddPosition" name="AddPosition" required="true" tabindex="15">
+                                    <select class="form-control select2"style="width: 100%;"  id="AddPosition" name="AddPosition" required="true" tabindex="17">
                                       <?php
                                         echo fill_position($dbConn, null);
                                       ?>
@@ -277,7 +286,7 @@ include 'modal/registermodal.php';
                                 <div class="col-md-6">
                                   <label for="AddDivision" class="col-sm-12" style="font-size: 15px;">Division<span class="requiredField">*</span></label>
                                     <div class="col-sm-12">
-                                      <select class="form-control select2"style="width: 100%;"  id="AddDivision" name="AddDivision" required="true" tabindex="16">
+                                      <select class="form-control select2"style="width: 100%;"  id="AddDivision" name="AddDivision" required="true" tabindex="18">
                                         <?php
                                           echo fill_division($dbConn, null);
                                         ?>
@@ -287,7 +296,7 @@ include 'modal/registermodal.php';
                                 <div class="col-md-6">
                                   <label for="AddUnit" class="col-sm-12" style="font-size: 15px;">Unit/Section<span class="requiredField">*</span></label>
                                     <div class="col-sm-12">
-                                      <select class="form-control select2"style="width: 100%;"  id="AddUnit" name="AddUnit" required="true" tabindex="17">
+                                      <select class="form-control select2"style="width: 100%;"  id="AddUnit" name="AddUnit" required="true" tabindex="19">
                                         <option>SELECT DIVISION FIRST</option>
                                       </select>  
                                     </div>
@@ -297,11 +306,12 @@ include 'modal/registermodal.php';
                             <div class="form-group">
                                 <label for="AddFile" class="col-sm-12" style="font-size: 15px;">Upload ID<span class="requiredField">*</span></label>
                                   <div class="col-sm-12">
-                                  <input type="file" class="form-control" id="AddFile" name="AddFile" value="" required="true">
+                                  <input type="file" class="form-control" id="AddFile" name="AddFile" value="" required="true" tabindex="20">
                                   </div>
                             </div>  
                           </div> <!--Card2-->
                       </div> <!--End Row1--> 
+                      <small id='CheckDataConsentmessage'></small>
                       <div class="col-md-12" style="background-color: #eee; padding:3px; border-radius:8px">
                         <div class="form-check checkbox-lg" style="margin:10px;font-size: 15px;">
                           <label for="dataConsent"><strong>Data Privacy Consent and Acknowledgment: </strong></label> 
