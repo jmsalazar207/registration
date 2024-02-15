@@ -11,6 +11,7 @@ if(empty($_POST['g-recaptcha-response']))
 {
     $dataReturn['status'] = "failed";
     $dataReturn['msg'] = "Please verify you are not a robot";
+    
     echo json_encode($dataReturn);
 }else{
     if (isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])){

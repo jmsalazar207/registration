@@ -143,27 +143,27 @@ include 'modal/registermodal.php';
                                 <label for="AddFirstName" class="col-sm-12" style="font-size: 15px;">First Name<span class="requiredField">*</span></label>
                                   <div class="col-sm-12">
                                     <input type="text" class="form-control" id="AddFirstName" name="AddFirstName" placeholder="FIRST NAME" value="" style="text-transform: uppercase;" required="true" tabindex="3">
+                                    <small id='CheckFNamemessage'></small>
                                   </div>
-                                  <small id='CheckFNamemessage'></small>
+                                  
                             </div>
                             <div class="form-group">
                               <label for="AddMiddleName" class="col-sm-12" style="font-size: 15px;">Middle Name<span class="requiredField">*</span></label>
                                 <div class="col-sm-12">
                                   <input type="text" class="form-control" id="AddMiddleName" name="AddMiddleName" placeholder="MIDDLE NAME" value="" style="text-transform: uppercase;" required="true" tabindex="4">
+                                  <small id='CheckMNamemessage'></small>
                                 </div>
-                                <small id='CheckMNamemessage'></small>
                             </div>
                             <div class="form-group">
                               <label for="AddLastName" class="col-sm-12" style="font-size: 15px;">Last Name<span class="requiredField">*</span></label>
                                 <div class="col-sm-12">
                                   <input type="text" class="form-control" id="AddLastName" name="AddLastName" placeholder="LAST NAME" value="" style="text-transform: uppercase;" required="true" tabindex="5">
+                                  <small id='CheckLNamemessage'></small>
                                 </div>
-                                <small id='CheckLNamemessage'></small>
                             </div>
                             <div class="form-group">
                               <label for="AddextName" class="col-md-12" style="font-size: 15px;">Ext. Name
                                 <span class="requiredField">
-                                  
                                 </span>
                               </label>
                               <div class="col-sm-12">
@@ -201,8 +201,9 @@ include 'modal/registermodal.php';
                                     <div class="input-group-addon">
                                       <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input type="date" class="form-control pull-right" name="AddBirthdate" id="AddBirthdate" required="true" tabindex="8">
+                                    <input type="date" class="form-control pull-right" name="AddBirthdate" id="AddBirthdate" onkeyup="maxDate()"   required="true" tabindex="8">
                                   </div>
+                                  <small id='CheckBdaymessage'></small>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -215,8 +216,8 @@ include 'modal/registermodal.php';
                               <label for="AddMobileNumber" class="col-sm-12" style="font-size: 15px;">Mobile Number<span class="requiredField">*</span></label>
                                 <div class="col-sm-12">
                                   <input type="text" class="form-control" id="AddMobileNumber" name="AddMobileNumber" placeholder="MOBILE NUMBER" value="" style="text-transform: uppercase;" required="true" tabindex="10" onkeypress="return NumberOnly(event)">
+                                  <small id='CheckMobileNomessage'></small>
                                 </div>
-                                <small id='CheckMobileNomessage'></small>
                             </div>                                
                         </div> <!--End Card1-->
                           <div class="card col-md-6"> <!--Card2-->
@@ -225,13 +226,14 @@ include 'modal/registermodal.php';
                                 <div class="col-md-6">
                                     <label for="AddHouseNumber" class="col-sm-12" style="font-size: 15px;">House Number<span class="requiredField"></span></label>
                                       <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="AddHouseNumber" name="AddHouseNumber" placeholder="House #" value="" style="text-transform: uppercase;" required="true" tabindex="11">
+                                        <input type="text" class="form-control" id="AddHouseNumber" name="AddHouseNumber" placeholder="House #" value="" style="text-transform: uppercase;" onkeypress="return NumberOnly(event)" required="true" tabindex="11">
                                       </div>
                                   </div>
                                   <div class="col-md-6">
                                     <label for="AddStreet" class="col-sm-12" style="font-size: 15px;">Street<span class="requiredField"></span></label>
                                       <div class="col-sm-12">
                                         <input type="text" class="form-control" id="AddStreet" name="AddStreet" placeholder="Street" value="" style="text-transform: uppercase;" tabindex="12">
+                                        <small id='CheckStreetmessage'></small>
                                       </div>
                                   </div>
                               </div>
@@ -313,7 +315,7 @@ include 'modal/registermodal.php';
                       </div> <!--End Row1--> 
                       <small id='CheckDataConsentmessage'></small>
                       <div class="col-md-12" style="background-color: #eee; padding:3px; border-radius:8px">
-                        <div class="form-check checkbox-lg" style="margin:10px;font-size: 15px;">
+                        <div class="form-check checkbox-lg" style="margin:10px;font-size: 15px;" id="ContentdataConsent" >
                           <label for="dataConsent"><strong>Data Privacy Consent and Acknowledgment: </strong></label> 
                           <h5 style="text-align:justify; font-weight: 900;font-size: 15px">
                           <input type="checkbox" name="dataConsent" id="dataConsent" class="form-check-input">
@@ -331,7 +333,8 @@ include 'modal/registermodal.php';
                   <div class="box-footer">
                       <div class="col-sm-10">
                         <div class="g-recaptcha" data-sitekey="6LeTvywhAAAAAO3C0jpqGHBY-_CHkinekSrSzSlS"></div>
-                      </div>              
+                      </div>    
+                      <small id='CheckCaptchamessage'></small>   
                       <div class="col-sm-2">
                         <input type="hidden" class="form-control" id="processType" name="processType" style="text-transform: uppercase;" required="true">
                         <input type="submit" class="btn btn-info pull-right btn-block" id="btnSubmit" name="btnSubmit">

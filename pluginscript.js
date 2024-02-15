@@ -267,12 +267,12 @@ $( document ).ready(function() {
       $("#contentsearch").on("submit",function(event){
         event.preventDefault();
         const IDNumber = $('#txtSearch').val();
+        $("#txtSearch").css('border-color', '');
+          $("#CheckIDmessage").html("");
         if ((IDNumber.length>5) || (IDNumber.length<4)){
           $("#CheckIDmessage").html("Invalid Employee number. Please enter a number with a minimum of 4 digits and a maximum of 5 digits.").css('color', 'red');
           $("#txtSearch").css('border-color', 'red');
         }else{
-          $("#txtSearch").css('border-color', '');
-          $("#CheckIDmessage").html("");
           var formData = new FormData(this);
           $.ajax({
             url:"search.php",
@@ -472,26 +472,69 @@ $( document ).ready(function() {
         const FName = $('#AddFirstName').val();
         const MName = $('#AddMiddleName').val();
         const LName = $('#AddLastName').val();
+        const Street = $('#AddStreet').val();
+        const Birthday = $('#AddBirthdate').val();
+        var bday = new Date(Birthday);
+        var month_diff = Date.now() - bday.getTime();
+        var age_dt = new Date(month_diff); 
+        var year = age_dt.getUTCFullYear();
+        var age = Math.abs(year - 1970);
 
+        $("#AddMobileNumber").css('border-color', '');
+        $("#CheckMobileNomessage").html("");
+        
+        $("#dataConsent").css('border-color', '');
+        $("#CheckDataConsentmessage").html("");
+
+        $("#AddFirstName").css('border-color', '');
+        $("#CheckFNamemessage").html("");
+
+        $("#AddMiddleName").css('border-color', '');
+        $("#CheckMNamemessage").html("");
+
+        $("#AddLastName").css('border-color', '');
+        $("#CheckLNamemessage").html("");
+        
+        $("#AddStreet").css('border-color', '');
+        $("#CheckStreetmessage").html("");
+        
+        $("#AddBirthdate").css('border-color', '');
+        $("#CheckBdaymessage").html("");
+        
+        if(!$("#dataConsent").is(":checked")){
+          $("#CheckDataConsentmessage").html("You need to agree to our data privacy notice to continue.").css('color', 'red');
+          $("#dataConsent").css('border-color', 'red');
+        }
+        if(Street.length <5){
+          $("#CheckStreetmessage").html("Please enter a Street with at least 5 characters.").css('color', 'red');
+          $("#AddStreet").css('border-color', 'red');
+          $("#AddStreet").focus();
+        }
         if((mobile_no.length != 11) || ((mobile_no.slice(0, 2)) !== "09")){
           $("#CheckMobileNomessage").html("The mobile number should adhere to the format starting with '09' and must consist of precisely 11 digits.").css('color', 'red');
           $("#AddMobileNumber").css('border-color', 'red');
-        }else if(!$("#dataConsent").is(":checked")){
-          $("#CheckDataConsentmessage").html("You need to agree to our data privacy notice to continue.").css('color', 'red');
-          $("#dataConsent").css('border-color', 'red');
-        }else if(FName.length <2){
+          $("#AddMobileNumber").focus();
+        }
+        if((age <18) || (age >65)){
+          $("#CheckBdaymessage").html("Kindly provide a valid date of birth. Age should fall within the range of 18 to 65 years.").css('color', 'red');
+          $("#AddBirthdate").css('border-color','red')
+          $("#AddBirthdate").focus();
+        }
+        if(LName.length <2){
+          $("#CheckLNamemessage").html("Please enter a Last Name with at least 2 characters.").css('color', 'red');
+          $("#AddLastName").css('border-color', 'red');
+          $("#AddLastName").focus();
+        }
+        if(MName.length <2){
+          $("#CheckMNamemessage").html("Please enter a Middle Name with at least 2 characters.").css('color', 'red');
+          $("#AddMiddleName").css('border-color', 'red');
+          $("#AddMiddleName").focus();
+        }
+        if(FName.length <2){
           $("#CheckFNamemessage").html("Please enter a First Name with at least 2 characters.").css('color', 'red');
           $("#AddFirstName").css('border-color', 'red');
-        }else if(MName.length <2){
-          $("#CheckMNamemessage").html("Please enter a First Name with at least 2 characters.").css('color', 'red');
-          $("#AddMiddleName").css('border-color', 'red');
-        }else if(LName.length <2){
-          $("#CheckLNamemessage").html("Please enter a First Name with at least 2 characters.").css('color', 'red');
-          $("#AddLastName").css('border-color', 'red');
+          $("#AddFirstName").focus();
         }else{
-          $("#AddMobileNumber").css('border-color', '');
-          $("#CheckMobileNomessage").html("");
-          CheckLNamemessage
           var formData = new FormData(this);
           $.ajax({
             url:"addnew.php",
