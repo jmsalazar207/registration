@@ -332,9 +332,10 @@ include 'modal/registermodal.php';
                 </div> 
                   <div class="box-footer">
                       <div class="col-sm-10">
-                        <div class="g-recaptcha" data-sitekey="6LeTvywhAAAAAO3C0jpqGHBY-_CHkinekSrSzSlS"></div>
+                        <div class="g-recaptcha" data-callback="recaptchaCallback" data-sitekey="6LeTvywhAAAAAO3C0jpqGHBY-_CHkinekSrSzSlS"></div>
+                        <small id='CheckCaptchamessage' style="color:red; ">Please verify you are not a robot</small>
                       </div>    
-                      <small id='CheckCaptchamessage'></small>   
+                         
                       <div class="col-sm-2">
                         <input type="hidden" class="form-control" id="processType" name="processType" style="text-transform: uppercase;" required="true">
                         <input type="submit" class="btn btn-info pull-right btn-block" id="btnSubmit" name="btnSubmit">

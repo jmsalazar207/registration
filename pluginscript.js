@@ -163,6 +163,10 @@ function NumberOnly(evt) {
 $( document ).ready(function() {
     $("#ConfirmPassword").keyup(checkPasswordMatch);
   });
+  function recaptchaCallback() {
+    $('#CheckCaptchamessage').html("").css('color', 'red');
+    
+};
   function checkPasswordMatch() {
         var DesiredPassword = $("#DesiredPassword").val();
         var confirmPassword = $("#ConfirmPassword").val();
@@ -479,6 +483,7 @@ $( document ).ready(function() {
         var age_dt = new Date(month_diff); 
         var year = age_dt.getUTCFullYear();
         var age = Math.abs(year - 1970);
+        const catpcha = $('#CheckCaptchamessage').text();
 
         $("#AddMobileNumber").css('border-color', '');
         $("#CheckMobileNomessage").html("");
@@ -500,7 +505,11 @@ $( document ).ready(function() {
         
         $("#AddBirthdate").css('border-color', '');
         $("#CheckBdaymessage").html("");
-        
+      
+        if(catpcha != ''){
+          $("#CheckCaptchamessage").html("Please enter a Street with at least 5 characters.").css('color', 'red');
+          $("#CheckCaptchamessage").focus();
+        }
         if(!$("#dataConsent").is(":checked")){
           $("#CheckDataConsentmessage").html("You need to agree to our data privacy notice to continue.").css('color', 'red');
           $("#dataConsent").css('border-color', 'red');
@@ -547,10 +556,11 @@ $( document ).ready(function() {
               if(stat == "success"){
                 $('#alertMessageSuccess').text(msg);
                 $('#modalAlertSuccess').modal('show');
-              }else{
-                $('#alertMessage').text(msg);
-                $('#modalAlert').modal('show'); 
               }
+              // else{
+              //   $('#alertMessage').text(msg);
+              //   $('#modalAlert').modal('show'); 
+              // }
             },
             processData: false,
             contentType: false
