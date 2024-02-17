@@ -162,12 +162,14 @@ function NumberOnly(evt) {
 
 $( document ).ready(function() {
     $("#ConfirmPassword").keyup(checkPasswordMatch);
-  });
+});
   function recaptchaCallback() {
-    $('#CheckCaptchamessage').html("").css('color', 'red');
-    
+    $('#CheckCaptchamessage').val(1); //check captcha is checked
 };
-  function checkPasswordMatch() {
+function recaptchaExpired() {
+  $('#CheckCaptchamessage').val(0); //check captcha is expired
+};
+  function checkPasswordMatch() { //password confirmed password if matched
         var DesiredPassword = $("#DesiredPassword").val();
         var confirmPassword = $("#ConfirmPassword").val();
         if (DesiredPassword != confirmPassword){
@@ -247,8 +249,7 @@ $( document ).ready(function() {
       length.classList.add("invalid");
       }
     }
-    $(".toggle-DesiredPassword").click(function() {
-
+    $(".toggle-DesiredPassword").click(function() { //show password in desired password
         $(this).toggleClass("fa-eye fa-eye-slash");
         var input = $($(this).attr("toggle"));
         if (input.attr("type") == "password") {
@@ -257,8 +258,7 @@ $( document ).ready(function() {
           input.attr("type", "password");
         }
       });
-      $(".toggle-ConfirmPassword").click(function() {
-
+      $(".toggle-ConfirmPassword").click(function() { //show password in Confirm password
         $(this).toggleClass("fa-eye fa-eye-slash");
         var input = $($(this).attr("toggle"));
         if (input.attr("type") == "password") {
@@ -268,7 +268,7 @@ $( document ).ready(function() {
         }
       });
       var empno = '';
-      $("#contentsearch").on("submit",function(event){
+      $("#contentsearch").on("submit",function(event){ //trigger search
         event.preventDefault();
         const IDNumber = $('#txtSearch').val();
         $("#txtSearch").css('border-color', '');
@@ -319,7 +319,7 @@ $( document ).ready(function() {
       });
 
       //Here
-      $("#contentcheck").on("submit",function(event){
+      $("#contentcheck").on("submit",function(event){ //search if correct password entered
         event.preventDefault();
         var formData = new FormData(this);
         $.ajax({
@@ -340,13 +340,12 @@ $( document ).ready(function() {
           contentType: false
         }); 
       });
-      function RegisterYes(){
+      function RegisterYes(){ //proceed with the registration 'Yes'
         const EmpNumber = sessionStorage.getItem("empno")
         const FirstName = sessionStorage.getItem("fname")
         const MiddleName = sessionStorage.getItem("mname")
         const LastName = sessionStorage.getItem("sname")
         const ExtName = sessionStorage.getItem("extname")
-
         $('#RegisterConfirm').modal('hide');
         $('#contentform').trigger("reset");
         $('#AddRegion').val('').trigger('change');
@@ -375,118 +374,123 @@ $( document ).ready(function() {
         $('#SearchContent').hide();
       };
 
-      function UpdateYes(password){
-        $.ajax({
-          url:"includes/functions.php",
-          method:"POST",
-          data:{empno:empno},
-          success:function(data){
-            UpdateInfo = JSON.parse(data);
-            $("#AddLastName").val(UpdateInfo["sname"]);
-            $("#AddFirstName").val(UpdateInfo["fname"]);
-            $("#AddMiddleName").val(UpdateInfo["mname"]);
-            $("#AddMobileNumber").val(UpdateInfo["mobile"]);
-            $("#AddSex").val(UpdateInfo["sex"]).trigger('change');
-            $("#AddextName").val(UpdateInfo["ename"]).trigger('change');
-            $("#AddBirthdate").val(UpdateInfo["birthdate"]);
-            $("#AddEmail").val(UpdateInfo["eaddress"]);
-            $("#AddStreet").val(UpdateInfo["street"]);
-            $("#AddHouseNumber").val(UpdateInfo["numAdd"]);
-            $("#EmployeeNumber").val(UpdateInfo["empno"]);
-            //md5 in jquery
-            $("#DesiredPassword").val(password);
-            var update_region_id = UpdateInfo["region"];
-            $.ajax({
-                url:"includes/functions.php",
-                method:"POST",
-                data:{update_region_id:update_region_id},
-                success:function(data){
-                    $('#AddRegion').html(data);
-                }
-            });
-            var update_province_id = UpdateInfo["province"];
-            $.ajax({
-              url:"includes/functions.php",
-              method:"POST",
-              data:{update_province_id:update_province_id,Where_region_ID:update_region_id},
-              success:function(data){
-                  $('#AddProvince').html(data);
-              }
-          });
-            var update_city_id = UpdateInfo["city"];
-            $.ajax({
-              url:"includes/functions.php",
-              method:"POST",
-              data:{update_city_id:update_city_id,Where_province_ID:update_province_id},
-              success:function(data){
-                  $('#AddCity').html(data);
-              }
-          });
-            var update_barangay_id = UpdateInfo["barangay"];
-            $.ajax({
-              url:"includes/functions.php",
-              method:"POST",
-              data:{update_barangay_id:update_barangay_id,Where_city_ID:update_city_id},
-              success:function(data){
-                  $('#AddBarangay').html(data);
-              }
-          });
-            var update_position_id = UpdateInfo["position"];
-            $.ajax({
-              url:"includes/functions.php",
-              method:"POST",
-              data:{update_position_id:update_position_id},
-              success:function(data){
-                  $('#AddPosition').html(data);
-              }
-          });
-            var update_division_id = UpdateInfo["division"];
-            $.ajax({
-              url:"includes/functions.php",
-              method:"POST",
-              data:{update_division_id:update_division_id},
-              success:function(data){
-                  $('#AddDivision').html(data);
-              }
-          });
-            var update_unit_id = UpdateInfo["unit"];
-            $.ajax({
-              url:"includes/functions.php",
-              method:"POST",
-              data:{update_unit_id:update_unit_id,Where_division_ID:update_division_id},
-              success:function(data){
-                  $('#AddUnit').html(data);
-              }
-          });
-          }
-        });
-        $('#UpdateConfirm').modal('hide');
-        $('#btnSubmit').val('Update');
-        $('#processType').val('Update');
-        $('#RegisterContent').show();
-        $('#SearchContent').hide();
-      };
+      // function UpdateYes(password){
+      //   $.ajax({
+      //     url:"includes/functions.php",
+      //     method:"POST",
+      //     data:{empno:empno},
+      //     success:function(data){
+      //       UpdateInfo = JSON.parse(data);
+      //       $("#AddLastName").val(UpdateInfo["sname"]);
+      //       $("#AddFirstName").val(UpdateInfo["fname"]);
+      //       $("#AddMiddleName").val(UpdateInfo["mname"]);
+      //       $("#AddMobileNumber").val(UpdateInfo["mobile"]);
+      //       $("#AddSex").val(UpdateInfo["sex"]).trigger('change');
+      //       $("#AddextName").val(UpdateInfo["ename"]).trigger('change');
+      //       $("#AddBirthdate").val(UpdateInfo["birthdate"]);
+      //       $("#AddEmail").val(UpdateInfo["eaddress"]);
+      //       $("#AddStreet").val(UpdateInfo["street"]);
+      //       $("#AddHouseNumber").val(UpdateInfo["numAdd"]);
+      //       $("#EmployeeNumber").val(UpdateInfo["empno"]);
+      //       //md5 in jquery
+      //       $("#DesiredPassword").val(password);
+      //       var update_region_id = UpdateInfo["region"];
+      //       $.ajax({
+      //           url:"includes/functions.php",
+      //           method:"POST",
+      //           data:{update_region_id:update_region_id},
+      //           success:function(data){
+      //               $('#AddRegion').html(data);
+      //           }
+      //       });
+      //       var update_province_id = UpdateInfo["province"];
+      //       $.ajax({
+      //         url:"includes/functions.php",
+      //         method:"POST",
+      //         data:{update_province_id:update_province_id,Where_region_ID:update_region_id},
+      //         success:function(data){
+      //             $('#AddProvince').html(data);
+      //         }
+      //     });
+      //       var update_city_id = UpdateInfo["city"];
+      //       $.ajax({
+      //         url:"includes/functions.php",
+      //         method:"POST",
+      //         data:{update_city_id:update_city_id,Where_province_ID:update_province_id},
+      //         success:function(data){
+      //             $('#AddCity').html(data);
+      //         }
+      //     });
+      //       var update_barangay_id = UpdateInfo["barangay"];
+      //       $.ajax({
+      //         url:"includes/functions.php",
+      //         method:"POST",
+      //         data:{update_barangay_id:update_barangay_id,Where_city_ID:update_city_id},
+      //         success:function(data){
+      //             $('#AddBarangay').html(data);
+      //         }
+      //     });
+      //       var update_position_id = UpdateInfo["position"];
+      //       $.ajax({
+      //         url:"includes/functions.php",
+      //         method:"POST",
+      //         data:{update_position_id:update_position_id},
+      //         success:function(data){
+      //             $('#AddPosition').html(data);
+      //         }
+      //     });
+      //       var update_division_id = UpdateInfo["division"];
+      //       $.ajax({
+      //         url:"includes/functions.php",
+      //         method:"POST",
+      //         data:{update_division_id:update_division_id},
+      //         success:function(data){
+      //             $('#AddDivision').html(data);
+      //         }
+      //     });
+      //       var update_unit_id = UpdateInfo["unit"];
+      //       $.ajax({
+      //         url:"includes/functions.php",
+      //         method:"POST",
+      //         data:{update_unit_id:update_unit_id,Where_division_ID:update_division_id},
+      //         success:function(data){
+      //             $('#AddUnit').html(data);
+      //         }
+      //     });
+      //     }
+      //   });
+      //   $('#UpdateConfirm').modal('hide');
+      //   $('#btnSubmit').val('Update');
+      //   $('#processType').val('Update');
+      //   $('#RegisterContent').show();
+      //   $('#SearchContent').hide();
+      // };
 
 
 
       //January 16, 2024
       $("#contentform").on("submit",function(event){
         event.preventDefault();
+        const email = $('#AddEmail').val();
         const mobile_no = $('#AddMobileNumber').val();
         const FName = $('#AddFirstName').val();
         const MName = $('#AddMiddleName').val();
         const LName = $('#AddLastName').val();
         const Street = $('#AddStreet').val();
         const Birthday = $('#AddBirthdate').val();
+        const catpcha = $('#CheckCaptchamessage').val();
+
         var bday = new Date(Birthday);
         var month_diff = Date.now() - bday.getTime();
         var age_dt = new Date(month_diff); 
         var year = age_dt.getUTCFullYear();
         var age = Math.abs(year - 1970);
-        const catpcha = $('#CheckCaptchamessage').text();
-
+        var mobileCount = 0; 
+          
         $("#AddMobileNumber").css('border-color', '');
         $("#CheckMobileNomessage").html("");
+
+        $("#CheckEmailNomessage").html("");
         
         $("#dataConsent").css('border-color', '');
         $("#CheckDataConsentmessage").html("");
@@ -505,66 +509,111 @@ $( document ).ready(function() {
         
         $("#AddBirthdate").css('border-color', '');
         $("#CheckBdaymessage").html("");
-      
-        if(catpcha != ''){
-          $("#CheckCaptchamessage").html("Please enter a Street with at least 5 characters.").css('color', 'red');
+
+        $("#CheckCaptchamessage").html("");
+        var validatePass = 1;
+
+        if(catpcha == 0){
+          $("#CheckCaptchamessage").html("Please Verify you're not a robot").css('color', 'red');
           $("#CheckCaptchamessage").focus();
+          validatePass = 0;
         }
         if(!$("#dataConsent").is(":checked")){
           $("#CheckDataConsentmessage").html("You need to agree to our data privacy notice to continue.").css('color', 'red');
           $("#dataConsent").css('border-color', 'red');
+          validatePass = 0;
         }
-        if(Street.length <5){
+        if(Street.length ==''){
+          //not required
+        }else if(Street.length <5){
           $("#CheckStreetmessage").html("Please enter a Street with at least 5 characters.").css('color', 'red');
           $("#AddStreet").css('border-color', 'red');
           $("#AddStreet").focus();
+          validatePass = 0;
         }
         if((mobile_no.length != 11) || ((mobile_no.slice(0, 2)) !== "09")){
           $("#CheckMobileNomessage").html("The mobile number should adhere to the format starting with '09' and must consist of precisely 11 digits.").css('color', 'red');
           $("#AddMobileNumber").css('border-color', 'red');
           $("#AddMobileNumber").focus();
+          validatePass = 0;
+        }
+        if(mobileCount > 0){
+          $("#CheckMobileNomessage").html("The mobile number provided has already been used for registration.").css('color', 'red');
+          $("#AddMobileNumber").css('border-color', 'red');
+          $("#AddMobileNumber").focus();
+          validatePass = 0;
         }
         if((age <18) || (age >65)){
           $("#CheckBdaymessage").html("Kindly provide a valid date of birth. Age should fall within the range of 18 to 65 years.").css('color', 'red');
           $("#AddBirthdate").css('border-color','red')
           $("#AddBirthdate").focus();
+          validatePass = 0;
         }
         if(LName.length <2){
           $("#CheckLNamemessage").html("Please enter a Last Name with at least 2 characters.").css('color', 'red');
           $("#AddLastName").css('border-color', 'red');
           $("#AddLastName").focus();
+          validatePass = 0;
         }
         if(MName.length <2){
           $("#CheckMNamemessage").html("Please enter a Middle Name with at least 2 characters.").css('color', 'red');
           $("#AddMiddleName").css('border-color', 'red');
           $("#AddMiddleName").focus();
+          validatePass = 0;
         }
         if(FName.length <2){
           $("#CheckFNamemessage").html("Please enter a First Name with at least 2 characters.").css('color', 'red');
           $("#AddFirstName").css('border-color', 'red');
           $("#AddFirstName").focus();
-        }else{
-          var formData = new FormData(this);
-          $.ajax({
-            url:"addnew.php",
-            method:"POST",
-            dataType: "json",
-            data:formData,
-            success:function(data){
-              const msg = data.msg;
-              const stat = data.status;
-              if(stat == "success"){
-                $('#alertMessageSuccess').text(msg);
-                $('#modalAlertSuccess').modal('show');
-              }
-              // else{
-              //   $('#alertMessage').text(msg);
-              //   $('#modalAlert').modal('show'); 
-              // }
-            },
-            processData: false,
-            contentType: false
-          }); 
+          validatePass = 0;
         }
+
+        $.ajax({ //check email and mobile if existed 
+          url:"checkUnique.php",
+          method:"POST",
+          data: {email:email,mobile_no:mobile_no},
+          dataType: 'json',
+          success:function(data){
+            const uniqueMobile = data.mobile;
+            const uniqueEmail = data.email;
+              if(uniqueEmail > 0){
+                $("#CheckEmailNomessage").html("");
+                $("#CheckEmailNomessage").html("The email address provided has already been used for registration.").css('color', 'red');
+              }
+              if(uniqueMobile > 0){
+                $("#CheckMobileNomessage").html("");
+                $("#CheckMobileNomessage").html("The mobile number provided has already been used for registration.").css('color', 'red');
+              }
+              if(validatePass && uniqueMobile==0 && uniqueEmail==0){
+                alert("pasado");
+              }
+          },
+        });
+
+        // if(validatePass == 1 && unique_data == 1){
+        //   alert('Pasado');
+        //   //process register
+        //   // var formData = new FormData(this);
+        //   // $.ajax({
+        //   //   url:"addnew.php",
+        //   //   method:"POST",
+        //   //   dataType: "json",
+        //   //   data:formData,
+        //   //   success:function(data){
+        //   //     const msg = data.msg;
+        //   //     const stat = data.status;
+        //   //     if(stat == "success"){
+        //   //       $('#alertMessageSuccess').text(msg);
+        //   //       $('#modalAlertSuccess').modal('show');
+        //   //     }
+        //   //     // else{
+        //   //     //   $('#alertMessage').text(msg);
+        //   //     //   $('#modalAlert').modal('show'); 
+        //   //     // }
+        //   //   },
+        //   //   processData: false,
+        //   //   contentType: false
+        //   // }); 
+        // }
 
       });

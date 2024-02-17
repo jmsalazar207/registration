@@ -201,7 +201,7 @@ include 'modal/registermodal.php';
                                     <div class="input-group-addon">
                                       <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input type="date" class="form-control pull-right" name="AddBirthdate" id="AddBirthdate" onkeyup="maxDate()"   required="true" tabindex="8">
+                                    <input type="date" class="form-control pull-right" name="AddBirthdate" id="AddBirthdate" required="true" tabindex="8">
                                   </div>
                                   <small id='CheckBdaymessage'></small>
                                 </div>
@@ -210,6 +210,7 @@ include 'modal/registermodal.php';
                               <label for="AddEmail" class="col-sm-12" style="font-size: 15px;">Email Address<span class="requiredField">*</span></label>
                                 <div class="col-sm-12">
                                   <input type="email" class="form-control" id="AddEmail" name="AddEmail" placeholder="Email Address" tabindex="9" required>
+                                  <small id='CheckEmailNomessage'></small>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -226,7 +227,7 @@ include 'modal/registermodal.php';
                                 <div class="col-md-6">
                                     <label for="AddHouseNumber" class="col-sm-12" style="font-size: 15px;">House Number<span class="requiredField"></span></label>
                                       <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="AddHouseNumber" name="AddHouseNumber" placeholder="House #" value="" style="text-transform: uppercase;" onkeypress="return NumberOnly(event)" required="true" tabindex="11">
+                                        <input type="text" class="form-control" id="AddHouseNumber" name="AddHouseNumber" placeholder="House #" value="" style="text-transform: uppercase;" onkeypress="return NumberOnly(event)" tabindex="11">
                                       </div>
                                   </div>
                                   <div class="col-md-6">
@@ -332,8 +333,8 @@ include 'modal/registermodal.php';
                 </div> 
                   <div class="box-footer">
                       <div class="col-sm-10">
-                        <div class="g-recaptcha" data-callback="recaptchaCallback" data-sitekey="6LeTvywhAAAAAO3C0jpqGHBY-_CHkinekSrSzSlS"></div>
-                        <small id='CheckCaptchamessage' style="color:red; ">Please verify you are not a robot</small>
+                        <div class="g-recaptcha" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpired" data-sitekey="6LeTvywhAAAAAO3C0jpqGHBY-_CHkinekSrSzSlS"></div>
+                        <small id='CheckCaptchamessage'></small>
                       </div>    
                          
                       <div class="col-sm-2">
