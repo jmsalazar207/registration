@@ -586,34 +586,29 @@ function recaptchaExpired() {
               }
               if(validatePass && uniqueMobile==0 && uniqueEmail==0){
                 alert("pasado");
+                //process register
+                var formData = new FormData(this);
+                $.ajax({
+                  url:"addnew.php",
+                  method:"POST",
+                  dataType: "json",
+                  data:formData,
+                  success:function(data){
+                    const msg = data.msg;
+                    const stat = data.status;
+                    if(stat == "success"){
+                      $('#alertMessageSuccess').text(msg);
+                      $('#modalAlertSuccess').modal('show');
+                    }
+                    // else{
+                    //   $('#alertMessage').text(msg);
+                    //   $('#modalAlert').modal('show'); 
+                    // }
+                  },
+                  processData: false,
+                  contentType: false
+                }); 
               }
           },
         });
-
-        // if(validatePass == 1 && unique_data == 1){
-        //   alert('Pasado');
-        //   //process register
-        //   // var formData = new FormData(this);
-        //   // $.ajax({
-        //   //   url:"addnew.php",
-        //   //   method:"POST",
-        //   //   dataType: "json",
-        //   //   data:formData,
-        //   //   success:function(data){
-        //   //     const msg = data.msg;
-        //   //     const stat = data.status;
-        //   //     if(stat == "success"){
-        //   //       $('#alertMessageSuccess').text(msg);
-        //   //       $('#modalAlertSuccess').modal('show');
-        //   //     }
-        //   //     // else{
-        //   //     //   $('#alertMessage').text(msg);
-        //   //     //   $('#modalAlert').modal('show'); 
-        //   //     // }
-        //   //   },
-        //   //   processData: false,
-        //   //   contentType: false
-        //   // }); 
-        // }
-
       });

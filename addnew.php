@@ -96,7 +96,6 @@ if(empty($_POST['g-recaptcha-response']))
                         $dataReturn['msg'] = "Your information has been updated successfully. Thanks for keeping your details current!";
                         echo json_encode($dataReturn);
                     }else {
-
                         $dataReturn['status'] = "failed";
                         $dataReturn['msg'] = "Oops! Something went wrong. Please try again later.";
                         echo json_encode($dataReturn);
