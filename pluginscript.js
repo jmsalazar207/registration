@@ -163,6 +163,19 @@ function NumberOnly(evt) {
 $( document ).ready(function() {
     $("#ConfirmPassword").keyup(checkPasswordMatch);
 });
+function validateFileType() { //check file type
+  var selectedFile = document.getElementById('AddFile').files[0];
+  var allowedTypes = ['image/jpeg', 'image/png'];
+
+  if (!allowedTypes.includes(selectedFile.type)) {
+    //  alert('Invalid file type. Please upload a JPEG, PNG, or PDF file.');
+     $("#CheckImagemessage").html("Invalid file type. Please upload a JPEG, PNG, or PDF file.").css('color', 'red');
+     document.getElementById('AddFile').value = '';
+  }else{
+    $("#CheckImagemessage").html("");
+  }
+
+}
   function recaptchaCallback() {
     $('#CheckCaptchamessage').val(1); //check captcha is checked
 };
@@ -361,16 +374,17 @@ function recaptchaExpired() {
         $('#ContentTip').show();
         
 
-        $('#AddFirstName').attr('disabled','disabled')
-        $('#AddLastName').attr('disabled','disabled')
-        $('#AddMiddleName').attr('disabled','disabled')
-        $('#AddextName').attr('disabled','disabled')
+        $('#AddFirstName').attr('readonly','readonly');
+        $('#AddLastName').attr('readonly','readonly');
+        $('#AddMiddleName').attr('readonly','readonly');
+        $('#AddextName').attr('disabled','disabled');
 
         $("#EmployeeNumber").val(EmpNumber);
         $("#AddFirstName").val(FirstName);
         $("#AddLastName").val(LastName);
         $("#AddMiddleName").val(MiddleName);
         $("#AddextName").val(ExtName).trigger('change');
+        $("#HiddenAddextName").val(ExtName);
         $('#SearchContent').hide();
       };
 
@@ -479,6 +493,8 @@ function recaptchaExpired() {
         const Street = $('#AddStreet').val();
         const Birthday = $('#AddBirthdate').val();
         const catpcha = $('#CheckCaptchamessage').val();
+        
+       
 
         var bday = new Date(Birthday);
         var month_diff = Date.now() - bday.getTime();
@@ -510,6 +526,10 @@ function recaptchaExpired() {
         $("#AddBirthdate").css('border-color', '');
         $("#CheckBdaymessage").html("");
 
+        $("#AddFile").css('border-color', '');
+        $("#CheckImagemessage").html("");
+
+
         $("#CheckCaptchamessage").html("");
         var validatePass = 1;
 
@@ -523,6 +543,7 @@ function recaptchaExpired() {
           $("#dataConsent").css('border-color', 'red');
           validatePass = 0;
         }
+        
         if(Street.length ==''){
           //not required
         }else if(Street.length <5){
@@ -584,10 +605,10 @@ function recaptchaExpired() {
                 $("#CheckMobileNomessage").html("");
                 $("#CheckMobileNomessage").html("The mobile number provided has already been used for registration.").css('color', 'red');
               }
-              if(validatePass && uniqueMobile==0 && uniqueEmail==0){
-                alert("pasado");
-                //process register
-                var formData = new FormData(this);
+              if(validatePass ==1 && uniqueMobile==0 && uniqueEmail==0){
+                alert('pasado')
+                // process register
+                var formData = new FormData(contentform);
                 $.ajax({
                   url:"addnew.php",
                   method:"POST",
@@ -600,10 +621,10 @@ function recaptchaExpired() {
                       $('#alertMessageSuccess').text(msg);
                       $('#modalAlertSuccess').modal('show');
                     }
-                    // else{
-                    //   $('#alertMessage').text(msg);
-                    //   $('#modalAlert').modal('show'); 
-                    // }
+                    else{
+                      $('#alertMessage').text(msg);
+                      $('#modalAlert').modal('show'); 
+                    }
                   },
                   processData: false,
                   contentType: false

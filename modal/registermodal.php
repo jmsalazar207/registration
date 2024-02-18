@@ -191,7 +191,7 @@
                 <h4 id="alertMessageSuccess"></h4>
               </div>
               <div class="modal-footerYellow">
-                <button type="button" class="btn btn-modalYellow btn-sm" data-dismiss="modal" onclick="javascript:window.location.reload()">OK</button>
+                <button type="button" class="btn btn-modalYellow btn-sm" data-dismiss="modal" onclick="javascript:window.location.href='index.php'">OK</button>
               </div>
             </div>
             <!-- /.modal-content -->

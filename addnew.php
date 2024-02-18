@@ -28,10 +28,16 @@ if(empty($_POST['g-recaptcha-response']))
             }else {
                 $process = $_POST['processType'];
                 if($process == 'Register'){
+                    $target_dir = "uploadedID/";
+                    $target_file = $target_dir ."_". basename($_FILES["AddFile"]["name"]);
+                    $UploadFile = basename($_FILES["AddFile"]["name"]);
+                    $uploadOk = 1;
+                    
+
                     $user['sname'] = sanitize(strtoupper($_POST['AddLastName']));
                     $user['fname'] = sanitize(strtoupper($_POST['AddFirstName']));
                     $user['mname'] = sanitize(strtoupper($_POST['AddMiddleName']));
-                    $user['ename'] = sanitize(strtoupper($_POST['AddextName']));
+                    $user['ename'] = sanitize(strtoupper($_POST['HiddenAddextName']));
                     $user['mobile'] = sanitize($_POST['AddMobileNumber']);
                     $user['sex'] = sanitize($_POST['AddSex']);
                     $user['birthdate'] = sanitize($_POST['AddBirthdate']);
@@ -47,21 +53,32 @@ if(empty($_POST['g-recaptcha-response']))
                     $user['division'] = sanitize($_POST['AddDivision']);
                     $user['unit'] = sanitize($_POST['AddUnit']);
                     $user['password'] = md5($_POST['ConfirmPassword']);
-                    $user['empno'] = sanitize($_POST['EmployeeNumber']);
+                    $id = $user['empno'] = sanitize($_POST['EmployeeNumber']);
+                    $user['uploaded_id'] = sanitize('Hehe');
                     $user['date_registered'] = $today;
-                    $user['approved'] = 0;
+                    $user['date_approved'] = '';
+                    $user['uploaded_id'] = $UploadFile;
                     $user['user_level'] = 0;
                     $user['isLog'] = 0;
-                    $InsertQuery = $dbConn->insert('userprofile',$user);
-                    if($InsertQuery){
+                    
+                    if (move_uploaded_file($_FILES["AddFile"]["tmp_name"], $target_file)) 
+                    {
+                    $UpdateRegisterQuery = $dbConn->update('userprofile', 'empno', $id, $user);
+                    if($UpdateRegisterQuery){
                         $dataReturn['status'] = "success";
                         $dataReturn['msg'] = "Congratulations! You have successfully registered.";
                         echo json_encode($dataReturn);
-                    }else {
+                    } else {
                         $dataReturn['status'] = "failed";
                         $dataReturn['msg'] = "Oops! Something went wrong. Please try again later.";
                         echo json_encode($dataReturn);
                     }
+                    } else {
+                        $dataReturn['status'] = "failed";
+                        $dataReturn['msg'] = "Oops! Something went wrong. Uploading failed..";
+                    }
+                    
+
                 }else if($process = 'Update'){                  
                     $id=$_POST['EmployeeNumber'];
 
