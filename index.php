@@ -58,40 +58,52 @@ include 'modal/registermodal.php';
   <div class="content-wrapper">
     <div class="container-fluid">
       <!-- Main content -->
-      <section class="content" style="width: 40% ;">
-            <div class="box" id="SearchContent">
-                  <form class="form-horizontal" method="POST" id="contentsearch">
-                    <div class="box-body">
-                    <h3 class="box-title">Login</h3>
-                      <div class="row">
-                        <div class="col-md-2">
-                        
-                        </div>
-                        <div class="col-md-12">
-                        <label for="Search" class="col-sm-12">Employee Number</label>
-                          <div class="input-group col-sm-12">
-                            <div class="input-group-addon">
-                              <i>
-                                <label style="font-size: 15px; margin:auto" for="03-">03-</label>
-                              </i>
-                            </div>
-                            <input type="text" class="form-control" name="txtSearch" id="txtSearch" placeholder="Employee Number" value="" style="text-transform: uppercase;" required="true" onkeypress="return NumberOnly(event)" tabindex="1">
-                          </div>
-                          <small id='CheckIDmessage'></small>
-                        </div>
-                      </div>
-                      <br>
-                          <div class="row">
-                            <div class="col-md-12">
-                              <button type="submit" class="form-control btn btn-info" id="btn_search" name="btn_search">
-                                SEARCH 
-                              <i class="fa fa-search"></i>
-                              </button>
-                            </div>
-                          </div>
-                    </div>
-                  </form>
+      <section class="content">
+      <div class="login-box">
+  	<div class="login-logo">
+  		<b>ERM</b>
+  	</div>
+  	   <div class="login-box-body">
+            <p class="login-box-msg">
+              Login
+            </p>
+    	    <form method="POST" id="contentLogin" >
+              <div class="form-group has-feedback">
+                <div class="input-group col-sm-12">
+                  <div class="input-group-addon">
+                    <i>
+                      <label style="font-size: 15px; margin:auto" for="03-">03-</label>
+                    </i>
+                  </div>
+                  <input type="text" class="form-control" name="username" id="username" placeholder="Employee Number" value="" style="text-transform: uppercase;" required="true" onkeypress="return NumberOnly(event)" tabindex="1">
                 </div>
+              </div>
+
+              <div class="input-group has-feedback">
+                <input type="password" class="form-control" name="password" id = "password" placeholder="Password" required>
+                <span class="input-group-addon"><i class="fa fa-eye-slash toggle-password " toggle = "#password"  id="togglepassword"></i></span>
+              </div><br>
+              <div class="row">
+                <div class="col-xs-12">
+                    <div class="g-recaptcha" data-callback="recaptchaCallbackLogin" data-expired-callback="recaptchaExpiredLogin" data-sitekey="6LeTvywhAAAAAO3C0jpqGHBY-_CHkinekSrSzSlS">
+                    </div>
+                    <small id='CheckCaptchaLoginmessage'></small>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="col-xs-12">
+                  <!-- <button type="submit" class="form-control btn btn-info" id="btn_search" name="btn_search"> -->
+                        <button type="submit" name="btn_submit" id="btn_submit" class="btn btn-primary  btn-block btn-flat" >Login</button>
+                  </div>
+              </div><br>
+          </form>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <label>Don't have account? <a href="mainRegister.php">Click here to register</a></label>
+                  </div>
+                </div>
+  	   </div>
+</div>
       </section>
       <!-- /.content -->
     </div>
@@ -130,8 +142,20 @@ include 'modal/registermodal.php';
 <script src="bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
 <!-- bootstrap time picker -->
 <script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
-<script src="pluginscript.js"></script>
+<script src="loginscript.js"></script>
 <!-- End Scripts calling -->
+<script>
+  $(".toggle-password").click(function() {
 
+  $(this).toggleClass("fa-eye fa-eye-slash");
+  var input = $($(this).attr("toggle"));
+  if (input.attr("type") == "password") {
+    input.attr("type", "text");
+  } else {
+    input.attr("type", "password");
+  }
+});
+
+</script>
 </body>
 </html>

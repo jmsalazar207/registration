@@ -4,6 +4,7 @@ function NumberOnly(evt) {
       return false;
     return true;
   }
+  // sessionStorage.clear();
   $(function () {
     //Initialize Select2 Elements
     $('.select2').select2()
@@ -68,6 +69,13 @@ function NumberOnly(evt) {
     $('.timepicker').timepicker({
       showInputs: false
     })
+
+
+    const sessionEmpno = sessionStorage.getItem("empno");
+    if(sessionEmpno){
+      
+      UpdateYes(sessionEmpno);
+    }
   });
 
   function modalCloseConfirm(){
@@ -182,6 +190,7 @@ function validateFileType() { //check file type
 function recaptchaExpired() {
   $('#CheckCaptchamessage').val(0); //check captcha is expired
 };
+
   function checkPasswordMatch() { //password confirmed password if matched
         var DesiredPassword = $("#DesiredPassword").val();
         var confirmPassword = $("#ConfirmPassword").val();
@@ -319,7 +328,7 @@ function recaptchaExpired() {
                     $('#RegisterConfirm').modal('show');
                     
                   }else{
-                    $('#alertMessage').text('Registered naka siz');
+                    $('#alertMessage').text('This employee number is already registered in our system. Please proceed to the login page and sign in to update your information.');
                     $('#modalAlert').modal('show');
                   }
               }
@@ -329,29 +338,6 @@ function recaptchaExpired() {
           }); 
         }
        
-      });
-
-      //Here
-      $("#contentcheck").on("submit",function(event){ //search if correct password entered
-        event.preventDefault();
-        var formData = new FormData(this);
-        $.ajax({
-          url:"checkpassword.php",
-          method:"POST",
-          dataType: "json",
-          data:formData,
-          success:function(data){
-            empno = data.empno;
-            if(data.count == 0){
-              $('#ErrorPassword').modal('show');
-            }else{
-              var password = data.password;
-              UpdateYes(password);
-            }
-          },
-          processData: false,
-          contentType: false
-        }); 
       });
       function RegisterYes(){ //proceed with the registration 'Yes'
         const EmpNumber = sessionStorage.getItem("empno")
@@ -387,98 +373,102 @@ function recaptchaExpired() {
         $("#HiddenAddextName").val(ExtName);
         $('#SearchContent').hide();
       };
+function UpdateYes(sessionEmpno){
+  const sessionPassword = sessionStorage.getItem("password");
+   $.ajax({
+      url:"includes/functions.php",
+      method:"POST",
+      data:{sessionEmpno:sessionEmpno},
+      success:function(data){
+        UpdateInfo = JSON.parse(data);
+        $("#AddLastName").val(UpdateInfo["sname"]);
+        $("#AddFirstName").val(UpdateInfo["fname"]);
+        $("#AddMiddleName").val(UpdateInfo["mname"]);
+        $("#AddMobileNumber").val(UpdateInfo["mobile"]);
+        $("#AddSex").val(UpdateInfo["sex"]).trigger('change');
+        $("#AddextName").val(UpdateInfo["ename"]).trigger('change');
+        $("#AddBirthdate").val(UpdateInfo["birthdate"]);
+        $("#AddEmail").val(UpdateInfo["eaddress"]);
+        $("#AddStreet").val(UpdateInfo["street"]);
+        $("#AddHouseNumber").val(UpdateInfo["numAdd"]);
+        $("#EmployeeNumber").val(UpdateInfo["empno"]);
+        //md5 in jquery
+        $("#DesiredPassword").val(sessionPassword);
+        sessionStorage.clear();
+        var update_region_id = UpdateInfo["region"];
+        $.ajax({
+            url:"includes/functions.php",
+            method:"POST",
+            data:{update_region_id:update_region_id},
+            success:function(data){
+                $('#AddRegion').html(data);
+            }
+        });
+        var update_province_id = UpdateInfo["province"];
+        $.ajax({
+          url:"includes/functions.php",
+          method:"POST",
+          data:{update_province_id:update_province_id,Where_region_ID:update_region_id},
+          success:function(data){
+              $('#AddProvince').html(data);
+          }
+      });
+        var update_city_id = UpdateInfo["city"];
+        $.ajax({
+          url:"includes/functions.php",
+          method:"POST",
+          data:{update_city_id:update_city_id,Where_province_ID:update_province_id},
+          success:function(data){
+              $('#AddCity').html(data);
+          }
+      });
+        var update_barangay_id = UpdateInfo["barangay"];
+        $.ajax({
+          url:"includes/functions.php",
+          method:"POST",
+          data:{update_barangay_id:update_barangay_id,Where_city_ID:update_city_id},
+          success:function(data){
+              $('#AddBarangay').html(data);
+          }
+      });
+        var update_position_id = UpdateInfo["position"];
+        $.ajax({
+          url:"includes/functions.php",
+          method:"POST",
+          data:{update_position_id:update_position_id},
+          success:function(data){
+              $('#AddPosition').html(data);
+          }
+      });
+        var update_division_id = UpdateInfo["division"];
+        $.ajax({
+          url:"includes/functions.php",
+          method:"POST",
+          data:{update_division_id:update_division_id},
+          success:function(data){
+              $('#AddDivision').html(data);
+          }
+      });
+        var update_unit_id = UpdateInfo["unit"];
+        $.ajax({
+          url:"includes/functions.php",
+          method:"POST",
+          data:{update_unit_id:update_unit_id,Where_division_ID:update_division_id},
+          success:function(data){
+              $('#AddUnit').html(data);
+          }
+      });
+      }
+    });
+    $('#btnSubmit').val('Update');
+    $('#processType').val('Update');
+    $('#RegisterContent').show();
+    $('#SearchContent').hide();
+    $('#AddFile').attr('disabled','disabled')
+    $('#selectUpload').hide();
+    
+  };
 
-      // function UpdateYes(password){
-      //   $.ajax({
-      //     url:"includes/functions.php",
-      //     method:"POST",
-      //     data:{empno:empno},
-      //     success:function(data){
-      //       UpdateInfo = JSON.parse(data);
-      //       $("#AddLastName").val(UpdateInfo["sname"]);
-      //       $("#AddFirstName").val(UpdateInfo["fname"]);
-      //       $("#AddMiddleName").val(UpdateInfo["mname"]);
-      //       $("#AddMobileNumber").val(UpdateInfo["mobile"]);
-      //       $("#AddSex").val(UpdateInfo["sex"]).trigger('change');
-      //       $("#AddextName").val(UpdateInfo["ename"]).trigger('change');
-      //       $("#AddBirthdate").val(UpdateInfo["birthdate"]);
-      //       $("#AddEmail").val(UpdateInfo["eaddress"]);
-      //       $("#AddStreet").val(UpdateInfo["street"]);
-      //       $("#AddHouseNumber").val(UpdateInfo["numAdd"]);
-      //       $("#EmployeeNumber").val(UpdateInfo["empno"]);
-      //       //md5 in jquery
-      //       $("#DesiredPassword").val(password);
-      //       var update_region_id = UpdateInfo["region"];
-      //       $.ajax({
-      //           url:"includes/functions.php",
-      //           method:"POST",
-      //           data:{update_region_id:update_region_id},
-      //           success:function(data){
-      //               $('#AddRegion').html(data);
-      //           }
-      //       });
-      //       var update_province_id = UpdateInfo["province"];
-      //       $.ajax({
-      //         url:"includes/functions.php",
-      //         method:"POST",
-      //         data:{update_province_id:update_province_id,Where_region_ID:update_region_id},
-      //         success:function(data){
-      //             $('#AddProvince').html(data);
-      //         }
-      //     });
-      //       var update_city_id = UpdateInfo["city"];
-      //       $.ajax({
-      //         url:"includes/functions.php",
-      //         method:"POST",
-      //         data:{update_city_id:update_city_id,Where_province_ID:update_province_id},
-      //         success:function(data){
-      //             $('#AddCity').html(data);
-      //         }
-      //     });
-      //       var update_barangay_id = UpdateInfo["barangay"];
-      //       $.ajax({
-      //         url:"includes/functions.php",
-      //         method:"POST",
-      //         data:{update_barangay_id:update_barangay_id,Where_city_ID:update_city_id},
-      //         success:function(data){
-      //             $('#AddBarangay').html(data);
-      //         }
-      //     });
-      //       var update_position_id = UpdateInfo["position"];
-      //       $.ajax({
-      //         url:"includes/functions.php",
-      //         method:"POST",
-      //         data:{update_position_id:update_position_id},
-      //         success:function(data){
-      //             $('#AddPosition').html(data);
-      //         }
-      //     });
-      //       var update_division_id = UpdateInfo["division"];
-      //       $.ajax({
-      //         url:"includes/functions.php",
-      //         method:"POST",
-      //         data:{update_division_id:update_division_id},
-      //         success:function(data){
-      //             $('#AddDivision').html(data);
-      //         }
-      //     });
-      //       var update_unit_id = UpdateInfo["unit"];
-      //       $.ajax({
-      //         url:"includes/functions.php",
-      //         method:"POST",
-      //         data:{update_unit_id:update_unit_id,Where_division_ID:update_division_id},
-      //         success:function(data){
-      //             $('#AddUnit').html(data);
-      //         }
-      //     });
-      //     }
-      //   });
-      //   $('#UpdateConfirm').modal('hide');
-      //   $('#btnSubmit').val('Update');
-      //   $('#processType').val('Update');
-      //   $('#RegisterContent').show();
-      //   $('#SearchContent').hide();
-      // };
 
 
 
@@ -486,6 +476,7 @@ function recaptchaExpired() {
       $("#contentform").on("submit",function(event){
         event.preventDefault();
         const email = $('#AddEmail').val();
+        const empno = $('#EmployeeNumber').val();
         const mobile_no = $('#AddMobileNumber').val();
         const FName = $('#AddFirstName').val();
         const MName = $('#AddMiddleName').val();
@@ -493,6 +484,7 @@ function recaptchaExpired() {
         const Street = $('#AddStreet').val();
         const Birthday = $('#AddBirthdate').val();
         const catpcha = $('#CheckCaptchamessage').val();
+        const type = $('#processType').val();
         
        
 
@@ -558,12 +550,14 @@ function recaptchaExpired() {
           $("#AddMobileNumber").focus();
           validatePass = 0;
         }
-        if(mobileCount > 0){
-          $("#CheckMobileNomessage").html("The mobile number provided has already been used for registration.").css('color', 'red');
-          $("#AddMobileNumber").css('border-color', 'red');
-          $("#AddMobileNumber").focus();
-          validatePass = 0;
-        }
+        // if(type=="Register"){
+        //     if(mobileCount > 0){
+        //       $("#CheckMobileNomessage").html("The mobile number provided has already been used for registration.").css('color', 'red');
+        //       $("#AddMobileNumber").css('border-color', 'red');
+        //       $("#AddMobileNumber").focus();
+        //       validatePass = 0;
+        //     }
+        // }
         if((age <18) || (age >65)){
           $("#CheckBdaymessage").html("Kindly provide a valid date of birth. Age should fall within the range of 18 to 65 years.").css('color', 'red');
           $("#AddBirthdate").css('border-color','red')
@@ -592,7 +586,7 @@ function recaptchaExpired() {
         $.ajax({ //check email and mobile if existed 
           url:"checkUnique.php",
           method:"POST",
-          data: {email:email,mobile_no:mobile_no},
+          data: {empno:empno,email:email,mobile_no:mobile_no},
           dataType: 'json',
           success:function(data){
             const uniqueMobile = data.mobile;
@@ -606,7 +600,6 @@ function recaptchaExpired() {
                 $("#CheckMobileNomessage").html("The mobile number provided has already been used for registration.").css('color', 'red');
               }
               if(validatePass ==1 && uniqueMobile==0 && uniqueEmail==0){
-                alert('pasado')
                 // process register
                 var formData = new FormData(contentform);
                 $.ajax({
@@ -630,6 +623,7 @@ function recaptchaExpired() {
                   contentType: false
                 }); 
               }
+               
           },
         });
       });

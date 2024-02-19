@@ -12,7 +12,7 @@
               <!-- User Account Menu -->
               <li class="dropdown user user-menu">
                 <a href="index.php">
-                  <span class="hidden-xs"></span>
+                  <span class="hidden-xs">Login</span>
                 </a>
               </li>
             </ul>

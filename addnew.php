@@ -77,7 +77,7 @@ if(empty($_POST['g-recaptcha-response']))
                         $dataReturn['status'] = "failed";
                         $dataReturn['msg'] = "Oops! Something went wrong. Uploading failed..";
                     }
-                    
+                   
 
                 }else if($process = 'Update'){                  
                     $id=$_POST['EmployeeNumber'];
@@ -101,10 +101,7 @@ if(empty($_POST['g-recaptcha-response']))
                     $userUpdate['division'] = sanitize($_POST['AddDivision']);
                     $userUpdate['unit'] = sanitize($_POST['AddUnit']);
                     $userUpdate['password'] = md5($_POST['ConfirmPassword']);
-                    $userUpdate['date_registered'] = $today;
-                    $userUpdate['approved'] = 0;
-                    $userUpdate['user_level'] = 0;
-                    $userUpdate['isLog'] = 0;
+                    $userUpdate['isLog'] = 1;
                     $userUpdate['last_update'] = $today;
     
                     $UpdateQuery = $dbConn->update('userprofile', 'empno', $id, $userUpdate);

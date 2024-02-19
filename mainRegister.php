@@ -94,7 +94,7 @@ include 'modal/registermodal.php';
             </form>
           </div>
           <div id="ContentTip" class="callout callout-info" hidden>
-          <h4>Tip!</h4>
+          <h4>Notice!</h4>
           <p style="font-size: medium;">The entered employee number belongs to <i style="color:black; font-weight:500; font-size:large;" id="FullName"></i>.
              If you encounter any issues with the provided number, please contact the Personnel Section for verification.</p>
         </div>
@@ -307,7 +307,7 @@ include 'modal/registermodal.php';
                                 </div>
                               </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="selectUpload">
                                 <label for="AddFile" class="col-sm-12" style="font-size: 15px;">Upload ID<span class="requiredField">*</span></label>
                                   <div class="col-sm-12">
                                   <input type="file" class="form-control" id="AddFile" name="AddFile" value="" required="true" onchange="validateFileType()" tabindex="20">
@@ -390,6 +390,7 @@ include 'modal/registermodal.php';
 <!-- bootstrap time picker -->
 <script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 <script src="pluginscript.js"></script>
+<!-- <script src="loginscript.js"></script> -->
 <!-- End Scripts calling -->
 <?php
 if(isset($_SESSION['insert'])){

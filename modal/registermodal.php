@@ -200,4 +200,52 @@
         </div> 
 
 
+      <!-- modal for alert error generic -->
+      <div class="modal fade" id="modalError" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-contenterror">
+              <div class="modal-headererror">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title">Ooops!</h3>
+              </div>
+              <div class="modal-bodyerror">
+                <p align="center"><span class="glyphicon glyphicon-question-sign s_icon"></span></p>
+                <h4 id="alertErrorMessage"></h4>
+              </div>
+              <div class="modal-footererror">
+                <button type="button" class="btn btn-modalerror btn-sm" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div> 
+
+        <!-- modal for update after login success -->
+        <div class="modal fade" id="SuccessLoginConfirm" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-contentsuccess">
+              <div class="modal-headersuccess">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title">Great!</h3>                
+              </div>
+              <div class="modal-bodysuccess">
+                  <p align="center"><span class="glyphicon glyphicon-ok s_icon"></span></p>
+             <h4 id="AlertProceedUpdate"></h4>
+              </div>
+              <div class="modal-footersuccess">
+                <!-- <button type="button" class="btn btn-modalsuccess btn-sm" onclick="UpdateYes()" data-dismiss="modal">Proceed</button> -->
+                <a href="mainRegister.php" class="btn btn-modalsuccess btn-sm">Proceed</a>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div> 
+
+        
+
+
        

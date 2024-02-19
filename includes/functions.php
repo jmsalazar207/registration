@@ -100,8 +100,8 @@ function fill_division($dbConn,$division_id=0){
  return $output;
 }
 //Information when old employee
-if(isset($_POST["empno"])){
-  $empNO = $_POST["empno"];
+if(isset($_POST["sessionEmpno"])){
+  $empNO = $_POST["sessionEmpno"];
   $params['conditions'] = array("empno" => $empNO);
   $UpdateInfo=$dbConn->findFirst('userprofile',$params);
   echo json_encode($UpdateInfo); 
