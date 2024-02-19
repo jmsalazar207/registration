@@ -364,15 +364,17 @@ function recaptchaExpired() {
         $('#AddLastName').attr('readonly','readonly');
         $('#AddMiddleName').attr('readonly','readonly');
         $('#AddextName').attr('disabled','disabled');
-
         $("#EmployeeNumber").val(EmpNumber);
         $("#AddFirstName").val(FirstName);
         $("#AddLastName").val(LastName);
         $("#AddMiddleName").val(MiddleName);
         $("#AddextName").val(ExtName).trigger('change');
         $("#HiddenAddextName").val(ExtName);
+        sessionStorage.clear();
+        
         $('#SearchContent').hide();
       };
+      
 function UpdateYes(sessionEmpno){
   const sessionPassword = sessionStorage.getItem("password");
    $.ajax({
