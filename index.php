@@ -80,7 +80,7 @@ include 'modal/registermodal.php';
               </div>
 
               <div class="input-group has-feedback">
-                <input type="password" class="form-control" name="password" id = "password" placeholder="Password" required>
+                <input type="password" class="form-control" name="password" id = "password" placeholder="Password" required tabindex="2">
                 <span class="input-group-addon"><i class="fa fa-eye-slash toggle-password " toggle = "#password"  id="togglepassword"></i></span>
               </div><br>
               <div class="row">

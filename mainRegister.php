@@ -310,7 +310,7 @@ include 'modal/registermodal.php';
                             <div class="form-group" id="selectUpload">
                                 <label for="AddFile" class="col-sm-12" style="font-size: 15px;">Upload ID<span class="requiredField">*</span></label>
                                   <div class="col-sm-12">
-                                  <input type="file" class="form-control" id="AddFile" name="AddFile" value="" required="true" onchange="validateFileType()" tabindex="20">
+                                  <input type="file" class="form-control" id="AddFile" name="AddFile" value="" required="true" onchange="validateFileType()" tabindex="20" accept="image/jpeg, image/png">
                                   <small id='CheckImagemessage'></small>
                                   </div>
                             </div>  
