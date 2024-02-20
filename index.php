@@ -67,7 +67,7 @@ include 'modal/registermodal.php';
             <p class="login-box-msg">
               Login
             </p>
-    	    <form method="POST" id="contentLogin" >
+    	    <form method="POST" id="contentLogin" autocomplete="off">
               <div class="form-group has-feedback">
                 <div class="input-group col-sm-12">
                   <div class="input-group-addon">

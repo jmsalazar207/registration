@@ -176,8 +176,8 @@ function validateFileType() { //check file type
   var allowedTypes = ['image/jpeg', 'image/png'];
 
   if (!allowedTypes.includes(selectedFile.type)) {
-    //  alert('Invalid file type. Please upload a JPEG, PNG, or PDF file.');
-     $("#CheckImagemessage").html("Invalid file type. Please upload a JPEG, PNG, or PDF file.").css('color', 'red');
+    //  alert('Invalid file type. Please upload a JPEG, PNG or any image file.');
+     $("#CheckImagemessage").html("Invalid file type. Please upload a JPEG, PNG or any image file.").css('color', 'red');
      document.getElementById('AddFile').value = '';
   }else{
     $("#CheckImagemessage").html("");

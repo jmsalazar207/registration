@@ -66,7 +66,7 @@ include 'modal/registermodal.php';
             <div class="box-header with-border">
               <h3 class="box-title">Search Employee Number</h3>
             </div>
-            <form class="form-horizontal" method="POST" id="contentsearch">
+            <form class="form-horizontal" method="POST" id="contentsearch" autocomplete="off">
               <div class="box-body">
                 <div class="row">
                   <div class="col-md-2">
@@ -99,7 +99,7 @@ include 'modal/registermodal.php';
              If you encounter any issues with the provided number, please contact the Personnel Section for verification.</p>
         </div>
           <div class="box box-info" id="RegisterContent" hidden>
-          <form class="form-horizontal" method="POST" id="contentform">
+          <form class="form-horizontal" method="POST" id="contentform" autocomplete="off">
                 <div class="box-body">
                   <div class="box-header">
                       <h3 class="box-title">Login Credentials</h3>

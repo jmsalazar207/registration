@@ -47,7 +47,7 @@ include 'modal/registermodal.php';
             <div class="box-header with-border">
               <h3 class="box-title">Search Employee Number</h3>
             </div>
-            <form class="form-horizontal" method="POST" id="contentsearch">
+            <form class="form-horizontal" method="POST" id="contentsearch" autocomplete="off">
               <div class="box-body">
 
 

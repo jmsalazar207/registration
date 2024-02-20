@@ -146,10 +146,10 @@ $("#contentLogin").on("submit",function(event){
                 $('#alertMessage').text("To access your account, you'll need to register first. Please click on 'Click here to register' to proceed to the registration page.");
                 $('#modalAlert').modal('show');
               }else if(credentialsMatch==4){ //modal not yet approved
-                $('#alertMessage').text('Your account is pending approval. Please reach out to ICTMS to expedite the approval process.');
+                $('#alertMessage').text('Your account is pending approval. Please reach out to ICTMS or Personnel Section to expedite the approval process.');
                 $('#modalAlert').modal('show');
               }else{ //modal no data found
-                $('#alertMessage').text("We couldn't find any data in the database. Please contact ICTMS for further assistance in verifying your information");
+                $('#alertMessage').text("We couldn't find any data in the database. Please contact ICTMS or Personnel Section for further assistance in verifying your information");
                 $('#modalAlert').modal('show');
               }
 
