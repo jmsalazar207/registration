@@ -327,7 +327,14 @@ include 'modal/registermodal.php';
                           with the RA 10173 or the Data Privacy Act of 2012 and existing DSWD Data Privacy Policies. I understand that
                           the information provided on this platform may include, but is not limited to, personal details, contact information,
                           birthdate, sex, and relevant data necessary for the processing of my records in the DSWD for the purposes of
-                          financial claims and other personnel/administrative transactions.</h5>
+                          financial claims and other personnel/administrative transactions.
+                          </h5>
+                          <h5 style="text-align:justify; font-weight: 900;font-size: 15px"> 
+                          I declare under oath that I have personally accomplished this registration form which is a true, correct and 
+                          complete statement pursuant to the provisions of pertinent laws, rules and regulations of the Republic of the Philippines. 
+                          I authorize the agency head/authorized representative to verify/validate the contents stated herein.          
+                          I  agree that any misrepresentation made in this document and its attachments shall cause the filing of administrative/criminal case/s against me.
+                          </h5>
                           <h5 style="text-align:justify; font-weight: 900;font-size: 15px">By submitting on this platform, I affirm that I have read and understood the terms outlined herein and voluntarily
                               agree to the collection and processing of my personal information.</h5>
                         </div>

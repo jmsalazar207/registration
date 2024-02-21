@@ -10,101 +10,6 @@ function recaptchaCallbackLogin() {
   function recaptchaExpiredLogin() {
   $('#CheckCaptchaLoginmessage').val(0); //check captcha is expired login
   };
-  // function UpdateYes(empnoUpdate){
-  //   alert(empnoUpdate);
-  //   window.location.href="mainRegister.php?empno="+empnoUpdate; 
-    // $('#RegisterContent').show();
-
-    // $.ajax({
-    //       url:"includes/functions.php",
-    //       method:"POST",
-    //       data:{empnoUpdate:empnoUpdate},
-    //       success:function(data){
-    //         UpdateInfo = JSON.parse(data);
-    //         $("#AddLastName").val(UpdateInfo["sname"]);
-    //         $("#AddFirstName").val(UpdateInfo["fname"]);
-    //         $("#AddMiddleName").val(UpdateInfo["mname"]);
-    //         $("#AddMobileNumber").val(UpdateInfo["mobile"]);
-    //         $("#AddSex").val(UpdateInfo["sex"]).trigger('change');
-    //         $("#AddextName").val(UpdateInfo["ename"]).trigger('change');
-    //         $("#AddBirthdate").val(UpdateInfo["birthdate"]);
-    //         $("#AddEmail").val(UpdateInfo["eaddress"]);
-    //         $("#AddStreet").val(UpdateInfo["street"]);
-    //         $("#AddHouseNumber").val(UpdateInfo["numAdd"]);
-    //         $("#EmployeeNumber").val(UpdateInfo["empno"]);
-    //         //md5 in jquery
-    //         $("#DesiredPassword").val(password);
-    //         var update_region_id = UpdateInfo["region"];
-    //         $.ajax({
-    //             url:"includes/functions.php",
-    //             method:"POST",
-    //             data:{update_region_id:update_region_id},
-    //             success:function(data){
-    //                 $('#AddRegion').html(data);
-    //             }
-    //         });
-    //         var update_province_id = UpdateInfo["province"];
-    //         $.ajax({
-    //           url:"includes/functions.php",
-    //           method:"POST",
-    //           data:{update_province_id:update_province_id,Where_region_ID:update_region_id},
-    //           success:function(data){
-    //               $('#AddProvince').html(data);
-    //           }
-    //       });
-    //         var update_city_id = UpdateInfo["city"];
-    //         $.ajax({
-    //           url:"includes/functions.php",
-    //           method:"POST",
-    //           data:{update_city_id:update_city_id,Where_province_ID:update_province_id},
-    //           success:function(data){
-    //               $('#AddCity').html(data);
-    //           }
-    //       });
-    //         var update_barangay_id = UpdateInfo["barangay"];
-    //         $.ajax({
-    //           url:"includes/functions.php",
-    //           method:"POST",
-    //           data:{update_barangay_id:update_barangay_id,Where_city_ID:update_city_id},
-    //           success:function(data){
-    //               $('#AddBarangay').html(data);
-    //           }
-    //       });
-    //         var update_position_id = UpdateInfo["position"];
-    //         $.ajax({
-    //           url:"includes/functions.php",
-    //           method:"POST",
-    //           data:{update_position_id:update_position_id},
-    //           success:function(data){
-    //               $('#AddPosition').html(data);
-    //           }
-    //       });
-    //         var update_division_id = UpdateInfo["division"];
-    //         $.ajax({
-    //           url:"includes/functions.php",
-    //           method:"POST",
-    //           data:{update_division_id:update_division_id},
-    //           success:function(data){
-    //               $('#AddDivision').html(data);
-    //           }
-    //       });
-    //         var update_unit_id = UpdateInfo["unit"];
-    //         $.ajax({
-    //           url:"includes/functions.php",
-    //           method:"POST",
-    //           data:{update_unit_id:update_unit_id,Where_division_ID:update_division_id},
-    //           success:function(data){
-    //               $('#AddUnit').html(data);
-    //           }
-    //       });
-    //       }
-    //     });
-    //     $('#btnSubmit').val('Update');
-    //     $('#processType').val('Update');
-    //     $('#RegisterContent').show();
-    //     $('#SearchContent').hide();   
-    //     window.location.href="mainRegister.php"; 
-    // };
 $("#contentLogin").on("submit",function(event){
     event.preventDefault();
     const username = $('#username').val();
@@ -143,7 +48,8 @@ $("#contentLogin").on("submit",function(event){
                 $('#modalError').modal('show'); 
 
               }else if(credentialsMatch==2){ //modal for registration
-                $('#alertMessage').text("To access your account, you'll need to register first. Please click on 'Click here to register' to proceed to the registration page.");
+                $('#alertMessage').text("The entered employee number is not yet registered in the system. Please proceed to register by clicking the 'Register' button or the 'Click here to register' link.");
+                $('#regRoute').show();
                 $('#modalAlert').modal('show');
               }else if(credentialsMatch==4){ //modal not yet approved
                 $('#alertMessage').text('Your account is pending approval. Please reach out to ICTMS or Personnel Section to expedite the approval process.');

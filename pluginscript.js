@@ -552,14 +552,6 @@ function UpdateYes(sessionEmpno){
           $("#AddMobileNumber").focus();
           validatePass = 0;
         }
-        // if(type=="Register"){
-        //     if(mobileCount > 0){
-        //       $("#CheckMobileNomessage").html("The mobile number provided has already been used for registration.").css('color', 'red');
-        //       $("#AddMobileNumber").css('border-color', 'red');
-        //       $("#AddMobileNumber").focus();
-        //       validatePass = 0;
-        //     }
-        // }
         if((age <18) || (age >65)){
           $("#CheckBdaymessage").html("Kindly provide a valid date of birth. Age should fall within the range of 18 to 65 years.").css('color', 'red');
           $("#AddBirthdate").css('border-color','red')
@@ -571,8 +563,9 @@ function UpdateYes(sessionEmpno){
           $("#AddLastName").css('border-color', 'red');
           $("#AddLastName").focus();
           validatePass = 0;
-        }
-        if(MName.length <2){
+        }if(MName.length ==''){
+          
+        }else if(MName.length <2){
           $("#CheckMNamemessage").html("Please enter a Middle Name with at least 2 characters.").css('color', 'red');
           $("#AddMiddleName").css('border-color', 'red');
           $("#AddMiddleName").focus();
