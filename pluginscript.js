@@ -74,6 +74,8 @@ function NumberOnly(evt) {
     })
     const sessionEmpno = sessionStorage.getItem("loginEmpno");
     if(sessionEmpno){
+      $('#AlertProceedUpdate').text("Congratulations! 🎉 You've successfully logged in. You can now update your information.");
+      $('#SuccessLoginConfirm').modal('show'); 
       UpdateYes(sessionEmpno);
     }
   });
@@ -294,8 +296,8 @@ function recaptchaExpired() {
       });
       var empno = '';
       $("#contentsearch").on("submit",function(event){ //trigger search
-        event.preventDefault();
         $('#regRoute').css("display","none");
+        event.preventDefault();
         const IDNumber = $('#txtSearch').val();
         $("#txtSearch").css('border-color', '');
           $("#CheckIDmessage").html("");
@@ -470,7 +472,8 @@ function UpdateYes(sessionEmpno){
     $('#SearchContent').hide();
     $('#AddFile').attr('disabled','disabled')
     $('#selectUpload').hide();
-    
+    $('#logoutTag').css("display","inline-flex");
+    $('#loginTag').css("display","none");
   };
 
 

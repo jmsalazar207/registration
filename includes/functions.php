@@ -201,7 +201,7 @@ if(isset($_POST["update_unit_id"])&& isset($_POST['Where_division_ID'])){
   $Where_division_ID = $_POST["Where_division_ID"];
   $params['fields'] = "unit_code, unit_name";
   $params['conditions'] = array("division_code" => $Where_division_ID);
-  $params['order'] = 'division_name';
+  $params['order'] = 'unit_name';
   $update_units=$dbConn->find('lib_unit',$params);
   $update_units_output = '<option value="">SELECT UNIT</option>';
   if($update_units){

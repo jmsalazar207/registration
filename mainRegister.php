@@ -150,7 +150,7 @@ include 'modal/registermodal.php';
                             <div class="form-group">
                               <label for="AddMiddleName" class="col-sm-12" style="font-size: 15px;">Middle Name<span class="requiredField">*</span></label>
                                 <div class="col-sm-12">
-                                  <input type="text" class="form-control" id="AddMiddleName" name="AddMiddleName" placeholder="MIDDLE NAME" value="" style="text-transform: uppercase;" required="true" tabindex="4">
+                                  <input type="text" class="form-control" id="AddMiddleName" name="AddMiddleName" placeholder="MIDDLE NAME" value="" style="text-transform: uppercase;" tabindex="4">
                                   <small id='CheckMNamemessage'></small>
                                 </div>
                             </div>

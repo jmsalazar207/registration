@@ -12,8 +12,8 @@ function recaptchaCallbackLogin() {
   $('#CheckCaptchaLoginmessage').val(0); //check captcha is expired login
   };
 $("#contentLogin").on("submit",function(event){
+  $('#regRoute').css("display","none");
     event.preventDefault();
-    $('#regRoute').css("display","none");
     const username = $('#username').val();
     const password = $('#password').val();
     sessionStorage.setItem("password",password);
@@ -43,8 +43,7 @@ $("#contentLogin").on("submit",function(event){
             
               if(credentialsMatch==1){
                 sessionStorage.setItem("loginEmpno",employeeNo);
-                $('#AlertProceedUpdate').text("Great! By clicking Ok, You will be redirected to update page");
-                $('#SuccessLoginConfirm').modal('show'); 
+                window.location.href="mainRegister.php"
               }else if(credentialsMatch==0){ //modal error password 
                 $('#alertErrorMessage').text("Oops! It seems there's an issue with your login credentials. Please try again.");
                 $('#modalError').modal('show'); 
@@ -56,9 +55,11 @@ $("#contentLogin").on("submit",function(event){
               }else if(credentialsMatch==4){ //modal not yet approved
                 $('#alertMessage').text('Your account is pending approval. Please reach out to ICTMS or Personnel Section to expedite the approval process.');
                 $('#modalAlert').modal('show');
+                sessionStorage.clear();
               }else{ //modal no data found
                 $('#alertMessage').text("We couldn't find any data in the database. Please contact ICTMS or Personnel Section for further assistance in verifying your information");              
                 $('#modalAlert').modal('show');
+                sessionStorage.clear();
               }
             },
           });

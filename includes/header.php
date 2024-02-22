@@ -10,10 +10,14 @@
             <ul class="nav navbar-nav">
 
               <!-- User Account Menu -->
-              <li class="dropdown user user-menu">
+              <li class="dropdown user user-menu" id="loginTag" style="display: inline-flex;">
                 <a href="index.php">
                   <span class="hidden-xs">Login</span>
-                  
+                </a>
+              </li>
+              <li class="dropdown user user-menu" id="logoutTag" style="display: none;">
+                <a href="index.php">
+                  <span class="hidden-xs">Logout</span>
                 </a>
               </li>
             </ul>
