@@ -12,6 +12,7 @@ function recaptchaCallbackLogin() {
   };
 $("#contentLogin").on("submit",function(event){
     event.preventDefault();
+    $('#regRoute').css("display","none");
     const username = $('#username').val();
     const password = $('#password').val();
     sessionStorage.setItem("password",password);
@@ -46,19 +47,18 @@ $("#contentLogin").on("submit",function(event){
               }else if(credentialsMatch==0){ //modal error password 
                 $('#alertErrorMessage').text("Oops! It seems there's an issue with your login credentials. Please try again.");
                 $('#modalError').modal('show'); 
-
+                sessionStorage.clear();
               }else if(credentialsMatch==2){ //modal for registration
+                $('#regRoute').css("display","inline-flex");
                 $('#alertMessage').text("The entered employee number is not yet registered in the system. Please proceed to register by clicking the 'Register' button or the 'Click here to register' link.");
-                $('#regRoute').show();
                 $('#modalAlert').modal('show');
               }else if(credentialsMatch==4){ //modal not yet approved
                 $('#alertMessage').text('Your account is pending approval. Please reach out to ICTMS or Personnel Section to expedite the approval process.');
                 $('#modalAlert').modal('show');
               }else{ //modal no data found
-                $('#alertMessage').text("We couldn't find any data in the database. Please contact ICTMS or Personnel Section for further assistance in verifying your information");
+                $('#alertMessage').text("We couldn't find any data in the database. Please contact ICTMS or Personnel Section for further assistance in verifying your information");              
                 $('#modalAlert').modal('show');
               }
-
             },
           });
     }

@@ -1,3 +1,4 @@
+
 function NumberOnly(evt) {
     var charCode = (evt.which) ? evt.which : evt.keyCode
     if (charCode > 31 && (charCode < 48 || charCode > 57))
@@ -69,15 +70,15 @@ function NumberOnly(evt) {
     $('.timepicker').timepicker({
       showInputs: false
     })
-
-
     const sessionEmpno = sessionStorage.getItem("empno");
     if(sessionEmpno){
-      
       UpdateYes(sessionEmpno);
     }
   });
-
+function sessionKill(){ //close modal session kill
+  sessionStorage.clear();
+  $('#RegisterConfirm').modal('hide');
+}
   function modalCloseConfirm(){
     $('#confirm_edit').modal('hide');
   };  
@@ -292,6 +293,7 @@ function recaptchaExpired() {
       var empno = '';
       $("#contentsearch").on("submit",function(event){ //trigger search
         event.preventDefault();
+        $('#regRoute').css("display","none");
         const IDNumber = $('#txtSearch').val();
         $("#txtSearch").css('border-color', '');
           $("#CheckIDmessage").html("");

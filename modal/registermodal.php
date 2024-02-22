@@ -4,8 +4,8 @@
           <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-contentsuccess">
               <div class="modal-headersuccess">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button> -->
                 <h3 class="modal-title">Great!</h3>                
               </div>
               <div class="modal-bodysuccess">
@@ -25,8 +25,8 @@
           <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-contenterror">
               <div class="modal-headererror">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button> -->
                 <h3 class="modal-title">Error!</h3>
               </div>
               <div class="modal-bodyerror">
@@ -47,8 +47,8 @@
           <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-contentYellow">
               <div class="modal-headerYellow">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+                  <!-- <span aria-hidden="true">&times;</span></button> -->
                 <h3 class="modal-title">Information</h3>
               </div>
               <div class="modal-bodyYellow">
@@ -57,7 +57,7 @@
               </div>
               <div class="modal-footerYellow">
               <button type="button" class="btn btn-modalYellow btn-sm" name="btnConfirm" onclick="RegisterYes()">Yes</button>
-                <button type="button" class="btn btn-modalYellow btn-sm" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-modalYellow btn-sm" onclick="sessionKill()">No</button>
               </div>
             </div>
             <!-- /.modal-content -->
@@ -70,8 +70,8 @@
             <div class="modal-contentYellow">
             <form class="form-horizontal" method="POST" action="checkpassword.php" id="contentcheck">
               <div class="modal-headerYellow">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+                  <!-- <span aria-hidden="true">&times;</span></button> -->
                 <h3 class="modal-title">Information</h3>
               </div>
               <div class="modal-bodyYellow">
@@ -95,8 +95,8 @@
           <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-contentsuccess">
               <div class="modal-headersuccess">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+                  <!-- <span aria-hidden="true">&times;</span></button> -->
                 <h3 class="modal-title">Great!</h3>                
               </div>
               <div class="modal-bodysuccess">
@@ -116,8 +116,8 @@
           <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-contenterror">
               <div class="modal-headererror">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+                  <!-- <span aria-hidden="true">&times;</span></button> -->
                 <h3 class="modal-title">Error!</h3>
               </div>
               <div class="modal-bodyerror">
@@ -137,8 +137,8 @@
           <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-contenterror">
               <div class="modal-headererror">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+                  <!-- <span aria-hidden="true">&times;</span></button> -->
                 <h3 class="modal-title">Ooops!</h3>
               </div>
               <div class="modal-bodyerror">
@@ -161,8 +161,8 @@
           <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-contentYellow">
               <div class="modal-headerYellow">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button> -->
                 <h3 class="modal-title">Information</h3>
               </div>
               <div class="modal-bodyYellow">
@@ -170,7 +170,7 @@
                 <h4 id="alertMessage"></h4>
               </div>
               <div class="modal-footerYellow">
-                <button type="button" id="regRoute" name="regRoute" onclick="location.href='mainRegister.php'" class="btn btn-primary btn-sm" hidden>Register</button>
+                <button type="button" id="regRoute" name="regRoute" onclick="location.href='mainRegister.php'" class="btn btn-primary btn-sm" style="display:none;">Register</button>
                 <button type="button" class="btn btn-modalYellow btn-sm" data-dismiss="modal">OK</button>
               </div>
             </div>
@@ -183,8 +183,8 @@
           <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-contentYellow">
               <div class="modal-headerYellow">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button> -->
                 <h3 class="modal-title">Information</h3>
               </div>
               <div class="modal-bodyYellow">
@@ -206,8 +206,8 @@
           <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-contenterror">
               <div class="modal-headererror">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button> -->
                 <h3 class="modal-title">Ooops!</h3>
               </div>
               <div class="modal-bodyerror">
@@ -228,8 +228,8 @@
           <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-contentsuccess">
               <div class="modal-headersuccess">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button> -->
                 <h3 class="modal-title">Great!</h3>                
               </div>
               <div class="modal-bodysuccess">

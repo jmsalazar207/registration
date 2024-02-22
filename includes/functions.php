@@ -3,7 +3,6 @@
 require_once('init.php');
 //Drop down ning Region
 function fill_region($dbConn,$region_id=0){
-    // $region_sql="SELECT region_code, region_name, region_nick FROM lib_regions";
     $params['fields'] = "region_code, region_name, region_nick";
     $regions=$dbConn->find('lib_regions',$params);
     $output = '<option value="">SELECT REGION</option>';
@@ -20,6 +19,7 @@ if(isset($_POST["regionAction"])){
   $region_code = $_POST["region_id"];
   $params['fields'] = "prov_code, prov_name";
   $params['conditions'] = array("region_code" => $region_code);
+  $params['order'] = "prov_name";
   $provinces=$dbConn->find('lib_provinces',$params);
   $province_output = '<option value="">SELECT PROVINCE</option>';
   if($provinces){
@@ -34,6 +34,7 @@ if(isset($_POST["provinceAction"])){
   $province_code = $_POST["province_id"];
   $params['fields'] = "city_code, city_name";
   $params['conditions'] = array("prov_code" => $province_code);
+  $params['order'] = "city_name";
   $cities=$dbConn->find('lib_cities',$params);
   $city_output = '<option value="">SELECT MUNICIPALITY</option>';
   if($cities){
@@ -48,6 +49,7 @@ if(isset($_POST["cityAction"])){
   $city_code = $_POST["city_id"];
   $params['fields'] = "brgy_code, brgy_name";
   $params['conditions'] = array("city_code" => $city_code);
+  $params['order'] = "brgy_name";
   $brgys=$dbConn->find('lib_brgy',$params);
   $brgy_output = '<option value="">SELECT BARANGAY</option>';
   if($brgys){
@@ -58,11 +60,11 @@ if(isset($_POST["cityAction"])){
   echo $brgy_output; 
 }
 //ONCHANGE Drop down menu for UNIT
-//Kapag Onchange ning city
 if(isset($_POST["divisionAction"])){
   $division_code = $_POST["division_ids"];
   $params['fields'] = "unit_code, unit_name";
   $params['conditions'] = array("division_code" => $division_code);
+  $params["order"] = "unit_name";
   $units=$dbConn->find('lib_unit',$params);
   $units_output = '<option value="">SELECT UNIT</option>';
   if($units){
@@ -77,6 +79,7 @@ function fill_position($dbConn,$position_id=0){
   // $region_sql="SELECT region_code, region_name, region_nick FROM lib_regions";
   $params['fields'] = "position_code, position_name";
   $params['group'] = "position_code, position_name";
+  $params['order'] = "position_name";
   $positions=$dbConn->find('lib_position',$params);
   $output = '<option value="">SELECT POSITION</option>';
   if($positions){
@@ -90,6 +93,7 @@ function fill_division($dbConn,$division_id=0){
   // $region_sql="SELECT region_code, region_name, region_nick FROM lib_regions";
   $params['fields'] = "division_code, division_name, division_name_code";
   $params['group'] = "division_code, division_name, division_name_code";
+  $params["order"] = "division_name";
   $divisions=$dbConn->find('lib_division',$params);
   $output = '<option value="">SELECT DIVISION</option>';
   if($divisions){
@@ -125,6 +129,7 @@ if(isset($_POST["update_province_id"])&& isset($_POST['Where_region_ID'])){
   $Where_region_id = $_POST["Where_region_ID"];
   $params['fields'] = "prov_code, prov_name";
   $params['conditions'] = array("region_code" => $Where_region_id);
+  $params['order'] = 'prov_name';
   $update_provinces=$dbConn->find('lib_provinces',$params);
   $update_provinces_output = '<option value="">SELECT PROVINCE</option>';
   if($update_provinces){
@@ -140,6 +145,7 @@ if(isset($_POST["update_city_id"])&& isset($_POST['Where_province_ID'])){
   $Where_province_id = $_POST["Where_province_ID"];
   $params['fields'] = "city_code, city_name";
   $params['conditions'] = array("prov_code" => $Where_province_id);
+  $params['order'] = 'city_name';
   $update_cities=$dbConn->find('lib_cities',$params);
   $update_city_output = '<option value="">SELECT MUNICIPALITY</option>';
   if($update_cities){
@@ -154,6 +160,7 @@ if(isset($_POST["update_barangay_id"])&& isset($_POST['Where_city_ID'])){
   $Where_city_id = $_POST["Where_city_ID"];
   $params['fields'] = "brgy_code, brgy_name";
   $params['conditions'] = array("city_code" => $Where_city_id);
+  $params['order'] = 'brgy_name';
   $update_brgys=$dbConn->find('lib_brgy',$params);
   $update_brgys_output = '<option value="">SELECT BARANGAY</option>';
   if($update_brgys){
@@ -166,7 +173,7 @@ if(isset($_POST["update_barangay_id"])&& isset($_POST['Where_city_ID'])){
 if(isset($_POST["update_position_id"])){
   $update_position_id = $_POST["update_position_id"];
   $params['fields'] = "position_code, position_name";
-  // $params['conditions'] = array("city_code" => $Where_city_id);
+  $params['order'] = 'position_name';
   $update_positions=$dbConn->find('lib_position',$params);
   $update_positions_output = '<option value="">SELECT POSITION</option>';
   if($update_positions){
@@ -179,7 +186,7 @@ if(isset($_POST["update_position_id"])){
 if(isset($_POST["update_division_id"])){
   $update_division_id = $_POST["update_division_id"];
   $params['fields'] = "division_code, division_name";
-  // $params['conditions'] = array("city_code" => $Where_city_id);
+  $params["order"] = "division_name";
   $update_divisions=$dbConn->find('lib_division',$params);
   $update_divisions_output = '<option value="">SELECT DIVISION</option>';
   if($update_divisions){
@@ -194,6 +201,7 @@ if(isset($_POST["update_unit_id"])&& isset($_POST['Where_division_ID'])){
   $Where_division_ID = $_POST["Where_division_ID"];
   $params['fields'] = "unit_code, unit_name";
   $params['conditions'] = array("division_code" => $Where_division_ID);
+  $params['order'] = 'division_name';
   $update_units=$dbConn->find('lib_unit',$params);
   $update_units_output = '<option value="">SELECT UNIT</option>';
   if($update_units){
