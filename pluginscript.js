@@ -1,4 +1,6 @@
-
+window.onload = function() {
+  sessionStorage.clear();
+};
 function NumberOnly(evt) {
     var charCode = (evt.which) ? evt.which : evt.keyCode
     if (charCode > 31 && (charCode < 48 || charCode > 57))
@@ -70,7 +72,7 @@ function NumberOnly(evt) {
     $('.timepicker').timepicker({
       showInputs: false
     })
-    const sessionEmpno = sessionStorage.getItem("empno");
+    const sessionEmpno = sessionStorage.getItem("loginEmpno");
     if(sessionEmpno){
       UpdateYes(sessionEmpno);
     }
@@ -372,7 +374,6 @@ function recaptchaExpired() {
         $("#AddMiddleName").val(MiddleName);
         $("#AddextName").val(ExtName).trigger('change');
         $("#HiddenAddextName").val(ExtName);
-        sessionStorage.clear();
         
         $('#SearchContent').hide();
       };
@@ -398,7 +399,6 @@ function UpdateYes(sessionEmpno){
         $("#EmployeeNumber").val(UpdateInfo["empno"]);
         //md5 in jquery
         $("#DesiredPassword").val(sessionPassword);
-        sessionStorage.clear();
         var update_region_id = UpdateInfo["region"];
         $.ajax({
             url:"includes/functions.php",

@@ -1,3 +1,4 @@
+
 function NumberOnly(evt) {
     var charCode = (evt.which) ? evt.which : evt.keyCode
     if (charCode > 31 && (charCode < 48 || charCode > 57))
@@ -41,7 +42,7 @@ $("#contentLogin").on("submit",function(event){
             sessionStorage.setItem("updateEmpNO",employeeNo);
             
               if(credentialsMatch==1){
-                sessionStorage.setItem("empno",employeeNo);
+                sessionStorage.setItem("loginEmpno",employeeNo);
                 $('#AlertProceedUpdate').text("Great! By clicking Ok, You will be redirected to update page");
                 $('#SuccessLoginConfirm').modal('show'); 
               }else if(credentialsMatch==0){ //modal error password 

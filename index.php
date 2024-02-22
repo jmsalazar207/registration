@@ -145,8 +145,8 @@ include 'modal/registermodal.php';
 <script src="loginscript.js"></script>
 <!-- End Scripts calling -->
 <script>
+  sessionStorage.clear();
   $(".toggle-password").click(function() {
-
   $(this).toggleClass("fa-eye fa-eye-slash");
   var input = $($(this).attr("toggle"));
   if (input.attr("type") == "password") {
