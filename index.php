@@ -36,14 +36,6 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Updated: Jan 29 2024 with Bootstrap v5.3.2
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body>
@@ -130,10 +122,8 @@
                         </div>
                     
                     <div class="col-12">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
-                        <label class="form-check-label" for="rememberMe">Remember me</label>
-                      </div>
+                    <div class="g-recaptcha" data-callback="recaptchaCallbackLogin" data-expired-callback="recaptchaExpiredLogin" data-sitekey="6LeTvywhAAAAAO3C0jpqGHBY-_CHkinekSrSzSlS">
+                    </div>
                     </div>
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit">Login</button>
@@ -167,14 +157,15 @@
   <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
   <script src="includes/scripts.js" async defer></script>
+  <script src="assets/js/jquery-3.5.1.min.js"></script>
   <script>
   sessionStorage.clear();
   $(".toggle-password").click(function() {
-    alert('rar');
   $(this).toggleClass("ri-eye-fill");
   var input = $($(this).attr("toggle"));
   if (input.attr("type") == "password") {
