@@ -46,7 +46,7 @@ $("#contentLogin").on("submit",function(event){
             
               if(credentialsMatch==1){
                 sessionStorage.setItem("loginEmpno",employeeNo);
-                window.location.href="mainRegister.php"
+                window.location.href="homePage.php"
               }else if(credentialsMatch==0){ //modal error password 
                 $('#alertErrorMessage').text("Oops! It seems there's an issue with your login credentials. Please try again.");
                 $('#modalError').modal('show'); 

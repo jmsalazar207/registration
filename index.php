@@ -85,13 +85,15 @@
                         name="username" 
                         id="username" 
                         placeholder="Employee Number" 
-                        value="" style="text-transform: uppercase;" 
+                        value="" 
+                        style="text-transform: uppercase;" 
                         onkeypress="return NumberOnly(event)" 
                         tabindex="1"
                         required
                         >
                         <div 
-                          class="invalid-feedback" id ="loginUserMessage">
+                          class="invalid-feedback" 
+                          id ="loginUserMessage">
                           Please enter your username.
                         </div>
                       </div>
@@ -120,7 +122,8 @@
                           </i>
                           </span>
                           <div 
-                            class="invalid-feedback" id="loginPasswordMessage" >
+                            class="invalid-feedback" 
+                            id="loginPasswordMessage" >
                             Please enter your password.
                           </div>
                         </div>
