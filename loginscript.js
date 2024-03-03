@@ -6,23 +6,26 @@ function NumberOnly(evt) {
     return true;
   }
 function recaptchaCallbackLogin() {
-    $('#CheckCaptchaLoginmessage').val(1); //check captcha is checked login
+    $('#loginCaptchaMessage').val(1); //check captcha is checked login
+    $('#loginCaptchaMessage').hide();
   };
   function recaptchaExpiredLogin() {
-  $('#CheckCaptchaLoginmessage').val(0); //check captcha is expired login
+  $('#loginCaptchaMessage').val(0); //check captcha is expired login
   };
+  
 $("#contentLogin").on("submit",function(event){
+  event.preventDefault();
   $('#regRoute').css("display","none");
-    event.preventDefault();
     const username = $('#username').val();
     const password = $('#password').val();
     sessionStorage.setItem("password",password);
-    const loginCaptcha = $('#CheckCaptchaLoginmessage').val();
-    $("#CheckCaptchaLoginmessage").html("");
+    const loginCaptcha = $('#loginCaptchaMessage').val();
+    $("#loginCaptchaMessage").html("");
     var loginPass = 1;
     if(loginCaptcha == 0){
-      $("#CheckCaptchaLoginmessage").html("Please Verify you're not a robot").css('color', 'red');
-      $("#CheckCaptchaLoginmessage").focus();
+      $("#loginCaptchaMessage").html("Please Verify you're not a robot").css('color', 'red');
+      $("#loginCaptchaMessage").focus();
+      $("#loginCaptchaMessage").show();
       loginPass = 0;
     }
     if(loginPass==1){

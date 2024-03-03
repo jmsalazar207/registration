@@ -1,30 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <?php
     session_start();
     $_SESSION["token"] = bin2hex(random_bytes(32));
     $_SESSION["token-expire"] = time() + 3600; // 1 hour = 3600 secs
     require_once('includes/init.php');
-    include 'modal/registermodal.php';
     include 'includes/functions.php'; 
   ?>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>Pages / Login - NiceAdmin Bootstrap Template</title>
+  <title>Login - Employee's Registration Module</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
-
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -33,38 +27,46 @@
   <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
-
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 </head>
-
 <body>
-
   <main>
     <div class="container">
-
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
-
               <div class="d-flex justify-content-center py-4">
-                <a href="index.html" class="logo d-flex align-items-center w-auto">
-                  <img src="assets/img/logo.png" alt="">
-                  <span class="d-none d-lg-block">NiceAdmin</span>
+                <a 
+                  href="index.php" 
+                  class="logo d-flex align-items-center w-auto">
+                    <img 
+                      src="assets/img/logo.png" 
+                      alt="">
+                  <span 
+                    class="d-none d-lg-block">
+                    ERM
+                  </span>
                 </a>
               </div><!-- End Logo -->
-
               <div class="card mb-3">
-
                 <div class="card-body">
-
                   <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
-                    <p class="text-center small">Enter your username & password to login</p>
+                    <h5 
+                      class="card-title text-center pb-0 fs-4">
+                        Login to Your Account
+                    </h5>
+                    <p 
+                      class="text-center small">
+                      Enter your username & password to login
+                    </p>
                   </div>
-
-                  <form method="POST" id="contentLogin" autocomplete="off" class="row g-3 needs-validation"  novalidate>
+                  <form 
+                    method="POST" 
+                    id="contentLogin" 
+                    autocomplete="off" 
+                    class="row g-3 needs-validation">
                     <div class="col-12">
                       <label 
                         for="Username" 
@@ -86,63 +88,82 @@
                         value="" style="text-transform: uppercase;" 
                         onkeypress="return NumberOnly(event)" 
                         tabindex="1"
-                        required>
+                        required
+                        >
                         <div 
-                          class="invalid-feedback">
+                          class="invalid-feedback" id ="loginUserMessage">
                           Please enter your username.
                         </div>
                       </div>
                     </div>
-                        <div class="input-group mb-3 col-12">
-                        <!-- <label 
-                            for="password" 
-                            class="form-label">
-                            Password
-                          </label> -->
+                      <div col-12>
+                        <label 
+                          for="password" 
+                          class="form-label">
+                          Password
+                        </label>
+                        <div class="input-group mb-3">
                           <input 
                             type="password" 
                             class="form-control" 
                             name="password" 
                             id = "password" 
                             placeholder="Password" 
-                            required 
+                            required ="true"
                             tabindex="2">
                           <span 
                             class="input-group-text">
                           <i 
-                            class="ri-eye-off-fill toggle-password" 
+                            class=" toggle-password bi bi-eye-slash" 
                             toggle = "#password"  
                             id="togglepassword">
                           </i>
                           </span>
                           <div 
-                            class="invalid-feedback">
+                            class="invalid-feedback" id="loginPasswordMessage" >
                             Please enter your password.
                           </div>
                         </div>
-                    
+                      </div> 
+                      <div class="col-12">
+                        <div 
+                          class="g-recaptcha" 
+                          data-callback="recaptchaCallbackLogin"
+                          data-expired-callback="recaptchaExpiredLogin" 
+                          data-sitekey="6LeTvywhAAAAAO3C0jpqGHBY-_CHkinekSrSzSlS">
+                        </div>
+                        <div 
+                          class="invalid-feedback" 
+                          id="loginCaptchaMessage">
+                          Please Verify you're not a robot
+                        </div>
+                      </div>
                     <div class="col-12">
-                    <div class="g-recaptcha" data-callback="recaptchaCallbackLogin" data-expired-callback="recaptchaExpiredLogin" data-sitekey="6LeTvywhAAAAAO3C0jpqGHBY-_CHkinekSrSzSlS">
-                    </div>
+                      <button 
+                        class="btn btn-primary w-100" 
+                        name="btn_submit" 
+                        id="btn_submit" 
+                        type="submit">
+                        Login
+                      </button>
                     </div>
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit">Login</button>
-                    </div>
-                    <div class="col-12">
-                      <p class="small mb-0">Don't have account? <a href="pages-register.html">Create an account</a></p>
+                      <p 
+                        class="small mb-0">
+                        Don't have account? 
+                        <a 
+                          href="mainRegister.php">
+                          Create an account
+                        </a>
+                      </p>
                     </div>
                   </form>
-
                 </div>
               </div>
-
-
             </div>
           </div>
         </div>
-
       </section>
-
     </div>
   </main><!-- End #main -->
 
@@ -162,11 +183,12 @@
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
   <script src="includes/scripts.js" async defer></script>
+  <script src="loginscript.js" async defer></script>
   <script src="assets/js/jquery-3.5.1.min.js"></script>
   <script>
   sessionStorage.clear();
   $(".toggle-password").click(function() {
-  $(this).toggleClass("ri-eye-fill");
+  $("#togglepassword").toggleClass("bi bi-eye");
   var input = $($(this).attr("toggle"));
   if (input.attr("type") == "password") {
     input.attr("type", "text");
@@ -174,8 +196,9 @@
     input.attr("type", "password");
   }
 });
-
 </script>
+<?php
+include 'modal/registermodal.php';
+?>
 </body>
-
 </html>
