@@ -1,153 +1,181 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<?php
-  session_start();
-	$_SESSION["token"] = bin2hex(random_bytes(32));
-	$_SESSION["token-expire"] = time() + 3600; // 1 hour = 3600 secs
-// include 'includes/conn_to_ctris.php';
-require_once('includes/init.php');
-include 'modal/registermodal.php';
-   include 'includes/functions.php'; 
-?>
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-  <script src="includes/scripts.js" async defer></script>
-  
+  <?php
+    session_start();
+    $_SESSION["token"] = bin2hex(random_bytes(32));
+    $_SESSION["token-expire"] = time() + 3600; // 1 hour = 3600 secs
+    require_once('includes/init.php');
+    include 'modal/registermodal.php';
+    include 'includes/functions.php'; 
+  ?>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="shortcut icon" href="images/dtricon.jpg">
-    <title>Registration Module</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <!-- Select2 -->
-  <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
-  <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
-  <!-- Google Font -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  <link rel="stylesheet" href="plugins/iCheck/all.css">
-  <link rel="stylesheet" href="includes/add.css">
-   <!-- Bootstrap Color Picker -->
-   <link rel="stylesheet" href="bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
-     <!-- Bootstrap time Picker -->
-  <link rel="stylesheet" href="plugins/timepicker/bootstrap-timepicker.min.css">
-  <style>
-    .requiredField{
-      color:red;
-      font-weight: bold;
-      font-size: 18px;
-    }
-  </style>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Pages / Login - NiceAdmin Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Updated: Jan 29 2024 with Bootstrap v5.3.2
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
 </head>
 
-<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
-<body class="hold-transition skin-blue layout-top-nav">
-<div class="wrapper">
-<?php include 'includes/header.php';?>
-  <!-- Full Width Column -->
-  <div class="content-wrapper">
-    <div class="container-fluid">
-      <!-- Main content -->
-      <section class="content">
-      <div class="login-box">
-  	<div class="login-logo">
-  		<b>ERM</b>
-  	</div>
-  	   <div class="login-box-body">
-            <p class="login-box-msg">
-              Login
-            </p>
-    	    <form method="POST" id="contentLogin" autocomplete="off">
-              <div class="form-group has-feedback">
-                <div class="input-group col-sm-12">
-                  <div class="input-group-addon">
-                    <i>
-                      <label style="font-size: 15px; margin:auto" for="03-">03-</label>
-                    </i>
-                  </div>
-                  <input type="text" class="form-control" name="username" id="username" placeholder="Employee Number" value="" style="text-transform: uppercase;" required="true" onkeypress="return NumberOnly(event)" tabindex="1">
-                </div>
-              </div>
+<body>
 
-              <div class="input-group has-feedback">
-                <input type="password" class="form-control" name="password" id = "password" placeholder="Password" required tabindex="2">
-                <span class="input-group-addon"><i class="fa fa-eye-slash toggle-password " toggle = "#password"  id="togglepassword"></i></span>
-              </div><br>
-              <div class="row">
-                <div class="col-xs-12">
-                    <div class="g-recaptcha" data-callback="recaptchaCallbackLogin" data-expired-callback="recaptchaExpiredLogin" data-sitekey="6LeTvywhAAAAAO3C0jpqGHBY-_CHkinekSrSzSlS">
+  <main>
+    <div class="container">
+
+      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+              <div class="d-flex justify-content-center py-4">
+                <a href="index.html" class="logo d-flex align-items-center w-auto">
+                  <img src="assets/img/logo.png" alt="">
+                  <span class="d-none d-lg-block">NiceAdmin</span>
+                </a>
+              </div><!-- End Logo -->
+
+              <div class="card mb-3">
+
+                <div class="card-body">
+
+                  <div class="pt-4 pb-2">
+                    <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
+                    <p class="text-center small">Enter your username & password to login</p>
+                  </div>
+
+                  <form method="POST" id="contentLogin" autocomplete="off" class="row g-3 needs-validation"  novalidate>
+                    <div class="col-12">
+                      <label 
+                        for="Username" 
+                        class="form-label">
+                        Username
+                      </label>
+                      <div class="input-group has-validation">
+                        <span 
+                          class="input-group-text" 
+                          id="inputGroupPrepend">
+                          03-
+                        </span>
+                        <input 
+                        type="text" 
+                        class="form-control" 
+                        name="username" 
+                        id="username" 
+                        placeholder="Employee Number" 
+                        value="" style="text-transform: uppercase;" 
+                        onkeypress="return NumberOnly(event)" 
+                        tabindex="1"
+                        required>
+                        <div 
+                          class="invalid-feedback">
+                          Please enter your username.
+                        </div>
+                      </div>
                     </div>
-                    <small id='CheckCaptchaLoginmessage'></small>
+                        <div class="input-group mb-3 col-12">
+                        <!-- <label 
+                            for="password" 
+                            class="form-label">
+                            Password
+                          </label> -->
+                          <input 
+                            type="password" 
+                            class="form-control" 
+                            name="password" 
+                            id = "password" 
+                            placeholder="Password" 
+                            required 
+                            tabindex="2">
+                          <span 
+                            class="input-group-text">
+                          <i 
+                            class="ri-eye-off-fill toggle-password" 
+                            toggle = "#password"  
+                            id="togglepassword">
+                          </i>
+                          </span>
+                          <div 
+                            class="invalid-feedback">
+                            Please enter your password.
+                          </div>
+                        </div>
+                    
+                    <div class="col-12">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe">Remember me</label>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <button class="btn btn-primary w-100" type="submit">Login</button>
+                    </div>
+                    <div class="col-12">
+                      <p class="small mb-0">Don't have account? <a href="pages-register.html">Create an account</a></p>
+                    </div>
+                  </form>
+
                 </div>
               </div>
-              <div class="row">
-                  <div class="col-xs-12">
-                  <!-- <button type="submit" class="form-control btn btn-info" id="btn_search" name="btn_search"> -->
-                        <button type="submit" name="btn_submit" id="btn_submit" class="btn btn-primary  btn-block btn-flat" >Login</button>
-                  </div>
-              </div><br>
-          </form>
-                <div class="row">
-                  <div class="col-xs-12">
-                    <label>Don't have account? <a href="mainRegister.php">Click here to register</a></label>
-                  </div>
-                </div>
-  	   </div>
-</div>
-      </section>
-      <!-- /.content -->
-    </div>
-    <!-- /.container -->
-  </div>
-  <!-- /.content-wrapper -->
-  
-  
-</div>
 
-<!-- Start Scripts calling -->
-<!-- ./wrapper -->
-<!-- jQuery 3 -->
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- AdminLTE App -->
-<script src="dist/js/adminlte.min.js"></script>
-<script src="bower_components/select2/dist/js/select2.full.min.js"></script>
-<!-- SlimScroll -->
-<script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="bower_components/fastclick/lib/fastclick.js"></script>
-<script src="plugins/input-mask/jquery.inputmask.js"></script>
-<script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-<script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
-<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-<script src="bower_components/moment/min/moment.min.js"></script>
-<!-- bootstrap datepicker -->
-<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="dist/js/demo.js"></script>
-<!-- iCheck 1.0.1 -->
-<script src="plugins/iCheck/icheck.min.js"></script>
-<!-- bootstrap color picker -->
-<script src="bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
-<!-- bootstrap time picker -->
-<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
-<script src="loginscript.js"></script>
-<!-- End Scripts calling -->
-<script>
+
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </main><!-- End #main -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="assets/vendor/echarts/echarts.min.js"></script>
+  <script src="assets/vendor/quill/quill.min.js"></script>
+  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+  <script src="includes/scripts.js" async defer></script>
+  <script>
   sessionStorage.clear();
   $(".toggle-password").click(function() {
-  $(this).toggleClass("fa-eye fa-eye-slash");
+    alert('rar');
+  $(this).toggleClass("ri-eye-fill");
   var input = $($(this).attr("toggle"));
   if (input.attr("type") == "password") {
     input.attr("type", "text");
@@ -158,4 +186,5 @@ include 'modal/registermodal.php';
 
 </script>
 </body>
+
 </html>
