@@ -155,7 +155,7 @@
                         class="small mb-0">
                         Don't have account? 
                         <a 
-                          href="mainRegister.php">
+                          href="Register.php">
                           Create an account
                         </a>
                       </p>

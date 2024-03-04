@@ -36,12 +36,9 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 </head>
-
 <body>
-
   <main>
     <div class="container">
-
       <section class="section register min-vh-100 d-flex flex-column py-4">
         <div class="container">
           <div class="row">
@@ -49,7 +46,18 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="card-title">
-                            <h5>Search Employee Number</h5>
+                          <div class="row">
+                            <div class="col-md-9">
+                              <h5>Search Employee Number</h5>
+                            </div>
+                            <div class="col-md-3">
+                              <a href="index.php" class="button float-end">
+                                <i class="bi bi-arrow-left-square" >
+                                  Back to Login Page
+                                </i>
+                              </a> 
+                            </div>
+                          </div>
                         </div>  
                             <form 
                                 class="form-horizontal" 
@@ -97,13 +105,33 @@
                                             id="btn_search" 
                                             name="btn_search">
                                             SEARCH 
-                                                <i class="fa fa-search"></i>
+                                                <i class="bi bi-search"></i>
                                         </button>
                                     </div>
                                 </div>
                             </form>
                     </div>
                 </div>
+            </div>
+          </div>
+          <div class="row">
+            <div 
+              id="ContentTip"
+              class="alert alert-primary fade show" 
+              role="alert" 
+              >
+                  <h4 class="alert-heading">
+                    Notice!
+                  </h4>
+                  <p>
+                      The entered employee number belongs to 
+                    <i 
+                      style="color:black; font-weight:500; font-size:large;" 
+                      id="FullName">
+                    </i>.
+                      If you encounter any issues with the provided number, 
+                      please contact the Personnel Section for verification.
+                  </p>
             </div>
           </div>  
           <div class="row justify-content-center" hidden>
