@@ -201,7 +201,7 @@
 });
 </script>
 <?php
-include 'modal/registermodal.php';
+include 'modal/modals.php';
 ?>
 </body>
 </html>

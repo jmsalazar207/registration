@@ -48,20 +48,23 @@ $("#contentLogin").on("submit",function(event){
                 sessionStorage.setItem("loginEmpno",employeeNo);
                 window.location.href="homePage.php"
               }else if(credentialsMatch==0){ //modal error password 
-                $('#alertErrorMessage').text("Oops! It seems there's an issue with your login credentials. Please try again.");
-                $('#modalError').modal('show'); 
+                $('#headerClass').css("background-color","red");
+                $('#footerClass').css("background-color","red");
+                $('#headerMessage').text("Error!!");
+                $('#modalMessage').text("Oops! It seems there's an issue with your login credentials. Please try again.");
+                $('#modalInfo').modal('show'); 
                 sessionStorage.clear();
               }else if(credentialsMatch==2){ //modal for registration
-                $('#regRoute').css("display","inline-flex");
-                $('#alertMessage').text("The entered employee number is not yet registered in the system. Please proceed to register by clicking the 'Register' button or the 'Click here to register' link.");
-                $('#modalAlert').modal('show');
+                // $('#regRoute').css("display","inline-flex");
+                $('#modalMessage').text("The entered employee number is not yet registered in the system. Please proceed to register by clicking the 'Register' button or the 'Click here to register' link.");
+                $('#modalInfo').modal('show');
               }else if(credentialsMatch==4){ //modal not yet approved
-                $('#alertMessage').text('Your account is pending approval. Please reach out to ICTMS or Personnel Section to expedite the approval process.');
-                $('#modalAlert').modal('show');
+                $('#modalMessage').text('Your account is pending approval. Please reach out to ICTMS or Personnel Section to expedite the approval process.');
+                $('#modalInfo').modal('show');
                 sessionStorage.clear();
               }else{ //modal no data found
-                $('#alertMessage').text("We couldn't find any data in the database. Please contact ICTMS or Personnel Section for further assistance in verifying your information");              
-                $('#modalAlert').modal('show');
+                $('#modalMessage').text("We couldn't find any data in the database. Please contact ICTMS or Personnel Section for further assistance in verifying your information");              
+                $('#modalInfo').modal('show');
                 sessionStorage.clear();
               }
             },

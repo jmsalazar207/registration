@@ -170,7 +170,7 @@
                 <h4 id="alertMessage"></h4>
               </div>
               <div class="modal-footerYellow">
-                <button type="button" id="regRoute" name="regRoute" onclick="location.href='mainRegister.php'" class="btn btn-primary btn-sm" style="display: none;">Register</button>
+                <button type="button" id="regRoute" name="regRoute" onclick="location.href='Register.php'" class="btn btn-primary btn-sm" style="display: none;">Register</button>
                 <button type="button" class="btn btn-modalYellow btn-sm" data-dismiss="modal">OK</button>
               </div>
             </div>

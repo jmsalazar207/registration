@@ -219,7 +219,7 @@
   <script src="includes/scripts.js" async defer></script>
   <script src="pluginscript.js"></script>
 <?php
- include 'modal/registermodal.php';
+ include 'modal/modals.php';
 ?>
 </body>
 
