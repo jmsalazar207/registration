@@ -7,7 +7,6 @@
 	$_SESSION["token-expire"] = time() + 3600; // 1 hour = 3600 secs
 // include 'includes/conn_to_ctris.php';
 require_once('includes/init.php');
-include 'modal/registermodal.php';
    include 'includes/functions.php'; 
 ?>
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
@@ -400,6 +399,8 @@ include 'modal/registermodal.php';
 <!-- <script src="loginscript.js"></script> -->
 <!-- End Scripts calling -->
 <?php
+include 'modal/registermodal.php';
+
 if(isset($_SESSION['insert'])){
   if($_SESSION['insert'] == 'success'){
     echo "<script type='text/javascript'>
