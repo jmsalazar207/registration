@@ -22,6 +22,7 @@ require_once("includes/helper.php");
                 $data['credentialsMatch'] = 4;
             }else{
                 $data['credentialsMatch'] = 1;
+                $_SESSION['userID'] = $credentials['empno'];
             }
         }else if(($credentials['password'] != '') && $credentials['password'] !=$password) {
             $data['credentialsMatch'] = 0;

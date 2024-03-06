@@ -42,7 +42,6 @@ $("#contentLogin").on("submit",function(event){
             sessionStorage.setItem("updateEmpNO",employeeNo);
             
               if(credentialsMatch==1){
-                $_SESSION['userID'] = employeeNo;
                 sessionStorage.setItem("loginEmpno",employeeNo);
                 window.location.href="homePage.php"
               }else if(credentialsMatch==0){ //modal error password 

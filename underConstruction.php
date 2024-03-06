@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="shortcut icon" href="images/logo.png">
   <title>Home Page - Employee's Registration Module</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -37,16 +36,8 @@
         include "includes/headerIn.php";
         include "includes/sideBar.php";
     ?>
-  
-
-  <!-- =============================================== -->
-
-  
-  <!-- =============================================== -->
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-
 
     <!-- Main content -->
     <section class="content">
@@ -54,7 +45,7 @@
 			<div class="col-xs-12">
 				<div class="box">
 					<div class="box-body">
-						<img src = "images/BG.png" height = "800px" width = "100%" />
+						<img src = "images/under_maintenance.png" height = "750px" width = "100%" />
 					</div>
 				</div>
 			</div>
@@ -65,14 +56,6 @@
   </div>
   <!-- /.content-wrapper -->
 
-<?php
-include "includes/footer.php";
-?>
- 
-  <!-- /.control-sidebar -->
-  <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
 
@@ -93,8 +76,5 @@ include "includes/footer.php";
     $('.sidebar-menu').tree()
   })
 </script>
-<?php
-include "modal/registermodal.php";
-?>
 </body>
 </html>
