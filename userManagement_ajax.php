@@ -61,9 +61,14 @@ if($empRecords){
 	// $divison = $row['division_name'];
 	// $unit = $row['unit_name'];   
    
-    $action = "<td style='text-align:center'>
-            <a href='#' class='reset' data-toggle='modal' data-target='#modal-default' value = '$empno'  title='View' >RESET</a>
-            </td>";  
+    $action = "<td>
+                  <button class='' data-toggle='modal' data-target='#modal-default' value = '$empno'  title='View' >
+                     View Info
+                  </button>
+                  <button class='' data-toggle='modal' data-target='#modal-default' value = '$empno'  title='View' >
+                     Approve
+                  </button>
+               </td>";  
    
    $data[] = array(
       "Action" => $action,

@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="shortcut icon" href="images/logo.png">
   <title>User Management - Employee's Registration Module</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -35,35 +36,35 @@
         <div class="content-wrapper">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Data Table With Full Features</h3>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <h3 class="box-title">
+                        User Management Module
+                      </h3>
+                    </div>
+                    &nbsp;
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-info" style="width: 15%;" >
+                          Add User
+                        </button>
+                    </div>
+                  </div>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                <table id="userManage" class="table table-bordered table-striped" style="width:100%">
+                <table id="userManage" class="table table-bordered table-striped table-responsive" style="text-align:center; width:100%">
                     <thead class="bg-primary">
                         <tr>
-                        <th style="text-align:center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Action&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                        <th> EmpID </th>
-                        <th> Lastname </th>
-                        <th> Firstname </th>
-                        <th> Middlename </th>
-                        <th> Position </th>
-                        <th> Division </th>
-                        <th> Unit </th>
+                          <th> Action </th>
+                          <th> Employee Number </th>
+                          <th> Last Name </th>
+                          <th> First Name </th>
+                          <th> Middle Name </th>
+                          <th> Position </th>
+                          <th> Division </th>
+                          <th> Unit </th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                        <th style="text-align:center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Action&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                        <th> EmpID. </th>
-                        <th> Lastname </th>
-                        <th> Firstname </th>
-                        <th> Middlename </th>
-                        <th> Position </th>  
-                        <th> Division </th>
-                        <th> Unit </th>                            
-                        </tr>
-                    </tfoot>
                 </table>
                 </div>
                 <!-- /.box-body -->
