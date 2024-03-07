@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+<?php
+  session_start();
+	$_SESSION["token"] = bin2hex(random_bytes(32));
+	$_SESSION["token-expire"] = time() + 3600; // 1 hour = 3600 secs
+// include 'includes/conn_to_ctris.php';
+require_once('includes/init.php');
+   include 'includes/functions.php'; 
+?>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="shortcut icon" href="images/logo.png">
@@ -15,6 +23,8 @@
   <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -44,8 +54,11 @@
                     </div>
                     &nbsp;
                     <div class="col-md-12">
-                        <button type="submit" class="btn btn-info" style="width: 15%;" >
-                          Add User
+                        <button type="submit" id="btnAdd" name="btnAdd" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addNewUser">
+                          <span class="glyphicon glyphicon-plus"></span>
+                            <span class="glyphicon-class">
+                              Add New User
+                            </span>
                         </button>
                     </div>
                   </div>
@@ -93,7 +106,13 @@
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+<!-- Select2 -->
+<script src="bower_components/select2/dist/js/select2.full.min.js"></script>
 <!-- page script -->
+<?php
+include "modal/formModal.php";
+?>
+<script src="manageScript.js"></script>
 <script>
   $(function () {
     $('#userManage').DataTable({
@@ -138,5 +157,6 @@
     // });
   })
 </script>
+
 </body>
 </html>

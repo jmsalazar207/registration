@@ -3,6 +3,7 @@
       text-align: center;
     }
 </style>
+
 <header class="main-header">
     <!-- Logo -->
     <a href="#" class="logo">

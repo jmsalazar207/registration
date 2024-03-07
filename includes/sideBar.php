@@ -87,6 +87,12 @@
                  List of Position
               </a>
             </li>
+            <li>
+              <a href="underconstruction.php">
+                <i class="glyphicon glyphicon-list-alt"></i> 
+                 Generate List
+              </a>
+            </li>
           </ul>
         </li>
         <li>
