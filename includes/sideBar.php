@@ -13,7 +13,7 @@
           </a>
         </li>
         <li>
-          <a href="profilePage.php">
+          <a href="underconstruction.php">
             <i class="glyphicon glyphicon-user"></i> 
               <span>
                 Profile
@@ -64,7 +64,7 @@
           </a>
           <ul class="treeview-menu">
             <li>
-              <a href="underconstruction.php">
+              <a href="userManagement.php">
                 <i class="glyphicon glyphicon-book"></i> 
                  User Management
               </a>

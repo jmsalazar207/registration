@@ -32,33 +32,25 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
-<?php 
+  <?php 
         include "includes/session.php";
         include "includes/headerIn.php";
         include "includes/sideBar.php";
     ?>
-  
-
-  <!-- =============================================== -->
-
-  
-  <!-- =============================================== -->
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-
-
     <!-- Main content -->
     <section class="content">
-    <div class="row">
-			<div class="col-xs-12">
-				<div class="box">
-					<div class="box-body">
-						<img src = "images/BG.png" height = "800px" width = "100%" />
-					</div>
-				</div>
-			</div>
-		</div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-body">
+              <img src = "images/BG.png" height = "800px" width = "100%" />
+            </div>
+          </div>
+        </div>
+      </div>
 
     </section>
     <!-- /.content -->
