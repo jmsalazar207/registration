@@ -29,7 +29,7 @@ function NumberOnly(evt) {
 
     var validatePassSubmit = 1;
 
-    if(addLName.length <2){
+      if(addLName.length <2){
         $("#checkTxtAddLName").html("Please enter a Last Name with at least 2 characters.").css('color', 'red');
         $("#txtAddLName").css('border-color', 'red');
         $("#txtAddLName").focus();
@@ -63,7 +63,8 @@ function NumberOnly(evt) {
                 $("#checkTxtAddEmpno").html("Oops! It seems this employee number has already been used. Please double-check your information and try again, or contact support for assistance.").css('color', 'red');
                 $("#txtAddEmpno").css('border-color', 'red');
                 $("#txtAddEmpno").focus();
-            }else{
+                validatePassSubmit = 0;
+            }else if(validatePassSubmit == 1){
                 alert('Ala yang kalupa proceed insert');
             }
         },
