@@ -1,3 +1,4 @@
+
 function NumberOnly(evt) {
     var charCode = (evt.which) ? evt.which : evt.keyCode
     if (charCode > 31 && (charCode < 48 || charCode > 57))
@@ -66,6 +67,28 @@ function NumberOnly(evt) {
                 validatePassSubmit = 0;
             }else if(validatePassSubmit == 1){
                 alert('Ala yang kalupa proceed insert');
+                    // process register
+                    // var formData = new FormData(contentform);
+                    // $.ajax({
+                    //   url:"addnew.php",
+                    //   method:"POST",
+                    //   dataType: "json",
+                    //   data:formData,
+                    //   success:function(data){
+                    //     const msg = data.msg;
+                    //     const stat = data.status;
+                    //     if(stat == "success"){
+                    //       $('#alertMessageSuccess').text(msg);
+                    //       $('#modalAlertSuccess').modal('show');
+                    //     }
+                    //     else{
+                    //       $('#alertMessage').text(msg);
+                    //       $('#modalAlert').modal('show'); 
+                    //     }
+                    //   },
+                    //   processData: false,
+                    //   contentType: false
+                    // }); 
             }
         },
         });

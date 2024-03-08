@@ -1,10 +1,11 @@
+
 <!-- Left side column. contains the sidebar -->
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li>
+        <li id="homePage">
           <a href="homePage.php">
             <i class="glyphicon glyphicon-home"></i> 
               <span>
@@ -12,7 +13,7 @@
               </span>
           </a>
         </li>
-        <li>
+        <li id="profilePage" >
           <a href="underconstruction.php">
             <i class="glyphicon glyphicon-user"></i> 
               <span>

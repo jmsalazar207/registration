@@ -36,6 +36,7 @@
         include "includes/session.php";
         include "includes/headerIn.php";
         include "includes/sideBar.php";
+        
     ?>
 
   <!-- Content Wrapper. Contains page content -->
