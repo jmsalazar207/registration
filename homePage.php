@@ -36,7 +36,6 @@
         include "includes/session.php";
         include "includes/headerIn.php";
         include "includes/sideBar.php";
-        
     ?>
 
   <!-- Content Wrapper. Contains page content -->
@@ -81,6 +80,7 @@ include "includes/footer.php";
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+<script src="panelScript.js"></script>
 <script>
   $(document).ready(function () {
     $('.sidebar-menu').tree()

@@ -16,7 +16,7 @@ $("#contentLogin").on("submit",function(event){
     event.preventDefault();
     const username = $('#username').val();
     const password = $('#password').val();
-    sessionStorage.setItem("password",password);
+    // sessionStorage.setItem("password",password);
     const loginCaptcha = $('#CheckCaptchaLoginmessage').val();
     $("#CheckCaptchaLoginmessage").html("");
     var loginPass = 1;
@@ -39,7 +39,7 @@ $("#contentLogin").on("submit",function(event){
                  // 4 registered ok password match but not approved
             const credentialsMatch = data.credentialsMatch;
             var employeeNo = data.empno;
-            sessionStorage.setItem("updateEmpNO",employeeNo);
+            // sessionStorage.setItem("updateEmpNO",employeeNo);
             
               if(credentialsMatch==1){
                 sessionStorage.setItem("loginEmpno",employeeNo);

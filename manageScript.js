@@ -53,7 +53,7 @@ function NumberOnly(evt) {
         $("#txtAddEmpno").focus();
         validatePassSubmit = 0;
       }
-      $.ajax({ //check email and mobile if existed 
+      $.ajax({ //check empno
         url:"checkExist.php",
         method:"POST",
         data: {addEmpNo:addEmpNo},

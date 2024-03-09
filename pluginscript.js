@@ -72,12 +72,12 @@ function NumberOnly(evt) {
     $('.timepicker').timepicker({
       showInputs: false
     })
-    const sessionEmpno = sessionStorage.getItem("loginEmpno");
-    if(sessionEmpno){
-      $('#AlertProceedUpdate').text("Congratulations! 🎉 You've successfully logged in. You can now update your information.");
-      $('#SuccessLoginConfirm').modal('show'); 
-      UpdateYes(sessionEmpno);
-    }
+    // const sessionEmpno = sessionStorage.getItem("loginEmpno");
+    // if(sessionEmpno){
+    //   $('#AlertProceedUpdate').text("Congratulations! 🎉 You've successfully logged in. You can now update your information.");
+    //   $('#SuccessLoginConfirm').modal('show'); 
+    //   UpdateYes(sessionEmpno);
+    // }
   });
 function sessionKill(){ //close modal session kill
   sessionStorage.clear();
@@ -381,7 +381,7 @@ function recaptchaExpired() {
       };
       
 function UpdateYes(sessionEmpno){
-  const sessionPassword = sessionStorage.getItem("password");
+  // const sessionPassword = sessionStorage.getItem("password");
    $.ajax({
       url:"includes/functions.php",
       method:"POST",

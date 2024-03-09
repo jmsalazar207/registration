@@ -3,7 +3,7 @@
       text-align: center;
     }
 </style>
-
+<?php error_reporting(0)?>
 <header class="main-header">
     <!-- Logo -->
     <a href="#" class="logo">
@@ -27,14 +27,14 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img id="headerPicture" src="uploadedProfile/userIcon.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs" id="headerFullname" ></span>
+              <span class="hidden-xs" id="headerFullname"><?=$_SESSION['FullName'];?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
                 <img id="dropPicture" src="uploadedProfile/userIcon.jpg" class="img-circle" alt="User Image">
-                <p id="dropFullName">
-                  <small id="dropPosition"></small>
+                <p id="dropFullName"><?=$_SESSION['FirstName'].' '.$_SESSION['LastName']?>
+                  <small id="dropPosition"><?=$_SESSION['Position']?></small>
                 </p>
               </li>
               <!-- Menu Footer-->

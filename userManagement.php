@@ -37,7 +37,7 @@ require_once('includes/init.php');
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
-        <?php 
+    <?php 
             include "includes/session.php";
             include "includes/headerIn.php";
             include "includes/sideBar.php";
