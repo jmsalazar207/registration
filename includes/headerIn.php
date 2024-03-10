@@ -3,7 +3,6 @@
       text-align: center;
     }
 </style>
-<?php error_reporting(0)?>
 <header class="main-header">
     <!-- Logo -->
     <a href="#" class="logo">
@@ -27,16 +26,36 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img id="headerPicture" src="uploadedProfile/userIcon.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs" id="headerFullname"><?=$_SESSION['FullName'];?></span>
+              <span class="hidden-xs" id="headerFullname"></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
-              <li class="user-header">
+              <li 
+                class="user-header"
+                style=
+                "
+                display: inline-block; 
+                width: 100%;
+                height:auto;
+                text-align: center;
+                "
+              >
                 <img id="dropPicture" src="uploadedProfile/userIcon.jpg" class="img-circle" alt="User Image">
-                <p id="dropFullName"><?=$_SESSION['FirstName'].' '.$_SESSION['LastName']?>
-                  <small id="dropPosition"><?=$_SESSION['Position']?></small>
-                </p>
+                  <p id="dropFullName"></p>
+                    <div class="card">
+                      <small 
+                        id="dropPosition" 
+                        style=
+                        "
+                          font-size:medium;
+                          color: white;
+                          text-align: center;
+                          width: 100%;
+                        " >
+                      </small>
+                    </div>
               </li>
+            
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
@@ -53,3 +72,4 @@
       </div>
     </nav>
   </header>
+  

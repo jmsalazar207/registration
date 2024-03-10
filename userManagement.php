@@ -3,6 +3,10 @@
 <head>
 <?php
   session_start();
+  $UL = $_SESSION['userLevel'];
+  if(($UL !=1)&&($UL != 2)){
+    header('location: homePage.php');
+  }
 	$_SESSION["token"] = bin2hex(random_bytes(32));
 	$_SESSION["token-expire"] = time() + 3600; // 1 hour = 3600 secs
 // include 'includes/conn_to_ctris.php';
@@ -110,8 +114,9 @@ require_once('includes/init.php');
 <script src="bower_components/select2/dist/js/select2.full.min.js"></script>
 <!-- page script -->
 <?php
-include "modal/formModal.php";
+  include "modal/formModal.php";
 ?>
+<script src="panelScript.js"></script>
 <script src="manageScript.js"></script>
 <script>
   $(function () {

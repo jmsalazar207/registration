@@ -68,27 +68,29 @@ function NumberOnly(evt) {
             }else if(validatePassSubmit == 1){
                 alert('Ala yang kalupa proceed insert');
                     // process register
-                    // var formData = new FormData(contentform);
-                    // $.ajax({
-                    //   url:"addnew.php",
-                    //   method:"POST",
-                    //   dataType: "json",
-                    //   data:formData,
-                    //   success:function(data){
-                    //     const msg = data.msg;
-                    //     const stat = data.status;
-                    //     if(stat == "success"){
-                    //       $('#alertMessageSuccess').text(msg);
-                    //       $('#modalAlertSuccess').modal('show');
-                    //     }
-                    //     else{
-                    //       $('#alertMessage').text(msg);
-                    //       $('#modalAlert').modal('show'); 
-                    //     }
-                    //   },
-                    //   processData: false,
-                    //   contentType: false
-                    // }); 
+                    var formData = new FormData(contentAdd);
+                    $.ajax({
+                      url:"addNewUser.php",
+                      method:"POST",
+                      dataType: "json",
+                      data:formData,
+                      success:function(data){
+                        const msg = data.msg;
+                        const stat = data.status;
+                        if(stat == "success"){
+                          
+                          $('#modalNotif-header').text('Great! Success.');
+                          $('#modalNotif-message').text(msg);
+                          $('#modalNotif').modal('show');
+                        }
+                        else{
+                          $('#alertMessage').text(msg);
+                          $('#modalAlert').modal('show'); 
+                        }
+                      },
+                      processData: false,
+                      contentType: false
+                    }); 
             }
         },
         });

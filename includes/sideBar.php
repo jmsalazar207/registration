@@ -53,7 +53,7 @@
           </ul>
         </li>
         <li>
-        <li class="treeview" id="sysAdmin">
+        <li class="treeview" id="sysAdmin" hidden>
           <a href="#">
             <i class="glyphicon glyphicon-cog"></i> 
               <span>
@@ -88,14 +88,14 @@
                  List of Position
               </a>
             </li>
-            <li>
+          </ul>
+        </li>
+        <li id="genList" hidden>
               <a href="underconstruction.php">
                 <i class="glyphicon glyphicon-list-alt"></i> 
                  Generate List
               </a>
             </li>
-          </ul>
-        </li>
         <li>
           <a href="includes/logout.php">
             <i class ="glyphicon glyphicon-log-out"></i>   
