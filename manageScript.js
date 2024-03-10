@@ -24,7 +24,7 @@ function NumberOnly(evt) {
       }
     })
   }
-  $('#formUser').on("submit",function(event){
+  $('#contentUpdate').on("submit",function(event){
       event.preventDefault();
       alert('Pasok sa checking');
       const adminEmpNo = $('#txtEmpno').val();
@@ -86,7 +86,7 @@ function NumberOnly(evt) {
           }else if(validatePassUpdate == 1){
               alert('Ala yang kalupa proceed update');
                   // process update
-                  var formData = new FormData(formUser);
+                  var formData = new FormData(contentUpdate);
                   $.ajax({
                     url:"adminUpdateNewUser.php",
                     method:"POST",
@@ -95,8 +95,7 @@ function NumberOnly(evt) {
                     success:function(data){
                       const msg = data.msg;
                       const stat = data.status;
-                      if(stat == "success"){
-                        
+                      if(stat === "success"){ 
                         $('#modalNotif-header').text('Great! Success.');
                         $('#modalNotif-message').text(msg);
                         $('#modalNotif').modal('show');
