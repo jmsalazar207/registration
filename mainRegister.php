@@ -3,6 +3,9 @@
 <head>
 <?php
   session_start();
+  if (isset($_SESSION["userID"]) && $_SESSION["userID"]){
+    header('location: homePage.php');
+  }
 	$_SESSION["token"] = bin2hex(random_bytes(32));
 	$_SESSION["token-expire"] = time() + 3600; // 1 hour = 3600 secs
 // include 'includes/conn_to_ctris.php';

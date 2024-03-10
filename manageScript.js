@@ -8,6 +8,113 @@ function NumberOnly(evt) {
   $(function(){
     $('.select2').select2()
   })
+  function adminUpdate(id){
+    $.ajax({
+      url:"includes/functions.php",
+      method:"POST",
+      data:{sessionEmpno:id},
+      success:function(data){
+        UpdateInfo = JSON.parse(data);
+        $("#txtEmpno").val(UpdateInfo["empno"].replaceAll('03-',''));
+        $("#txtLName").val(UpdateInfo["sname"]);
+        $("#txtFName").val(UpdateInfo["fname"]);
+        $("#txtMName").val(UpdateInfo["mname"]);
+        $("#txtExtName").val(UpdateInfo["ename"]).trigger('change');
+        $('#formUser').modal('show');
+      }
+    })
+  }
+  $('#formUser').on("submit",function(event){
+      event.preventDefault();
+      alert('Pasok sa checking');
+      const adminEmpNo = $('#txtEmpno').val();
+      const adminFName = $('#txtFName').val();
+      const adminMname = $('#txtMName').val();
+      const adminLName = $('#txtLName').val();
+      
+    $("#txtEmpno").css('border-color', '');
+    $("#checkTxtEmpno").html("");
+
+    $("#txtLName").css('border-color', '');``
+    $("#checkTxtLName").html("");
+
+    $("#txtMName").css('border-color', '');
+    $("#checkTxtMName").html("");
+          
+    $("#txtFName").css('border-color', '');
+    $("#checkTxtFName").html("");
+
+    $("#txtExtName").css('border-color', '');
+    $("#checkTxtExtName").html("");
+
+    var validatePassUpdate = 1;
+    if(adminLName.length <2){
+      $("#checkTxtLName").html("Please enter a Last Name with at least 2 characters.").css('color', 'red');
+      $("#txtLName").css('border-color', 'red');
+      $("#txtLName").focus();
+      validatePassUpdate = 0;
+    }if(adminMname.length ==''){
+      
+    }else if(adminMname.length <2){
+      $("#checkTxtMName").html("Please enter a Middle Name with at least 2 characters.").css('color', 'red');
+      $("#txtMName").css('border-color', 'red');
+      $("#txtMName").focus();
+      validatePassUpdate = 0;
+    }if(adminFName.length <2){
+      $("#checkTxtFName").html("Please enter a First Name with at least 2 characters.").css('color', 'red');
+      $("#txtFName").css('border-color', 'red');
+      $("#txtFName").focus();
+      validatePassUpdate = 0;
+    }if ((adminEmpNo.length>5) || (adminEmpNo.length<4)){
+      $("#checkTxtEmpno").html("Invalid Employee number. Please enter a number with a minimum of 4 digits and a maximum of 5 digits.").css('color', 'red');
+      $("#txtEmpno").css('border-color', 'red');
+      $("#txtEmpno").focus();
+      validatePassUpdate = 0;
+    }
+    $.ajax({ //check empno
+      url:"checkExist.php",
+      method:"POST",
+      data: {addEmpNo:adminEmpNo},
+      dataType: 'json',
+      success:function(data){
+          const uniqueEmpNo = data.empNO;
+          if(uniqueEmpNo){
+              $("#checkTxtEmpno").html("Oops! It seems this employee number has already been used. Please double-check your information and try again, or contact support for assistance.").css('color', 'red');
+              $("#txtEmpno").css('border-color', 'red');
+              $("#txtEmpno").focus();
+              validatePassUpdate = 0;
+          }else if(validatePassUpdate == 1){
+              alert('Ala yang kalupa proceed update');
+                  // process update
+                  var formData = new FormData(formUser);
+                  $.ajax({
+                    url:"adminUpdateNewUser.php",
+                    method:"POST",
+                    dataType: "json",
+                    data:formData,
+                    success:function(data){
+                      const msg = data.msg;
+                      const stat = data.status;
+                      if(stat == "success"){
+                        
+                        $('#modalNotif-header').text('Great! Success.');
+                        $('#modalNotif-message').text(msg);
+                        $('#modalNotif').modal('show');
+                      }
+                      else{
+                        $('#alertMessage').text(msg);
+                        $('#modalAlert').modal('show'); 
+                      }
+                    },
+                    processData: false,
+                    contentType: false
+                  }); 
+          }
+      },
+      });
+      // UPDATWEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+      
+  })
   $("#contentAdd").on("submit",function(event){
     event.preventDefault();
     const addEmpNo = $('#txtAddEmpno').val();
@@ -70,7 +177,7 @@ function NumberOnly(evt) {
                     // process register
                     var formData = new FormData(contentAdd);
                     $.ajax({
-                      url:"addNewUser.php",
+                      url:"adminAddNewUser.php",
                       method:"POST",
                       dataType: "json",
                       data:formData,

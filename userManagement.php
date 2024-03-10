@@ -112,6 +112,7 @@ require_once('includes/init.php');
 <script src="dist/js/demo.js"></script>
 <!-- Select2 -->
 <script src="bower_components/select2/dist/js/select2.full.min.js"></script>
+
 <!-- page script -->
 <?php
   include "modal/formModal.php";

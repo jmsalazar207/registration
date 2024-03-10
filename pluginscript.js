@@ -97,7 +97,7 @@ function sessionKill(){ //close modal session kill
             url:"includes/functions.php",
             method:"POST",
             data:{regionAction:regionAction, region_id:region_id},
-            success:function(data){
+            success:function(data){``
 
                 jQuery('#AddProvince').html(data);
                 jQuery('#AddCity').html('<option value="">SELECT PROVINCE FIRST</option>');  

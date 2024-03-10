@@ -62,7 +62,7 @@ if($empRecords){
 	// $unit = $row['unit_name'];   
    
     $action = "<td>
-                  <button class='' data-toggle='modal' data-target='#modal-default' value = '$empno'  title='View' >
+                  <button class='' onclick ='adminUpdate(this.value)' value = '$empno'  title='View' >
                      View Info
                   </button>
                   <button class='' data-toggle='modal' data-target='#modal-default' value = '$empno'  title='View' >
