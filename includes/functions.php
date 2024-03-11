@@ -1,6 +1,19 @@
  <?php
 // include 'conn_to_ctris.php';
 require_once('init.php');
+
+//Drop down ning Cluster
+function fill_cluster($dbConn,$cluster_id=0){
+  $params['fields'] = "cluster_code, cluster_name";
+  $cluster=$dbConn->find('lib_cluster',$params);
+  $output = '<option value="">SELECT CLUSTER</option>';
+  if($cluster){
+    foreach($cluster as $cluster){
+      $output .= '<option value='.$cluster['cluster_code']. ($cluster_id==$cluster['cluster_code']?" selected":"") . ' >' .$cluster['cluster_name'].'</option>';
+    }
+  }
+ return $output;
+}
 //Drop down ning Region
 function fill_region($dbConn,$region_id=0){
     $params['fields'] = "region_code, region_name, region_nick";

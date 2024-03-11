@@ -12,15 +12,18 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
     echo json_encode($dataReturn);
 }else{
     //proceed to insert new user
-                    $id=$_POST['txtEmpno'];
+                    $id='03-'.$_POST['txtOldEmpno'];
+                    $adminUserUpdate['empno'] = sanitize('03-'.$_POST['txtEmpno']);
                     $adminUserUpdate['sname'] = sanitize(strtoupper($_POST['txtLName']));
                     $adminUserUpdate['fname'] = sanitize(strtoupper($_POST['txtFName']));
                     $adminUserUpdate['mname'] = sanitize(strtoupper($_POST['txtMName']));
-                    $adminUserUpdate['ename'] = sanitize(strtoupper($_POST['txtExtName']));
+                    $adminUserUpdate['ename'] = sanitize($_POST['txtExtName']);
                     $adminUserUpdate['last_update'] = $today;
     
-                    $UpdateQuery = $dbConn->update('userprofile', 'empno', $id, $adminUserUpdate);
-                    if($UpdateQuery){
+                    $adminUpdateQuery = $dbConn->update('userprofile', 'empno', $id, $adminUserUpdate);
+                    // echo $adminUpdateQuery;
+
+                    if($adminUpdateQuery){
                         $dataReturn['status'] = "success";
                         $dataReturn['msg'] = "Information has been updated successfully.";
                         echo json_encode($dataReturn);

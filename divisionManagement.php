@@ -53,15 +53,15 @@ require_once('includes/init.php');
                   <div class="row">
                     <div class="col-md-12">
                       <h3 class="box-title">
-                        User Management Module
+                        Management for List of Division
                       </h3>
                     </div>
                     &nbsp;
                     <div class="col-md-12">
-                        <button type="submit" id="btnAdd" name="btnAdd" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addNewUser">
+                        <button type="submit" id="btnAdd" name="btnAdd" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addDivision">
                           <span class="glyphicon glyphicon-plus"></span>
                             <span class="glyphicon-class">
-                              Add New User
+                              Add Division
                             </span>
                         </button>
                     </div>
@@ -73,13 +73,8 @@ require_once('includes/init.php');
                     <thead class="bg-primary">
                         <tr>
                           <th> Action </th>
-                          <th> Employee Number </th>
-                          <th> Last Name </th>
-                          <th> First Name </th>
-                          <th> Middle Name </th>
-                          <th> Position </th>
-                          <th> Division </th>
-                          <th> Unit </th>
+                          <th> Division Name </th>
+                          <th> Division Code Name </th>
                         </tr>
                     </thead>
                 </table>
@@ -89,11 +84,12 @@ require_once('includes/init.php');
             <!-- /.box -->
         </div>
         <!-- /.content-wrapper -->
+
+    <!-- Add the sidebar's background. This div must be placedimmediately after the control sidebar -->
+        <div class="control-sidebar-bg"></div>
         <?php
           include "includes/footer.php";
         ?>
-    <!-- Add the sidebar's background. This div must be placedimmediately after the control sidebar -->
-        <div class="control-sidebar-bg"></div>
     </div>
 
 <!-- ./wrapper -->
@@ -123,31 +119,31 @@ require_once('includes/init.php');
 <script src="panelScript.js"></script>
 <script src="manageScript.js"></script>
 <script>
-  $(function () {
-    $('#userManage').DataTable({
-      ajax: {
-          url: 'userManagement_ajax.php',
-          type: 'POST',
-          'data': function(data){
-          }
-        },
-      serverSide: true,
-      stateSave: true,
-      "order": [[ 1, "desc" ]],
-      columns: [
-        { data: "Action"},
-        { data: "empno"},
-        { data: "sname"},
-        { data: "fname"},
-        { data: "mname"},
-        { data: "position_name"},
-        { data: "division_name"},
-        { data: "unit_name"}
-      ],
-      'columnDefs': [ 
-        { "bSortable": false, "aTargets": [0] }
-      ]
-    });
+//   $(function () {
+//     $('#userManage').DataTable({
+//       ajax: {
+//           url: 'userManagement_ajax.php',
+//           type: 'POST',
+//           'data': function(data){
+//           }
+//         },
+//       serverSide: true,
+//       stateSave: true,
+//       "order": [[ 1, "desc" ]],
+//       columns: [
+//         { data: "Action"},
+//         { data: "empno"},
+//         { data: "sname"},
+//         { data: "fname"},
+//         { data: "mname"},
+//         { data: "position_name"},
+//         { data: "division_name"},
+//         { data: "unit_name"}
+//       ],
+//       'columnDefs': [ 
+//         { "bSortable": false, "aTargets": [0] }
+//       ]
+//     });
     
     // $('#table_employees tbody').on('click', '.reset', function (){
     //   var empno = $(this).attr('value');
@@ -164,7 +160,7 @@ require_once('includes/init.php');
     //     },
     //   })
     // });
-  })
+//   })
 </script>
 
 </body>

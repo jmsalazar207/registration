@@ -65,9 +65,7 @@ if($empRecords){
                   <button class='' onclick ='adminUpdate(this.value)' value = '$empno'  title='View' >
                      View Info
                   </button>
-                  <button class='' data-toggle='modal' data-target='#modal-default' value = '$empno'  title='View' >
-                     Approve
-                  </button>
+                 
                </td>";  
    
    $data[] = array(

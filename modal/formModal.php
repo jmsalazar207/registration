@@ -208,6 +208,14 @@
                                             type="hidden" 
                                             name="token" 
                                             value="<?=$_SESSION["token"]?>"> 
+                                            
+                                            <input 
+                                            type="hidden" 
+                                            class="form-control" 
+                                            name="txtOldEmpno" 
+                                            id="txtOldEmpno" 
+                                            >
+
                                         <input 
                                             type="text" 
                                             class="form-control" 
@@ -337,8 +345,119 @@
           </div>
           <!-- /.modal-dialog -->
         </div>
-        /.modal
+        <!-- /.modalUpdate -->
 
+
+        <!-- modal update info  -->
+        <div class="modal fade" id="addDivision">
+          <div class="modal-dialog">
+            <div class="modal-content">
+                <form 
+                    method="POST" 
+                    id="contentDivision" 
+                    autocomplete="off">
+                    <div class="modal-header">
+                        <button 
+                            type="button" 
+                            class="close" 
+                            data-dismiss="modal" 
+                            aria-label="Close">
+                                <span aria-hidden="true">
+                                    &times;
+                                </span>
+                        </button>
+                        <h4 class="modal-title">Division Information</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="card col-md-12">
+                                <div class="col-md-12">
+                                    <label 
+                                        for="txtEmpno" 
+                                        class="col-sm-12">
+                                        Division Name
+                                    </label>
+                                    <div class="col-sm-12">
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            name="txtDivName" 
+                                            id="txtDivName" 
+                                            placeholder="Division Name" 
+                                            value="" 
+                                            style="text-transform: uppercase;" 
+                                            required="true" 
+                                            tabindex="1">
+                                    </div>
+                                    <small id='checktxtDivName'></small>
+                                </div>
+                                <br>
+                                <div class="col-md-12">
+                                    <label 
+                                        for="txtFName" 
+                                        class="col-sm-12">
+                                        Division Name Code
+                                    </label>
+                                    <div class="col-sm-12">
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            name="txtDivNameCode" 
+                                            id="txtDivNameCode" 
+                                            placeholder="Division Name Code" 
+                                            value="" 
+                                            style="text-transform: uppercase;" 
+                                            required="true" 
+                                            tabindex="2">
+                                    </div>
+                                    <small id='checktxtDivNameCode'></small>
+                                </div>
+                                <br>
+                                <div class="col-md-12">
+                                    <label 
+                                        for="txtExtName" 
+                                        class="col-sm-12">
+                                        Cluster
+                                    </label>
+                                    <div class="col-sm-12">
+                                        <select 
+                                            class="form-control select2"
+                                            style="width: 100%;"  
+                                            id="txtCluster" 
+                                            name="txtCluster" 
+                                            tabindex="6"
+                                            required = "true">
+                                                <?php
+                                                    echo fill_cluster($dbConn, null);
+                                                ?>
+                                        </select>
+                                    </div>
+                                    <small id='checktxtCluster'></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button 
+                            type="button" 
+                            class="btn btn-default pull-left" 
+                            data-dismiss="modal">
+                            Close
+                        </button>
+                        <button 
+                            type="submit" 
+                            class="btn btn-primary">
+                            Update
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modalDivision -->
+        
         <!-- modal Notif -->
         <div class="modal fade" id="modalNotif">
           <div class="modal-dialog modal-sm">

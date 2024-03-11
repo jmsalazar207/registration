@@ -16,6 +16,7 @@ function NumberOnly(evt) {
       success:function(data){
         UpdateInfo = JSON.parse(data);
         $("#txtEmpno").val(UpdateInfo["empno"].replaceAll('03-',''));
+        $("#txtOldEmpno").val(UpdateInfo["empno"].replaceAll('03-',''));
         $("#txtLName").val(UpdateInfo["sname"]);
         $("#txtFName").val(UpdateInfo["fname"]);
         $("#txtMName").val(UpdateInfo["mname"]);
@@ -24,10 +25,76 @@ function NumberOnly(evt) {
       }
     })
   }
+  $('#contentDivision').on("submit", function(event){
+    event.preventDefault();
+      const DivisionName = $('#txtDivName').val();
+      const DivisionNameCode = $('#txtDivNameCode').val();
+      const Cluster = $('#txtCluster').val();
+
+      $("#txtDivName").css('border-color', '');
+      $("#checktxtDivName").html("");
+
+      $("#txtDivNameCode").css('border-color', '');
+      $("#checktxtDivNameCode").html("");
+      
+      var validatePass = 1;
+      if(DivisionName.length <2){
+        $("#checktxtDivName").html("Please enter a Division Name with at least 2 characters.").css('color', 'red');
+        $("#txtDivName").css('border-color', 'red');
+        $("#txtDivName").focus();
+        validatePass = 0;
+      }if(DivisionNameCode.length <2){
+        $("#checktxtDivNameCode").html("Please enter a Division Name Code with at least 2 characters.").css('color', 'red');
+        $("#txtDivNameCode").css('border-color', 'red');
+        $("#txtDivNameCode").focus();
+        validatePass = 0;
+      }if(validatePass){
+        alert('Fasado');
+      }
+      // $.ajax({ //check empno
+      //   url:"checkExist.php",
+      //   method:"POST",
+      //   data: {addEmpNo:adminEmpNo},
+      //   dataType: 'json',
+      //   success:function(data){
+      //       const uniqueEmpNo = data.empNO;
+      //       if(uniqueEmpNo){
+      //           $("#checkTxtEmpno").html("Oops! It seems this employee number has already been used. Please double-check your information and try again, or contact support for assistance.").css('color', 'red');
+      //           $("#txtEmpno").css('border-color', 'red');
+      //           $("#txtEmpno").focus();
+      //           validatePassUpdate = 0;
+      //       }else if(validatePassUpdate == 1){
+      //               // process update
+      //               var formData = new FormData(contentUpdate);
+      //               $.ajax({
+      //                 url:"adminUpdateNewUser.php",
+      //                 method:"POST",
+      //                 dataType: "json",
+      //                 data:formData,
+      //                 success:function(data){
+      //                   const msg = data.msg;
+      //                   const stat = data.status;
+      //                   if(stat === "success"){ 
+      //                     $('#modalNotif-header').text('Great! Success.');
+      //                     $('#modalNotif-message').text(msg);
+      //                     $('#modalNotif').modal('show');
+      //                   }
+      //                   else{
+      //                     $('#alertMessage').text(msg);
+      //                     $('#modalAlert').modal('show'); 
+      //                   }
+      //                 },
+      //                 processData: false,
+      //                 contentType: false
+      //               }); 
+      //       }
+      //   },
+      //   });
+  })
   $('#contentUpdate').on("submit",function(event){
       event.preventDefault();
-      alert('Pasok sa checking');
       const adminEmpNo = $('#txtEmpno').val();
+      const adminOldEmpno = $('#txtOldEmpno').val();
       const adminFName = $('#txtFName').val();
       const adminMname = $('#txtMName').val();
       const adminLName = $('#txtLName').val();
@@ -74,7 +141,7 @@ function NumberOnly(evt) {
     $.ajax({ //check empno
       url:"checkExist.php",
       method:"POST",
-      data: {addEmpNo:adminEmpNo},
+      data: {addEmpNo:adminEmpNo, adminOldEmpno:adminOldEmpno},
       dataType: 'json',
       success:function(data){
           const uniqueEmpNo = data.empNO;
@@ -84,7 +151,6 @@ function NumberOnly(evt) {
               $("#txtEmpno").focus();
               validatePassUpdate = 0;
           }else if(validatePassUpdate == 1){
-              alert('Ala yang kalupa proceed update');
                   // process update
                   var formData = new FormData(contentUpdate);
                   $.ajax({
