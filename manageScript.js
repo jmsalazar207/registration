@@ -8,7 +8,7 @@ function NumberOnly(evt) {
   $(function(){
     $('.select2').select2()
   })
-  function adminUpdate(id){
+  function adminUpdate(id){ //retrieve data to modal
     $.ajax({
       url:"includes/functions.php",
       method:"POST",
@@ -25,73 +25,7 @@ function NumberOnly(evt) {
       }
     })
   }
-  $('#contentDivision').on("submit", function(event){
-    event.preventDefault();
-      const DivisionName = $('#txtDivName').val();
-      const DivisionNameCode = $('#txtDivNameCode').val();
-      const Cluster = $('#txtCluster').val();
-
-      $("#txtDivName").css('border-color', '');
-      $("#checktxtDivName").html("");
-
-      $("#txtDivNameCode").css('border-color', '');
-      $("#checktxtDivNameCode").html("");
-      
-      var validatePass = 1;
-      if(DivisionName.length <2){
-        $("#checktxtDivName").html("Please enter a Division Name with at least 2 characters.").css('color', 'red');
-        $("#txtDivName").css('border-color', 'red');
-        $("#txtDivName").focus();
-        validatePass = 0;
-      }if(DivisionNameCode.length <2){
-        $("#checktxtDivNameCode").html("Please enter a Division Name Code with at least 2 characters.").css('color', 'red');
-        $("#txtDivNameCode").css('border-color', 'red');
-        $("#txtDivNameCode").focus();
-        validatePass = 0;
-      }if(validatePass){
-        alert('Fasado');
-      }
-      // $.ajax({ //check empno
-      //   url:"checkExist.php",
-      //   method:"POST",
-      //   data: {addEmpNo:adminEmpNo},
-      //   dataType: 'json',
-      //   success:function(data){
-      //       const uniqueEmpNo = data.empNO;
-      //       if(uniqueEmpNo){
-      //           $("#checkTxtEmpno").html("Oops! It seems this employee number has already been used. Please double-check your information and try again, or contact support for assistance.").css('color', 'red');
-      //           $("#txtEmpno").css('border-color', 'red');
-      //           $("#txtEmpno").focus();
-      //           validatePassUpdate = 0;
-      //       }else if(validatePassUpdate == 1){
-      //               // process update
-      //               var formData = new FormData(contentUpdate);
-      //               $.ajax({
-      //                 url:"adminUpdateNewUser.php",
-      //                 method:"POST",
-      //                 dataType: "json",
-      //                 data:formData,
-      //                 success:function(data){
-      //                   const msg = data.msg;
-      //                   const stat = data.status;
-      //                   if(stat === "success"){ 
-      //                     $('#modalNotif-header').text('Great! Success.');
-      //                     $('#modalNotif-message').text(msg);
-      //                     $('#modalNotif').modal('show');
-      //                   }
-      //                   else{
-      //                     $('#alertMessage').text(msg);
-      //                     $('#modalAlert').modal('show'); 
-      //                   }
-      //                 },
-      //                 processData: false,
-      //                 contentType: false
-      //               }); 
-      //       }
-      //   },
-      //   });
-  })
-  $('#contentUpdate').on("submit",function(event){
+  $('#contentUpdate').on("submit",function(event){ //Trigger update for userinfo
       event.preventDefault();
       const adminEmpNo = $('#txtEmpno').val();
       const adminOldEmpno = $('#txtOldEmpno').val();
@@ -141,10 +75,10 @@ function NumberOnly(evt) {
     $.ajax({ //check empno
       url:"checkExist.php",
       method:"POST",
-      data: {addEmpNo:adminEmpNo, adminOldEmpno:adminOldEmpno},
+      data: {updateEmpNo:adminEmpNo, adminOldEmpno:adminOldEmpno},
       dataType: 'json',
       success:function(data){
-          const uniqueEmpNo = data.empNO;
+          const uniqueEmpNo = data.updateEmpNO;
           if(uniqueEmpNo){
               $("#checkTxtEmpno").html("Oops! It seems this employee number has already been used. Please double-check your information and try again, or contact support for assistance.").css('color', 'red');
               $("#txtEmpno").css('border-color', 'red');
@@ -180,7 +114,7 @@ function NumberOnly(evt) {
       // UPDATWEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
       
   })
-  $("#contentAdd").on("submit",function(event){
+  $("#contentAdd").on("submit",function(event){ //Trigger add new userinfo
     event.preventDefault();
     const addEmpNo = $('#txtAddEmpno').val();
     const addFName = $('#txtAddFName').val();
@@ -266,4 +200,70 @@ function NumberOnly(evt) {
             }
         },
         });
+  })
+  $('#contentDivision').on("submit", function(event){ //trigger add division
+    event.preventDefault();
+      const DivisionName = $('#txtDivName').val();
+      const DivisionNameCode = $('#txtDivNameCode').val();
+      const Cluster = $('#txtCluster').val();
+
+      $("#txtDivName").css('border-color', '');
+      $("#checktxtDivName").html("");
+
+      $("#txtDivNameCode").css('border-color', '');
+      $("#checktxtDivNameCode").html("");
+      
+      var validatePass = 1;
+      if(DivisionName.length <2){
+        $("#checktxtDivName").html("Please enter a Division Name with at least 2 characters.").css('color', 'red');
+        $("#txtDivName").css('border-color', 'red');
+        $("#txtDivName").focus();
+        validatePass = 0;
+      }if(DivisionNameCode.length <2){
+        $("#checktxtDivNameCode").html("Please enter a Division Name Code with at least 2 characters.").css('color', 'red');
+        $("#txtDivNameCode").css('border-color', 'red');
+        $("#txtDivNameCode").focus();
+        validatePass = 0;
+      }if(validatePass){
+        alert('Fasado');
+      }
+      // $.ajax({ //check empno
+      //   url:"checkExist.php",
+      //   method:"POST",
+      //   data: {addEmpNo:adminEmpNo},
+      //   dataType: 'json',
+      //   success:function(data){
+      //       const uniqueEmpNo = data.empNO;
+      //       if(uniqueEmpNo){
+      //           $("#checkTxtEmpno").html("Oops! It seems this employee number has already been used. Please double-check your information and try again, or contact support for assistance.").css('color', 'red');
+      //           $("#txtEmpno").css('border-color', 'red');
+      //           $("#txtEmpno").focus();
+      //           validatePassUpdate = 0;
+      //       }else if(validatePassUpdate == 1){
+      //               // process update
+      //               var formData = new FormData(contentUpdate);
+      //               $.ajax({
+      //                 url:"adminUpdateNewUser.php",
+      //                 method:"POST",
+      //                 dataType: "json",
+      //                 data:formData,
+      //                 success:function(data){
+      //                   const msg = data.msg;
+      //                   const stat = data.status;
+      //                   if(stat === "success"){ 
+      //                     $('#modalNotif-header').text('Great! Success.');
+      //                     $('#modalNotif-message').text(msg);
+      //                     $('#modalNotif').modal('show');
+      //                   }
+      //                   else{
+      //                     $('#alertMessage').text(msg);
+      //                     $('#modalAlert').modal('show'); 
+      //                   }
+      //                 },
+      //                 processData: false,
+      //                 contentType: false
+      //               }); 
+      //       }
+      //   },
+      //   });
   })
