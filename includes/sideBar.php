@@ -91,7 +91,7 @@
           </ul>
         </li>
         <li id="genList" hidden>
-              <a href="underconstruction.php">
+              <a href="generateList.php">
                 <i class="glyphicon glyphicon-list-alt"></i> 
                  Generate List
               </a>

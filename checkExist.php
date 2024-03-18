@@ -19,7 +19,4 @@ if (isset($_POST["updateEmpNo"])) {
     $count['updateEmpNO'] = $dbConn->count();
     echo json_encode($count);
 }
-
-    
-
     
