@@ -224,46 +224,45 @@ function NumberOnly(evt) {
         $("#txtDivNameCode").css('border-color', 'red');
         $("#txtDivNameCode").focus();
         validatePass = 0;
-      }if(validatePass){
-        alert('Fasado');
       }
-      // $.ajax({ //check empno
-      //   url:"checkExist.php",
-      //   method:"POST",
-      //   data: {addEmpNo:adminEmpNo},
-      //   dataType: 'json',
-      //   success:function(data){
-      //       const uniqueEmpNo = data.empNO;
-      //       if(uniqueEmpNo){
-      //           $("#checkTxtEmpno").html("Oops! It seems this employee number has already been used. Please double-check your information and try again, or contact support for assistance.").css('color', 'red');
-      //           $("#txtEmpno").css('border-color', 'red');
-      //           $("#txtEmpno").focus();
-      //           validatePassUpdate = 0;
-      //       }else if(validatePassUpdate == 1){
-      //               // process update
-      //               var formData = new FormData(contentUpdate);
-      //               $.ajax({
-      //                 url:"adminUpdateNewUser.php",
-      //                 method:"POST",
-      //                 dataType: "json",
-      //                 data:formData,
-      //                 success:function(data){
-      //                   const msg = data.msg;
-      //                   const stat = data.status;
-      //                   if(stat === "success"){ 
-      //                     $('#modalNotif-header').text('Great! Success.');
-      //                     $('#modalNotif-message').text(msg);
-      //                     $('#modalNotif').modal('show');
-      //                   }
-      //                   else{
-      //                     $('#alertMessage').text(msg);
-      //                     $('#modalAlert').modal('show'); 
-      //                   }
-      //                 },
-      //                 processData: false,
-      //                 contentType: false
-      //               }); 
-      //       }
-      //   },
-      //   });
+      $.ajax({ //check empno
+        url:"checkExist.php",
+        method:"POST",
+        data: {adminDivision:DivisionName},
+        dataType: 'json',
+        success:function(data){
+            const uniqueDivName = data.divName;
+            if(uniqueDivName){
+                $("#checktxtDivName").html("Apologies for the inconvenience. It appears that the division name you provided already exists. Please verify the information and try again, or reach out to support for further assistance.").css('color', 'red');
+                $("#txtDivName").css('border-color', 'red');
+                $("#txtDivName").focus();
+                validatePass = 0;
+            }else if(validatePass == 1){
+              alert('ala neman kalupa');
+                    // process update
+                    var formData = new FormData(contentDivision);
+                    $.ajax({
+                      url:"adminAddNewDivision.php",
+                      method:"POST",
+                      dataType: "json",
+                      data:formData,
+                      success:function(data){
+                        const msg = data.msg;
+                        const stat = data.status;
+                        if(stat === "success"){ 
+                          $('#modalNotif-header').text('Great! Success.');
+                          $('#modalNotif-message').text(msg);
+                          $('#modalNotif').modal('show');
+                        }
+                        else{
+                          $('#alertMessage').text(msg);
+                          $('#modalAlert').modal('show'); 
+                        }
+                      },
+                      processData: false,
+                      contentType: false
+                    }); 
+            }
+        },
+        });
   })

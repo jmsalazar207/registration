@@ -19,4 +19,11 @@ if (isset($_POST["updateEmpNo"])) {
     $count['updateEmpNO'] = $dbConn->count();
     echo json_encode($count);
 }
+if (isset($_POST["adminDivision"])) {
+    $divName = $_POST['adminDivision'];
+    $param['conditions'] = array('division_name' => $divName);
+    $dbConn->findFirst('lib_division', $param);
+    $count['divName'] = $dbConn->count();
+    echo json_encode($count);
+}
     

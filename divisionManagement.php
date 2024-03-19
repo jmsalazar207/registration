@@ -75,6 +75,13 @@ require_once('includes/init.php');
                           <th> Action </th>
                           <th> Division Name </th>
                           <th> Division Code Name </th>
+                          <th> Cluster </th>
+                          <th> Added By </th>
+                          <th> Date and Time Added </th>
+                          <th> Updated By </th>
+                          <th> Date and Time Updated </th>
+                          <th> Deleted </th>
+                          <th> Date and Time Deleted </th>
                         </tr>
                     </thead>
                 </table>
@@ -119,48 +126,34 @@ require_once('includes/init.php');
 <script src="panelScript.js"></script>
 <script src="manageScript.js"></script>
 <script>
-//   $(function () {
-//     $('#userManage').DataTable({
-//       ajax: {
-//           url: 'userManagement_ajax.php',
-//           type: 'POST',
-//           'data': function(data){
-//           }
-//         },
-//       serverSide: true,
-//       stateSave: true,
-//       "order": [[ 1, "desc" ]],
-//       columns: [
-//         { data: "Action"},
-//         { data: "empno"},
-//         { data: "sname"},
-//         { data: "fname"},
-//         { data: "mname"},
-//         { data: "position_name"},
-//         { data: "division_name"},
-//         { data: "unit_name"}
-//       ],
-//       'columnDefs': [ 
-//         { "bSortable": false, "aTargets": [0] }
-//       ]
-//     });
-    
-    // $('#table_employees tbody').on('click', '.reset', function (){
-    //   var empno = $(this).attr('value');
-    //   $.ajax({
-    //     url:"reset.php",
-    //     method:"POST",
-    //     data: {empno:empno},
-    //     success:function(data){
-    //       if(data){
-    //         alert("Password successfull reset to default password'");
-    //       }else{
-    //         alert("Failed to reset password!");
-    //       }
-    //     },
-    //   })
-    // });
-//   })
+  $(function () {
+    $('#userManage').DataTable({
+      ajax: {
+          url: 'divisionManagement_ajax.php',
+          type: 'POST',
+          'data': function(data){
+          }
+        },
+      serverSide: true,
+      stateSave: true,
+      "order": [[ 1, "desc" ]],
+      columns: [
+        { data: "Action"},
+        { data: "division_name"},
+        { data: "division_name_code"},
+        { data: "cluster_name"},
+        { data: "added_by"},
+        { data: "datetime_added"},
+        { data: "updated_by"},
+        { data: "datetime_updated"},
+        { data: "deleted_by"},
+        { data: "datetime_deleted"}
+      ],
+      'columnDefs': [ 
+        { "bSortable": false, "aTargets": [0] }
+      ]
+    });
+  })
 </script>
 
 </body>

@@ -373,11 +373,15 @@
                             <div class="card col-md-12">
                                 <div class="col-md-12">
                                     <label 
-                                        for="txtEmpno" 
+                                        for="txtDivName" 
                                         class="col-sm-12">
                                         Division Name
                                     </label>
                                     <div class="col-sm-12">
+                                        <input 
+                                            type="hidden" 
+                                            name="token" 
+                                            value="<?=$_SESSION["token"]?>"> 
                                         <input 
                                             type="text" 
                                             class="form-control" 
@@ -415,7 +419,7 @@
                                 <br>
                                 <div class="col-md-12">
                                     <label 
-                                        for="txtExtName" 
+                                        for="txtCluster" 
                                         class="col-sm-12">
                                         Cluster
                                     </label>
@@ -447,7 +451,7 @@
                         <button 
                             type="submit" 
                             class="btn btn-primary">
-                            Update
+                            Submit
                         </button>
                     </div>
                 </form>
