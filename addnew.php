@@ -29,8 +29,12 @@ if(empty($_POST['g-recaptcha-response']))
                 $process = $_POST['processType'];
                 if($process == 'Register'){
                     $target_dir = "uploadedID/";
-                    $target_file = $target_dir ."_". basename($_FILES["AddFile"]["name"]);
-                    $UploadFile = basename($_FILES["AddFile"]["name"]);
+                    $fileExt = pathinfo($_FILES['AddFile']['name'], PATHINFO_EXTENSION);
+                    $UploadFile = '_'.$_POST['EmployeeNumber'].'.'.$fileExt;
+                    $target_file = $target_dir.$UploadFile;
+                    // $target_file = $target_dir ."_". basename($_FILES["AddFile"]["name"]);
+                    // $UploadFile = basename($_FILES["AddFile"]["name"]);
+                    // $UploadFile = $_POST['EmployeeNumber'];
                     $uploadOk = 1;
                     
 

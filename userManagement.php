@@ -64,6 +64,12 @@ require_once('includes/init.php');
                               Add New User
                             </span>
                         </button>
+                        <!-- <button type="button" id="update" name="update" class="btn btn-info btn-sm">
+                          <span class="glyphicon glyphicon-plus"></span>
+                            <span class="glyphicon-class">
+                              Update
+                            </span>
+                        </button> -->
                     </div>
                   </div>
                 </div>
@@ -147,6 +153,13 @@ require_once('includes/init.php');
       'columnDefs': [ 
         { "bSortable": false, "aTargets": [0] }
       ]
+    });
+
+    $("#update").on("click",function(){
+      $.ajax({
+        url:"update_filename.php",
+        method:"POST",
+      });
     });
     
     // $('#table_employees tbody').on('click', '.reset', function (){

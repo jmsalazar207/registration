@@ -65,7 +65,9 @@ if($empRecords){
                   <button class='' onclick ='adminUpdate(this.value)' value = '$empno'  title='View' >
                      View Info
                   </button>
-                 
+                  <button class='' onclick ='adminApprove(this.value)' value = '$empno'  title='View' >
+                  Review
+                  </button>
                </td>";  
    
    $data[] = array(

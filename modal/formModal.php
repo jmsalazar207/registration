@@ -1,3 +1,4 @@
+
       <!-- modal for add user -->
       <div class="modal fade" id="addNewUser">
           <div class="modal-dialog">
@@ -346,8 +347,124 @@
           <!-- /.modal-dialog -->
         </div>
         <!-- /.modalUpdate -->
+    <!-- Approve modal -->
+            <div class="modal fade" id="formApprove">
+          <div class="modal-dialog">
+            <div class="modal-content">
+                <form 
+                    method="POST" 
+                    id="contentApprove" 
+                    autocomplete="off">
+                    <div class="modal-header">
+                        <button 
+                            type="button" 
+                            class="close" 
+                            data-dismiss="modal" 
+                            aria-label="Close">
+                                <span aria-hidden="true">
+                                    &times;
+                                </span>
+                        </button>
+                        <h4 class="modal-title">Validate Account</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="card col-md-12">
+                                <div class="col-md-12">
+                                    <label 
+                                        for="txtEmpno" 
+                                        class="col-sm-12">
+                                        Employee Number
+                                    </label>
+                                    <div class="input-group col-sm-12">
+                                        <input 
+                                            type="hidden" 
+                                            name="token" 
+                                            value="<?=$_SESSION["token"]?>"> 
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            name="txtValidateEmpno" 
+                                            id="txtValidateEmpno" 
+                                            placeholder="Employee Number" 
+                                            value="" 
+                                            style="text-transform: uppercase;" 
+                                            required="true" 
+                                            tabindex="1"
+                                            readonly>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="col-md-12">
+                                    <label 
+                                        for="txtValidateFullName" 
+                                        class="col-sm-12">
+                                        Full Name
+                                    </label>
+                                    <div class="input-group col-sm-12">
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            name="txtValidateFullName" 
+                                            id="txtValidateFullName" 
+                                            placeholder="Full Name" 
+                                            value="" 
+                                            style="text-transform: uppercase;" 
+                                            required="true" 
+                                            tabindex="2"
+                                            readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label 
+                                        for="validateUploadedID" 
+                                        class="col-sm-12">
+                                        Uploaded ID
+                                    </label>
+                                    <div class="input-group col-sm-12">
+                                        <div class="card" style="border: grey;" >
 
-
+                                        </div>
+                                        <img 
+                                            class="img-responsive" 
+                                            src="" 
+                                            alt="No photo available" 
+                                            id="validateUploadedID" 
+                                            name="validateUploadedID" 
+                                            style="width: auto; height:auto;" >
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button 
+                            type="button" 
+                            class="btn btn-default pull-left" 
+                            data-dismiss="modal">
+                            Close
+                        </button>
+                        <button 
+                            type="submit" 
+                            class="btn btn-danger">
+                            Disapprove
+                        </button>
+                        <button 
+                            type="button" 
+                            class="btn btn-primary">
+                            Approve
+                        </button>
+                        
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modalUpdate -->
+    <!-- End Approve modal -->
         <!-- modal update info  -->
         <div class="modal fade" id="addDivision">
           <div class="modal-dialog">

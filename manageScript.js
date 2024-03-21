@@ -8,11 +8,11 @@ function NumberOnly(evt) {
   $(function(){
     $('.select2').select2()
   })
-  function adminUpdate(id){ //retrieve data to modal
+  function adminUpdate(updateEmpno){ //retrieve data to modal admin edit user
     $.ajax({
       url:"includes/functions.php",
       method:"POST",
-      data:{sessionEmpno:id},
+      data:{sessionEmpno:updateEmpno},
       success:function(data){
         UpdateInfo = JSON.parse(data);
         $("#txtEmpno").val(UpdateInfo["empno"].replaceAll('03-',''));
@@ -22,6 +22,26 @@ function NumberOnly(evt) {
         $("#txtMName").val(UpdateInfo["mname"]);
         $("#txtExtName").val(UpdateInfo["ename"]).trigger('change');
         $('#formUser').modal('show');
+      }
+    })
+  }
+  function adminApprove(approveEmpno){ //retrieve data to modal admin approve user
+    $.ajax({
+      url:"includes/functions.php",
+      method:"POST",
+      data:{sessionEmpno:approveEmpno},
+      success:function(data){
+        UpdateInfo = JSON.parse(data);
+        const sname = UpdateInfo["sname"];
+        const fname = UpdateInfo["fname"];
+        const mname = UpdateInfo["mname"];
+        const ename = UpdateInfo["ename"];
+        const uploadedID = UpdateInfo["uploaded_id"];
+        alert(uploadedID);
+         $("#txtValidateEmpno").val(UpdateInfo["empno"]);
+         $("#txtValidateFullName").val(fname+' '+mname+' '+sname+' '+ename);
+         $("#validateUploadedID").attr('src','uploadedID/'+uploadedID);
+        $('#formApprove').modal('show');
       }
     })
   }
