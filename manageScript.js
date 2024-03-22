@@ -37,9 +37,10 @@ function NumberOnly(evt) {
         const mname = UpdateInfo["mname"];
         const ename = UpdateInfo["ename"];
         const uploadedID = UpdateInfo["uploaded_id"];
-        alert(uploadedID);
+        // alert(uploadedID);
          $("#txtValidateEmpno").val(UpdateInfo["empno"]);
          $("#txtValidateFullName").val(fname+' '+mname+' '+sname+' '+ename);
+        //  $("#validateUploadedID").attr('src','uploadedID/'+uploadedID);
          $("#validateUploadedID").attr('src','uploadedID/'+uploadedID);
         $('#formApprove').modal('show');
       }

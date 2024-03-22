@@ -53,19 +53,13 @@ $sql_emp = "SELECT u.empno, u.sname, u.fname, u.mname, p.position_name, d.divisi
 $empRecords = $dbConn->findQuery($sql_emp);
 if($empRecords){
    foreach($empRecords as $row){
-	$empno = $row['empno'];
-	// $fname= $row['fname'];
-	// $sname = $row['sname'];
-	// $mname = $row['mname'];
-	// $position = $row['position_name'];
-	// $divison = $row['division_name'];
-	// $unit = $row['unit_name'];   
+	$empno = $row['empno']; 
    
     $action = "<td>
-                  <button class='' onclick ='adminUpdate(this.value)' value = '$empno'  title='View' >
+                  <button class='' id = 'btnAdminUpdate' name ='btnAdminUpdate' onclick ='adminUpdate(this.value)' value = '$empno'  title='View' >
                      View Info
                   </button>
-                  <button class='' onclick ='adminApprove(this.value)' value = '$empno'  title='View' >
+                  <button class='' id='btnAdminApprove' name= 'btnAdminApprove' onclick ='adminApprove(this.value)' value = '$empno'  title='View' >
                   Review
                   </button>
                </td>";  

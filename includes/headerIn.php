@@ -25,7 +25,7 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img id="headerPicture" src="uploadedProfile/userIcon.jpg" class="user-image" alt="User Image">
+              <img id="headerPicture" src="uploadedProfile/profile.jpg" class="user-image" alt="User Image">
               <span class="hidden-xs" id="headerFullname"></span>
             </a>
             <ul class="dropdown-menu">
@@ -40,7 +40,7 @@
                 text-align: center;
                 "
               >
-                <img id="dropPicture" src="uploadedProfile/userIcon.jpg" class="img-circle" alt="User Image">
+                <img id="dropPicture" src="uploadedProfile/profile.jpg" class="img-circle" alt="User Image">
                   <p id="dropFullName"></p>
                     <div class="card">
                       <small 

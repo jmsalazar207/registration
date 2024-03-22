@@ -162,6 +162,7 @@ require_once('includes/init.php');
       });
     });
     
+    
     // $('#table_employees tbody').on('click', '.reset', function (){
     //   var empno = $(this).attr('value');
     //   $.ajax({
