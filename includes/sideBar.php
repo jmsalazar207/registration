@@ -93,9 +93,11 @@
         <li id="genList" hidden>
               <a href="generateList.php">
                 <i class="glyphicon glyphicon-list-alt"></i> 
-                 Generate List
+                <span>
+                  Generate List
+                </span>
               </a>
-            </li>
+        </li>
         <li>
           <a href="includes/logout.php">
             <i class ="glyphicon glyphicon-log-out"></i>   

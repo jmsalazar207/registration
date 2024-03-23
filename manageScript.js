@@ -36,15 +36,103 @@ function NumberOnly(evt) {
         const fname = UpdateInfo["fname"];
         const mname = UpdateInfo["mname"];
         const ename = UpdateInfo["ename"];
+        const empno = UpdateInfo["empno"];
         const uploadedID = UpdateInfo["uploaded_id"];
         // alert(uploadedID);
-         $("#txtValidateEmpno").val(UpdateInfo["empno"]);
+         $("#txtValidateEmpno").val(empno);
+         $("#btnApprove").val(empno);
+         $("#btnDisapprove").val(empno);
          $("#txtValidateFullName").val(fname+' '+mname+' '+sname+' '+ename);
-        //  $("#validateUploadedID").attr('src','uploadedID/'+uploadedID);
          $("#validateUploadedID").attr('src','uploadedID/'+uploadedID);
         $('#formApprove').modal('show');
       }
     })
+  }
+  $("#btnApprove").on("click",function(){
+    var btnApproveEmpno = $(this).attr('value');
+    $.ajax({
+      url:"adminApproveUser.php",
+      method:"POST",
+      data:{btnApproveEmpno:btnApproveEmpno},
+      dataType: 'json',
+      success:function(data){
+        const msg = data.msg;
+        const stat = data.status;  
+        if(stat === "success"){ 
+          $('#modalNotif-header').text('Great! Success.');
+          $('#modalNotif-message').text(msg);
+          $('#modalNotif').modal('show');
+        }
+        else{
+          $('#alertMessage').text(msg);
+          $('#modalAlert').modal('show'); 
+        }
+      }
+    });
+  })
+  $("#btnDisapprove").on("click",function(){
+    var btnDisapproveEmpno = $(this).attr('value');
+    $.ajax({
+      url:"adminDisapproveUser.php",
+      method:"POST",
+      data:{btnDisapproveEmpno:btnDisapproveEmpno},
+      dataType: 'json',
+      success:function(data){
+        const msg = data.msg;
+        const stat = data.status;  
+        if(stat === "success"){ 
+          $('#modalNotif-header').text('Great! Success.');
+          $('#modalNotif-message').text(msg);
+          $('#modalNotif').modal('show');
+        }
+        else{
+          $('#alertMessage').text(msg);
+          $('#modalAlert').modal('show'); 
+        }
+      }
+    });
+  })
+  function adminLock(btnAdminLockEmpno){
+    $.ajax({
+      url:"adminLockUser.php",
+      method:"POST",
+      data:{btnAdminLockEmpno:btnAdminLockEmpno},
+      dataType: 'json',
+      success:function(data){
+        const msg = data.msg;
+        const stat = data.status;  
+        if(stat === "success"){ 
+          $('#modalNotif-header').text('Great! Success.');
+          $('#modalNotif-message').text(msg);
+          $('#modalNotif').modal('show');
+        }
+        else{
+          $('#alertMessage').text(msg);
+          $('#modalAlert').modal('show'); 
+        }
+      }
+    });
+  }
+  function adminUnLock(btnAdminUnLockEmpno){
+    $.ajax({
+      url:"adminUnLockUser.php",
+      method:"POST",
+      data:{btnAdminUnLockEmpno:btnAdminUnLockEmpno},
+      dataType: 'json',
+      success:function(data){
+        const msg = data.msg;
+        const stat = data.status;  
+        if(stat === "success"){ 
+          $('#modalNotif-header').text('Great! Success.');
+          $('#modalNotif-message').text(msg);
+          $('#modalNotif').modal('show');
+        }
+        else{
+          $('#alertMessage').text(msg);
+          $('#modalAlert').modal('show'); 
+        }
+      }
+    });
   }
   $('#contentUpdate').on("submit",function(event){ //Trigger update for userinfo
       event.preventDefault();

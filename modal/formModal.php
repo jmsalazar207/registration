@@ -1,4 +1,3 @@
-
       <!-- modal for add user -->
       <div class="modal fade" id="addNewUser">
           <div class="modal-dialog">
@@ -446,13 +445,17 @@
                             Close
                         </button>
                         <button 
-                            type="submit" 
-                            class="btn btn-danger">
+                            type="button" 
+                            class="btn btn-danger"
+                            id="btnDisapprove"
+                            name="btnDisapprove" >
                             Disapprove
                         </button>
                         <button 
                             type="button" 
-                            class="btn btn-primary">
+                            class="btn btn-primary"
+                            id="btnApprove"
+                            name="btnApprove">
                             Approve
                         </button>
                         

@@ -83,9 +83,11 @@ require_once('includes/init.php');
                           <th> Last Name </th>
                           <th> First Name </th>
                           <th> Middle Name </th>
+                          <th> Extension Name </th>
                           <th> Position </th>
                           <th> Division </th>
                           <th> Unit </th>
+                          <th> Account Status </th>
                         </tr>
                     </thead>
                 </table>
@@ -146,21 +148,33 @@ require_once('includes/init.php');
         { data: "sname"},
         { data: "fname"},
         { data: "mname"},
+        { data: "ename"},
         { data: "position_name"},
         { data: "division_name"},
-        { data: "unit_name"}
+        { data: "unit_name"},
+        { data: "account_status_name"}
       ],
       'columnDefs': [ 
-        { "bSortable": false, "aTargets": [0] }
+        { "bSortable": false, "aTargets": [0] },
+        { "width": "200px", "targets": 0 },
+        { "width": "50px", "targets": 1 },
+        { "width": "80px", "targets": 2 },
+        { "width": "80px", "targets": 3 },
+        { "width": "80px", "targets": 4 },
+        { "width": "30px", "targets": 5 },
+        { "width": "150px", "targets": 6 },
+        { "width": "140px", "targets": 7 },
+        { "width": "140px", "targets": 8 },
+        { "width": "90px", "targets": 9 }
       ]
     });
 
-    $("#update").on("click",function(){
-      $.ajax({
-        url:"update_filename.php",
-        method:"POST",
-      });
-    });
+    // $("#update").on("click",function(){
+    //   $.ajax({
+    //     url:"update_filename.php",
+    //     method:"POST",
+    //   });
+    // });
     
     
     // $('#table_employees tbody').on('click', '.reset', function (){
