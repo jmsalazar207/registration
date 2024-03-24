@@ -8,6 +8,8 @@ if (isset($_POST['btnApproveEmpno'])) {
   $adminUserApprove['account_status'] = 2;
   $adminUserApprove['approved_by'] = $_SESSION['userID'];
   $adminUserApprove['date_approved'] = $today;
+  $adminUserApprove['datetime_deny'] = '';
+  $adminUserApprove['deny_by'] = '';
   $sqlApprove = $dbConn->update('userprofile', 'empno', $empno, $adminUserApprove);
   if($sqlApprove){
     $dataReturn['status'] = "success";

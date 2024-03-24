@@ -32,28 +32,32 @@ $("#contentLogin").on("submit",function(event){
             data: {username:username,password:password},
             dataType: 'json',
             success:function(data){
-                // 1 registered ok password match
-                // 0 registered wrong password
-                // 2 not yet registered hihi
-                // 3 no data in the database call personnel
-                 // 4 registered ok password match but not approved
             const credentialsMatch = data.credentialsMatch;
             var employeeNo = data.empno;
             // sessionStorage.setItem("updateEmpNO",employeeNo);
             
-              if(credentialsMatch==1){
+              if(credentialsMatch==2){
                 sessionStorage.setItem("loginEmpno",employeeNo);
                 window.location.href="homePage.php"
-              }else if(credentialsMatch==0){ //modal error password 
+              }else if(credentialsMatch==3){ //modal error password 
+                $('#alertErrorMessage').text("Your registration has been disapproved by the administrator. Please contact the Personnel Section to verify your account.");
+                $('#modalError').modal('show'); 
+                sessionStorage.clear();
+              }else if(credentialsMatch==4){ //modal error password 
+                $('#alertErrorMessage').text("Your account has been locked by the administrator. Please reach out to the Personnel Section for assistance with unlocking your account.");
+                $('#modalError').modal('show'); 
+                sessionStorage.clear();
+              }else if(credentialsMatch==5){ //modal error password 
                 $('#alertErrorMessage').text("Oops! It seems there's an issue with your login credentials. Please try again.");
                 $('#modalError').modal('show'); 
                 sessionStorage.clear();
-              }else if(credentialsMatch==2){ //modal for registration
+              }else if(credentialsMatch==0){ //modal for registration
                 $('#regRoute').css("display","inline-flex");
                 $('#alertMessage').text("The entered employee number is not yet registered in the system. Please proceed to register by clicking the 'Register' button or the 'Click here to register' link.");
                 $('#modalAlert').modal('show');
-              }else if(credentialsMatch==4){ //modal not yet approved
-                $('#alertMessage').text('Your account is pending approval. Please reach out to ICTMS or Personnel Section to expedite the approval process.');
+              }else if(credentialsMatch==1){ //modal not yet approved
+                // $('#alertMessage').text('Your account is pending approval. Please reach out to ICTMS or Personnel Section to expedite the approval process.');
+                 $('#alertMessage').text('The module for updating data is currently under construction. Please await further updates to proceed with updating your entered information.');
                 $('#modalAlert').modal('show');
                 sessionStorage.clear();
               }else{ //modal no data found

@@ -7,6 +7,7 @@ if (isset($_POST['btnAdminUnLockEmpno'])) {
   $adminUserUnLock['account_status'] = 2;
   $adminUserUnLock['lock_by'] = '';
   $adminUserUnLock['datetime_lock'] = '';
+  
   $sqlUnLock = $dbConn->update('userprofile', 'empno', $empno, $adminUserUnLock);
   if($sqlUnLock){
     $dataReturn['status'] = "success";

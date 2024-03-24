@@ -64,6 +64,7 @@ if(empty($_POST['g-recaptcha-response']))
                     $user['uploaded_id'] = $UploadFile;
                     $user['user_level'] = 0;
                     $user['isLog'] = 0;
+                    $user['account_status'] = 1;
                     
                     if (move_uploaded_file($_FILES["AddFile"]["tmp_name"], $target_file)) 
                     {

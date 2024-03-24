@@ -11,16 +11,17 @@ require_once("includes/helper.php");
     $exists = $dbConn->findFirst('userprofile',$param);
     if($exists) {
         $data['empno'] = $user['empno'];
-        $data['count'] = 1;  
+        $data['count'] = 1;
+        $account_status = $exists['account_status'];  
         $date_registered = $exists['date_registered'];
         $data['fname'] = $exists['fname'];
         $data['mname'] = $exists['mname'];
         $data['sname'] = $exists['sname'];
         $data['extname'] = $exists['ename'];
-        if($date_registered==null || $date_registered =='0000-00-00 00:00:00') {
-            $data['registered'] = 'No';  
+        if($account_status!=0) {
+            $data['registered'] = 'Yes';  
         }else{
-            $data['registered'] = 'Yes';
+            $data['registered'] = 'No';
         }
         echo json_encode($data);
     } else {

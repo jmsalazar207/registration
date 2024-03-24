@@ -4,7 +4,7 @@
 <?php
   session_start();
   $UL = $_SESSION['userLevel'];
-  if(($UL !=1)&&($UL != 2)){
+  if(($UL !=1)&&($UL != 3)){
     header('location: homePage.php');
   }
 	$_SESSION["token"] = bin2hex(random_bytes(32));
