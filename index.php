@@ -102,6 +102,7 @@ require_once('includes/init.php');
                 <div class="row">
                   <div class="col-xs-12">
                     <label>Don't have account? <a href="mainRegister.php">Click here to register</a></label>
+                    <label><a href="https://docs.google.com/forms/d/e/1FAIpQLSfAU3hpCz14eMK3xK2bykVy7WS4mvHwzWYLNlGJQ_RAE-wSVw/viewform">For ERM concern click here</a></label>
                   </div>
                 </div>
   	   </div>
@@ -157,7 +158,9 @@ require_once('includes/init.php');
     input.attr("type", "password");
   }
 });
-
+$('#modalAlert').on('hidden.bs.modal', function () {
+  alert("Modal Closed");
+})
 </script>
 <?php
 include 'modal/registermodal.php';

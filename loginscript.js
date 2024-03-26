@@ -33,16 +33,22 @@ $("#contentLogin").on("submit",function(event){
             dataType: 'json',
             success:function(data){
             const credentialsMatch = data.credentialsMatch;
+            const userLevel = data.AccountUserLevel;
             var employeeNo = data.empno;
             // sessionStorage.setItem("updateEmpNO",employeeNo);
             
               if(credentialsMatch==2){
-                sessionStorage.setItem("loginEmpno",employeeNo);
-                window.location.href="homePage.php"
+                if(userLevel!= 0){
+                  sessionStorage.setItem("loginEmpno",employeeNo);
+                  window.location.href="homePage.php"
+                }else{
+                  $('#alertMessage').text('The module for updating data is currently under construction. Please await further updates to proceed with updating your entered information.');
+                  $('#modalAlert').modal('show');
+                }
               }else if(credentialsMatch==3){ //modal error password 
                 $('#alertErrorMessage').text("Your registration has been disapproved by the administrator. Please contact the Personnel Section to verify your account.");
                 $('#modalError').modal('show'); 
-                sessionStorage.clear();
+                
               }else if(credentialsMatch==4){ //modal error password 
                 $('#alertErrorMessage').text("Your account has been locked by the administrator. Please reach out to the Personnel Section for assistance with unlocking your account.");
                 $('#modalError').modal('show'); 
@@ -57,7 +63,7 @@ $("#contentLogin").on("submit",function(event){
                 $('#modalAlert').modal('show');
               }else if(credentialsMatch==1){ //modal not yet approved
                 // $('#alertMessage').text('Your account is pending approval. Please reach out to ICTMS or Personnel Section to expedite the approval process.');
-                 $('#alertMessage').text('The module for updating data is currently under construction. Please await further updates to proceed with updating your entered information.');
+                 $('#alertMessage').text('Your account is currently pending approval. Kindly reach out to the personnel department for further assistance in completing the approval process.');
                 $('#modalAlert').modal('show');
                 sessionStorage.clear();
               }else{ //modal no data found

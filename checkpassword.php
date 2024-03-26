@@ -24,8 +24,11 @@ require_once("includes/helper.php");
         }else if($isApproved== 2) {
             if(($credentials['password'] != '') && $credentials['password'] ==$password) {
                 $data['credentialsMatch'] = 2; //Approved
-                $_SESSION['userID'] = $credentials['empno'];
-                $_SESSION['userLevel'] = $credentials['user_level'];
+                $data['AccountUserLevel'] = $credentials['user_level'];
+                if($data['AccountUserLevel'] != 0){
+                    $_SESSION['userID'] = $credentials['empno'];
+                    $_SESSION['userLevel'] = $credentials['user_level'];
+                }
             }else{
                 $data['credentialsMatch'] = 5; //wrong password
             }
