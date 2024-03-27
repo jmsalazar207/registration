@@ -368,7 +368,7 @@ function recaptchaExpired() {
 
         $('#AddFirstName').attr('readonly','readonly');
         $('#AddLastName').attr('readonly','readonly');
-        $('#AddMiddleName').attr('readonly','readonly');
+        // $('#AddMiddleName').attr('readonly','readonly');
         $('#AddextName').attr('disabled','disabled');
         $("#EmployeeNumber").val(EmpNumber);
         $("#AddFirstName").val(FirstName);
