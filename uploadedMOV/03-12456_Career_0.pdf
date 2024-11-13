@@ -1,0 +1,8 @@
+<br />
+<b>Fatal error</b>:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'dtl.control_no' in 'field list' in C:\xampp\htdocs\isdp_v1\config\db\CONN_DB.php:65
+Stack trace:
+#0 C:\xampp\htdocs\isdp_v1\config\db\CONN_DB.php(65): PDO-&gt;prepare('SELECT dtl.id, ...')
+#1 C:\xampp\htdocs\isdp_v1\config\db\CONN_DB.php(199): CONN_DB-&gt;query('SELECT dtl.id, ...', Array)
+#2 C:\xampp\htdocs\isdp_v1\app\generate_payroll_mul.php(275): CONN_DB-&gt;findQuery('SELECT dtl.id, ...')
+#3 {main}
+  thrown in <b>C:\xampp\htdocs\isdp_v1\config\db\CONN_DB.php</b> on line <b>65</b><br />
