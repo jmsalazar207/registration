@@ -36,11 +36,13 @@ require_once("includes/helper.php");
                 $_SESSION['userLevel'] = $credentials['user_level'];
             }else{
                 $data['credentialsMatch'] = 5; //wrong password
+                $data['empno'] = $credentials['empno'];
             }
         }else if ($isApproved==3) {
             $data['credentialsMatch'] = 3; //Disapproved
         }else if ($isApproved==4) {
             $data['credentialsMatch'] = 4; //Account Locked
+
         }
         echo json_encode($data);
     }else{

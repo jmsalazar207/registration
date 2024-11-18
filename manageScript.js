@@ -540,8 +540,7 @@ $('#contentUpdate').on("submit",function(event){ //Trigger update for userinfo
             $("#txtEmpno").css('border-color', 'red');
             $("#txtEmpno").focus();
             validatePassUpdate = 0;
-        }
-        else{
+        }else{
           $.ajax({ //check email and mobile if existed 
             url:"checkUnique.php",
             method:"POST",
@@ -717,7 +716,7 @@ $('#contentDivision').on("submit", function(event){ //trigger add division
               $("#txtDivName").focus();
               validatePass = 0;
           }else if(validatePass == 1){
-            alert('ala neman kalupa');
+           
                   // process update
                   var formData = new FormData(contentDivision);
                   $.ajax({

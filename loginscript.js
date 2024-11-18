@@ -43,13 +43,64 @@ $("#contentLogin").on("submit",function(event){
                 $('#alertErrorMessage').text("Your registration has been disapproved by the administrator. Please contact the Personnel Section to verify your account.");
                 $('#modalError').modal('show'); 
               }else if(credentialsMatch==4){ //modal error password 
-                $('#alertErrorMessage').text("Your account has been locked by the administrator. Please reach out to the Personnel Section for assistance with unlocking your account.");
+                $('#alertErrorMessage').text("Your account has been locked. Please reach out to the Personnel Section for assistance with unlocking your account.");
                 $('#modalError').modal('show'); 
                 sessionStorage.clear();
               }else if(credentialsMatch==5){ //modal error password 
-                $('#alertErrorMessage').text("Oops! It seems there's an issue with your login credentials. Please try again.");
-                $('#modalError').modal('show'); 
-                sessionStorage.clear();
+                $.ajax({ 
+                  url: "checkExist.php",
+                  method: "POST",
+                  data: { attemptEmpNO: employeeNo },
+                  dataType: 'json',
+                  success: function(data) {
+                      var count = parseInt(data.password_attempt); 
+                      count++;
+                      if (count >= 3) {
+                          $.ajax({
+                            url: "updateAttempt.php", // Endpoint to update the attempt count
+                            method: "POST",
+                            data: { LockEmpNo: employeeNo },
+                            success: function(data) {
+                              const msg = data.msg;
+                              const stat = data.status;
+                              if(stat == "success"){
+                              $('#modalNotif-header').text('Opps! Error!');
+                              $('#modalNotif-message').text(msg);
+                              $('#modalNotif').modal('show');
+                              sessionStorage.clear();
+                              }else{
+                              $('#modalNotif-header').text('Opps! Error!');
+                              $('#modalNotif-message').text(msg);
+                              $('#modalNotif').modal('show');
+                              }
+                            }
+                        });
+                      } else {
+                          $.ajax({
+                              url: "updateAttempt.php", // Endpoint to update the attempt count
+                              method: "POST",
+                              data: { attemptEmpNO: employeeNo, attemptCount: count },
+                              success: function(data) {
+                                const msg = data.msg;
+                                const stat = data.status;
+                                if(stat == "success"){
+                                $('#modalNotif-header').text('Opps! Error!');
+                                $('#modalNotif-message').text(msg);
+                                $('#modalNotif').modal('show');
+                                sessionStorage.clear();
+                                }else{
+                                $('#modalNotif-header').text('Opps! Error!');
+                                $('#modalNotif-message').text(msg);
+                                $('#modalNotif').modal('show');
+                                }
+                              }
+                          });
+                      }
+                  },
+                  error: function(xhr, status, error) {
+                      console.error("An error occurred: ", error);
+                  }
+              });
               }else if(credentialsMatch==0){ //modal for registration
                 $('#regRoute').css("display","inline-flex");
                 $('#alertMessage').text("The entered employee number is not yet registered in the system. Please proceed to register by clicking the 'Register' button or the 'Click here to register' link.");

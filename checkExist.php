@@ -206,6 +206,12 @@ if(isset($_POST['resetUsername'])){
    $count['EmpID'] = $dbConn->count();
    echo json_encode($count);
 }
+if(isset($_POST['attemptEmpNO'])){
+   $attemptEmpNO = $_POST['attemptEmpNO'];
+   $sql_count_attempt = "SELECT password_attempt FROM userprofile WHERE empno = '$attemptEmpNO'";
+   $count_attempt = $dbConn->findFirstQuery($sql_count_attempt);
+   echo json_encode($count_attempt);
+}
  
  
  

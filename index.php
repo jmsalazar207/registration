@@ -77,6 +77,10 @@ require_once('includes/init.php');
                       <label style="font-size: 15px; margin:auto" for="03-">03-</label>
                     </i>
                   </div>
+                  <input 
+                  type="hidden" 
+                  name="token" 
+                  value="<?=$_SESSION["token"]?>">
                   <input type="text" class="form-control" name="username" id="username" placeholder="Employee Number" value="" style="text-transform: uppercase;" required="true" onkeypress="return NumberOnly(event)" tabindex="1">
                 </div>
               </div>
@@ -159,7 +163,7 @@ require_once('includes/init.php');
 <script src="bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
 <!-- bootstrap time picker -->
 <script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
-<script src="loginscript.js"></script>
+<script src="loginscript.js?test=<?php echo time()?>"></script>
 <!-- End Scripts calling -->
 <script>
   sessionStorage.clear();
@@ -178,6 +182,7 @@ $('#modalAlert').on('hidden.bs.modal', function () {
 </script>
 <?php
 include 'modal/registermodal.php';
+include 'modal/formModal.php';
 ?>
 </body>
 </html>
