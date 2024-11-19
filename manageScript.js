@@ -595,6 +595,7 @@ $('#contentUpdate').on("submit",function(event){ //Trigger update for userinfo
 });
 $("#contentAdd").on("submit",function(event){ //Trigger add new userinfo
   event.preventDefault();
+  const addSelectMode = $('#txtSelectMode').val();
   const addEmpNo = $('#txtAddEmpno').val();
   const addFName = $('#txtAddFName').val();
   const addMname = $('#txtAddMName').val();
@@ -612,73 +613,99 @@ $("#contentAdd").on("submit",function(event){ //Trigger add new userinfo
 
   $("#txtAddFName").css('border-color', '');
   $("#checkTxtAddFName").html("");
-
-  var validatePassSubmit = 1;
-
     if(addLName.length <2){
       $("#checkTxtAddLName").html("Please enter a Last Name with at least 2 characters.").css('color', 'red');
       $("#txtAddLName").css('border-color', 'red');
       $("#txtAddLName").focus();
-      validatePassSubmit = 0;
-    }if(addMname.length ==''){
-      
-    }else if(addMname.length <2){
+    }else if((addMname !='') && (addMname.length <2)){
       $("#checkTxtAddMName").html("Please enter a Middle Name with at least 2 characters.").css('color', 'red');
       $("#txtAddMName").css('border-color', 'red');
       $("#txtAddMName").focus();
-      validatePassSubmit = 0;
-    }if(addFName.length <2){
+    }else if(addFName.length <2){
       $("#checkTxtAddFName").html("Please enter a First Name with at least 2 characters.").css('color', 'red');
       $("#txtAddFName").css('border-color', 'red');
       $("#checkTxtAddFName").focus();
-      validatePassSubmit = 0;
-    }if ((addEmpNo.length>5) || (addEmpNo.length<4)){
-      $("#checkTxtAddEmpno").html("Invalid Employee number. Please enter a number with a minimum of 4 digits and a maximum of 5 digits.").css('color', 'red');
-      $("#txtAddEmpno").css('border-color', 'red');
-      $("#txtAddEmpno").focus();
-      validatePassSubmit = 0;
+    }else if(addSelectMode==2){ //Manual entry of employee number
+      if ((addEmpNo.length>5) || (addEmpNo.length<4)){
+        $("#checkTxtAddEmpno").html("Invalid Employee number. Please enter a number with a minimum of 4 digits and a maximum of 5 digits.").css('color', 'red');
+        $("#txtAddEmpno").css('border-color', 'red');
+        $("#txtAddEmpno").focus();
+      }else if(addEmpNo > 12636){
+        $("#checkTxtAddEmpno").html("Invalid input. Employee number must not exceed the allowed limit.").css('color', 'red');
+        $("#txtAddEmpno").css('border-color', 'red');
+        $("#txtAddEmpno").focus();
+      }else{
+        $.ajax({ //check empno
+          url:"checkExist.php",
+          method:"POST",
+          data: {addEmpNo:addEmpNo},
+          dataType: 'json',
+          success:function(data){
+              const uniqueEmpNo = data.empNO;
+              if(uniqueEmpNo){
+                  $("#checkTxtAddEmpno").html("Oops! It seems this employee number has already been used. Please double-check your information and try again, or contact support for assistance.").css('color', 'red');
+                  $("#txtAddEmpno").css('border-color', 'red');
+                  $("#txtAddEmpno").focus();
+              }else{
+                // process register
+                insertNewUser();
+              }
+          },
+          });
+      }
+    }else{
+      generateID();
     }
-    $.ajax({ //check empno
-      url:"checkExist.php",
-      method:"POST",
-      data: {addEmpNo:addEmpNo},
-      dataType: 'json',
-      success:function(data){
-          const uniqueEmpNo = data.empNO;
-          if(uniqueEmpNo){
-              $("#checkTxtAddEmpno").html("Oops! It seems this employee number has already been used. Please double-check your information and try again, or contact support for assistance.").css('color', 'red');
-              $("#txtAddEmpno").css('border-color', 'red');
-              $("#txtAddEmpno").focus();
-              validatePassSubmit = 0;
-          }else if(validatePassSubmit == 1){
-                  // process register
-                  var formData = new FormData(contentAdd);
-                  $.ajax({
-                    url:"adminAddNewUser.php",
-                    method:"POST",
-                    dataType: "json",
-                    data:formData,
-                    success:function(data){
-                      const msg = data.msg;
-                      const stat = data.status;
-                      if(stat == "success"){
-                        
-                        $('#modalNotif-header').text('Great! Success.');
-                        $('#modalNotif-message').text(msg);
-                        $('#modalNotif').modal('show');
-                      }
-                      else{
-                        $('#alertMessage').text(msg);
-                        $('#modalAlert').modal('show'); 
-                      }
-                    },
-                    processData: false,
-                    contentType: false
-                  }); 
-          }
-      },
-      });
 });
+function insertNewUser(){ //function for insertnew user
+  var formData = new FormData(contentAdd);
+  $.ajax({
+    url:"adminAddNewUser.php",
+    method:"POST",
+    dataType: "json",
+    data:formData,
+    success:function(data){
+      const msg = data.msg;
+      const stat = data.status;
+      if(stat == "success"){
+        $('#modalNotif-header').text('Great! Success.');
+        $('#modalNotif-message').text(msg);
+        $('#modalNotif').modal('show');
+      }else{
+        $('#modalNotif-header').text('Opps! Error.');
+        $('#modalNotif-message').text(msg);
+        $('#modalNotif').modal('show');
+      }
+    },
+    processData: false,
+    contentType: false
+  }); 
+}
+function generateID(){ //function for auto generated entry of employee number
+  $.ajax({
+        url:"includes/functions.php",
+        method:"POST",
+        data: {GenerateEmpID:1},
+        dataType: 'json',
+        success:function(data){
+          let lastNumber = data.last_emp_no;
+          const setEmpID = ++lastNumber;
+          $("#txtAddEmpno").val(setEmpID);
+          if(setEmpID != ''){
+            insertNewUser();
+          }
+        }
+      })
+}
+function changeMode(){ //behaivior after change of mode
+  $('#txtAddEmpno').val('');
+  var ModeValue = $('#txtSelectMode').val();
+  if(ModeValue ==1){
+    $('#txtAddEmpno').attr('readonly',true);
+  }else{
+    $('#txtAddEmpno').attr('readonly',false);
+  }
+}
 $('#contentDivision').on("submit", function(event){ //trigger add division
   event.preventDefault();
     const DivisionName = $('#txtDivName').val();

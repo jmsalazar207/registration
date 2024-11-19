@@ -11,44 +11,83 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
     $dataReturn['msg'] = "Session has expired. Please relogin your account.";
     echo json_encode($dataReturn);
 }else{
-    //proceed to insert new user
-    $user['empno'] = '03-'.sanitize($_POST['txtAddEmpno']);
-    $user['sname'] = sanitize(strtoupper($_POST['txtAddLName']));
-    $user['fname'] = sanitize(strtoupper($_POST['txtAddFName']));
-    $user['mname'] = sanitize(strtoupper($_POST['txtAddMName']));
-    $user['ename'] = sanitize(strtoupper($_POST['txtAddExtName']));
-    $user['password'] = '';
-    $user['mobile'] = '';
-    $user['birthdate'] = '';
-    $user['eaddress'] = '';
-    $user['street'] = '';
-    $user['region'] = '';
-    $user['numAdd'] = '';
-    $user['barangay'] = '';
-    $user['city'] = '';
-    $user['province'] = '';
-    $user['position'] = '';
-    $user['division'] = '';
-    $user['unit'] = '';
-    $user['date_registered'] = '';
-    $user['date_approved'] = '';
-    $user['uploaded_id'] = '';
-    $user['user_level'] = '';
-    $user['isLog'] = '';
-    $user['last_update'] = '';
-    $user['date_deleted'] = '';
-    $personalInfo['empno'] = '03-'.sanitize($_POST['txtAddEmpno']);
-    $permAddress['empno'] = '03-'.sanitize($_POST['txtAddEmpno']);
-    $insertNewUser = $dbConn->insert('userprofile',$user);
-    $insertPersonalInfo = $dbConn->insert('lib_personal_info',$personalInfo);
-    $insertPermAddress = $dbConn->insert('lib_perm_address',$permAddress);
-    if($insertNewUser && $insertPersonalInfo && $insertPermAddress){
-        $dataReturn['status'] = "success";
-        $dataReturn['msg'] = "New user successfully added.";
-        echo json_encode($dataReturn);
-    } else {
-        $dataReturn['status'] = "failed";
-        $dataReturn['msg'] = "Oops! Something went wrong. Please try again later.";
-        echo json_encode($dataReturn);
+    $modeSelect = $_POST['txtSelectMode'];
+    if($modeSelect==1){ //auto generate
+        $user['empno'] = '03-'.sanitize($_POST['txtAddEmpno']);
+        $user['sname'] = sanitize(strtoupper($_POST['txtAddLName']));
+        $user['fname'] = sanitize(strtoupper($_POST['txtAddFName']));
+        $user['mname'] = sanitize(strtoupper($_POST['txtAddMName']));
+        $user['ename'] = sanitize(strtoupper($_POST['txtAddExtName']));
+        $user['password'] = '';
+        $user['mobile'] = '';
+        $user['birthdate'] = '';
+        $user['eaddress'] = '';
+        $user['street'] = '';
+        $user['region'] = '';
+        $user['numAdd'] = '';
+        $user['barangay'] = '';
+        $user['city'] = '';
+        $user['province'] = '';
+        $user['position'] = '';
+        $user['division'] = '';
+        $user['unit'] = '';
+        $user['date_registered'] = '';
+        $user['date_approved'] = '';
+        $user['uploaded_id'] = '';
+        $user['user_level'] = '';
+        $user['isLog'] = '';
+        $user['last_update'] = '';
+        $user['date_deleted'] = '';
+        $insertNewUser = $dbConn->insert('userprofile',$user);  //Insert user  
+
+        $updateLastIDNo['last_emp_no'] = sanitize($_POST['txtAddEmpno']);
+        $UpdateLastIDNumber = $dbConn->update('tbl_emp_last_no','id','0',$updateLastIDNo); //Update last number
+
+        if($insertNewUser && $UpdateLastIDNumber){
+            $dataReturn['status'] = "success";
+            $dataReturn['msg'] = "New user successfully added.";
+            echo json_encode($dataReturn);
+        } else {
+            $dataReturn['status'] = "failed";
+            $dataReturn['msg'] = "Oops! Something went wrong. Please try again later.";
+            echo json_encode($dataReturn);
+        }
+        
+    }else{
+        $user['empno'] = '03-'.sanitize($_POST['txtAddEmpno']);
+        $user['sname'] = sanitize(strtoupper($_POST['txtAddLName']));
+        $user['fname'] = sanitize(strtoupper($_POST['txtAddFName']));
+        $user['mname'] = sanitize(strtoupper($_POST['txtAddMName']));
+        $user['ename'] = sanitize(strtoupper($_POST['txtAddExtName']));
+        $user['password'] = '';
+        $user['mobile'] = '';
+        $user['birthdate'] = '';
+        $user['eaddress'] = '';
+        $user['street'] = '';
+        $user['region'] = '';
+        $user['numAdd'] = '';
+        $user['barangay'] = '';
+        $user['city'] = '';
+        $user['province'] = '';
+        $user['position'] = '';
+        $user['division'] = '';
+        $user['unit'] = '';
+        $user['date_registered'] = '';
+        $user['date_approved'] = '';
+        $user['uploaded_id'] = '';
+        $user['user_level'] = '';
+        $user['isLog'] = '';
+        $user['last_update'] = '';
+        $user['date_deleted'] = '';
+        $insertNewUser = $dbConn->insert('userprofile',$user);
+        if($insertNewUser){
+            $dataReturn['status'] = "success";
+            $dataReturn['msg'] = "New user successfully added.";
+            echo json_encode($dataReturn);
+        } else {
+            $dataReturn['status'] = "failed";
+            $dataReturn['msg'] = "Oops! Something went wrong. Please try again later.";
+            echo json_encode($dataReturn);
+        }
     }
 }

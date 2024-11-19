@@ -685,4 +685,14 @@ if(isset($_POST["eligibility"])){
   }
   echo $eligibility_output;
 }
+
+if(isset($_POST["GenerateEmpID"])){ 
+  $output = [];
+
+  $params['fields'] = "last_emp_no";
+  $result = $dbConn->findFirst('tbl_emp_last_no',$params);
+  $output['last_emp_no'] = $result['last_emp_no'];
+
+  echo json_encode($output); 
+}
 ?>
