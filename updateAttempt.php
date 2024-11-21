@@ -11,7 +11,7 @@ if (isset($_POST['attemptEmpNO'])) {  //Tries
 
   if($sqlUpdateAttempt){
     $dataReturn['status'] = "success";
-    $dataReturn['msg'] = "Oops! It seems there's an issue with your login credentials. Please try again.!"; //success update then notif for error password
+    $dataReturn['msg'] = "Oops! Invalid Credentials. Please contact Personnel Section for further assistance in verifying your information."; //success update then notif for error password
     echo json_encode($dataReturn);
   }else{
     $dataReturn['status'] = "failed";
@@ -21,6 +21,7 @@ if (isset($_POST['attemptEmpNO'])) {  //Tries
 }else if(isset($_POST['LockEmpNo'])){ //3 attempt
   $empno = $_POST['LockEmpNo'];
   $lockAccount['account_status'] = 4;
+  $lockAccount['password_attempt'] = 3;
 
   $sqlLockAccount = $dbConn->update('userprofile', 'empno', $empno, $lockAccount);
 

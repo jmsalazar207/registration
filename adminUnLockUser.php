@@ -5,6 +5,7 @@ $dataReturn = [];
 if (isset($_POST['btnAdminUnLockEmpno'])) {
   $empno = $_POST['btnAdminUnLockEmpno'];
   $adminUserUnLock['account_status'] = 2;
+  $adminUserUnLock['password_attempt'] = 0;
   $adminUserUnLock['lock_by'] = '';
   $adminUserUnLock['datetime_lock'] = '';
   

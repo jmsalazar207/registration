@@ -39,6 +39,7 @@ require_once('includes/init.php');
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <link rel="stylesheet" href="plugins/iCheck/all.css">
   <link rel="stylesheet" href="includes/add.css">
+  <link rel="stylesheet" href="includes/loader.css">
    <!-- Bootstrap Color Picker -->
    <link rel="stylesheet" href="bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
      <!-- Bootstrap time Picker -->
@@ -54,6 +55,12 @@ require_once('includes/init.php');
 
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
 <body class="hold-transition skin-blue layout-top-nav">
+  <div class="loader-div">
+    <img 
+    class="loader-img" 
+    src="images/ajax-loader.gif" 
+    style="height: 50px;width: auto;" />
+  </div>
 <div class="wrapper">
 <?php include 'includes/header.php';?>
   <!-- Full Width Column -->
@@ -91,7 +98,12 @@ require_once('includes/init.php');
               </div><br>
               <div class="row">
                 <div class="col-xs-12">
-                    <div class="g-recaptcha" data-callback="recaptchaCallbackLogin" data-expired-callback="recaptchaExpiredLogin" data-sitekey="6LeTvywhAAAAAO3C0jpqGHBY-_CHkinekSrSzSlS" tabindex = "3">
+                    <div 
+                    class="g-recaptcha" 
+                    data-callback="onCaptchaSuccess" 
+                    data-expired-callback="onCaptchaExpired" 
+                    data-sitekey="6LeTvywhAAAAAO3C0jpqGHBY-_CHkinekSrSzSlS" 
+                    tabindex = "3">
                     </div>
                     <small id='CheckCaptchaLoginmessage'></small>
                 </div>
@@ -107,18 +119,24 @@ require_once('includes/init.php');
                   <div class="col-xs-12">
                     <label>
                       Don't have account? 
-                        <a href="mainRegister.php">
+                        <a href="mainRegister.php" target="_blank">
                           Click here to register
                         </a>
                     </label>
+                  </div>
+                  <div class="col-xs-12">
                     <label>
-                      <a href="forgot/forgot_password.php">
-                        Forgotten your password?
+                      Forgot your password?
+                      <a href="forgot/forgot_password.php" target="_blank">
+                        Click here to recover
                       </a>
-                    </label><br>
+                    </label>
+                  </div><br>
+                  <div class="col-xs-12">
 		                <label>
-                      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfAU3hpCz14eMK3xK2bykVy7WS4mvHwzWYLNlGJQ_RAE-wSVw/viewform">
-                        For ERM concern click here
+                      Do you have system concern?
+                      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfAU3hpCz14eMK3xK2bykVy7WS4mvHwzWYLNlGJQ_RAE-wSVw/viewform" target="_blank">
+                        Click here to send 
                       </a>
                     </label>
                   </div>
@@ -164,6 +182,8 @@ require_once('includes/init.php');
 <!-- bootstrap time picker -->
 <script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 <script src="loginscript.js?test=<?php echo time()?>"></script>
+<script src="modalNotif.js?test=<?php echo time()?>"></script>
+
 <!-- End Scripts calling -->
 <script>
   sessionStorage.clear();
@@ -183,6 +203,7 @@ $('#modalAlert').on('hidden.bs.modal', function () {
 <?php
 include 'modal/registermodal.php';
 include 'modal/formModal.php';
+include 'modal/modalNotif.php';
 ?>
 </body>
 </html>

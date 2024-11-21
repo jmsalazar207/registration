@@ -206,8 +206,6 @@
           <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-contenterror">
               <div class="modal-headererror">
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button> -->
                 <h3 class="modal-title">Ooops!</h3>
               </div>
               <div class="modal-bodyerror">
@@ -221,15 +219,13 @@
             <!-- /.modal-content -->
           </div>
           <!-- /.modal-dialog -->
-        </div> 
+      </div> 
 
         <!-- modal for update after login success -->
         <div class="modal fade" id="SuccessLoginConfirm" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-contentsuccess">
               <div class="modal-headersuccess">
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button> -->
                 <h3 class="modal-title">Great!</h3>                
               </div>
               <div class="modal-bodysuccess">
@@ -237,8 +233,6 @@
              <h4 id="AlertProceedUpdate"></h4>
               </div>
               <div class="modal-footersuccess">
-                <!-- <button type="button" class="btn btn-modalsuccess btn-sm" onclick="UpdateYes()" data-dismiss="modal">Proceed</button> -->
-                <!-- <a class="btn btn-modalsuccess btn-sm">Ok</a> -->
                 <button type="button" class="btn btn-modalsuccess btn-sm" data-dismiss="modal">OK</button>
               </div>
             </div>
