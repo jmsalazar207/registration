@@ -398,7 +398,7 @@ require_once('includes/init.php');
 <script src="bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
 <!-- bootstrap time picker -->
 <script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
-<script src="pluginscript.js"></script>
+<script src="pluginscript.js?test=<?php echo time()?>"></script>
 <!-- <script src="loginscript.js"></script> -->
 <!-- End Scripts calling -->
 <?php

@@ -184,6 +184,7 @@ require_once('includes/init.php');
 <script src="loginscript.js?test=<?php echo time()?>"></script>
 <script src="modalNotif.js?test=<?php echo time()?>"></script>
 
+
 <!-- End Scripts calling -->
 <script>
   sessionStorage.clear();

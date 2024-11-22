@@ -75,7 +75,7 @@ include "includes/footer.php";
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
-<script src="panelScript.js"></script>
+<script src="panelScript.js?test=<?php echo time()?>"></script>
 <script>
   $(document).ready(function () {
     $('.sidebar-menu').tree()

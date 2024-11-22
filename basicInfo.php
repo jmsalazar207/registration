@@ -506,7 +506,7 @@
                     <button 
                         type="submit" 
                         class="btn btn-primary btn-md pull-right">
-                        Update Profile
+                        Save
                     </button>
                 </div>
             </div>

@@ -121,8 +121,8 @@ require_once('includes/init.php');
 <?php
   include "modal/formModal.php"
 ?>
-<script src="panelScript.js"></script>
-<script src="position.js"></script>
+<script src="panelScript.js?test=<?php echo time()?>"></script>
+<script src="position.js?test=<?php echo time()?>"></script>
 <script>
   $(function () {
     $('#tblManagePosition').DataTable({ //retrieve data position name

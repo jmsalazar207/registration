@@ -29,3 +29,30 @@ $(function(){
         }
     })
 })
+const idleTimeout = 5 * 60 * 1000; // 5 minutes in milliseconds
+let idleTimer;
+
+// Function to log the user out
+function logoutUser() {
+    alert("You have been logged out due to inactivity.");
+    // Redirect to logout or login page
+    window.location.href = "includes/logout.php"; // Change to your logout URL
+}
+
+// Function to reset the idle timer
+function resetIdleTimer() {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(logoutUser, idleTimeout);
+}
+
+// Monitor user activity
+function setupIdleTimer() {
+    document.addEventListener('mousemove', resetIdleTimer);
+    document.addEventListener('keydown', resetIdleTimer);
+    document.addEventListener('scroll', resetIdleTimer);
+    document.addEventListener('touchstart', resetIdleTimer);
+}
+
+// Initialize the idle timer
+setupIdleTimer();
+resetIdleTimer(); // Start the timer immediately

@@ -619,3 +619,20 @@ function recaptchaExpired() {
           },
         });
       });
+      // <link rel="stylesheet" href="../includes/loader.css">
+      // <div class="loader-div">
+      //       <img 
+      //       class="loader-img" 
+      //       src="../assets/images/ajax-loader.gif" 
+      //       style="height: 50px;width: auto;" />
+      //     </div> 
+      // ,error: function(xhr, status, error) {
+      //   alert('The system encountered an error while processing your request:', error);
+      //   $(".loader-div").hide(); // hide loader
+      // }
+      // $(".loader-div").show();
+      // $(".loader-div").hide(); // hide loader
+      
+      // $('#modalNotif-header').text('Opps! Error.');
+      // $('#modalNotif-message').text(msg);
+      // $('#modalNotif').modal('show');

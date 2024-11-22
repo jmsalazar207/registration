@@ -123,8 +123,8 @@ require_once('includes/init.php');
 <?php
   include "modal/formModal.php";
 ?>
-<script src="panelScript.js"></script>
-<script src="manageScript.js"></script>
+<script src="panelScript.js?test=<?php echo time()?>"></script>
+<script src="manageScript.js?test=<?php echo time()?>"></script>
 <script>
   $(function () {
     $('#userManage').DataTable({

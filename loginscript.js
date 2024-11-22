@@ -27,11 +27,11 @@ function NumberOnly(evt) {
     $("#CheckCaptchaLoginmessage").html("");
   
     // Validate captcha
-    if (!captchaResponse || !isCaptchaValid) { 
-      $("#CheckCaptchaLoginmessage").html("Please verify you're not a robot").css('color', 'red');
-      $("#CheckCaptchaLoginmessage").focus();
-      return; // Exit function if captcha is not valid
-    }
+    // if (!captchaResponse || !isCaptchaValid) { 
+    //   $("#CheckCaptchaLoginmessage").html("Please verify you're not a robot").css('color', 'red');
+    //   $("#CheckCaptchaLoginmessage").focus();
+    //   return; // Exit function if captcha is not valid
+    // }
   
     // Show loader and send AJAX request
     $(".loader-div").show();

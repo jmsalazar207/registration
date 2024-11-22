@@ -542,7 +542,7 @@ include "includes/footer.php";
 include "modal/formModal.php";
 ?>
 <script src="profileScript.js?test=<?php echo time()?>"></script>
-<script src="panelScript.js"></script>
+<script src="panelScript.js?test=<?php echo time()?>"></script>
 
 </body>
 </html>
