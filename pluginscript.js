@@ -1,12 +1,6 @@
 window.onload = function() {
   sessionStorage.clear();
 };
-function NumberOnly(evt) {
-    var charCode = (evt.which) ? evt.which : evt.keyCode
-    if (charCode > 31 && (charCode < 48 || charCode > 57))
-      return false;
-    return true;
-  }
   // sessionStorage.clear();
   $(function () {
     //Initialize Select2 Elements
@@ -75,16 +69,16 @@ function NumberOnly(evt) {
 
   });
 function sessionKill(){ //close modal session kill
-  sessionStorage.clear();
+  // sessionStorage.clear();
   $('#RegisterConfirm').modal('hide');
 }
   function modalCloseConfirm(){
     $('#confirm_edit').modal('hide');
   };  
   //for Residential
-//Kapag meg select Region
+
   jQuery(document).ready(function() {
-    jQuery("#AddRegion").on('change',function(){
+    jQuery("#AddRegion").on('change',function(){  //Kapag meg select Region
         var regionAction = jQuery(this).attr("id");
         var region_id = jQuery(this).val();
         if(region_id){
@@ -92,8 +86,7 @@ function sessionKill(){ //close modal session kill
             url:"includes/functions.php",
             method:"POST",
             data:{regionAction:regionAction, region_id:region_id},
-            success:function(data){``
-
+            success:function(data){
                 jQuery('#AddProvince').html(data);
                 jQuery('#AddCity').html('<option value="">SELECT PROVINCE FIRST</option>');  
             }
@@ -103,74 +96,59 @@ function sessionKill(){ //close modal session kill
             jQuery('#AddCity').html('<option value="">SELECT PROVINCE FIRST</option>');
             jQuery('#AddBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');
         }
-    });
-  });
-//End select Region
-
-//Kapag meg Select province
-  jQuery(document).ready(function() {
-    jQuery("#AddProvince").on('change',function(){
-        var provinceAction = jQuery(this).attr("id");
-        var province_id = jQuery(this).val();
-        if(province_id){
-            jQuery.ajax({
-            url:"includes/functions.php",
-            method:"POST",
-            data:{provinceAction:provinceAction, province_id:province_id},
-            success:function(data){
-                jQuery('#AddCity').html(data);
-                jQuery('#AddBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');  
-            }
-        });
-        }else{
-            jQuery('#AddCity').html('<option value="">SELECT PROVINCE FIRST</option>');
-            jQuery('#AddBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');
-        }
-    });
-  });
-//end select city
-//kapag meg select barangay
-        jQuery(document).ready(function() {
-      jQuery("#AddCity").on('change',function(){
-          var cityAction = jQuery(this).attr("id");
-          var city_id = jQuery(this).val();
-          if(city_id){
-              jQuery.ajax({
-              url:"includes/functions.php",
-              method:"POST",
-              data:{cityAction:cityAction, city_id:city_id},
-              success:function(data){
-                  jQuery('#AddBarangay').html(data);
-                   
-              }
-          });
-          }else{
-              jQuery('#AddBarangay').html('<option value="">SELECT PROVINCE FIRST</option>');
-             
+    });    //End select Region
+    jQuery("#AddProvince").on('change',function(){  //Kapag meg Select province
+      var provinceAction = jQuery(this).attr("id");
+      var province_id = jQuery(this).val();
+      if(province_id){
+          jQuery.ajax({
+          url:"includes/functions.php",
+          method:"POST",
+          data:{provinceAction:provinceAction, province_id:province_id},
+          success:function(data){
+              jQuery('#AddCity').html(data);
+              jQuery('#AddBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');  
           }
       });
-        });  
-//Onchange ning Division
-  jQuery("#AddDivision").on('change',function(){
-    var divisionAction = jQuery(this).attr("id");
-    var division_ids = jQuery(this).val();
-    if(division_ids){
-        jQuery.ajax({
-        url:"includes/functions.php",
-        method:"POST",
-        data:{divisionAction:divisionAction, division_ids:division_ids},
-        success:function(data){
-            jQuery('#AddUnit').html(data);
-        }
+      }else{
+          jQuery('#AddCity').html('<option value="">SELECT PROVINCE FIRST</option>');
+          jQuery('#AddBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');
+      }
     });
-    }else{
-        jQuery('#AddUnit').html('<option value="">SELECT DIVISION FIRST</option>');
-    }
-});
-
-$( document ).ready(function() {
-    $("#ConfirmPassword").keyup(checkPasswordMatch);
-});
+    jQuery("#AddCity").on('change',function(){
+      var cityAction = jQuery(this).attr("id");
+      var city_id = jQuery(this).val();
+      if(city_id){
+          jQuery.ajax({
+          url:"includes/functions.php",
+          method:"POST",
+          data:{cityAction:cityAction, city_id:city_id},
+          success:function(data){
+              jQuery('#AddBarangay').html(data);
+          }
+      });
+      }else{
+        jQuery('#AddBarangay').html('<option value="">SELECT PROVINCE FIRST</option>');
+      }
+    });
+    //Onchange ning Division
+    jQuery("#AddDivision").on('change',function(){
+      var divisionAction = jQuery(this).attr("id");
+      var division_ids = jQuery(this).val();
+      if(division_ids){
+          jQuery.ajax({
+          url:"includes/functions.php",
+          method:"POST",
+          data:{divisionAction:divisionAction, division_ids:division_ids},
+          success:function(data){
+              jQuery('#AddUnit').html(data);
+          }
+      });
+      }else{
+          jQuery('#AddUnit').html('<option value="">SELECT DIVISION FIRST</option>');
+      }
+    });
+  });
 function validateFileType() { //check file type
   var selectedFile = document.getElementById('AddFile').files[0];
   var allowedTypes = ['image/jpeg', 'image/png'];
@@ -184,13 +162,6 @@ function validateFileType() { //check file type
   }
 
 }
-  function recaptchaCallback() {
-    $('#CheckCaptchamessage').val(1); //check captcha is checked
-};
-function recaptchaExpired() {
-  $('#CheckCaptchamessage').val(0); //check captcha is expired
-};
-
   function checkPasswordMatch() { //password confirmed password if matched
         var DesiredPassword = $("#DesiredPassword").val();
         var confirmPassword = $("#ConfirmPassword").val();
@@ -202,74 +173,6 @@ function recaptchaExpired() {
             $("#btnSubmit").attr('disabled', false);
         }
         if(DesiredPassword=='' || DesiredPassword == '') $("#checkmessage").html("");
-    }
-    var myInput = document.getElementById("DesiredPassword");
-    var letter = document.getElementById("letter");
-    var capital = document.getElementById("capital");
-    var number = document.getElementById("number");
-    var special_char = document.getElementById("special_char");
-    var length = document.getElementById("length");
-
-    // When the user clicks on the password field, show the message box
-    myInput.onfocus = function() {
-      document.getElementById("message").style.display = "block";
-    }
-
-    // When the user clicks outside of the password field, hide the message box
-    myInput.onblur = function() {
-      document.getElementById("message").style.display = "none";
-    }
-
-    // When the user starts to type something inside the password field
-    myInput.onkeyup = function() {
-      // Validate lowercase letters
-      var lowerCaseLetters = /[a-z]/g;
-      if(myInput.value.match(lowerCaseLetters)) {  
-      letter.classList.remove("invalid");
-      letter.classList.add("valid");
-      } else {
-      letter.classList.remove("valid");
-      letter.classList.add("invalid");
-      }
-      
-      // Validate capital letters
-      var upperCaseLetters = /[A-Z]/g;
-      if(myInput.value.match(upperCaseLetters)) {  
-      capital.classList.remove("invalid");
-      capital.classList.add("valid");
-      } else {
-      capital.classList.remove("valid");
-      capital.classList.add("invalid");
-      }
-
-      // Validate numbers
-      var numbers = /[0-9]/g;
-      if(myInput.value.match(numbers)) {  
-      number.classList.remove("invalid");
-      number.classList.add("valid");
-      } else {
-      number.classList.remove("valid");
-      number.classList.add("invalid");
-      }
-      
-      // Validate special
-      var special_chars = /[!@#$%^.+=~-]/g;
-      if(myInput.value.match(special_chars)) {  
-      special_char.classList.remove("invalid");
-      special_char.classList.add("valid");
-      } else {
-      special_char.classList.remove("valid");
-      special_char.classList.add("invalid");
-      }
-      
-      // Validate length
-      if(myInput.value.length >= 8) {
-      length.classList.remove("invalid");
-      length.classList.add("valid");
-      } else {
-      length.classList.remove("valid");
-      length.classList.add("invalid");
-      }
     }
     $(".toggle-DesiredPassword").click(function() { //show password in desired password
         $(this).toggleClass("fa-eye fa-eye-slash");
@@ -289,6 +192,7 @@ function recaptchaExpired() {
           input.attr("type", "password");
         }
       });
+
       var empno = '';
       $("#contentsearch").on("submit",function(event){ //trigger search
         $('#regRoute').css("display","none");
@@ -297,16 +201,18 @@ function recaptchaExpired() {
         $("#txtSearch").css('border-color', '');
           $("#CheckIDmessage").html("");
         if ((IDNumber.length>5) || (IDNumber.length<4)){
-          $("#CheckIDmessage").html("Invalid Employee number. Please enter a number with a minimum of 4 digits and a maximum of 5 digits.").css('color', 'red');
+          $("#CheckIDmessage").html("Opps! Invalid Employee number").css('color', 'red');
           $("#txtSearch").css('border-color', 'red');
         }else{
           var formData = new FormData(this);
+          $(".loader-div").show();
           $.ajax({
             url:"search.php",
             method:"POST",
             dataType: "json",
             data:formData,
             success:function(data){
+              $(".loader-div").hide(); // hide loader
               empno = data.empno;
               fname = data.fname;
               mname = data.mname;
@@ -314,25 +220,21 @@ function recaptchaExpired() {
               extname = data.extname;
               fullname = fname+' '+mname+' '+sname+' '+extname;
               if(data.count == 0){
-                $('#alertMessage').text('Oops! The employee number was not found in our database. Please reach out to the Personnel Section for assistance in verifying the information.');
-                $('#modalAlert').modal('show');
-              }else if(data.count ==1){
-
-                  if(data.registered =="No"){
-                    sessionStorage.setItem("empno",empno);
-                    sessionStorage.setItem("fname",fname);
-                    sessionStorage.setItem("mname",mname);
-                    sessionStorage.setItem("sname",sname);
-                    sessionStorage.setItem("extname",extname);
+                modalErrorShow("Oops! Invalid Credentials. Please contact Personnel Section.");
+              }else{
+                  if(data.registered =="No"){ //not yet registered
                     $('#FullName').text(fullname);
                     $('#WarningMessage').text('Employee Number found. Ready to proceed with registration?');
                     $('#RegisterConfirm').modal('show');
-                    
-                  }else{
+                  }else{ //registered
                     $('#alertMessage').text('This employee number is already registered in our system. Please proceed to the login page and sign in to update your information.');
                     $('#modalAlert').modal('show');
                   }
               }
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+              resetCaptcha();
             },
             processData: false,
             contentType: false
@@ -340,6 +242,7 @@ function recaptchaExpired() {
         }
        
       });
+
       function RegisterYes(){ //proceed with the registration 'Yes'
         const EmpNumber = sessionStorage.getItem("empno")
         const FirstName = sessionStorage.getItem("fname")
@@ -356,7 +259,6 @@ function recaptchaExpired() {
         $('#AddDivision').val('').trigger('change');
         $('#AddUnit').html('<option value="">SELECT DIVISION FIRST</option>');
         $('#btnSubmit').val('Register');
-        $('#processType').val('Register');
         $('#RegisterContent').show();
         $('#ContentTip').show();
         
@@ -375,101 +277,7 @@ function recaptchaExpired() {
         $('#SearchContent').hide();
       };
       
-// function UpdateYes(sessionEmpno){
-//   // const sessionPassword = sessionStorage.getItem("password");
-//    $.ajax({
-//       url:"includes/functions.php",
-//       method:"POST",
-//       data:{sessionEmpno:sessionEmpno},
-//       success:function(data){
-//         UpdateInfo = JSON.parse(data);
-//         $("#AddLastName").val(UpdateInfo["sname"]);
-//         $("#AddFirstName").val(UpdateInfo["fname"]);
-//         $("#AddMiddleName").val(UpdateInfo["mname"]);
-//         $("#AddMobileNumber").val(UpdateInfo["mobile"]);
-//         $("#AddSex").val(UpdateInfo["sex"]).trigger('change');
-//         $("#AddextName").val(UpdateInfo["ename"]).trigger('change');
-//         $("#AddBirthdate").val(UpdateInfo["birthdate"]);
-//         $("#AddEmail").val(UpdateInfo["eaddress"]);
-//         $("#AddStreet").val(UpdateInfo["street"]);
-//         $("#AddHouseNumber").val(UpdateInfo["numAdd"]);
-//         $("#EmployeeNumber").val(UpdateInfo["empno"]);
-//         //md5 in jquery
-//         $("#DesiredPassword").val(sessionPassword);
-//         var update_region_id = UpdateInfo["region"];
-//         $.ajax({
-//             url:"includes/functions.php",
-//             method:"POST",
-//             data:{update_region_id:update_region_id},
-//             success:function(data){
-//                 $('#AddRegion').html(data);
-//             }
-//         });
-//         var update_province_id = UpdateInfo["province"];
-//         $.ajax({
-//           url:"includes/functions.php",
-//           method:"POST",
-//           data:{update_province_id:update_province_id,Where_region_ID:update_region_id},
-//           success:function(data){
-//               $('#AddProvince').html(data);
-//           }
-//       });
-//         var update_city_id = UpdateInfo["city"];
-//         $.ajax({
-//           url:"includes/functions.php",
-//           method:"POST",
-//           data:{update_city_id:update_city_id,Where_province_ID:update_province_id},
-//           success:function(data){
-//               $('#AddCity').html(data);
-//           }
-//       });
-//         var update_barangay_id = UpdateInfo["barangay"];
-//         $.ajax({
-//           url:"includes/functions.php",
-//           method:"POST",
-//           data:{update_barangay_id:update_barangay_id,Where_city_ID:update_city_id},
-//           success:function(data){
-//               $('#AddBarangay').html(data);
-//           }
-//       });
-//         var update_position_id = UpdateInfo["position"];
-//         $.ajax({
-//           url:"includes/functions.php",
-//           method:"POST",
-//           data:{update_position_id:update_position_id},
-//           success:function(data){
-//               $('#AddPosition').html(data);
-//           }
-//       });
-//         var update_division_id = UpdateInfo["division"];
-//         $.ajax({
-//           url:"includes/functions.php",
-//           method:"POST",
-//           data:{update_division_id:update_division_id},
-//           success:function(data){
-//               $('#AddDivision').html(data);
-//           }
-//       });
-//         var update_unit_id = UpdateInfo["unit"];
-//         $.ajax({
-//           url:"includes/functions.php",
-//           method:"POST",
-//           data:{update_unit_id:update_unit_id,Where_division_ID:update_division_id},
-//           success:function(data){
-//               $('#AddUnit').html(data);
-//           }
-//       });
-//       }
-//     });
-//     $('#btnSubmit').val('Update');
-//     $('#processType').val('Update');
-//     $('#RegisterContent').show();
-//     $('#SearchContent').hide();
-//     $('#AddFile').attr('disabled','disabled')
-//     $('#selectUpload').hide();
-//     $('#logoutTag').css("display","inline-flex");
-//     $('#loginTag').css("display","none");
-//   };
+
 
       //January 16, 2024
       $("#contentform").on("submit",function(event){
@@ -492,7 +300,6 @@ function recaptchaExpired() {
         var age_dt = new Date(month_diff); 
         var year = age_dt.getUTCFullYear();
         var age = Math.abs(year - 1970);
-        var mobileCount = 0; 
           
         $("#AddMobileNumber").css('border-color', '');
         $("#CheckMobileNomessage").html("");
@@ -636,3 +443,7 @@ function recaptchaExpired() {
       // $('#modalNotif-header').text('Opps! Error.');
       // $('#modalNotif-message').text(msg);
       // $('#modalNotif').modal('show');
+
+      // modalAlertShow("");
+      // modalErrorShow("");
+      // modalSuccessShow("");

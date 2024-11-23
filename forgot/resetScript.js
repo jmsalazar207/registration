@@ -1,69 +1,3 @@
-function StrongPassword(){
-  var myInput = document.getElementById("resetNewPassword");
-  var letter = document.getElementById("letter");
-  var capital = document.getElementById("capital");
-  var number = document.getElementById("number");
-  var special_char = document.getElementById("special_char");
-  var length = document.getElementById("length");
-  
-  // When the user starts to type something inside the password field
-    // Validate lowercase letters
-    var lowerCaseLetters = /[a-z]/g;
-    if(myInput.value.match(lowerCaseLetters)) {  
-    letter.classList.remove("invalid");
-    letter.classList.add("valid");
-    } else {
-    letter.classList.remove("valid");
-    letter.classList.add("invalid");
-    }
-    
-    // Validate capital letters
-    var upperCaseLetters = /[A-Z]/g;
-    if(myInput.value.match(upperCaseLetters)) {  
-    capital.classList.remove("invalid");
-    capital.classList.add("valid");
-    } else {
-    capital.classList.remove("valid");
-    capital.classList.add("invalid");
-    }
-  
-    // Validate numbers
-    var numbers = /[0-9]/g;
-    if(myInput.value.match(numbers)) {  
-    number.classList.remove("invalid");
-    number.classList.add("valid");
-    } else {
-    number.classList.remove("valid");
-    number.classList.add("invalid");
-    }
-    
-    // Validate special
-    var special_chars = /[!@#$%^.+=~-]/g;
-    if(myInput.value.match(special_chars)) {  
-    special_char.classList.remove("invalid");
-    special_char.classList.add("valid");
-    } else {
-    special_char.classList.remove("valid");
-    special_char.classList.add("invalid");
-    }
-    
-    // Validate length
-    if(myInput.value.length >= 8) {
-    length.classList.remove("invalid");
-    length.classList.add("valid");
-    } else {
-    length.classList.remove("valid");
-    length.classList.add("invalid");
-    }
-}
-function showMessage(){
-  // When the user clicks on the password field, show the message box
-  document.getElementById("message").style.display = "block";
-}
-function hideMessage(){
-  // When the user clicks outside of the password field, hide the message box
-  document.getElementById("message").style.display = "none";
-}
 function checkPasswordMatch() { //password confirmed password if matched
   var NewPassword = $("#resetNewPassword").val();
   var ConfirmPassword = $("#resetConfirmPassword").val();
@@ -75,24 +9,6 @@ function checkPasswordMatch() { //password confirmed password if matched
       $("#btnReset").attr('disabled', false);
   }
   if(NewPassword=='' || NewPassword == '') $("#checkmessage").html("");
-}
-function NumberOnly(evt) {
-    var charCode = (evt.which) ? evt.which : evt.keyCode
-    if (charCode > 31 && (charCode < 48 || charCode > 57))
-      return false;
-    return true;
-}
-function recaptchaCallbackReset() {
-    $('#CheckCaptchaResetmessage').val(1); //check captcha is checked login
-}
-function recaptchaExpiredReset() {
-$('#CheckCaptchaResetmessage').val(0); //check captcha is expired login
-}
-function recaptchaCallbackForgot() {
-  $('#CheckCaptchaForgotmessage').val(1); //check captcha is checked login
-}
-function recaptchaExpiredForgot() {
-$('#CheckCaptchaForgotmessage').val(0); //check captcha is expired login
 }
 function redirectTo(url) {
   window.location.href = url;
@@ -107,8 +23,8 @@ $('#frmForgot').on("submit",function(event){
   $("#checkForgotEmail").html("").css('color', 'red');
   $("#checkForgotEmail").css('border-color','');
   $("#CheckCaptchaForgotmessage").html("");
-  const loginCaptcha = $('#CheckCaptchaForgotmessage').val();
-  if(loginCaptcha !=1){
+  const captchaResponse = grecaptcha.getResponse();
+  if(!captchaResponse || !isCaptchaValid){
     $("#CheckCaptchaForgotmessage").html("Please Verify you're not a robot").css('color', 'red');
     $("#CheckCaptchaForgotmessage").focus();
   }else if((EmpIDValue.length>5) || (EmpIDValue.length<4)){
@@ -176,14 +92,14 @@ $('#frmReset').on("submit",function(event){
   event.preventDefault();
     ResetEmpIDValue = $("#resetUsername").val();
     const ResetEmpID = '03-'+ResetEmpIDValue;
-    const ResetCaptcha = $('#CheckCaptchaResetmessage').val();
     const ResetConfirmPassword = $('#resetConfirmPassword').val();
     const ResetNewPassword = $('#resetNewPassword').val();
     const ResetTempPassword = $('#resetPassword').val();
+    const captchaResponse = grecaptcha.getResponse();
     if((ResetEmpIDValue.length>5) || (ResetEmpIDValue.length<4)){
     $("#checkResetUsername").html("Oops! Invalid input detected. Please verify your entry and try again. For assistance, contact support.").css('color', 'red');
     $("#checkResetUsername").css('border-color','red');
-    }else if(ResetCaptcha !=1){
+    }else if(!captchaResponse || !isCaptchaValid){
     $('#CheckCaptchaResetmessage').html("Please Verify you're not a robot").css('color', 'red');
     $("#CheckCaptchaResetmessage").css('border-color','red');
     }else{

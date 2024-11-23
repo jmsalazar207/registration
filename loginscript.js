@@ -1,21 +1,4 @@
 
-function NumberOnly(evt) {
-    var charCode = (evt.which) ? evt.which : evt.keyCode
-    if (charCode > 31 && (charCode < 48 || charCode > 57))
-      return false;
-    return true;
-  }
-  
-  let isCaptchaValid = false;
-
-  function onCaptchaSuccess() {
-    isCaptchaValid = true;
-  }
-  
-  function onCaptchaExpired() {
-    isCaptchaValid = false;
-  }
-  
   $("#contentLogin").on("submit", function(event) {
     $('#regRoute').css("display", "none");
     event.preventDefault();
@@ -27,11 +10,11 @@ function NumberOnly(evt) {
     $("#CheckCaptchaLoginmessage").html("");
   
     // Validate captcha
-    // if (!captchaResponse || !isCaptchaValid) { 
-    //   $("#CheckCaptchaLoginmessage").html("Please verify you're not a robot").css('color', 'red');
-    //   $("#CheckCaptchaLoginmessage").focus();
-    //   return; // Exit function if captcha is not valid
-    // }
+    if (!captchaResponse || !isCaptchaValid) { 
+      $("#CheckCaptchaLoginmessage").html("Please verify you're not a robot").css('color', 'red');
+      $("#CheckCaptchaLoginmessage").focus();
+      return; // Exit function if captcha is not valid
+    }
   
     // Show loader and send AJAX request
     $(".loader-div").show();
@@ -79,13 +62,6 @@ function NumberOnly(evt) {
       }
     });
   });
-  
-  // Helper function to reset captcha
-  function resetCaptcha() {
-    grecaptcha.reset();
-    isCaptchaValid = false;
-  }
-  
   // Handle wrong password attempts
   function handleWrongPassword(employeeNo) {
     $.ajax({
@@ -110,7 +86,6 @@ function NumberOnly(evt) {
       }
     });
   }
-  
   // Lock account after 3 failed attempts
   function lockAccount(employeeNo) {
     $.ajax({
@@ -127,7 +102,6 @@ function NumberOnly(evt) {
       }
     });
   }
-  
   // Update attempt count
   function updateAttemptCount(employeeNo, count) {
     $.ajax({

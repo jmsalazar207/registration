@@ -43,27 +43,7 @@
         </div>      
 <!-- Modal confirm for new employee -->
         <!--AlreadyExist-->
-        <div class="modal fade" id="RegisterConfirm" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-            <div class="modal-contentYellow">
-              <div class="modal-headerYellow">
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-                  <!-- <span aria-hidden="true">&times;</span></button> -->
-                <h3 class="modal-title">Information</h3>
-              </div>
-              <div class="modal-bodyYellow">
-                <p align="center"><span class="glyphicon glyphicon-question-sign s_icon"></span></p>
-                <h4 id="WarningMessage"></h4>
-              </div>
-              <div class="modal-footerYellow">
-              <button type="button" class="btn btn-modalYellow btn-sm" name="btnConfirm" onclick="RegisterYes()">Yes</button>
-                <button type="button" class="btn btn-modalYellow btn-sm" onclick="sessionKill()">No</button>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div> 
+
                 <!--AlreadyExist-->
         <div class="modal fade" id="UpdateConfirm" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-sm" role="document">

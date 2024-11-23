@@ -108,9 +108,9 @@ require_once('../includes/init.php');
                 tabindex="2"
                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
                 title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" 
-                onkeyup="StrongPassword()"
-                onfocus="showMessage()"
-                onblur="hideMessage()"
+                onkeyup="StrongPassword('resetNewPassword');"
+                onfocus="showMessage('message');"
+                onblur="hideMessage('message');"
                 >
                 <span class="input-group-addon">
                     <i class="fa fa-eye-slash toggle-password " 
@@ -156,8 +156,8 @@ require_once('../includes/init.php');
                 <div class="col-xs-12">
                     <div 
                     class="g-recaptcha" 
-                    data-callback="recaptchaCallbackReset" 
-                    data-expired-callback="recaptchaExpiredReset" 
+                    data-callback="onCaptchaSuccess" 
+                    data-expired-callback="onCaptchaExpired" 
                     data-sitekey="6LeTvywhAAAAAO3C0jpqGHBY-_CHkinekSrSzSlS">
                     </div>
                     <small id='CheckCaptchaResetmessage'></small>
@@ -193,6 +193,7 @@ require_once('../includes/init.php');
 <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- iCheck -->
 <script src="../plugins/iCheck/icheck.min.js"></script>
+<script src="../genFunction.js?test=<?php echo time()?>"></script>
 <script src="resetScript.js?test=<?php echo time()?>"></script>
 <?php
 //include '../modal/registermodal.php';

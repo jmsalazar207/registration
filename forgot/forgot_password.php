@@ -79,7 +79,11 @@ require_once('../includes/init.php');
                   </div><br>
                   <div class="row">
                     <div class="col-xs-12">
-                        <div class="g-recaptcha" data-callback="recaptchaCallbackForgot" data-expired-callback="recaptchaExpiredForgot" data-sitekey="6LeTvywhAAAAAO3C0jpqGHBY-_CHkinekSrSzSlS">
+                        <div 
+                        class="g-recaptcha" 
+                        data-callback="onCaptchaSuccess" 
+                        data-expired-callback="onCaptchaExpired" 
+                        data-sitekey="6LeTvywhAAAAAO3C0jpqGHBY-_CHkinekSrSzSlS">
                         </div>
                         <small id='CheckCaptchaForgotmessage'></small>
                     </div>
@@ -111,6 +115,7 @@ require_once('../includes/init.php');
 <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- iCheck -->
 <script src="../plugins/iCheck/icheck.min.js"></script>
+<script src="../genFunction.js?test=<?php echo time()?>"></script>
 <script src="resetScript.js?test=<?php echo time()?>"></script>
 <?php
 //include '../modal/registermodal.php';

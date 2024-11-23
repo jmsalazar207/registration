@@ -1,4 +1,8 @@
-
+.requiredField::after {
+  content: " *"; /* Add a red asterisk */
+  color: red;    /* Set the asterisk color to red */
+  font-weight: bold; /* Make the asterisk bold */
+}
   /*EXIST MODAL*/
 
 .modal-headerYellow {
@@ -183,3 +187,4 @@
   width: 750px;
   margin: auto;
 }
+

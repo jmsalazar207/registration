@@ -81,20 +81,46 @@ require_once('includes/init.php');
                 <div class="input-group col-sm-12">
                   <div class="input-group-addon">
                     <i>
-                      <label style="font-size: 15px; margin:auto" for="03-">03-</label>
+                      <label 
+                      style="font-size: 15px; margin:auto" 
+                      for="03-">
+                        03-
+                      </label>
                     </i>
                   </div>
                   <input 
                   type="hidden" 
                   name="token" 
                   value="<?=$_SESSION["token"]?>">
-                  <input type="text" class="form-control" name="username" id="username" placeholder="Employee Number" value="" style="text-transform: uppercase;" required="true" onkeypress="return NumberOnly(event)" tabindex="1">
+                  <input 
+                  type="text" 
+                  class="form-control" 
+                  name="username" 
+                  id="username" 
+                  placeholder="Employee Number" 
+                  value="" 
+                  style="text-transform: uppercase;" 
+                  required="true" 
+                  onkeypress="return NumberOnly(event)" tabindex="1">
                 </div>
               </div>
 
               <div class="input-group has-feedback">
-                <input type="password" class="form-control" name="password" id = "password" placeholder="Password" required tabindex="2">
-                <span class="input-group-addon"><i class="fa fa-eye-slash toggle-password " toggle = "#password"  id="togglepassword"></i></span>
+                <input 
+                type="password" 
+                class="form-control" 
+                name="password" 
+                id = "password" 
+                placeholder="Password" 
+                required 
+                tabindex="2">
+                <span 
+                class="input-group-addon">
+                  <i class="fa fa-eye-slash toggle-password " 
+                  toggle = "#password"  
+                  id="togglepassword">
+                  </i>
+                </span>
               </div><br>
               <div class="row">
                 <div class="col-xs-12">
@@ -181,10 +207,9 @@ require_once('includes/init.php');
 <script src="bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
 <!-- bootstrap time picker -->
 <script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<script src="genFunction.js?test=<?php echo time()?>"></script>
 <script src="loginscript.js?test=<?php echo time()?>"></script>
 <script src="modalNotif.js?test=<?php echo time()?>"></script>
-
-
 <!-- End Scripts calling -->
 <script>
   sessionStorage.clear();
