@@ -66,19 +66,7 @@ window.onload = function() {
     $('.timepicker').timepicker({
       showInputs: false
     })
-
-  });
-function sessionKill(){ //close modal session kill
-  // sessionStorage.clear();
-  $('#RegisterConfirm').modal('hide');
-}
-  function modalCloseConfirm(){
-    $('#confirm_edit').modal('hide');
-  };  
-  //for Residential
-
-  jQuery(document).ready(function() {
-    jQuery("#AddRegion").on('change',function(){  //Kapag meg select Region
+      jQuery("#AddRegion").on('change',function(){  //Kapag meg select Region
         var regionAction = jQuery(this).attr("id");
         var region_id = jQuery(this).val();
         if(region_id){
@@ -149,6 +137,14 @@ function sessionKill(){ //close modal session kill
       }
     });
   });
+function sessionKill(){ //close modal session kill
+  // sessionStorage.clear();
+  $('#RegisterConfirm').modal('hide');
+}
+  function modalCloseConfirm(){
+    $('#confirm_edit').modal('hide');
+  };  
+
 function validateFileType() { //check file type
   var selectedFile = document.getElementById('AddFile').files[0];
   var allowedTypes = ['image/jpeg', 'image/png'];
@@ -174,15 +170,18 @@ function validateFileType() { //check file type
         }
         if(DesiredPassword=='' || DesiredPassword == '') $("#checkmessage").html("");
     }
-    $(".toggle-DesiredPassword").click(function() { //show password in desired password
-        $(this).toggleClass("fa-eye fa-eye-slash");
-        var input = $($(this).attr("toggle"));
-        if (input.attr("type") == "password") {
-          input.attr("type", "text");
-        } else {
-          input.attr("type", "password");
-        }
-      });
+   $(document).on("click", ".toggle-DesiredPassword", function () {
+    // Toggle the eye icon class
+    $(this).toggleClass("fa-eye fa-eye-slash");
+    
+    // Toggle the input type
+    var input = $($(this).attr("toggle"));
+    if (input.attr("type") === "password") {
+        input.attr("type", "text");
+    } else {
+        input.attr("type", "password");
+    }
+});
       $(".toggle-ConfirmPassword").click(function() { //show password in Confirm password
         $(this).toggleClass("fa-eye fa-eye-slash");
         var input = $($(this).attr("toggle"));
@@ -219,16 +218,21 @@ function validateFileType() { //check file type
               sname = data.sname;
               extname = data.extname;
               fullname = fname+' '+mname+' '+sname+' '+extname;
+              var PassData ={
+                empno : empno,
+                fname : fname,
+                mname : mname,
+                sname : sname,
+                extname : extname
+              };
               if(data.count == 0){
                 modalErrorShow("Oops! Invalid Credentials. Please contact Personnel Section.");
               }else{
                   if(data.registered =="No"){ //not yet registered
                     $('#FullName').text(fullname);
-                    $('#WarningMessage').text('Employee Number found. Ready to proceed with registration?');
-                    $('#RegisterConfirm').modal('show');
+                    modalConfirmShow('Employee Number found. Ready to proceed with registration?',RegisterYes,sessionKill,PassData);
                   }else{ //registered
-                    $('#alertMessage').text('This employee number is already registered in our system. Please proceed to the login page and sign in to update your information.');
-                    $('#modalAlert').modal('show');
+                    modalAlertShow('This employee number is already registered in our system.');
                   }
               }
             },error: function(xhr, status, error) {
@@ -243,12 +247,12 @@ function validateFileType() { //check file type
        
       });
 
-      function RegisterYes(){ //proceed with the registration 'Yes'
-        const EmpNumber = sessionStorage.getItem("empno")
-        const FirstName = sessionStorage.getItem("fname")
-        const MiddleName = sessionStorage.getItem("mname")
-        const LastName = sessionStorage.getItem("sname")
-        const ExtName = sessionStorage.getItem("extname")
+      function RegisterYes(PassData){ //proceed with the registration 'Yes'
+        var empID = PassData.empno;
+        var FName = PassData.fname;
+        var MName = PassData.mname;
+        var SName = PassData.sname;
+        var EName = PassData.extname;
         $('#RegisterConfirm').modal('hide');
         $('#contentform').trigger("reset");
         $('#AddRegion').val('').trigger('change');
@@ -263,22 +267,15 @@ function validateFileType() { //check file type
         $('#ContentTip').show();
         
 
-        $('#AddFirstName').attr('readonly','readonly');
-        $('#AddLastName').attr('readonly','readonly');
-        // $('#AddMiddleName').attr('readonly','readonly');
-        $('#AddextName').attr('disabled','disabled');
-        $("#EmployeeNumber").val(EmpNumber);
-        $("#AddFirstName").val(FirstName);
-        $("#AddLastName").val(LastName);
-        $("#AddMiddleName").val(MiddleName);
-        $("#AddextName").val(ExtName).trigger('change');
-        $("#HiddenAddextName").val(ExtName);
+        $("#EmployeeNumber").val(empID);
+        $("#AddFirstName").val(FName);
+        $("#AddLastName").val(SName);
+        $("#AddMiddleName").val(MName);
+        $("#AddextName").val(EName).trigger('change');
+        $("#HiddenAddextName").val(EName);
         
         $('#SearchContent').hide();
       };
-      
-
-
       //January 16, 2024
       $("#contentform").on("submit",function(event){
         event.preventDefault();
@@ -290,17 +287,11 @@ function validateFileType() { //check file type
         const LName = $('#AddLastName').val();
         const Street = $('#AddStreet').val();
         const Birthday = $('#AddBirthdate').val();
-        const catpcha = $('#CheckCaptchamessage').val();
+        const captchaResponse = grecaptcha.getResponse();
         const type = $('#processType').val();
-        
-       
+        var age = computeBday(Birthday);
 
-        var bday = new Date(Birthday);
-        var month_diff = Date.now() - bday.getTime();
-        var age_dt = new Date(month_diff); 
-        var year = age_dt.getUTCFullYear();
-        var age = Math.abs(year - 1970);
-          
+        
         $("#AddMobileNumber").css('border-color', '');
         $("#CheckMobileNomessage").html("");
 
@@ -425,6 +416,7 @@ function validateFileType() { //check file type
                
           },
         });
+        
       });
       // <link rel="stylesheet" href="../includes/loader.css">
       // <div class="loader-div">

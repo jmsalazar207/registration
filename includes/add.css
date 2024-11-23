@@ -132,6 +132,12 @@
   border-color: #DC3535;
   font-family:Comic Sans, sans-serif;
 }
+.btn-modalSave {
+  color: #fff;
+  background-color: #1b2afd;
+  border-color: #1b2afd;
+  font-family:Comic Sans, sans-serif;
+}
     /*END ERROR MODAL*/    
 .s_icon{
   font-size: 30px;

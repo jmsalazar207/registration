@@ -31,3 +31,29 @@ function modalErrorShow(msg){
     $('#modalDynamicButton').attr('class','btn btn-modalYellow btn-sm');
     $('#modalDynamic').modal('show');
   }
+  function modalConfirmShow(msg,YesAction,NoAction,PassData){
+    $('#modalDynamicConfirmContent').attr('class','modal-contentYellow');
+    $('#modalDynamicConfirmHeader').attr('class','modal-headerYellow');
+    $('#modalDynamicConfirmTitle').text("Confirmation");
+    $('#modalDynamicConfirmMessage').text(msg);
+    $('#modalDynamicConfirmBody').attr('class','modal-bodyYellow');
+    $('#modalDynamicConfirmIcon').attr('class','glyphicon glyphicon-info-sign s_icon');
+    $('#modalDynamicConfirmFooter').attr('class','modal-footerYellow');
+    $('#modalDynamicConfirmButtonYes').attr('class','btn btn-modalSave btn-sm');
+    $('#modalDynamicConfirmButtonNo').attr('class','btn btn-modalerror btn-sm');
+      // Remove previous event listeners (to prevent stacking)
+      $('#modalDynamicConfirmButtonYes').off('click');
+      $('#modalDynamicConfirmButtonNo').off('click');
+  
+      // Attach new event listeners
+      $('#modalDynamicConfirmButtonYes').on('click', function () {
+          YesAction(PassData); // Call the Yes action
+          $('#modalDynamicConfirm').modal('hide'); // Close the modal
+      });
+  
+      $('#modalDynamicConfirmButtonNo').on('click', function () {
+          NoAction(); // Call the No action
+          $('#modalDynamicConfirm').modal('hide'); // Close the modal
+      });
+    $('#modalDynamicConfirm').modal('show');
+  }

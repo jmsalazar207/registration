@@ -52,7 +52,7 @@
               <!-- dynamic modal confirmation -->
               <div 
               class="modal fade" 
-              id="modalDynamic" 
+              id="modalDynamicConfirm" 
               role="dialog" 
               aria-labelledby="exampleModalCenterTitle" 
               aria-hidden="true">
@@ -61,48 +61,41 @@
                   role="document">
                     <div 
                     class="" 
-                    id="modalDynamicContent">
+                    id="modalDynamicConfirmContent">
                       <div 
                       class="" 
-                      id="modalDynamicHeader">
+                      id="modalDynamicConfirmHeader">
                         <h3 
                         class="modal-title" 
-                        id="modalDynamicTitle">
+                        id="modalDynamicConfirmTitle">
                         </h3>
                       </div>
                       <div 
                       class="" 
-                      id="modalDynamicBody" >
+                      id="modalDynamicConfirmBody" >
                         <p align="center">
                           <span 
                           class="" 
-                          id="modalDynamicIcon">
+                          id="modalDynamicConfirmIcon">
                           </span>
                         </p>
-                        <h4 id="modalDynamicMessage">
+                        <h4 id="modalDynamicConfirmMessage">
                         </h4>
                       </div>
                       <div 
                       class="" 
-                      id="modalDynamicFooter" >
+                      id="modalDynamicConfirmFooter" >
                         <button 
                         type="button" 
                         class="" 
-                        id="modalDynamicButtonClose" 
-                        data-dismiss="modal">
-                          Close
-                        </button>
-                        <button 
-                        type="button" 
-                        class="btn btn-modalYellow btn-sm" 
-                        name="btnConfirm" 
-                        onclick="RegisterYes()">
+                        name="btnConfirm"
+                        id="modalDynamicConfirmButtonYes" >
                           Yes
                         </button>
                         <button 
                         type="button" 
-                        class="btn btn-modalYellow btn-sm" 
-                        onclick="sessionKill()">
+                        class="" 
+                        id="modalDynamicConfirmButtonNo">
                           No
                         </button>
                       </div>

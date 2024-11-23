@@ -183,7 +183,7 @@ require_once('includes/init.php');
                             <div class="input-group has-feedback col-sm-12">
                                 <input 
                                 type="password" 
-                                class="form-control col-sm-10" 
+                                class="form-control col-sm-10 password-field" 
                                 id="DesiredPassword" 
                                 name="DesiredPassword" 
                                 placeholder="Desired Password" 
@@ -196,8 +196,7 @@ require_once('includes/init.php');
                                 onblur="hideMessage('message');">
                                 <span class="input-group-addon">
                                   <i 
-                                  class="fa fa-eye-slash toggle-DesiredPassword " 
-                                  toggle = "#DesiredPassword"  
+                                  class="fa fa-eye-slash toggle-DesiredPassword "   
                                   id="toggleDesiredPassword">
                                   </i>
                                 </span>
@@ -311,7 +310,8 @@ require_once('includes/init.php');
                                 value="" 
                                 style="text-transform: uppercase;" 
                                 required="true" 
-                                tabindex="5">
+                                tabindex="5"
+                                readonly>
                                 <small id='CheckLNamemessage'></small>
                               </div>
                           </div>
@@ -332,6 +332,7 @@ require_once('includes/init.php');
                             value="" 
                             style="text-transform: uppercase;">
                               <select 
+                              disabled
                               class="form-control select2"
                               style="width: 100%;"  
                               id="AddextName" 
