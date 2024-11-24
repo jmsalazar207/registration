@@ -224,7 +224,7 @@ if(isset($_POST["sessionEmpno"])){ //retrieve data from database based on the lo
   $params = array($empNO);
   $sql = 
   "SELECT up.empno, up.position_id, pos.item_code, up.date_filled, up.sname, up.mname, up.fname, up.ename, up.sex, up.mobile, up.eaddress, up.birthdate, up.street, up.numAdd,
-up.region, up.city, up.province, up.barangay, pn.position_name, pos.unit_code, un.unit_name, un.division_code, d.division_name, up.user_level,
+up.region, up.city, up.province, up.barangay, up.uploaded_id, pn.position_name, pos.unit_code, un.unit_name, un.division_code, d.division_name, up.user_level,
   IFNULL(r.region_name,'') AS region_name, IFNULL(prov.prov_name,'') AS prov_name, 
   IFNULL(muni.city_name,'') AS city_name, IFNULL(brgy.brgy_name,'') AS brgy_name, up.account_status
 FROM userprofile up

@@ -4,6 +4,18 @@ function NumberOnly(evt) {
       return false;
     return true;
 }
+function staticModal(){
+  $('#modalDynamic').modal({
+    backdrop: 'static', // Prevent close on clicking outside
+    keyboard: false     // Prevent close on pressing Esc
+  });
+}
+function staticConfirmModal(){
+  $('#modalDynamicConfirm').modal({
+    backdrop: 'static', // Prevent close on clicking outside
+    keyboard: false     // Prevent close on pressing Esc
+  });
+}
 let isCaptchaValid = false;
 
   function onCaptchaSuccess() {
@@ -13,19 +25,23 @@ let isCaptchaValid = false;
   function onCaptchaExpired() {
     isCaptchaValid = false;
   }
+
 // Helper function to reset captcha
 function resetCaptcha() {
     grecaptcha.reset();
     isCaptchaValid = false;
     }
+
   function showMessage(showID){
     // When the user clicks on the password field, show the message box
     document.getElementById(showID).style.display = "block";
   }
+
   function hideMessage(hideID){
     // When the user clicks outside of the password field, hide the message box
     document.getElementById(hideID).style.display = "none";
   }
+
   function StrongPassword(inputID){
     var myInput = document.getElementById(inputID);
     var letter = document.getElementById("letter");
@@ -84,20 +100,7 @@ function resetCaptcha() {
       length.classList.add("invalid");
       }
   }
-  $(document).on("click", ".toggle-password", function () {
-    // Toggle the eye icon class
-    $(this).toggleClass("fa-eye fa-eye-slash");
 
-    // Find the associated input field (the sibling input element)
-    const input = $(this).siblings(".password-field");
-
-    // Toggle the input type between 'password' and 'text'
-    if (input.attr("type") === "password") {
-        input.attr("type", "text");
-    } else {
-        input.attr("type", "password");
-    }
-});
 function computeBday(Birthday) {
   var bday = new Date(Birthday);
   var today = new Date();
@@ -117,6 +120,70 @@ function computeBday(Birthday) {
 
   return age;
 }
+
+// Dynamic Password Visibility Toggle
+$(document).on("click", ".toggle-password", function () {
+  const target = $(this).data("target"); // Get the target input field from data attribute
+  const input = $(target);
+
+  // Toggle between 'password' and 'text' types
+  if (input.attr("type") === "password") {
+      input.attr("type", "text");
+      $(this).removeClass("fa-eye-slash").addClass("fa-eye");
+  } else {
+      input.attr("type", "password");
+      $(this).removeClass("fa-eye").addClass("fa-eye-slash");
+  }
+});
+
+// Password Match Validation
+$(document).on("keyup", ".password-field, .confirm-password-field", function () {
+  const password = $(".password-field").val(); // Get desired password value
+  const confirmPassword = $(".confirm-password-field").val(); // Get confirm password value
+  const message = $("#checkmessage");
+
+  // Check if passwords match
+  if (password === confirmPassword && password !== "") {
+      message.html("Passwords match.").css("color", "green");
+      $("#btnSubmit").attr("disabled", false); // Enable submit button
+  } else if (password !== confirmPassword) {
+      message.html("Passwords do not match!").css("color", "red");
+      $("#btnSubmit").attr("disabled", true); // Disable submit button
+  } else {
+      message.html(""); // Clear message if fields are empty
+  }
+});
+function refreshPage() {
+  location.reload(); // Reloads the current page
+}
+function deleteData(PassData){ //dynamic delete details
+  var DeleteURL = PassData.valueURL;
+  var DeleteID = PassData.valueEmp;
+  $.ajax({
+    url:DeleteURL,
+    method:"POST",
+    dataType: "json",
+    data:{DeleteID:DeleteID},
+    success:function(data){
+      $('#modalConfirmDelete').modal('hide');
+      const msg = data.msg;
+      const stat = data.status;
+      if(stat == "success"){
+          modalSuccessShow(msg,refreshPage);
+      } else {
+        modalErrorShow(msg);
+      }
+    }
+  });
+}
+
+
+
+
+
+
+
+
 // Simple regex to check email format
 // function isValidEmailFormat(email) {
 //   var regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;

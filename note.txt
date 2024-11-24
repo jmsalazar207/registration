@@ -1,0 +1,24 @@
+          <link rel="stylesheet" href="../includes/loader.css">
+		<div class="loader-div">
+          <img 
+          class="loader-img" 
+          src="../assets/images/ajax-loader.gif" 
+          style="height: 50px;width: auto;" />
+        </div> 
+		,error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+        resetCaptcha();
+      }
+		$(".loader-div").show();
+		$(".loader-div").hide(); // hide loader
+		
+		$('#modalNotif-header').text('Opps! Error.');
+		$('#modalNotif-message').text(msg);
+		$('#modalNotif').modal('show');
+		
+		data-callback="onCaptchaSuccess" 
+                    data-expired-callback="onCaptchaExpired" 
+					10854
+					
+					

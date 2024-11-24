@@ -68,17 +68,16 @@ if($empRecords){
    foreach($empRecords as $row){
 	$empno = $row['empno']; 
    $url = "adminDeleteUser.php";
-   $deleteValue = $empno.','.$url;
    $acc_status = $row['account_status'];
    if($acc_status ==1 || $acc_status ==3){
       $action = "<td>
-                  <button class='' id = 'btnAdminUpdate' name ='btnAdminUpdate' onclick ='adminUpdate(this.value)' value = '$empno'  title='View' >
-                     View Info
+                  <button class='btn btn-primary btn-sm' id = 'btnAdminUpdate' name ='btnAdminUpdate'  value = '$empno'  title='View' >
+                     Update
                   </button>
-                  <button class='' id='btnAdminApprove' name= 'btnAdminApprove' onclick ='adminApprove(this.value)' value = '$empno'  title='View' >
+                  <button class='btn btn-warning btn-sm' id='btnAdminReview' name= 'btnAdminReview' value = '$empno'  title='Review' >
                   Review
                   </button>
-                  <button type = 'button' id = 'btnResetPassword' name = 'btnResetPassword' onclick ='resetPassword(this.value)' class = '' value = '$empno'  title='Reset Password'>
+                  <button class = 'btn btn-default btn-sm' type = 'button' id = 'btnResetPassword' name = 'btnResetPassword'  class = '' value = '$empno'  title='Reset Password'>
                      Reset
                   </button>
                </td>
@@ -86,36 +85,36 @@ if($empRecords){
    
    }else if($acc_status == 2){
       $action = "<td>
-                  <button class='' id = 'btnAdminUpdate' name ='btnAdminUpdate' onclick ='adminUpdate(this.value)' value = '$empno'  title='View' >
-                     View Info
+                  <button class='btn btn-primary btn-sm' id = 'btnAdminUpdate' name ='btnAdminUpdate'  value = '$empno'  title='View' >
+                     Update
                   </button>
-                  <button class='' id='btnAdminLock' name= 'btnAdminLock' onclick ='adminLock(this.value)' value = '$empno'  title='View' >
+                  <button class='btn btn-danger btn-sm' id='btnAdminLock' name= 'btnAdminLock' value = '$empno'  title='View' >
                   Lock Account
                   </button>
-                  <button type = 'button' id = 'btnResetPassword' name = 'btnResetPassword' onclick ='resetPassword(this.value)' class = '' value = '$empno'  title='Reset Password'>
+                  <button class = 'btn btn-default btn-sm' type = 'button' id = 'btnResetPassword' name = 'btnResetPassword' class = '' value = '$empno'  title='Reset Password'>
                      Reset
                   </button>
                </td>";
    }else if($acc_status == 4){
       $action = "<td>
-                  <button class='' id = 'btnAdminUpdate' name ='btnAdminUpdate' onclick ='adminUpdate(this.value)' value = '$empno'  title='View' >
-                     View Info
+                  <button class='btn btn-info btn-sm' id = 'btnAdminUpdate' name ='btnAdminUpdate'  value = '$empno'  title='View' >
+                     Update
                   </button>
-                  <button class='' id='btnAdminUnlock' name= 'btnAdminUnlock' onclick ='adminUnLock(this.value)' value = '$empno'  title='View' >
+                  <button class='btn btn-warning btn-sm' id='btnAdminUnlock' name= 'btnAdminUnlock' value = '$empno'  title='View' >
                   Unlock Account
                   </button>
-                  <button type = 'button' id = 'btnResetPassword' name = 'btnResetPassword' onclick ='resetPassword(this.value)' class = '' value = '$empno'  title='Reset Password'>
+                  <button class = 'btn btn-default btn-sm' type = 'button' id = 'btnResetPassword' name = 'btnResetPassword'  class = '' value = '$empno'  title='Reset Password'>
                      Reset
                   </button>
                 </td>";
    }else{
       $action =   "<td>
-                     <button class='' id = 'btnAdminUpdate' name ='btnAdminUpdate' onclick ='adminUpdate(this.value)' value = '$empno'  title='View' >
-                        View Info
+                     <button class='btn btn-primary btn-sm' id = 'btnAdminUpdate' name ='btnAdminUpdate'  value = '$empno'  title='View' >
+                        Update
                      </button>
                   </td>
             <td>
-               <button class='btn btn-danger btn-sm' id = 'btnDelete' name ='btnDelete' onclick ='btnDelete(this.value)' value = '$deleteValue'  title='Remove Information' >
+               <button class='btn btn-danger btn-sm' id = 'btnDelete' name ='btnDelete' data-valueEmp = '$empno' data-valueURL = '$url'  title='Remove Information' >
                   Remove
                </button>
             </td>

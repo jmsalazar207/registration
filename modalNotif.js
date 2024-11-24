@@ -7,9 +7,10 @@ function modalErrorShow(msg){
     $('#modalDynamicIcon').attr('class','glyphicon glyphicon-exclamation-sign s_icon');
     $('#modalDynamicFooter').attr('class','modal-footererror');
     $('#modalDynamicButton').attr('class','btn btn-modalerror btn-sm');
+    staticModal();
     $('#modalDynamic').modal('show');
   } 
-  function modalSuccessShow(msg){
+  function modalSuccessShow(msg,YesAction){
     $('#modalDynamicContent').attr('class','modal-contentsuccess');
     $('#modalDynamicHeader').attr('class','modal-headersuccess');
     $('#modalDynamicTitle').text("Great!");
@@ -18,6 +19,13 @@ function modalErrorShow(msg){
     $('#modalDynamicIcon').attr('class','glyphicon glyphicon-ok-sign s_icon');
     $('#modalDynamicFooter').attr('class','modal-footersuccess');
     $('#modalDynamicButton').attr('class','btn btn-modalsuccess btn-sm');
+    $('#modalDynamicButton').off('click');
+    // Attach new event listeners
+    $('#modalDynamicButton').on('click', function () {
+        YesAction(); // Call the Yes action
+        $('#modalDynamic').modal('hide'); // Close the modal  
+    });
+    staticModal();
     $('#modalDynamic').modal('show');
   } 
   function modalAlertShow(msg){
@@ -29,9 +37,10 @@ function modalErrorShow(msg){
     $('#modalDynamicIcon').attr('class','glyphicon glyphicon-info-sign s_icon');
     $('#modalDynamicFooter').attr('class','modal-footerYellow');
     $('#modalDynamicButton').attr('class','btn btn-modalYellow btn-sm');
+    staticModal();
     $('#modalDynamic').modal('show');
   }
-  function modalConfirmShow(msg,YesAction,NoAction,PassData){
+  function modalConfirmShow(msg,YesAction,PassData){
     $('#modalDynamicConfirmContent').attr('class','modal-contentYellow');
     $('#modalDynamicConfirmHeader').attr('class','modal-headerYellow');
     $('#modalDynamicConfirmTitle').text("Confirmation");
@@ -40,7 +49,8 @@ function modalErrorShow(msg){
     $('#modalDynamicConfirmIcon').attr('class','glyphicon glyphicon-info-sign s_icon');
     $('#modalDynamicConfirmFooter').attr('class','modal-footerYellow');
     $('#modalDynamicConfirmButtonYes').attr('class','btn btn-modalSave btn-sm');
-    $('#modalDynamicConfirmButtonNo').attr('class','btn btn-modalerror btn-sm');
+    $('#modalDynamicConfirmButtonNo').attr('class','btn btn-modalNo btn-sm');
+    staticConfirmModal();
       // Remove previous event listeners (to prevent stacking)
       $('#modalDynamicConfirmButtonYes').off('click');
       $('#modalDynamicConfirmButtonNo').off('click');
@@ -50,9 +60,7 @@ function modalErrorShow(msg){
           YesAction(PassData); // Call the Yes action
           $('#modalDynamicConfirm').modal('hide'); // Close the modal
       });
-  
       $('#modalDynamicConfirmButtonNo').on('click', function () {
-          NoAction(); // Call the No action
           $('#modalDynamicConfirm').modal('hide'); // Close the modal
       });
     $('#modalDynamicConfirm').modal('show');

@@ -40,10 +40,14 @@
   border-top: 1px solid #e5e5e5;
 }
 .btn-modalYellow {
-  color: #fff;
-  background-color: #F7D060;
-  border-color: #F7D060;
+  background-color: white; 
+  color: black; 
+  border: 2px solid #F7D060;
   font-family:Comic Sans, sans-serif;
+}
+.btn-modalYellow:hover {
+  background-color: #F7D060;
+  color: white;
 }
   /* END EXIST MODAL*/
 
@@ -83,10 +87,15 @@
   border-top: 1px solid #e5e5e5;
 }
 .btn-modalsuccess {
-  color: #fff;
-  background-color: #59CE8F;
-  border-color: #59CE8F;
+  background-color: white; 
+  color: black; 
+  border: 2px solid #04AA6D;
   font-family:Comic Sans, sans-serif;
+}
+
+.btn-modalsuccess:hover {
+  background-color: #04AA6D;
+  color: white;
 }
     /*END SUCCESS MODAL*/
 
@@ -127,15 +136,32 @@
   border-top: 1px solid #e5e5e5;
 }
 .btn-modalerror {
-  color: #fff;
-  background-color: #DC3535;
-  border-color: #DC3535;
+  background-color: white; 
+  color: black; 
+  border: 2px solid #f44336;
   font-family:Comic Sans, sans-serif;
 }
+.btn-modalerror:hover {
+  background-color: #f44336;
+  color: white;
+}
+.btn-modalSave:hover {
+  background-color: #008CBA;
+  color: white;
+}
 .btn-modalSave {
-  color: #fff;
-  background-color: #1b2afd;
-  border-color: #1b2afd;
+  background-color: white; 
+  color: black; 
+  border: 2px solid #008CBA;
+  font-family:Comic Sans, sans-serif;
+}
+.btn-modalNo:hover {
+  background-color: #e7e7e7;
+}
+.btn-modalNo {
+  background-color: white;
+  color: black;
+  border: 2px solid #e7e7e7;
   font-family:Comic Sans, sans-serif;
 }
     /*END ERROR MODAL*/    

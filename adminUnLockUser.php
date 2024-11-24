@@ -12,7 +12,7 @@ if (isset($_POST['btnAdminUnLockEmpno'])) {
   $sqlUnLock = $dbConn->update('userprofile', 'empno', $empno, $adminUserUnLock);
   if($sqlUnLock){
     $dataReturn['status'] = "success";
-    $dataReturn['msg'] = "Account UnLocked!";
+    $dataReturn['msg'] = "Account Unlocked!";
     echo json_encode($dataReturn);
   }else{
     $dataReturn['status'] = "failed";

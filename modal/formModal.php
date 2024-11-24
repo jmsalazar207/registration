@@ -757,15 +757,15 @@
                         <button 
                             type="button" 
                             class="btn btn-danger"
-                            id="btnDisapprove"
-                            name="btnDisapprove" >
+                            id="btnDisapproveRegistration"
+                            name="btnDisapproveRegistration" >
                             Disapprove
                         </button>
                         <button 
                             type="button" 
                             class="btn btn-primary"
-                            id="btnApprove"
-                            name="btnApprove">
+                            id="btnApproveRegistration"
+                            name="btnApproveRegistration">
                             Approve
                         </button>
                         

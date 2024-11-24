@@ -1,10 +1,4 @@
 
-function NumberOnly(evt) {
-    var charCode = (evt.which) ? evt.which : evt.keyCode
-    if (charCode > 31 && (charCode < 48 || charCode > 57))
-      return false;
-    return true;
-  }
   $(function(){
     $('.select2').select2();
     jQuery("#txtRegion").on('change',function(){
@@ -81,7 +75,351 @@ jQuery("#txtDivision").on('change',function(){
   }
 });
   });
-  function adminUpdate(updateEmpno){ //retrieve data to modal admin edit user
+
+  function populateAdminUpdateModal(UpdateInfo){
+    if(UpdateInfo){
+      const acc_status = UpdateInfo["account_status"];
+        if(acc_status ==0){
+        //Update Personal Information
+          $("#txtEmpno").val(UpdateInfo["empno"].replaceAll('03-',''));
+          $("#txtOldEmpno").val(UpdateInfo["empno"].replaceAll('03-',''));
+          $("#txtLName").val(UpdateInfo["sname"]);
+          $("#txtFName").val(UpdateInfo["fname"]);
+          $("#txtMName").val(UpdateInfo["mname"]);
+          $("#txtExtName").val(UpdateInfo["ename"]).trigger('change');
+          
+          $("#divSex").hide();
+          $("#divBirthdate").hide();
+          $("#divEmailAddress").hide();
+          $("#divMobileNumber").hide();
+          $("#divRegion").hide();
+          $("#divProvince").hide();
+          $("#divCity").hide();
+          $("#divBrgy").hide();
+
+          $("#txtSex").attr("disabled","disabled");
+          $("#txtBirthdate").attr("disabled","disabled");
+          $("#txtEmailAddress").attr("disabled","disabled");
+          $("#txtMobileNumber").attr("disabled","disabled");
+          $("#txtRegion").attr("disabled","disabled");
+          $("#txtProvince").attr("disabled","disabled");
+          $("#txtCity").attr("disabled","disabled");
+          $("#txtBrgy").attr("disabled","disabled");
+        }else{
+          $("#divSex").show();
+          $("#divBirthdate").show();
+          $("#divEmailAddress").show();
+          $("#divMobileNumber").show();
+          $("#divRegion").show();
+          $("#divProvince").show();
+          $("#divCity").show();
+          $("#divBrgy").show();
+
+          $("#txtSex").attr("disabled",false);
+          $("#txtBirthdate").attr("disabled",false);
+          $("#txtEmailAddress").attr("disabled",false);
+          $("#txtMobileNumber").attr("disabled",false);
+          $("#txtRegion").attr("disabled",false);
+          $("#txtProvince").attr("disabled",false);
+          $("#txtCity").attr("disabled",false);
+          $("#txtBrgy").attr("disabled",false);
+
+          $("#txtEmpno").val(UpdateInfo["empno"].replaceAll('03-',''));
+          $("#txtOldEmpno").val(UpdateInfo["empno"].replaceAll('03-',''));
+          $("#txtLName").val(UpdateInfo["sname"]);
+          $("#txtFName").val(UpdateInfo["fname"]);
+          $("#txtMName").val(UpdateInfo["mname"]);
+          $("#txtExtName").val(UpdateInfo["ename"]).trigger('change');
+          $("#txtSex").val(UpdateInfo["sex"]).trigger('change');
+          $("#txtMobileNumber").val(UpdateInfo["mobile"]); 
+          $("#txtEmailAddress").val(UpdateInfo["eaddress"]);
+          $("#txtBirthdate").val(UpdateInfo["birthdate"]);
+          var update_region_id = UpdateInfo["region"];
+          $.ajax({
+              url:"includes/functions.php",
+              method:"POST",
+              data:{update_region_id:update_region_id},
+              success:function(data){
+                  $('#txtRegion').html(data);
+              }
+          });
+          var update_province_id = UpdateInfo["province"];
+          $.ajax({
+            url:"includes/functions.php",
+            method:"POST",
+            data:{update_province_id:update_province_id,Where_region_ID:update_region_id},
+            success:function(data){
+                $('#txtProvince').html(data);
+            }
+        });
+          var update_city_id = UpdateInfo["city"];
+          $.ajax({
+            url:"includes/functions.php",
+            method:"POST",
+            data:{update_city_id:update_city_id,Where_province_ID:update_province_id},
+            success:function(data){
+                $('#txtCity').html(data);
+            }
+        });
+          var update_barangay_id = UpdateInfo["barangay"];
+          $.ajax({
+            url:"includes/functions.php",
+            method:"POST",
+            data:{update_barangay_id:update_barangay_id,Where_city_ID:update_city_id},
+            success:function(data){
+                $('#txtBrgy').html(data);
+            }
+        });
+        }
+        //Overview
+        $("#infoEmpno").text(UpdateInfo["empno"]);
+        $("#infoFullName").text(UpdateInfo['fname']+' '+UpdateInfo['mname']+' '+UpdateInfo['sname']+' '+UpdateInfo['ename']);
+        $("#infoPosition").text(UpdateInfo['position_name']);
+        $("#infoDivision").text(UpdateInfo['division_name']);
+        $("#infoUnit").text(UpdateInfo['unit_name']);
+        $("#infoAddress").text(UpdateInfo['numAdd']+' '+UpdateInfo['street']+' '+UpdateInfo['brgy_name']+' '+UpdateInfo['city_name']+' '+UpdateInfo['prov_name']+' '+UpdateInfo['region_name']);
+        $("#infoMobileNo").text(UpdateInfo['mobile']);
+        $("#infoEmail").text(UpdateInfo['eaddress']);
+        //Update Item Code
+        $("#UpdateEmpNo").val(UpdateInfo['empno']);
+        $("#UpdateFullName").val(UpdateInfo['fname']+' '+UpdateInfo['mname']+' '+UpdateInfo['sname']+' '+UpdateInfo['ename']);
+        $("#UpdatePosID").val(UpdateInfo['position_id']);
+        $("#UpdateItemCode").val(UpdateInfo['item_code']);
+        $("#UpdateDateFilled").val(UpdateInfo['date_filled']);
+        const DateFilled = UpdateInfo['date_filled'];
+        const DateUnfilled = $("#UpdateDateUnfilled");
+        DateUnfilled.attr('min', DateFilled);
+        //Condition 
+            const CurrentPosition = UpdateInfo['position_id'];
+            if(CurrentPosition ==''){
+              $("#UpdateDateUnfilled").removeAttr('required');
+              $("#UpdateReasonVacancy").removeAttr('required');
+              $("#divReasonVacancy").hide();
+              $("#divDateFilled").hide();
+              $("#divItemCode").hide();
+              $("#divDateVacated").hide();
+              $("#divNewItemCode").show();
+              var HistoryEmployee = UpdateInfo["empno"];
+              $("#UpdateEmpHistoryLastFilled").val('');
+                $.ajax({
+                  url:"includes/functions.php",
+                  method:"POST",
+                  data:{HistoryEmployee:HistoryEmployee},
+                  dataType:"json",
+                  success:function(data){
+                    HistoryEndAppointment = data.end_of_appointment;
+                    if(HistoryEndAppointment){
+                      alert(HistoryEndAppointment);
+                      $("#UpdateEmpHistoryLastFilled").val(HistoryEndAppointment);
+                    }
+                    
+                  }
+              });
+            }else{
+              $("#UpdateDateUnfilled").attr('required','required');
+              $("#UpdateReasonVacancy").attr('required','required');
+              $("#divReasonVacancy").show();
+              $("#divDateFilled").show();
+              $("#divItemCode").show();
+              $("#divDateVacated").show();
+            }
+      }
+  }
+
+  function ApproveRegistration(btnApproveEmpno){
+    $(".loader-div").show();
+    $.ajax({
+      url:"adminApproveUser.php",
+      method:"POST",
+      data:{btnApproveEmpno:btnApproveEmpno},
+      dataType: 'json',
+      success:function(data){
+        $(".loader-div").hide();
+        const msg = data.msg;
+        const stat = data.status;  
+        if(stat === "success"){ 
+          modalSuccessShow(msg,refreshPage);
+        } else {
+          modalErrorShow(msg);
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
+    });
+  }
+
+  function DisapproveRegistration(btnDisapproveEmpno) {
+    $(".loader-div").show();
+    $.ajax({
+      url:"adminDisapproveUser.php",
+      method:"POST",
+      data:{btnDisapproveEmpno:btnDisapproveEmpno},
+      dataType: 'json',
+      success:function(data){
+        $(".loader-div").hide();
+        const msg = data.msg;
+        const stat = data.status;  
+        if(stat === "success"){ 
+          modalSuccessShow(msg,refreshPage)
+        } else {
+          modalErrorShow(msg);
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
+    });
+  }
+
+  function adminLockAcount(btnAdminLockEmpno){
+    $(".loader-div").show();
+    $.ajax({
+      url:"adminLockUser.php",
+      method:"POST",
+      data:{btnAdminLockEmpno:btnAdminLockEmpno},
+      dataType: 'json',
+      success:function(data){
+        $(".loader-div").hide();
+        const msg = data.msg;
+        const stat = data.status;  
+        if(stat === "success"){ 
+          modalSuccessShow(msg,refreshPage);
+        } else {
+          modalErrorShow(msg);
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
+    });
+  }
+
+  function adminUnlockAccount(btnAdminUnLockEmpno){
+    $(".loader-div").show();
+    $.ajax({
+      url:"adminUnLockUser.php",
+      method:"POST",
+      data:{btnAdminUnLockEmpno:btnAdminUnLockEmpno},
+      dataType: 'json',
+      success:function(data){
+        $(".loader-div").hide();
+        const msg = data.msg;
+        const stat = data.status;  
+        if(stat === "success"){ 
+          modalSuccessShow(msg,refreshPage);
+        } else {
+         modalErrorShow(msg);
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();s
+      }
+    });
+  }
+
+  function resetPassword(btnResetPassword){
+    $(".loader-div").show();
+    $.ajax({
+      url:"resetPassword.php",
+      method:"POST",
+      data:{btnResetPassword:btnResetPassword},
+      dataType: 'json',
+      success:function(data){
+        $(".loader-div").hide();
+        const msg = data.msg;
+        const stat = data.status;  
+        if(stat === "success"){ 
+          modalSuccessShow(msg,refreshPage);
+        } else {
+          modalErrorShow(msg);
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();s
+      }
+    });
+  }
+
+  $(document).on('click', '#btnApproveRegistration', function() {   //approve registration action
+    PassData = $(this).attr('value');
+    modalConfirmShow('Would you like to approve this registration now?',ApproveRegistration,PassData);
+  });
+
+  $(document).on('click', '#btnDisapproveRegistration', function() {  //disapprove registration action
+    PassData = $(this).attr('value');
+    modalConfirmShow('Would you like to proceed with disapproving this registration?',DisapproveRegistration,PassData);
+  });
+
+  $(document).on('click', '#btnAdminReview', function() { //review button action
+    const approveEmpno = $(this).val();
+    $(".loader-div").show();
+    $.ajax({
+        url: "includes/functions.php", // PHP file
+        method: "POST", // HTTP method
+        data: { sessionEmpno: approveEmpno }, // Data sent to server
+        success: function(data) {
+          $(".loader-div").hide();
+            try {
+                // Parse JSON response
+                const UpdateInfo = JSON.parse(data);
+
+                // Extract values
+                const sname = UpdateInfo["sname"];
+                const fname = UpdateInfo["fname"];
+                const mname = UpdateInfo["mname"];
+                const ename = UpdateInfo["ename"];
+                const empno = UpdateInfo["empno"];
+                const uploadedID = UpdateInfo["uploaded_id"];
+
+                // Populate fields
+                $("#txtValidateEmpno").val(empno);
+                $("#btnApproveRegistration").val(empno);
+                $("#btnDisapproveRegistration").val(empno);
+                $("#txtValidateFullName").val(fname + ' ' + mname + ' ' + sname + ' ' + ename);
+                $("#validateUploadedID").attr('src', 'uploadedID/' + uploadedID);
+
+                // Show the modal
+                $('#formApprove').modal('show');
+            } catch (e) {
+                console.error("Error parsing JSON response:", e);
+                console.log("Server Response:", data);
+            }
+        },
+        error: function(xhr, status, error) {
+          modalErrorShow("The system encountered an error. Please contact support.");
+          $(".loader-div").hide();
+        }
+    });
+  });
+
+  $(document).on('click', '#btnAdminLock', function() {   //lock account action
+    PassData = $(this).attr('value');
+    modalConfirmShow('Would you like to proceed with locking this account?',adminLockAcount,PassData);
+  });
+
+  $(document).on('click', '#btnAdminUnlock', function() {   //unlock account action
+    PassData = $(this).attr('value');
+    modalConfirmShow('Would you like to proceed with unlocking this account?',adminUnlockAccount,PassData);
+  });
+
+  $(document).on('click', '#btnResetPassword', function() {   //reset password to default action
+    PassData = $(this).attr('value');
+    modalConfirmShow('Would you like to proceed with resetting this password?',resetPassword,PassData);
+  });
+
+  $(document).on('click', '#btnDelete', function() {    //delete user acount action
+    const valueEmp = $(this).attr('data-valueEmp');
+    const valueURL = $(this).attr('data-valueURL');
+    var PassData = {
+      valueEmp:valueEmp,
+      valueURL:valueURL
+    };
+    modalConfirmShow('Would you like to permanently delete this information? This action cannot be undone.',deleteData,PassData);
+  });
+  
+  $(document).on('click', '#btnAdminUpdate', function() {   //open update modal
+    var updateEmpno = $(this).attr('value');
     $("#divNewItemCode").hide();
     $.ajax({
       url:"includes/functions.php",
@@ -89,287 +427,14 @@ jQuery("#txtDivision").on('change',function(){
       data:{sessionEmpno:updateEmpno},
       success:function(data){
         UpdateInfo = JSON.parse(data);
-        if(UpdateInfo){
-        const acc_status = UpdateInfo["account_status"];
-          if(acc_status ==0){
-          //Update Personal Information
-            $("#txtEmpno").val(UpdateInfo["empno"].replaceAll('03-',''));
-            $("#txtOldEmpno").val(UpdateInfo["empno"].replaceAll('03-',''));
-            $("#txtLName").val(UpdateInfo["sname"]);
-            $("#txtFName").val(UpdateInfo["fname"]);
-            $("#txtMName").val(UpdateInfo["mname"]);
-            $("#txtExtName").val(UpdateInfo["ename"]).trigger('change');
-            
-            $("#divSex").hide();
-            $("#divBirthdate").hide();
-            $("#divEmailAddress").hide();
-            $("#divMobileNumber").hide();
-            $("#divRegion").hide();
-            $("#divProvince").hide();
-            $("#divCity").hide();
-            $("#divBrgy").hide();
-
-            $("#txtSex").attr("disabled","disabled");
-            $("#txtBirthdate").attr("disabled","disabled");
-            $("#txtEmailAddress").attr("disabled","disabled");
-            $("#txtMobileNumber").attr("disabled","disabled");
-            $("#txtRegion").attr("disabled","disabled");
-            $("#txtProvince").attr("disabled","disabled");
-            $("#txtCity").attr("disabled","disabled");
-            $("#txtBrgy").attr("disabled","disabled");
-          }else{
-            $("#divSex").show();
-            $("#divBirthdate").show();
-            $("#divEmailAddress").show();
-            $("#divMobileNumber").show();
-            $("#divRegion").show();
-            $("#divProvince").show();
-            $("#divCity").show();
-            $("#divBrgy").show();
-
-            $("#txtSex").attr("disabled",false);
-            $("#txtBirthdate").attr("disabled",false);
-            $("#txtEmailAddress").attr("disabled",false);
-            $("#txtMobileNumber").attr("disabled",false);
-            $("#txtRegion").attr("disabled",false);
-            $("#txtProvince").attr("disabled",false);
-            $("#txtCity").attr("disabled",false);
-            $("#txtBrgy").attr("disabled",false);
-
-            $("#txtEmpno").val(UpdateInfo["empno"].replaceAll('03-',''));
-            $("#txtOldEmpno").val(UpdateInfo["empno"].replaceAll('03-',''));
-            $("#txtLName").val(UpdateInfo["sname"]);
-            $("#txtFName").val(UpdateInfo["fname"]);
-            $("#txtMName").val(UpdateInfo["mname"]);
-            $("#txtExtName").val(UpdateInfo["ename"]).trigger('change');
-            $("#txtSex").val(UpdateInfo["sex"]).trigger('change');
-            $("#txtMobileNumber").val(UpdateInfo["mobile"]); 
-            $("#txtEmailAddress").val(UpdateInfo["eaddress"]);
-            $("#txtBirthdate").val(UpdateInfo["birthdate"]);
-            var update_region_id = UpdateInfo["region"];
-            $.ajax({
-                url:"includes/functions.php",
-                method:"POST",
-                data:{update_region_id:update_region_id},
-                success:function(data){
-                    $('#txtRegion').html(data);
-                }
-            });
-            var update_province_id = UpdateInfo["province"];
-            $.ajax({
-              url:"includes/functions.php",
-              method:"POST",
-              data:{update_province_id:update_province_id,Where_region_ID:update_region_id},
-              success:function(data){
-                  $('#txtProvince').html(data);
-              }
-          });
-            var update_city_id = UpdateInfo["city"];
-            $.ajax({
-              url:"includes/functions.php",
-              method:"POST",
-              data:{update_city_id:update_city_id,Where_province_ID:update_province_id},
-              success:function(data){
-                  $('#txtCity').html(data);
-              }
-          });
-            var update_barangay_id = UpdateInfo["barangay"];
-            $.ajax({
-              url:"includes/functions.php",
-              method:"POST",
-              data:{update_barangay_id:update_barangay_id,Where_city_ID:update_city_id},
-              success:function(data){
-                  $('#txtBrgy').html(data);
-              }
-          });
-          }
-          //Overview
-          $("#infoEmpno").text(UpdateInfo["empno"]);
-          $("#infoFullName").text(UpdateInfo['fname']+' '+UpdateInfo['mname']+' '+UpdateInfo['sname']+' '+UpdateInfo['ename']);
-          $("#infoPosition").text(UpdateInfo['position_name']);
-          $("#infoDivision").text(UpdateInfo['division_name']);
-          $("#infoUnit").text(UpdateInfo['unit_name']);
-          $("#infoAddress").text(UpdateInfo['numAdd']+' '+UpdateInfo['street']+' '+UpdateInfo['brgy_name']+' '+UpdateInfo['city_name']+' '+UpdateInfo['prov_name']+' '+UpdateInfo['region_name']);
-          $("#infoMobileNo").text(UpdateInfo['mobile']);
-          $("#infoEmail").text(UpdateInfo['eaddress']);
-          //Update Item Code
-          $("#UpdateEmpNo").val(UpdateInfo['empno']);
-          $("#UpdateFullName").val(UpdateInfo['fname']+' '+UpdateInfo['mname']+' '+UpdateInfo['sname']+' '+UpdateInfo['ename']);
-          $("#UpdatePosID").val(UpdateInfo['position_id']);
-          $("#UpdateItemCode").val(UpdateInfo['item_code']);
-          $("#UpdateDateFilled").val(UpdateInfo['date_filled']);
-          const DateFilled = UpdateInfo['date_filled'];
-          const DateUnfilled = $("#UpdateDateUnfilled");
-          DateUnfilled.attr('min', DateFilled);
-          //Condition 
-              const CurrentPosition = UpdateInfo['position_id'];
-              if(CurrentPosition ==''){
-                $("#UpdateDateUnfilled").removeAttr('required');
-                $("#UpdateReasonVacancy").removeAttr('required');
-                $("#divReasonVacancy").hide();
-                $("#divDateFilled").hide();
-                $("#divItemCode").hide();
-                $("#divDateVacated").hide();
-                $("#divNewItemCode").show();
-                var HistoryEmployee = UpdateInfo["empno"];
-                $("#UpdateEmpHistoryLastFilled").val('');
-                  $.ajax({
-                    url:"includes/functions.php",
-                    method:"POST",
-                    data:{HistoryEmployee:HistoryEmployee},
-                    dataType:"json",
-                    success:function(data){
-                      HistoryEndAppointment = data.end_of_appointment;
-                      if(HistoryEndAppointment){
-                        alert(HistoryEndAppointment);
-                        $("#UpdateEmpHistoryLastFilled").val(HistoryEndAppointment);
-                      }
-                      
-                    }
-                });
-              }else{
-                $("#UpdateDateUnfilled").attr('required','required');
-                $("#UpdateReasonVacancy").attr('required','required');
-                $("#divReasonVacancy").show();
-                $("#divDateFilled").show();
-                $("#divItemCode").show();
-                $("#divDateVacated").show();
-              }
-        }
+        populateAdminUpdateModal(UpdateInfo);
         $('#formUser').modal('show');
       }
     })
-  };
-  function adminApprove(approveEmpno){ //retrieve data to modal admin approve user
-    $.ajax({
-      url:"includes/functions.php",
-      method:"POST",
-      data:{sessionEmpno:approveEmpno},
-      success:function(data){
-        UpdateInfo = JSON.parse(data);
-        const sname = UpdateInfo["sname"];
-        const fname = UpdateInfo["fname"];
-        const mname = UpdateInfo["mname"];
-        const ename = UpdateInfo["ename"];
-        const empno = UpdateInfo["empno"];
-        const uploadedID = UpdateInfo["uploaded_id"];
-        // alert(uploadedID);
-         $("#txtValidateEmpno").val(empno);
-         $("#btnApprove").val(empno);
-         $("#btnDisapprove").val(empno);
-         $("#txtValidateFullName").val(fname+' '+mname+' '+sname+' '+ename);
-         $("#validateUploadedID").attr('src','uploadedMOV/'+uploadedID);
-        $('#formApprove').modal('show');
-      }
-    })
-  };
-  $("#btnApprove").on("click",function(){
-    var btnApproveEmpno = $(this).attr('value');
-    $.ajax({
-      url:"adminApproveUser.php",
-      method:"POST",
-      data:{btnApproveEmpno:btnApproveEmpno},
-      dataType: 'json',
-      success:function(data){
-        const msg = data.msg;
-        const stat = data.status;  
-        if(stat === "success"){ 
-          $('#modalNotif-header').text('Great! Success.');
-          $('#modalNotif-message').text(msg);
-          $('#modalNotif').modal('show');
-        }
-        else{
-          $('#alertMessage').text(msg);
-          $('#modalAlert').modal('show'); 
-        }
-      }
-    });
   });
-  $("#btnDisapprove").on("click",function(){
-    var btnDisapproveEmpno = $(this).attr('value');
-    $.ajax({
-      url:"adminDisapproveUser.php",
-      method:"POST",
-      data:{btnDisapproveEmpno:btnDisapproveEmpno},
-      dataType: 'json',
-      success:function(data){
-        const msg = data.msg;
-        const stat = data.status;  
-        if(stat === "success"){ 
-          $('#modalNotif-header').text('Great! Success.');
-          $('#modalNotif-message').text(msg);
-          $('#modalNotif').modal('show');
-        }
-        else{
-          $('#alertMessage').text(msg);
-          $('#modalAlert').modal('show'); 
-        }
-      }
-    });
-  });
-  function adminLock(btnAdminLockEmpno){
-    $.ajax({
-      url:"adminLockUser.php",
-      method:"POST",
-      data:{btnAdminLockEmpno:btnAdminLockEmpno},
-      dataType: 'json',
-      success:function(data){
-        const msg = data.msg;
-        const stat = data.status;  
-        if(stat === "success"){ 
-          $('#modalNotif-header').text('Great! Success.');
-          $('#modalNotif-message').text(msg);
-          $('#modalNotif').modal('show');
-        }
-        else{
-          $('#alertMessage').text(msg);
-          $('#modalAlert').modal('show'); 
-        }
-      }
-    });
-  };
-  function adminUnLock(btnAdminUnLockEmpno){
-    $.ajax({
-      url:"adminUnLockUser.php",
-      method:"POST",
-      data:{btnAdminUnLockEmpno:btnAdminUnLockEmpno},
-      dataType: 'json',
-      success:function(data){
-        const msg = data.msg;
-        const stat = data.status;  
-        if(stat === "success"){ 
-          $('#modalNotif-header').text('Great! Success.');
-          $('#modalNotif-message').text(msg);
-          $('#modalNotif').modal('show');
-        }
-        else{
-          $('#alertMessage').text(msg);
-          $('#modalAlert').modal('show'); 
-        }
-      }
-    });
-  };
-function resetPassword(btnResetPassword){
-  $.ajax({
-    url:"resetPassword.php",
-    method:"POST",
-    data:{btnResetPassword:btnResetPassword},
-    dataType: 'json',
-    success:function(data){
-      const msg = data.msg;
-      const stat = data.status;  
-      if(stat === "success"){ 
-        $('#modalNotif-header').text('Great! Success.');
-        $('#modalNotif-message').text(msg);
-        $('#modalNotif').modal('show');
-      }
-      else{
-        $('#alertMessage').text(msg);
-        $('#modalAlert').modal('show'); 
-      }
-    }
-  });
-};
+  
+
+
 $("#fromTabUpdateItemCode").on("submit",function(event){ //Trigger update item code
   $("#UpdateNewItemCode").removeAttr("required");
   $("#UpdateNewDatefilled").removeAttr("required");
@@ -399,6 +464,31 @@ $("#fromTabUpdateItemCode").on("submit",function(event){ //Trigger update item c
     AdminUpdateItemCode();
   }
 });
+function AdminUpdateItemCode(){ //trigger update item code
+  var formData = new FormData(fromTabUpdateItemCode);
+  $.ajax({
+    url:"adminUpdateItemCode.php",
+    method:"POST",
+    dataType: "json",
+    data:formData,
+    async: false,
+    success:function(data){
+      const msg = data.msg;
+      const stat = data.status;
+      if(stat == "success"){
+        $('#modalNotif-header').text('Great! Success.');
+        $('#modalNotif-message').text(msg);
+        $('#modalNotif').modal('show');
+      }
+      else{
+        $('#alertMessage').text(msg);
+        $('#modalAlert').modal('show'); 
+      }
+    },
+    processData: false,
+    contentType: false
+  }); 
+}
 function ValidatePositionDateCreated(){
   const NewItemCodePosID = $("#UpdateNewItemCode").val(); //New Item Code with value of position id
   $.ajax({
@@ -422,31 +512,7 @@ function reasonVacancy(){ //trigger onchange reason of vacancy
     $("#divNewItemCode").show();
   }
 }
-function AdminUpdateItemCode(){ //trigger update item code
-    var formData = new FormData(fromTabUpdateItemCode);
-    $.ajax({
-      url:"adminUpdateItemCode.php",
-      method:"POST",
-      dataType: "json",
-      data:formData,
-      async: false,
-      success:function(data){
-        const msg = data.msg;
-        const stat = data.status;
-        if(stat == "success"){
-          $('#modalNotif-header').text('Great! Success.');
-          $('#modalNotif-message').text(msg);
-          $('#modalNotif').modal('show');
-        }
-        else{
-          $('#alertMessage').text(msg);
-          $('#modalAlert').modal('show'); 
-        }
-      },
-      processData: false,
-      contentType: false
-    }); 
-}
+
 $('#contentUpdate').on("submit",function(event){ //Trigger update for userinfo
     event.preventDefault();
     const adminEmpNo = $('#txtEmpno').val();
@@ -770,46 +836,6 @@ $('#contentDivision').on("submit", function(event){ //trigger add division
           }
       },
       });
-});
-function btnDelete(Value){
-  var btnValue = Value;
-  const array = btnValue.split(",");
-  const ID = array[0];
-  const PHP = array[1];
-  $('#DeleteID').val('');
-  $('#DeletePHP').val('');
-  $('#DeleteID').val(ID);
-  $('#DeletePHP').val(PHP);
-  $('#modalConfirmDelete').modal('show');
-}
-$("#frmConfirmDelete").on("submit",function(event){
-  $deleteURL = $('#DeletePHP').val();
-  event.preventDefault();
-  var formData = new FormData(frmConfirmDelete);
-  $.ajax({
-    url:$deleteURL,
-    method:"POST",
-    dataType: "json",
-    data:formData,
-    success:function(data){
-      $('#modalConfirmDelete').modal('hide');
-      const msg = data.msg;
-      const stat = data.status;
-      if(stat == "success"){
-          $('#modalNotif-header').text('Great! Success.');
-          $('#modalNotif-message').text(msg);
-            $('#modalNotif').modal('show');
-            }
-      else{
-        $('#modalNotif-header').text('Error!');
-        $('#modalNotif-message').text(msg);
-          $('#modalNotif').modal('show');
-      }
-    },
-    processData: false,
-    contentType: false
-
-  });
 });
 function btnGererateEmployeeNumber(){
   

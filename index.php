@@ -38,7 +38,7 @@ require_once('includes/init.php');
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <link rel="stylesheet" href="plugins/iCheck/all.css">
-  <link rel="stylesheet" href="includes/add.css">
+  <link rel="stylesheet" href="includes/add.css?test=<?php echo time()?>">
   <link rel="stylesheet" href="includes/loader.css">
    <!-- Bootstrap Color Picker -->
    <link rel="stylesheet" href="bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
@@ -116,10 +116,12 @@ require_once('includes/init.php');
                 tabindex="2">
                 <span 
                 class="input-group-addon">
-                  <i class="fa fa-eye-slash toggle-password " 
-                  toggle = "#password"  
-                  id="togglepassword">
-                  </i>
+                <i 
+                class="fa fa-eye-slash toggle-password" 
+                data-target="#password" 
+                role="button" 
+                aria-label="Toggle password visibility">
+                </i>
                 </span>
               </div><br>
               <div class="row">
@@ -211,21 +213,6 @@ require_once('includes/init.php');
 <script src="loginscript.js?test=<?php echo time()?>"></script>
 <script src="modalNotif.js?test=<?php echo time()?>"></script>
 <!-- End Scripts calling -->
-<script>
-  sessionStorage.clear();
-  $(".toggle-password").click(function() {
-  $(this).toggleClass("fa-eye fa-eye-slash");
-  var input = $($(this).attr("toggle"));
-  if (input.attr("type") == "password") {
-    input.attr("type", "text");
-  } else {
-    input.attr("type", "password");
-  }
-});
-$('#modalAlert').on('hidden.bs.modal', function () {
-  alert("Modal Closed");
-})
-</script>
 <?php
 include 'modal/registermodal.php';
 include 'modal/formModal.php';

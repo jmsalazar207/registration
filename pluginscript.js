@@ -137,13 +137,6 @@ window.onload = function() {
       }
     });
   });
-function sessionKill(){ //close modal session kill
-  // sessionStorage.clear();
-  $('#RegisterConfirm').modal('hide');
-}
-  function modalCloseConfirm(){
-    $('#confirm_edit').modal('hide');
-  };  
 
 function validateFileType() { //check file type
   var selectedFile = document.getElementById('AddFile').files[0];
@@ -158,284 +151,209 @@ function validateFileType() { //check file type
   }
 
 }
-  function checkPasswordMatch() { //password confirmed password if matched
-        var DesiredPassword = $("#DesiredPassword").val();
-        var confirmPassword = $("#ConfirmPassword").val();
-        if (DesiredPassword != confirmPassword){
-            $("#checkmessage").html("Passwords does not match!").css('color', 'red');
-            $("#btnSubmit").attr('disabled', true);
+var empno = '';
+$("#contentsearch").on("submit",function(event){ //trigger search
+  $('#regRoute').css("display","none");
+  event.preventDefault();
+  const IDNumber = $('#txtSearch').val();
+  $("#txtSearch").css('border-color', '');
+    $("#CheckIDmessage").html("");
+  if ((IDNumber.length>5) || (IDNumber.length<4)){
+    $("#CheckIDmessage").html("Opps! Invalid Employee number").css('color', 'red');
+    $("#txtSearch").css('border-color', 'red');
+  }else{
+    var formData = new FormData(this);
+    $(".loader-div").show();
+    $.ajax({
+      url:"search.php",
+      method:"POST",
+      dataType: "json",
+      data:formData,
+      success:function(data){
+        $(".loader-div").hide(); // hide loader
+        empno = data.empno;
+        fname = data.fname;
+        mname = data.mname;
+        sname = data.sname;
+        extname = data.extname;
+        fullname = fname+' '+mname+' '+sname+' '+extname;
+        var PassData ={
+          empno : empno,
+          fname : fname,
+          mname : mname,
+          sname : sname,
+          extname : extname
+        };
+        if(data.count == 0){
+          modalErrorShow("Oops! Invalid Credentials. Please contact Personnel Section.");
         }else{
-            $("#checkmessage").html("Passwords match.").css('color', 'green');
-            $("#btnSubmit").attr('disabled', false);
+            if(data.registered =="No"){ //not yet registered
+              $('#FullName').text(fullname);
+              modalConfirmShow('Employee Number found. Ready to proceed with registration?',RegisterYes,PassData); //(message,function,data)
+            }else{ //registered
+              modalAlertShow('This employee number is already registered in our system.');
+            }
         }
-        if(DesiredPassword=='' || DesiredPassword == '') $("#checkmessage").html("");
-    }
-   $(document).on("click", ".toggle-DesiredPassword", function () {
-    // Toggle the eye icon class
-    $(this).toggleClass("fa-eye fa-eye-slash");
-    
-    // Toggle the input type
-    var input = $($(this).attr("toggle"));
-    if (input.attr("type") === "password") {
-        input.attr("type", "text");
-    } else {
-        input.attr("type", "password");
-    }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+        resetCaptcha();
+      },
+      processData: false,
+      contentType: false
+    }); 
+  }
+  
 });
-      $(".toggle-ConfirmPassword").click(function() { //show password in Confirm password
-        $(this).toggleClass("fa-eye fa-eye-slash");
-        var input = $($(this).attr("toggle"));
-        if (input.attr("type") == "password") {
-          input.attr("type", "text");
-        } else {
-          input.attr("type", "password");
-        }
-      });
 
-      var empno = '';
-      $("#contentsearch").on("submit",function(event){ //trigger search
-        $('#regRoute').css("display","none");
-        event.preventDefault();
-        const IDNumber = $('#txtSearch').val();
-        $("#txtSearch").css('border-color', '');
-          $("#CheckIDmessage").html("");
-        if ((IDNumber.length>5) || (IDNumber.length<4)){
-          $("#CheckIDmessage").html("Opps! Invalid Employee number").css('color', 'red');
-          $("#txtSearch").css('border-color', 'red');
-        }else{
-          var formData = new FormData(this);
-          $(".loader-div").show();
-          $.ajax({
-            url:"search.php",
-            method:"POST",
-            dataType: "json",
-            data:formData,
-            success:function(data){
-              $(".loader-div").hide(); // hide loader
-              empno = data.empno;
-              fname = data.fname;
-              mname = data.mname;
-              sname = data.sname;
-              extname = data.extname;
-              fullname = fname+' '+mname+' '+sname+' '+extname;
-              var PassData ={
-                empno : empno,
-                fname : fname,
-                mname : mname,
-                sname : sname,
-                extname : extname
-              };
-              if(data.count == 0){
-                modalErrorShow("Oops! Invalid Credentials. Please contact Personnel Section.");
-              }else{
-                  if(data.registered =="No"){ //not yet registered
-                    $('#FullName').text(fullname);
-                    modalConfirmShow('Employee Number found. Ready to proceed with registration?',RegisterYes,sessionKill,PassData);
-                  }else{ //registered
-                    modalAlertShow('This employee number is already registered in our system.');
-                  }
-              }
-            },error: function(xhr, status, error) {
-              modalErrorShow("The system encountered an error. Please contact support.");
-              $(".loader-div").hide();
-              resetCaptcha();
-            },
-            processData: false,
-            contentType: false
-          }); 
-        }
-       
-      });
+function RegisterYes(PassData){ //proceed with the registration 'Yes'
+  var empID = PassData.empno;
+  var FName = PassData.fname;
+  var MName = PassData.mname;
+  var SName = PassData.sname;
+  var EName = PassData.extname;
+  $('#RegisterConfirm').modal('hide');
+  $('#contentform').trigger("reset");
+  $('#AddRegion').val('').trigger('change');
+  $('#AddProvince').html('<option value="">SELECT REGION FIRST</option>');
+  $('#AddCity').html('<option value="">SELECT PROVINCE FIRST</option>');
+  $('#AddBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');
+  $('#AddPosition').val('').trigger('change');
+  $('#AddDivision').val('').trigger('change');
+  $('#AddUnit').html('<option value="">SELECT DIVISION FIRST</option>');
+  $('#btnSubmit').val('Register');
+  $('#RegisterContent').show();
+  $('#ContentTip').show();
+  $("#EmployeeNumber").val(empID);
+  $("#AddFirstName").val(FName);
+  $("#AddLastName").val(SName);
+  $("#AddMiddleName").val(MName);
+  $("#AddextName").val(EName).trigger('change');
+  $("#HiddenAddextName").val(EName);
+  $('#SearchContent').hide();
+};
 
-      function RegisterYes(PassData){ //proceed with the registration 'Yes'
-        var empID = PassData.empno;
-        var FName = PassData.fname;
-        var MName = PassData.mname;
-        var SName = PassData.sname;
-        var EName = PassData.extname;
-        $('#RegisterConfirm').modal('hide');
-        $('#contentform').trigger("reset");
-        $('#AddRegion').val('').trigger('change');
-        $('#AddProvince').html('<option value="">SELECT REGION FIRST</option>');
-        $('#AddCity').html('<option value="">SELECT PROVINCE FIRST</option>');
-        $('#AddBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');
-        $('#AddPosition').val('').trigger('change');
-        $('#AddDivision').val('').trigger('change');
-        $('#AddUnit').html('<option value="">SELECT DIVISION FIRST</option>');
-        $('#btnSubmit').val('Register');
-        $('#RegisterContent').show();
-        $('#ContentTip').show();
-        
+$("#contentform").on("submit",function(event){
+  event.preventDefault();
+  const email = $('#AddEmail').val();
+  const empno = $('#EmployeeNumber').val();
+  const mobile_no = $('#AddMobileNumber').val();
+  const FName = $('#AddFirstName').val();
+  const MName = $('#AddMiddleName').val();
+  const LName = $('#AddLastName').val();
+  const Street = $('#AddStreet').val();
+  const Birthday = $('#AddBirthdate').val();
+  const captchaResponse = grecaptcha.getResponse();
+  var age = computeBday(Birthday);
 
-        $("#EmployeeNumber").val(empID);
-        $("#AddFirstName").val(FName);
-        $("#AddLastName").val(SName);
-        $("#AddMiddleName").val(MName);
-        $("#AddextName").val(EName).trigger('change');
-        $("#HiddenAddextName").val(EName);
-        
-        $('#SearchContent').hide();
-      };
-      //January 16, 2024
-      $("#contentform").on("submit",function(event){
-        event.preventDefault();
-        const email = $('#AddEmail').val();
-        const empno = $('#EmployeeNumber').val();
-        const mobile_no = $('#AddMobileNumber').val();
-        const FName = $('#AddFirstName').val();
-        const MName = $('#AddMiddleName').val();
-        const LName = $('#AddLastName').val();
-        const Street = $('#AddStreet').val();
-        const Birthday = $('#AddBirthdate').val();
-        const captchaResponse = grecaptcha.getResponse();
-        const type = $('#processType').val();
-        var age = computeBday(Birthday);
+  
+  $("#AddMobileNumber").css('border-color', '');
+  $("#CheckMobileNomessage").html("");
 
-        
-        $("#AddMobileNumber").css('border-color', '');
-        $("#CheckMobileNomessage").html("");
+  $("#CheckEmailNomessage").html("");
+  
+  $("#dataConsent").css('border-color', '');
+  $("#CheckDataConsentmessage").html("");
 
-        $("#CheckEmailNomessage").html("");
-        
-        $("#dataConsent").css('border-color', '');
-        $("#CheckDataConsentmessage").html("");
+  $("#AddFirstName").css('border-color', '');
+  $("#CheckFNamemessage").html("");
 
-        $("#AddFirstName").css('border-color', '');
-        $("#CheckFNamemessage").html("");
+  $("#AddMiddleName").css('border-color', '');
+  $("#CheckMNamemessage").html("");
 
-        $("#AddMiddleName").css('border-color', '');
-        $("#CheckMNamemessage").html("");
+  $("#AddLastName").css('border-color', '');
+  $("#CheckLNamemessage").html("");
+  
+  $("#AddStreet").css('border-color', '');
+  $("#CheckStreetmessage").html("");
+  
+  $("#AddBirthdate").css('border-color', '');
+  $("#CheckBdaymessage").html("");
 
-        $("#AddLastName").css('border-color', '');
-        $("#CheckLNamemessage").html("");
-        
-        $("#AddStreet").css('border-color', '');
-        $("#CheckStreetmessage").html("");
-        
-        $("#AddBirthdate").css('border-color', '');
-        $("#CheckBdaymessage").html("");
+  $("#AddFile").css('border-color', '');
+  $("#CheckImagemessage").html("");
+  $("#CheckCaptchamessage").html("");
 
-        $("#AddFile").css('border-color', '');
-        $("#CheckImagemessage").html("");
-
-
-        $("#CheckCaptchamessage").html("");
-        var validatePass = 1;
-
-        if(catpcha == 0){
-          $("#CheckCaptchamessage").html("Please Verify you're not a robot").css('color', 'red');
-          $("#CheckCaptchamessage").focus();
-          validatePass = 0;
-        }
-        if(!$("#dataConsent").is(":checked")){
-          $("#CheckDataConsentmessage").html("You need to agree to our data privacy notice to continue.").css('color', 'red');
-          $("#dataConsent").css('border-color', 'red');
-          validatePass = 0;
-        }
-        
-        if(Street.length ==''){
-          //not required
-        }else if(Street.length <5){
-          $("#CheckStreetmessage").html("Please enter a Street with at least 5 characters.").css('color', 'red');
-          $("#AddStreet").css('border-color', 'red');
-          $("#AddStreet").focus();
-          validatePass = 0;
-        }
-        if((mobile_no.length != 11) || ((mobile_no.slice(0, 2)) !== "09")){
-          $("#CheckMobileNomessage").html("The mobile number should adhere to the format starting with '09' and must consist of precisely 11 digits.").css('color', 'red');
-          $("#AddMobileNumber").css('border-color', 'red');
-          $("#AddMobileNumber").focus();
-          validatePass = 0;
-        }
-        if((age <18) || (age >65)){
-          $("#CheckBdaymessage").html("Kindly provide a valid date of birth. Age should fall within the range of 18 to 65 years.").css('color', 'red');
-          $("#AddBirthdate").css('border-color','red')
-          $("#AddBirthdate").focus();
-          validatePass = 0;
-        }
-        if(LName.length <2){
-          $("#CheckLNamemessage").html("Please enter a Last Name with at least 2 characters.").css('color', 'red');
-          $("#AddLastName").css('border-color', 'red');
-          $("#AddLastName").focus();
-          validatePass = 0;
-        }if(MName.length ==''){
-          
-        }else if(MName.length <2){
-          $("#CheckMNamemessage").html("Please enter a Middle Name with at least 2 characters.").css('color', 'red');
-          $("#AddMiddleName").css('border-color', 'red');
-          $("#AddMiddleName").focus();
-          validatePass = 0;
-        }
-        if(FName.length <2){
-          $("#CheckFNamemessage").html("Please enter a First Name with at least 2 characters.").css('color', 'red');
-          $("#AddFirstName").css('border-color', 'red');
-          $("#AddFirstName").focus();
-          validatePass = 0;
-        }
-
-        $.ajax({ //check email and mobile if existed 
-          url:"checkUnique.php",
-          method:"POST",
-          data: {empno:empno,email:email,mobile_no:mobile_no},
-          dataType: 'json',
-          success:function(data){
-            const uniqueMobile = data.mobile;
-            const uniqueEmail = data.email;
-              if(uniqueEmail > 0){
-                $("#CheckEmailNomessage").html("");
-                $("#CheckEmailNomessage").html("The email address provided has already been used for registration.").css('color', 'red');
-              }
-              if(uniqueMobile > 0){
-                $("#CheckMobileNomessage").html("");
-                $("#CheckMobileNomessage").html("The mobile number provided has already been used for registration.").css('color', 'red');
-              }
-              if(validatePass ==1 && uniqueMobile==0 && uniqueEmail==0){
-                // process register
-                var formData = new FormData(contentform);
-                $.ajax({
-                  url:"addnew.php",
-                  method:"POST",
-                  dataType: "json",
-                  data:formData,
-                  success:function(data){
-                    const msg = data.msg;
-                    const stat = data.status;
-                    if(stat == "success"){
-                      $('#alertMessageSuccess').text(msg);
-                      $('#modalAlertSuccess').modal('show');
-                    }
-                    else{
-                      $('#alertMessage').text(msg);
-                      $('#modalAlert').modal('show'); 
-                    }
-                  },
-                  processData: false,
-                  contentType: false
-                }); 
-              }
-               
-          },
-        });
-        
-      });
-      // <link rel="stylesheet" href="../includes/loader.css">
-      // <div class="loader-div">
-      //       <img 
-      //       class="loader-img" 
-      //       src="../assets/images/ajax-loader.gif" 
-      //       style="height: 50px;width: auto;" />
-      //     </div> 
-      // ,error: function(xhr, status, error) {
-      //   alert('The system encountered an error while processing your request:', error);
-      //   $(".loader-div").hide(); // hide loader
-      // }
-      // $(".loader-div").show();
-      // $(".loader-div").hide(); // hide loader
-      
-      // $('#modalNotif-header').text('Opps! Error.');
-      // $('#modalNotif-message').text(msg);
-      // $('#modalNotif').modal('show');
-
-      // modalAlertShow("");
-      // modalErrorShow("");
-      // modalSuccessShow("");
+  if (!captchaResponse || !isCaptchaValid) { 
+    $("#CheckCaptchamessage").html("Please Verify you're not a robot").css('color', 'red');
+    $("#CheckCaptchamessage").focus();
+    return; // Exit function if captcha is not valid
+  }else if(!$("#dataConsent").is(":checked")){
+    $("#CheckDataConsentmessage").html("You need to agree to our data privacy notice to continue.").css('color', 'red');
+    $("#dataConsent").css('border-color', 'red');
+  }else if(Street.length > 0 && Street.length < 5){
+    $("#CheckStreetmessage").html("Please enter a Street with at least 5 characters.").css('color', 'red');
+    $("#AddStreet").css('border-color', 'red');
+    $("#AddStreet").focus();
+  }else if((mobile_no.length != 11) || ((mobile_no.slice(0, 2)) !== "09")){
+    $("#CheckMobileNomessage").html("The mobile number should adhere to the format starting with '09' and must consist of precisely 11 digits.").css('color', 'red');
+    $("#AddMobileNumber").css('border-color', 'red');
+    $("#AddMobileNumber").focus();
+  }else if((age <18) || (age >65)){
+    $("#CheckBdaymessage").html("Kindly provide a valid date of birth. Age should fall within the range of 18 to 65 years.").css('color', 'red');
+    $("#AddBirthdate").css('border-color','red')
+    $("#AddBirthdate").focus();
+  }else if(LName.length <2){
+    $("#CheckLNamemessage").html("Please enter a Last Name with at least 2 characters.").css('color', 'red');
+    $("#AddLastName").css('border-color', 'red');
+    $("#AddLastName").focus();
+  }else if((MName.length =='') && (MName.length <2)){
+    $("#CheckMNamemessage").html("Please enter a Middle Name with at least 2 characters.").css('color', 'red');
+    $("#AddMiddleName").css('border-color', 'red');
+    $("#AddMiddleName").focus();
+  }else if(FName.length <2){
+    $("#CheckFNamemessage").html("Please enter a First Name with at least 2 characters.").css('color', 'red');
+    $("#AddFirstName").css('border-color', 'red');
+    $("#AddFirstName").focus();
+  }else{
+    $(".loader-div").show();
+    $.ajax({ //check email and mobile if existed 
+      url:"checkUnique.php",
+      method:"POST",
+      data: {empno:empno,email:email,mobile_no:mobile_no},
+      dataType: 'json',
+      success:function(data){
+        $(".loader-div").hide();
+        const uniqueMobile = data.mobile;
+        const uniqueEmail = data.email;
+          if(uniqueEmail > 0){
+            $("#CheckEmailNomessage").html("");
+            $("#CheckEmailNomessage").html("The email address provided has already been used for registration.").css('color', 'red');
+          }else if(uniqueMobile > 0){
+            $("#CheckMobileNomessage").html("");
+            $("#CheckMobileNomessage").html("The mobile number provided has already been used for registration.").css('color', 'red');
+          } else {
+            $(".loader-div").show();
+            var formData = new FormData(contentform);
+            $.ajax({
+              url:"addnew.php",
+              method:"POST",
+              dataType: "json",
+              data:formData,
+              success:function(data){
+                $(".loader-div").hide();
+                const msg = data.msg;
+                const stat = data.status;
+                if(stat == "success"){
+                  modalSuccessShow(msg,refreshPage);
+                } else {
+                  modalErrorShow(msg)
+                  resetCaptcha();
+                }
+              },error: function(xhr, status, error) {
+                modalErrorShow("The system encountered an error. Please contact support.");
+                $(".loader-div").hide();
+                resetCaptcha();
+              },
+              processData: false,
+              contentType: false
+            }); 
+          }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+        resetCaptcha();
+      },
+    });
+  } 
+});

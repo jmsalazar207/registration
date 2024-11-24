@@ -40,7 +40,7 @@ require_once('includes/init.php');
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <link rel="stylesheet" href="plugins/iCheck/all.css">
   <link rel="stylesheet" href="includes/add.css?test=<?php echo time()?>">
-  <link rel="stylesheet" href="includes/loader.css">
+  <link rel="stylesheet" href="includes/loader.css?test=<?php echo time()?>">
    <!-- Bootstrap Color Picker -->
    <link rel="stylesheet" href="bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
      <!-- Bootstrap time Picker -->
@@ -195,10 +195,12 @@ require_once('includes/init.php');
                                 onfocus="showMessage('message');"
                                 onblur="hideMessage('message');">
                                 <span class="input-group-addon">
-                                  <i 
-                                  class="fa fa-eye-slash toggle-DesiredPassword "   
-                                  id="toggleDesiredPassword">
-                                  </i>
+                                <i 
+                                class="fa fa-eye-slash toggle-password" 
+                                data-target="#DesiredPassword" 
+                                role="button" 
+                                aria-label="Toggle password visibility">
+                                </i>
                                 </span>
                             </div>
                             <label 
@@ -210,20 +212,20 @@ require_once('includes/init.php');
                               <div class="input-group has-feedback col-sm-12">
                                   <input 
                                   type="password" 
-                                  class="form-control col-sm-10" 
+                                  class="form-control col-sm-10 confirm-password-field" 
                                   id="ConfirmPassword" 
                                   name = "ConfirmPassword" 
                                   placeholder="Confirm Password" 
                                   required="true" 
-                                  tabindex="2"
-                                  onkeyup="checkPasswordMatch();">
+                                  tabindex="2">
                                   <span 
                                   class="input-group-addon">
-                                    <i 
-                                    class="fa fa-eye-slash toggle-ConfirmPassword " 
-                                    toggle = "#ConfirmPassword"  
-                                    id="toggleConfirmPassword">
-                                    </i>
+                                  <i 
+                                  class="fa fa-eye-slash toggle-password" 
+                                  data-target="#ConfirmPassword" 
+                                  role="button" 
+                                  aria-label="Toggle password visibility">
+                                  </i>
                                   </span>
                               </div>
                           <small id='checkmessage'></small>
@@ -446,7 +448,7 @@ require_once('includes/init.php');
                               <div class="col-md-6">
                                   <label 
                                   for="AddHouseNumber" 
-                                  class="requiredField col-sm-12" 
+                                  class="col-sm-12" 
                                   style="font-size: 15px;">
                                     House Number
                                   </label>
@@ -466,7 +468,7 @@ require_once('includes/init.php');
                                 <div class="col-md-6">
                                   <label 
                                   for="AddStreet" 
-                                  class="requiredField col-sm-12" 
+                                  class="col-sm-12" 
                                   style="font-size: 15px;">
                                     Street
                                   </label>
@@ -619,8 +621,8 @@ require_once('includes/init.php');
                   <div class="col-sm-10">
                     <div 
                     class="g-recaptcha" 
-                    data-callback="recaptchaCallback" 
-                    data-expired-callback="recaptchaExpired" 
+                    data-callback="onCaptchaSuccess" 
+                    data-expired-callback="onCaptchaExpired"
                     data-sitekey="6LeTvywhAAAAAO3C0jpqGHBY-_CHkinekSrSzSlS"></div>
                     <small id='CheckCaptchamessage'></small>
                   </div>  
@@ -629,7 +631,8 @@ require_once('includes/init.php');
                     type="submit" 
                     class="btn btn-info pull-right btn-block" 
                     id="btnSubmit" 
-                    name="btnSubmit">
+                    name="btnSubmit"
+                    disabled>
                   </div>
               </div>
             </form>              
@@ -679,7 +682,6 @@ require_once('includes/init.php');
 <script src="pluginscript.js?test=<?php echo time()?>"></script>
 <script src="modalNotif.js?test=<?php echo time()?>"></script>
 <?php
-include 'modal/registermodal.php';
 include 'modal/modalNotif.php';
 ?>
 </body>
