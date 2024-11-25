@@ -1,15 +1,15 @@
-<div class="tab-pane" id="updateUserInfo" >
+<div class="tab-pane" id="AdminUpdateUserInfo" >
     <div class="user-block">
         <form 
         method="POST" 
-        id="contentUpdate" 
+        id="contentAdminUpdatePersonalInfo" 
         autocomplete="off">
             <div class="box" style="border:0cm" >
                 <div class="box-body row">
                     <div class="col-md-12">
                         <label 
                             for="txtEmpno" 
-                            class="col-sm-12">
+                            class="col-sm-12 requiredField">
                             Employee Number
                         </label>
                         <div class="input-group col-sm-12">
@@ -48,7 +48,7 @@
                     <div class="col-md-12">
                         <label 
                             for="txtFName" 
-                            class="col-sm-12">
+                            class="col-sm-12 requiredField">
                             First Name
                         </label>
                         <div class="input-group col-sm-12">
@@ -87,7 +87,7 @@
                     <div class="col-md-12">
                         <label 
                             for="txtLName" 
-                            class="col-sm-12">
+                            class="col-sm-12 requiredField">
                             Last Name
                         </label>
                         <div class="input-group col-sm-12">
@@ -137,7 +137,7 @@
                     <div class="col-md-12" id="divSex" >
                         <label 
                             for="txtSex" 
-                            class="col-sm-12">
+                            class="col-sm-12 requiredField">
                             Sex
                         </label>
                         <div class="input-group col-sm-12">
@@ -146,7 +146,8 @@
                                 style="width: 100%;"  
                                 id="txtSex" 
                                 name="txtSex" 
-                                tabindex="6">
+                                tabindex="6"
+                                required>
                                     <option value="">--</option>
                                     <option value="0">MALE</option>
                                     <option value="1">FEMALE</option>
@@ -157,7 +158,7 @@
                     <div class="col-md-12" id="divBirthdate">
                         <label 
                             for="txtBirthdate" 
-                            class="col-sm-12">
+                            class="col-sm-12 requiredField">
                             Birthday
                         </label>
                         <div class="input-group col-sm-12">
@@ -174,7 +175,7 @@
                     <div class="col-md-12" id="divEmailAddress">
                         <label 
                             for="txtEmailAddress" 
-                            class="col-sm-12">
+                            class="col-sm-12 requiredField">
                             Email Address
                         </label>
                         <div class="input-group col-sm-12">
@@ -193,7 +194,7 @@
                     <div class="col-md-12" id="divMobileNumber" >
                         <label 
                             for="txtMobileNumber" 
-                            class="col-sm-12">
+                            class="col-sm-12 requiredField">
                             Mobile Number
                         </label>
                         <div class="input-group col-sm-12">
@@ -214,7 +215,7 @@
                     <div class="col-md-12" id="divRegion" >
                         <label 
                             for="txtRegion" 
-                            class="col-sm-12">
+                            class="col-sm-12 requiredField">
                             Region
                         </label>
                         <div class="input-group col-sm-12">
@@ -223,7 +224,8 @@
                                 style="width: 100%;"  
                                 id="txtRegion" 
                                 name="txtRegion" 
-                                tabindex="10">
+                                tabindex="10"
+                                required>
                                 <?php
                                     echo fill_region($dbConn, null);
                                 ?>
@@ -234,7 +236,7 @@
                     <div class="col-md-12" id="divProvince" >
                         <label 
                             for="txtProvince" 
-                            class="col-sm-12">
+                            class="col-sm-12 requiredField">
                             Province
                         </label>
                         <div class="input-group col-sm-12">
@@ -243,7 +245,8 @@
                                 style="width: 100%;"  
                                 id="txtProvince" 
                                 name="txtProvince" 
-                                tabindex="11">
+                                tabindex="11"
+                                required>
                             </select>
                         </div>
                         <small id='checktxtProvince'></small>
@@ -251,7 +254,7 @@
                     <div class="col-md-12" id="divCity" >
                         <label 
                             for="txtCity" 
-                            class="col-sm-12">
+                            class="col-sm-12 requiredField">
                             City
                         </label>
                         <div class="input-group col-sm-12">
@@ -260,7 +263,8 @@
                                 style="width: 100%;"  
                                 id="txtCity" 
                                 name="txtCity" 
-                                tabindex="12">
+                                tabindex="12"
+                                required>
                             </select>
                         </div>
                         <small id='checktxtCity'></small>
@@ -268,7 +272,7 @@
                     <div class="col-md-12" id="divBrgy" >
                         <label 
                             for="txtBrgy" 
-                            class="col-sm-12">
+                            class="col-sm-12 requiredField">
                             Barangay
                         </label>
                         <div class="input-group col-sm-12">
@@ -277,7 +281,8 @@
                                 style="width: 100%;"  
                                 id="txtBrgy" 
                                 name="txtBrgy" 
-                                tabindex="13">
+                                tabindex="13"
+                                required>
                             </select>
                         </div>
                         <small id='checktxtBrgy'></small>
@@ -292,9 +297,11 @@
                     Close
                 </button>
                 <button 
-                    type="submit" 
+                    type="button" 
+                    id="btnUpdatePersonalInfo"
+                    name="btnUpdatePersonalInfo"
                     class="btn btn-primary btn-md pull-right">
-                    Update
+                    Save
                 </button>
             </div>
         </form>

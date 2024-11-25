@@ -1,5 +1,6 @@
 
   $(function(){
+
     $('.select2').select2();
     jQuery("#txtRegion").on('change',function(){
       var regionAction = jQuery(this).attr("id");
@@ -76,11 +77,20 @@ jQuery("#txtDivision").on('change',function(){
 });
   });
 
+  function hideDivItemCode(){
+    $("#divCurrentItemCode").hide();
+    $("#divDateFilled").hide();
+    $("#divDateVacated").hide();
+    $("#divReasonVacancy").hide();
+    $("#divNewItemCodeDateFilled").hide();
+    $("#divNewItemCode").hide();
+  }
+
   function populateAdminUpdateModal(UpdateInfo){
     if(UpdateInfo){
       const acc_status = UpdateInfo["account_status"];
         if(acc_status ==0){
-        //Update Personal Information
+        //Populate Update Personal Information
           $("#txtEmpno").val(UpdateInfo["empno"].replaceAll('03-',''));
           $("#txtOldEmpno").val(UpdateInfo["empno"].replaceAll('03-',''));
           $("#txtLName").val(UpdateInfo["sname"]);
@@ -135,43 +145,61 @@ jQuery("#txtDivision").on('change',function(){
           $("#txtEmailAddress").val(UpdateInfo["eaddress"]);
           $("#txtBirthdate").val(UpdateInfo["birthdate"]);
           var update_region_id = UpdateInfo["region"];
+          $(".loader-div").show();
           $.ajax({
               url:"includes/functions.php",
               method:"POST",
               data:{update_region_id:update_region_id},
               success:function(data){
+                $(".loader-div").hide(); 
                   $('#txtRegion').html(data);
+              },error: function(xhr, status, error) {
+                modalErrorShow("The system encountered an error. Please contact support.");
+                $(".loader-div").hide();
               }
           });
           var update_province_id = UpdateInfo["province"];
+          $(".loader-div").show();
           $.ajax({
             url:"includes/functions.php",
             method:"POST",
             data:{update_province_id:update_province_id,Where_region_ID:update_region_id},
             success:function(data){
+              $(".loader-div").hide(); 
                 $('#txtProvince').html(data);
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
             }
-        });
+          });
           var update_city_id = UpdateInfo["city"];
+          $(".loader-div").show();
           $.ajax({
             url:"includes/functions.php",
             method:"POST",
             data:{update_city_id:update_city_id,Where_province_ID:update_province_id},
             success:function(data){
-                $('#txtCity').html(data);
+              $(".loader-div").hide(); 
+              $('#txtCity').html(data);
             }
-        });
+          });
           var update_barangay_id = UpdateInfo["barangay"];
+          $(".loader-div").show();
           $.ajax({
             url:"includes/functions.php",
             method:"POST",
             data:{update_barangay_id:update_barangay_id,Where_city_ID:update_city_id},
             success:function(data){
+              $(".loader-div").hide(); 
                 $('#txtBrgy').html(data);
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
             }
-        });
+          });
         }
-        //Overview
+        
+        //populate Overview
         $("#infoEmpno").text(UpdateInfo["empno"]);
         $("#infoFullName").text(UpdateInfo['fname']+' '+UpdateInfo['mname']+' '+UpdateInfo['sname']+' '+UpdateInfo['ename']);
         $("#infoPosition").text(UpdateInfo['position_name']);
@@ -180,49 +208,26 @@ jQuery("#txtDivision").on('change',function(){
         $("#infoAddress").text(UpdateInfo['numAdd']+' '+UpdateInfo['street']+' '+UpdateInfo['brgy_name']+' '+UpdateInfo['city_name']+' '+UpdateInfo['prov_name']+' '+UpdateInfo['region_name']);
         $("#infoMobileNo").text(UpdateInfo['mobile']);
         $("#infoEmail").text(UpdateInfo['eaddress']);
-        //Update Item Code
-        $("#UpdateEmpNo").val(UpdateInfo['empno']);
-        $("#UpdateFullName").val(UpdateInfo['fname']+' '+UpdateInfo['mname']+' '+UpdateInfo['sname']+' '+UpdateInfo['ename']);
-        $("#UpdatePosID").val(UpdateInfo['position_id']);
-        $("#UpdateItemCode").val(UpdateInfo['item_code']);
-        $("#UpdateDateFilled").val(UpdateInfo['date_filled']);
-        const DateFilled = UpdateInfo['date_filled'];
-        const DateUnfilled = $("#UpdateDateUnfilled");
-        DateUnfilled.attr('min', DateFilled);
-        //Condition 
+
+        //Populate Update Item Code
+        $("#UpdateEmpNo").val(UpdateInfo['empno']); //set employee number to emp number 
+        $("#UpdateFullName").val(UpdateInfo['fname']+' '+UpdateInfo['mname']+' '+UpdateInfo['sname']+' '+UpdateInfo['ename']); //set fullname to name input
+        $("#UpdatePosID").val(UpdateInfo['position_id']); //set PositionID from userprofile to hidden textbox
+        
+        //Condition in Update Item Code 
             const CurrentPosition = UpdateInfo['position_id'];
-            if(CurrentPosition ==''){
-              $("#UpdateDateUnfilled").removeAttr('required');
-              $("#UpdateReasonVacancy").removeAttr('required');
-              $("#divReasonVacancy").hide();
-              $("#divDateFilled").hide();
-              $("#divItemCode").hide();
-              $("#divDateVacated").hide();
-              $("#divNewItemCode").show();
-              var HistoryEmployee = UpdateInfo["empno"];
-              $("#UpdateEmpHistoryLastFilled").val('');
-                $.ajax({
-                  url:"includes/functions.php",
-                  method:"POST",
-                  data:{HistoryEmployee:HistoryEmployee},
-                  dataType:"json",
-                  success:function(data){
-                    HistoryEndAppointment = data.end_of_appointment;
-                    if(HistoryEndAppointment){
-                      alert(HistoryEndAppointment);
-                      $("#UpdateEmpHistoryLastFilled").val(HistoryEndAppointment);
-                    }
-                    
-                  }
-              });
-            }else{
-              $("#UpdateDateUnfilled").attr('required','required');
-              $("#UpdateReasonVacancy").attr('required','required');
-              $("#divReasonVacancy").show();
+            if(CurrentPosition !=''){ //Atin neng current position
+              $("#UpdateItemCode").val(UpdateInfo['item_code']);
+              $("#UpdateDateFilled").val(UpdateInfo['date_filled']);
+              $("#divCurrentItemCode").show();
               $("#divDateFilled").show();
-              $("#divItemCode").show();
               $("#divDateVacated").show();
+              $("#divReasonVacancy").show();
+            } else { //No current position is set
+              $("#divNewItemCode").show(); //show New Item code
+              $("#divNewItemCodeDateFilled").show();  //show Date Filled
             }
+            
       }
   }
 
@@ -341,6 +346,279 @@ jQuery("#txtDivision").on('change',function(){
     });
   }
 
+  function AdminUpdatePersonalInfo(formData){
+    const adminEmpNo = $('#txtEmpno').val();
+    const adminOldEmpno = $('#txtOldEmpno').val();
+    const adminFName = $('#txtFName').val();
+    const adminMname = $('#txtMName').val();
+    const adminLName = $('#txtLName').val();
+    const Birthday = $('#txtBirthdate').val();
+    const EmailAddress = $('#txtEmailAddress').val();
+    const MobileNumber = $('#txtMobileNumber').val();
+    const checkUpdateEmpno = '03-'+ adminEmpNo;
+    const checkUpdateOldEmpno = '03-'+ adminOldEmpno;
+    var age = computeBday(Birthday);
+    
+  $("#txtEmpno").css('border-color', '');
+  $("#checkTxtEmpno").html("");
+
+  $("#txtLName").css('border-color', '');``
+  $("#checkTxtLName").html("");
+
+  $("#txtMName").css('border-color', '');
+  $("#checkTxtMName").html("");
+        
+  $("#txtFName").css('border-color', '');
+  $("#checkTxtFName").html("");
+
+  $("#txtExtName").css('border-color', '');
+  $("#checkTxtExtName").html("");
+
+  $("#txtBirthdate").css('border-color', '');
+  $("#checktxtBirthdate").html("");
+
+  $("#txtEmailAddress").css('border-color', '');
+  $("#checktxtEmailAddress").html("");
+
+  $("#txtMobileNumber").css('border-color', '');
+  $("#checktxtMobileNumber").html("");
+
+
+  if(Birthday && ((age <18) || (age >65))){
+      $("#checktxtBirthdate").html("Kindly provide a valid date of birth. Age should fall within the range of 18 to 65 years.").css('color', 'red');
+      $("#txtBirthdate").css('border-color','red')
+      $("#txtBirthdate").focus();
+
+  }else if(MobileNumber && ((MobileNumber.length != 11) || ((MobileNumber.slice(0, 2)) !== "09"))){
+      $("#checktxtMobileNumber").html("The mobile number should adhere to the format starting with '09' and must consist of precisely 11 digits.").css('color', 'red');
+      $("#txtMobileNumber").css('border-color', 'red');
+      $("#txtMobileNumber").focus();
+
+  }else if(adminLName.length <2){
+    $("#checkTxtLName").html("Please enter a Last Name with at least 2 characters.").css('color', 'red');
+    $("#txtLName").css('border-color', 'red');
+    $("#txtLName").focus();
+
+  }else if(adminMname.length >0 && adminMname.length <2){
+    $("#checkTxtMName").html("Please enter a Middle Name with at least 2 characters.").css('color', 'red');
+    $("#txtMName").css('border-color', 'red');
+    $("#txtMName").focus();
+  
+  }else if(adminFName.length <2){
+    $("#checkTxtFName").html("Please enter a First Name with at least 2 characters.").css('color', 'red');
+    $("#txtFName").css('border-color', 'red');
+    $("#txtFName").focus();
+
+  }else if ((adminEmpNo.length>5) || (adminEmpNo.length<4)){
+    $("#checkTxtEmpno").html("Invalid Employee number. Please enter a number with a minimum of 4 digits and a maximum of 5 digits.").css('color', 'red');
+    $("#txtEmpno").css('border-color', 'red');
+    $("#txtEmpno").focus();
+
+  }else if(adminEmpNo > 12636){
+    $("#checkTxtEmpno").html("Invalid input. Employee number must not exceed the allowed limit.").css('color', 'red');
+    $("#txtEmpno").css('border-color', 'red');
+    $("#txtEmpno").focus();
+  }else{
+    $(".loader-div").show();
+    $.ajax({ //check empno
+      url:"checkExist.php",
+      method:"POST",
+      data: {updateEmpNo:adminEmpNo, adminOldEmpno:adminOldEmpno},
+      dataType: 'json',
+      success:function(data){
+        $(".loader-div").hide();
+          const uniqueEmpNo = data.updateEmpNO;
+          if(uniqueEmpNo > 0){
+              $("#checkTxtEmpno").html("Oops! It seems this employee number has already been used. Please double-check your information and try again, or contact support for assistance.").css('color', 'red');
+              $("#txtEmpno").css('border-color', 'red');
+              $("#txtEmpno").focus();
+          }else{
+            $(".loader-div").show();
+            $.ajax({ //check email and mobile if existed 
+              url:"checkUnique.php",
+              method:"POST",
+              data: {type:2,empno:checkUpdateEmpno,email:EmailAddress,mobile_no:MobileNumber,adminOldEmpno:checkUpdateOldEmpno},
+              dataType: 'json',
+              success:function(data){
+                $(".loader-div").hide();
+                const uniqueMobile = data.mobile;
+                const uniqueEmail = data.email;
+                  if(uniqueEmail > 0){
+                    $("#txtEmailAddress").css('border-color', 'red');
+                    $("#txtEmailAddress").focus();
+                    $("#checktxtEmailAddress").html("");
+                    $("#checktxtEmailAddress").html("The email address provided has already been used.").css('color', 'red');
+                  }else if(uniqueMobile > 0){
+                    $("#txtMobileNumber").css('border-color', 'red');
+                    $("#txtMobileNumber").focus();
+                    $("#checktxtMobileNumber").html("");
+                    $("#checktxtMobileNumber").html("The mobile number provided has already been used.").css('color', 'red');
+                  } else {
+                    $(".loader-div").show();
+                    $.ajax({
+                      url:"adminUpdateNewUser.php",
+                      method:"POST",
+                      dataType: "json",
+                      data:formData,
+                      success:function(data){
+                        $(".loader-div").hide();
+                        const msg = data.msg;
+                        const stat = data.status;
+                        if(stat === "success"){ 
+                          modalSuccessShow(msg,refreshPage)
+                        } else {
+                          modalErrorShow(msg);
+                        }
+                      },error: function(xhr, status, error) {
+                        modalErrorShow("The system encountered an error. Please contact support.");
+                        $(".loader-div").hide();
+                      },
+                      processData: false,
+                      contentType: false
+                    }); 
+            }
+              },error: function(xhr, status, error) {
+                modalErrorShow("The system encountered an error. Please contact support.");
+                $(".loader-div").hide();
+              },
+            });
+          }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      },
+      });
+  }
+ 
+  }
+
+  function AdminUpdateItemCode(formData){ //admin update item code input validation
+    $("#CheckUpdateReasonVacancy").html("").css('color', 'red');
+    $("#UpdateReasonVacancy").css('border-color','');
+
+    $("#CheckUpdateDateUnfilled").html("").css('color', 'red');
+    $("#UpdateDateUnfilled").css('border-color','');
+
+    $("#CheckUpdateNewItemCode").html("").css('color', 'red');
+    $("#UpdateNewItemCode").css('border-color','');
+
+    $("#CheckUpdateNewDatefilled").html("");
+    $("#UpdateNewDatefilled").css('border-color','');
+
+    const condition = $("#UpdatePosID").val();
+
+    const ReasonVacancy = $("#UpdateReasonVacancy").val();
+    const DateUnfilled = $("#UpdateDateUnfilled").val();
+    const CurrentDateFilled = $("#UpdateDateFilled").val();
+    const NewItemCode = $("#UpdateNewItemCode").val();
+    const NewItemCodeDateFilled = $("#UpdateNewDatefilled").val();
+
+   if (condition){ //With current Item Code
+      if(DateUnfilled === ''){
+        $("#CheckUpdateDateUnfilled").html("To proceed, this field must be completed.").css('color', 'red');
+        $("#UpdateDateUnfilled").css('border-color','red');
+        $("#UpdateDateUnfilled").focus();
+      }else if(DateUnfilled < CurrentDateFilled){
+        $("#CheckUpdateDateUnfilled").html("Oops! The Date Unfilled cannot be later than the Previous Position's Date Filled.").css('color', 'red');
+        $("#UpdateDateUnfilled").css('border-color','red');
+        $("#UpdateDateUnfilled").focus();
+      }
+      else if(ReasonVacancy ==''){
+        $("#CheckUpdateReasonVacancy").html("To proceed, this field must be completed.").css('color', 'red');
+        $("#UpdateReasonVacancy").css('border-color','red');
+        $("#UpdateReasonVacancy").focus();
+      }else if(ReasonVacancy ==11 && NewItemCode ==''){
+        $("#CheckUpdateNewItemCode").html("To proceed, this field must be completed.").css('color', 'red');
+        $("#UpdateNewItemCode").css('border-color','red');
+        $("#UpdateNewItemCode").focus();
+      }else if(ReasonVacancy ==11 && NewItemCodeDateFilled ==''){
+        $("#CheckUpdateNewDatefilled").html("To proceed, this field must be completed.").css('color', 'red');
+        $("#UpdateNewDatefilled").css('border-color','red');
+        $("#UpdateNewDatefilled").focus();
+      } else {
+        AdminUpdateItemCodeAction(formData);
+      }
+   } else { //Without Item Code set new
+      if(NewItemCode ==''){
+        $("#CheckUpdateNewItemCode").html("To proceed, this field must be completed.").css('color', 'red');
+        $("#UpdateNewItemCode").css('border-color','red');
+        $("#UpdateNewItemCode").focus();
+      }else if(NewItemCodeDateFilled ==''){
+        $("#CheckUpdateNewDatefilled").html("To proceed, this field must be completed.").css('color', 'red');
+        $("#UpdateNewDatefilled").css('border-color','red');
+        $("#UpdateNewDatefilled").focus();
+      }else{
+        AdminUpdateItemCodeAction(formData);
+      }
+   }
+  }
+
+  function AdminUpdateItemCodeAction(formData){ //action for update itemcode
+      $(".loader-div").show();
+      $.ajax({
+        url:"adminUpdateItemCode.php",
+        method:"POST",
+        dataType: "json",
+        data:formData,
+        success:function(data){
+          $(".loader-div").hide();
+          const msg = data.msg;
+          const stat = data.status;
+          if(stat === "success"){ 
+            modalSuccessShow(msg,refreshPage)
+          } else {
+            modalErrorShow(msg);
+          }
+        },error: function(xhr, status, error) {
+          modalErrorShow("The system encountered an error. Please contact support.");
+          $(".loader-div").hide();
+        },
+        processData: false,
+        contentType: false
+      }); 
+  }
+
+  function ValidatePositionDateCreated(){
+    const NewItemCodePosID = $("#UpdateNewItemCode").val(); //New Item Code with value of position id
+    if(NewItemCodePosID !=''){
+      $(".loader-div").show();
+      $.ajax({
+        url:"includes/functions.php",
+          method:"POST",
+          data:{CheckDateCreate:NewItemCodePosID},
+          dataType:"json",
+          success:function(data){
+            $(".loader-div").hide(); 
+            const PositionCreatedDate = data.date_creation_position;
+            const NewPositionDateCreated = $("#UpdateNewDatefilled");
+            NewPositionDateCreated.attr('min', PositionCreatedDate);
+        },error: function(xhr, status, error) {
+          modalErrorShow("The system encountered an error. Please contact support.");
+          $(".loader-div").hide();
+        }
+      });
+    }
+  }
+
+  function reasonVacancy(){ //trigger onchange reason of vacancy
+    const reason = $("#UpdateReasonVacancy").val();
+    if(reason !=11){
+      $("#divNewItemCode").hide();
+      $("#divNewItemCodeDateFilled").hide();
+    }else{
+      $("#divNewItemCode").show();
+      $("#divNewItemCodeDateFilled").show();
+    }
+  }
+
+  $(document).on('change','#UpdateNewItemCode', function(){ //onchange ning New Item Code
+    ValidatePositionDateCreated();
+  });
+
+  $(document).on('change','#UpdateReasonVacancy', function(){ //onchange ning ReasonVacancy
+    reasonVacancy();
+  });
+
   $(document).on('click', '#btnApproveRegistration', function() {   //approve registration action
     PassData = $(this).attr('value');
     modalConfirmShow('Would you like to approve this registration now?',ApproveRegistration,PassData);
@@ -418,247 +696,31 @@ jQuery("#txtDivision").on('change',function(){
     modalConfirmShow('Would you like to permanently delete this information? This action cannot be undone.',deleteData,PassData);
   });
   
-  $(document).on('click', '#btnAdminUpdate', function() {   //open update modal
+  $(document).on('click', '#btnAdminUpdate', function() {   //open admin Update modal with populated information
     var updateEmpno = $(this).attr('value');
-    $("#divNewItemCode").hide();
     $.ajax({
       url:"includes/functions.php",
       method:"POST",
       data:{sessionEmpno:updateEmpno},
       success:function(data){
         UpdateInfo = JSON.parse(data);
+        hideDivItemCode();
         populateAdminUpdateModal(UpdateInfo);
-        $('#formUser').modal('show');
+        $('#formAdminUserUpdate').modal('show');
       }
     })
   });
-  
 
-
-$("#fromTabUpdateItemCode").on("submit",function(event){ //Trigger update item code
-  $("#UpdateNewItemCode").removeAttr("required");
-  $("#UpdateNewDatefilled").removeAttr("required");
-
-  $("#UpdateNewDatefilled").css('border-color', '');
-  $("#UpdateDateUnfilled").css('border-color', '');
-  $("#CheckUpdateNewDatefilled").html("");
-  event.preventDefault();
-  const NewItemCode = $("#UpdateNewItemCode").val(); //New Item Code
-  const PositionDateFilled = $("#UpdateNewDatefilled").val(); //Date Filled
-  const CurrentItemCode = $("#UpdateItemCode").val(); //Current Item code
-  const CurrentPositionUnfilled = $("#UpdateDateUnfilled").val(); //Current Date Unfilled
-  const EmpHistoryLastFilled = $("#UpdateEmpHistoryLastFilled").val(); //employee date last filled position
-  if((NewItemCode !='' && PositionDateFilled =='') || (NewItemCode =='' && PositionDateFilled !='') || (CurrentItemCode =='' && (NewItemCode =='' || PositionDateFilled ==''))) {
-    alert("Please complete all required fields.");
-    $("#UpdateNewItemCode").attr("required","required");
-    $("#UpdateNewDatefilled").attr("required","required");
-  }else if((CurrentItemCode != '' && NewItemCode !='') && (CurrentPositionUnfilled > PositionDateFilled)){
-    $("#UpdateNewDatefilled").css('border-color', 'red');
-    $("#UpdateDateUnfilled").css('border-color', 'red');
-    $("#CheckUpdateNewDatefilled").html("An issue occurred with the encoded date. Please verify the date from when it was left unfilled to when it was filled.");
-  }else if((CurrentItemCode == '' && NewItemCode !='') && (EmpHistoryLastFilled > PositionDateFilled)){
-    $("#UpdateNewDatefilled").css('border-color', 'red');
-    $("#CheckUpdateNewDatefilled").html("It appears there's an issue with the encoded date of filling. The latest position was filled by an employee on "+EmpHistoryLastFilled+". Kindly verify the employee's appointment history.");
-  }
-  else{
-    AdminUpdateItemCode();
-  }
-});
-function AdminUpdateItemCode(){ //trigger update item code
-  var formData = new FormData(fromTabUpdateItemCode);
-  $.ajax({
-    url:"adminUpdateItemCode.php",
-    method:"POST",
-    dataType: "json",
-    data:formData,
-    async: false,
-    success:function(data){
-      const msg = data.msg;
-      const stat = data.status;
-      if(stat == "success"){
-        $('#modalNotif-header').text('Great! Success.');
-        $('#modalNotif-message').text(msg);
-        $('#modalNotif').modal('show');
-      }
-      else{
-        $('#alertMessage').text(msg);
-        $('#modalAlert').modal('show'); 
-      }
-    },
-    processData: false,
-    contentType: false
-  }); 
-}
-function ValidatePositionDateCreated(){
-  const NewItemCodePosID = $("#UpdateNewItemCode").val(); //New Item Code with value of position id
-  $.ajax({
-    url:"includes/functions.php",
-      method:"POST",
-      data:{CheckDateCreate:NewItemCodePosID},
-      dataType:"json",
-      success:function(data){
-        const PositionCreatedDate = data.date_creation_position;
-        const NewPositionDateCreated = $("#UpdateNewDatefilled");
-        NewPositionDateCreated.attr('min', PositionCreatedDate);
-
-    }
+  $(document).on('click', '#btnUpdatePersonalInfo', function() {    //admin update personal info
+    var PassData = new FormData(contentAdminUpdatePersonalInfo);
+    modalConfirmShow('Would you like to confirm and save the changes now?',AdminUpdatePersonalInfo,PassData);
   });
-}
-function reasonVacancy(){ //trigger onchange reason of vacancy
-  const reason = $("#UpdateReasonVacancy").val();
-  if(reason !=11){
-    $("#divNewItemCode").hide();
-  }else{
-    $("#divNewItemCode").show();
-  }
-}
 
-$('#contentUpdate').on("submit",function(event){ //Trigger update for userinfo
-    event.preventDefault();
-    const adminEmpNo = $('#txtEmpno').val();
-    const adminOldEmpno = $('#txtOldEmpno').val();
-    const adminFName = $('#txtFName').val();
-    const adminMname = $('#txtMName').val();
-    const adminLName = $('#txtLName').val();
-    const Birthday = $('#txtBirthdate').val();
-    const EmailAddress = $('#txtEmailAddress').val();
-    const MobileNumber = $('#txtMobileNumber').val();
-    const checkUpdateEmpno = '03-'+ adminEmpNo;
-    var bday = new Date(Birthday);
-    var month_diff = Date.now() - bday.getTime();
-    var age_dt = new Date(month_diff); 
-    var year = age_dt.getUTCFullYear();
-    var age = Math.abs(year - 1970);
-    
-  $("#txtEmpno").css('border-color', '');
-  $("#checkTxtEmpno").html("");
+  $(document).on('click', '#btnUpdateItemCode', function() {    //admin update item Code
+    var PassData = new FormData(contentAdminUpdateItemCode);
+    modalConfirmShow('Would you like to confirm and save the changes now?',AdminUpdateItemCode,PassData); 
+  });
 
-  $("#txtLName").css('border-color', '');``
-  $("#checkTxtLName").html("");
-
-  $("#txtMName").css('border-color', '');
-  $("#checkTxtMName").html("");
-        
-  $("#txtFName").css('border-color', '');
-  $("#checkTxtFName").html("");
-
-  $("#txtExtName").css('border-color', '');
-  $("#checkTxtExtName").html("");
-
-  $("#txtBirthdate").css('border-color', '');
-  $("#checktxtBirthdate").html("");
-
-  $("#txtEmailAddress").css('border-color', '');
-  $("#checktxtEmailAddress").html("");
-
-  $("#txtMobileNumber").css('border-color', '');
-  $("#checktxtMobileNumber").html("");
-
-  var validatePassUpdate = 1;
-  if(Birthday){
-    if((age <18) || (age >65)){
-      $("#checktxtBirthdate").html("Kindly provide a valid date of birth. Age should fall within the range of 18 to 65 years.").css('color', 'red');
-      $("#txtBirthdate").css('border-color','red')
-      $("#txtBirthdate").focus();
-      validatePassUpdate = 0;
-    }
-  }
-  if(MobileNumber){
-    if((MobileNumber.length != 11) || ((MobileNumber.slice(0, 2)) !== "09")){
-      $("#checktxtMobileNumber").html("The mobile number should adhere to the format starting with '09' and must consist of precisely 11 digits.").css('color', 'red');
-      $("#txtMobileNumber").css('border-color', 'red');
-      $("#txtMobileNumber").focus();
-      validatePassUpdate = 0;
-    }
-  }
-  if(adminLName.length <2){
-    $("#checkTxtLName").html("Please enter a Last Name with at least 2 characters.").css('color', 'red');
-    $("#txtLName").css('border-color', 'red');
-    $("#txtLName").focus();
-    validatePassUpdate = 0;
-  }if(adminMname.length ==''){
-    
-  }else if(adminMname.length <2){
-    $("#checkTxtMName").html("Please enter a Middle Name with at least 2 characters.").css('color', 'red');
-    $("#txtMName").css('border-color', 'red');
-    $("#txtMName").focus();
-    validatePassUpdate = 0;
-  }if(adminFName.length <2){
-    $("#checkTxtFName").html("Please enter a First Name with at least 2 characters.").css('color', 'red');
-    $("#txtFName").css('border-color', 'red');
-    $("#txtFName").focus();
-    validatePassUpdate = 0;
-  }if ((adminEmpNo.length>5) || (adminEmpNo.length<4)){
-    $("#checkTxtEmpno").html("Invalid Employee number. Please enter a number with a minimum of 4 digits and a maximum of 5 digits.").css('color', 'red');
-    $("#txtEmpno").css('border-color', 'red');
-    $("#txtEmpno").focus();
-    validatePassUpdate = 0;
-  }
-  $.ajax({ //check empno
-    url:"checkExist.php",
-    method:"POST",
-    data: {updateEmpNo:adminEmpNo, adminOldEmpno:adminOldEmpno},
-    dataType: 'json',
-    success:function(data){
-        const uniqueEmpNo = data.updateEmpNO;
-        if(uniqueEmpNo > 0){
-            $("#checkTxtEmpno").html("Oops! It seems this employee number has already been used. Please double-check your information and try again, or contact support for assistance.").css('color', 'red');
-            $("#txtEmpno").css('border-color', 'red');
-            $("#txtEmpno").focus();
-            validatePassUpdate = 0;
-        }else{
-          $.ajax({ //check email and mobile if existed 
-            url:"checkUnique.php",
-            method:"POST",
-            data: {empno:checkUpdateEmpno,email:EmailAddress,mobile_no:MobileNumber},
-            dataType: 'json',
-            success:function(data){
-              const uniqueMobile = data.mobile;
-              const uniqueEmail = data.email;
-                if(uniqueEmail > 0){
-                  $("#txtEmailAddress").css('border-color', 'red');
-                  $("#txtEmailAddress").focus();
-                  $("#checktxtEmailAddress").html("");
-                  $("#checktxtEmailAddress").html("The email address provided has already been used.").css('color', 'red');
-                  validatePassUpdate = 0;
-                }else if(uniqueMobile > 0){
-                  $("#txtMobileNumber").css('border-color', 'red');
-                  $("#txtMobileNumber").focus();
-                  $("#checktxtMobileNumber").html("");
-                  $("#checktxtMobileNumber").html("The mobile number provided has already been used.").css('color', 'red');
-                  validatePassUpdate = 0;
-                }else if(validatePassUpdate == 1){
-                  // process update 
-                  var formData = new FormData(contentUpdate);
-                  $.ajax({
-                    url:"adminUpdateNewUser.php",
-                    method:"POST",
-                    dataType: "json",
-                    data:formData,
-                    success:function(data){
-                      const msg = data.msg;
-                      const stat = data.status;
-                      if(stat === "success"){ 
-                        $('#modalNotif-header').text('Great! Success.');
-                        $('#modalNotif-message').text(msg);
-                        $('#modalNotif').modal('show');
-                      }
-                      else{
-                        $('#alertMessage').text(msg);
-                        $('#modalAlert').modal('show'); 
-                      }
-                    },
-                    processData: false,
-                    contentType: false
-                  }); 
-          }
-            },
-          });
-        }
-    },
-    });
-    // UPDATWEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-});
 $("#contentAdd").on("submit",function(event){ //Trigger add new userinfo
   event.preventDefault();
   const addSelectMode = $('#txtSelectMode').val();
@@ -772,6 +834,9 @@ function changeMode(){ //behaivior after change of mode
     $('#txtAddEmpno').attr('readonly',false);
   }
 }
+
+
+
 $('#contentDivision').on("submit", function(event){ //trigger add division
   event.preventDefault();
     const DivisionName = $('#txtDivName').val();
@@ -837,6 +902,3 @@ $('#contentDivision').on("submit", function(event){ //trigger add division
       },
       });
 });
-function btnGererateEmployeeNumber(){
-  
-}

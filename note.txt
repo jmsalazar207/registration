@@ -10,15 +10,62 @@
         $(".loader-div").hide();
         resetCaptcha();
       }
+      ,error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
 		$(".loader-div").show();
-		$(".loader-div").hide(); // hide loader
-		
-		$('#modalNotif-header').text('Opps! Error.');
-		$('#modalNotif-message').text(msg);
-		$('#modalNotif').modal('show');
+		$(".loader-div").hide(); 
+    // hide loader
+
+    
+		if(stat === "success"){ 
+          modalSuccessShow(msg,refreshPage)
+        } else {
+          modalErrorShow(msg);
+        }
+
 		
 		data-callback="onCaptchaSuccess" 
                     data-expired-callback="onCaptchaExpired" 
 					10854
 					
-					
+					('#tableLOI').DataTable().ajax.reload();
+
+
+
+          if(CurrentPosition ==''){ //No ITEMCODE SET
+              $("#UpdateDateUnfilled").removeAttr('required');
+              $("#UpdateReasonVacancy").removeAttr('required');
+              $("#divReasonVacancy").hide();
+              $("#divDateFilled").hide();
+              $("#divItemCode").hide();
+              $("#divDateVacated").hide();
+              $("#divNewItemCode").show();
+              var HistoryEmployee = UpdateInfo["empno"];
+              $("#UpdateEmpHistoryLastFilled").val('');
+              $(".loader-div").show();
+                $.ajax({
+                  url:"includes/functions.php",
+                  method:"POST",
+                  data:{HistoryEmployee:HistoryEmployee},
+                  dataType:"json",
+                  success:function(data){
+                    $(".loader-div").hide(); 
+                    HistoryEndAppointment = data.end_of_appointment;
+                    if(HistoryEndAppointment){
+                      $("#UpdateEmpHistoryLastFilled").val(HistoryEndAppointment);
+                    }
+                  },error: function(xhr, status, error) {
+                    modalErrorShow("The system encountered an error. Please contact support.");
+                    $(".loader-div").hide();
+                  }
+              });
+            }else{
+              $("#UpdateDateUnfilled").attr('required','required');
+              $("#UpdateReasonVacancy").attr('required','required');
+              $("#divReasonVacancy").show();
+              $("#divDateFilled").show();
+              $("#divItemCode").show();
+              $("#divDateVacated").show();
+            }

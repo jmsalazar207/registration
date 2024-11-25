@@ -67,7 +67,7 @@ require_once('includes/init.php');
                     </div>
                     &nbsp;
                     <div class="col-md-12">
-                        <button type="submit" id="btnAdd" name="btnAdd" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addNewUser">
+                        <button type="submit" id="btnAdd" name="btnAdd" class="btn btn-info btn-sm" data-toggle="modal" data-target="#AdminAddNewUser">
                           <span class="glyphicon glyphicon-plus"></span>
                             <span class="glyphicon-class">
                               Add New User
@@ -143,7 +143,7 @@ require_once('includes/init.php');
 <script src="modalNotif.js?test=<?php echo time()?>"></script>
 <script>
   $(function () {
-    $('#userManage').DataTable({
+    var tblID = $('#userManage').DataTable({
       ajax: {
           url: 'userManagement_ajax.php',
           type: 'POST',

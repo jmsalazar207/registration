@@ -419,7 +419,7 @@
           <!-- /.modal-dialog -->
         </div>
 <!-- modal for add user -->
-<div class="modal fade" id="addNewUser">
+<div class="modal fade" id="AdminAddNewUser">
     <div class="modal-dialog">
       <div class="modal-content">
           <form 
@@ -609,7 +609,7 @@
   <!-- /.modal -->
 
         <!-- modal update info  -->
-        <div class="modal fade" id="formUser">
+        <div class="modal fade" id="formAdminUserUpdate">
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
             <div class="col-md-12">
@@ -626,7 +626,7 @@
                   <li id="TabUpdatePersonalInformation"
                   class="">
                     <a 
-                      href="#updateUserInfo" 
+                      href="#AdminUpdateUserInfo" 
                       data-toggle="tab">
                       Update Personal Information
                     </a>
@@ -634,7 +634,7 @@
                   <li id="TabUpdateItemCode"
                   >
                     <a 
-                      href="#updateUserItemCode" 
+                      href="#AdminUpdateUserItemCode" 
                       data-toggle="tab">
                       Update Item Code
                     </a>

@@ -1200,7 +1200,7 @@ $("#frmBasicInfoUpdate").on("submit",function(event){
     $.ajax({ //check email and mobile if existed 
       url:"checkUnique.php",
       method:"POST",
-      data: {empno:empno,email:email,mobile_no:mobile_no},
+      data: {type:1,empno:empno,email:email,mobile_no:mobile_no},
       dataType: 'json',
       success:function(data){
         const uniqueMobile = data.mobile;
