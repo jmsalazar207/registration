@@ -424,7 +424,7 @@
       <div class="modal-content">
           <form 
               method="POST" 
-              id="contentAdd" 
+              id="frmAdminAddNewUser" 
               autocomplete="off">
               <div class="modal-header">
                   <button 
@@ -441,7 +441,7 @@
                           <div class="col-md-12">
                               <label 
                                   for="txtAddEmpno" 
-                                  class="col-sm-12">
+                                  class="col-sm-12 requiredField">
                                   Select Mode
                               </label>
                               <div class="input-group col-sm-12">
@@ -451,8 +451,7 @@
                                       id="txtSelectMode" 
                                       name="txtSelectMode" 
                                       tabindex="1"
-                                      required
-                                      onchange="changeMode();">
+                                      required>
                                           <option value="1" selected>Auto Generate</option>
                                           <option value="2">Manual Entry</option>
                                   </select>
@@ -461,7 +460,7 @@
                           <div class="col-md-12">
                               <label 
                                   for="txtAddEmpno" 
-                                  class="col-sm-12">
+                                  class="col-sm-12 requiredField">
                                   Employee Number
                               </label>
                               <div class="input-group col-sm-12">
@@ -477,17 +476,17 @@
                                       name="token" 
                                       value="<?=$_SESSION["token"]?>"> 
                                   <input 
-                                      type="text" 
-                                      class="form-control" 
-                                      name="txtAddEmpno" 
-                                      id="txtAddEmpno" 
-                                      placeholder="Employee Number" 
-                                      value="" 
-                                      readonly
-                required
-                                      style="text-transform: uppercase;" 
-                                      onkeypress="return NumberOnly(event)" 
-                                      tabindex="1">
+                                    type="text" 
+                                    class="form-control" 
+                                    name="txtAddEmpno" 
+                                    id="txtAddEmpno" 
+                                    placeholder="Employee Number" 
+                                    value="" 
+                                    readonly
+                                    required
+                                    style="text-transform: uppercase;" 
+                                    onkeypress="return NumberOnly(event)" 
+                                    tabindex="1">
                               </div>
                               <small id='checkTxtAddEmpno'></small>
                           </div>
@@ -495,7 +494,7 @@
                           <div class="col-md-12">
                               <label 
                                   for="txtAddFName" 
-                                  class="col-sm-12">
+                                  class="col-sm-12 requiredField">
                                   First Name
                               </label>
                               <div class="input-group col-sm-12">
@@ -516,7 +515,7 @@
                           <div class="col-md-12">
                               <label 
                                   for="txtAddMName" 
-                                  class="col-sm-12">
+                                  class="col-sm-12 ">
                                   Middle Name
                               </label>
                               <div class="input-group col-sm-12">
@@ -536,7 +535,7 @@
                           <div class="col-md-12">
                               <label 
                                   for="txtAddLName" 
-                                  class="col-sm-12">
+                                  class="col-sm-12 requiredField">
                                   Last Name
                               </label>
                               <div class="input-group col-sm-12">
@@ -595,9 +594,11 @@
                       Close
                   </button>
                   <button 
-                      type="submit" 
+                      type="button"
+                      id="btnAddNewUser"
+                      name="btnAddNewUser" 
                       class="btn btn-primary">
-                      Save changes
+                      Add
                   </button>
               </div>
           </form>

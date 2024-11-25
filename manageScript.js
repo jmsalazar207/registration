@@ -617,6 +617,10 @@ jQuery("#txtDivision").on('change',function(){
 
   $(document).on('change','#UpdateReasonVacancy', function(){ //onchange ning ReasonVacancy
     reasonVacancy();
+  }); 
+
+  $(document).on('change','#txtSelectMode', function(){
+    changeMode();
   });
 
   $(document).on('click', '#btnApproveRegistration', function() {   //approve registration action
@@ -721,7 +725,12 @@ jQuery("#txtDivision").on('change',function(){
     modalConfirmShow('Would you like to confirm and save the changes now?',AdminUpdateItemCode,PassData); 
   });
 
-$("#contentAdd").on("submit",function(event){ //Trigger add new userinfo
+  $(document).on('click', '#btnAddNewUser', function(){
+    var PassData = '';
+    modalConfirmShow('Would you like to confirm and save the new user details now?',insertNewUser,PassData); 
+  });
+
+  function insertNewUser(){
   event.preventDefault();
   const addSelectMode = $('#txtSelectMode').val();
   const addEmpNo = $('#txtAddEmpno').val();
@@ -763,69 +772,98 @@ $("#contentAdd").on("submit",function(event){ //Trigger add new userinfo
         $("#txtAddEmpno").css('border-color', 'red');
         $("#txtAddEmpno").focus();
       }else{
+        $(".loader-div").show();
         $.ajax({ //check empno
           url:"checkExist.php",
           method:"POST",
           data: {addEmpNo:addEmpNo},
           dataType: 'json',
           success:function(data){
+            $(".loader-div").hide(); 
               const uniqueEmpNo = data.empNO;
               if(uniqueEmpNo){
                   $("#checkTxtAddEmpno").html("Oops! It seems this employee number has already been used. Please double-check your information and try again, or contact support for assistance.").css('color', 'red');
                   $("#txtAddEmpno").css('border-color', 'red');
                   $("#txtAddEmpno").focus();
               }else{
-                // process register
-                insertNewUser();
+                insertNewUserAction();
               }
+          },error: function(xhr, status, error) {
+            modalErrorShow("The system encountered an error. Please contact support.");
+            $(".loader-div").hide();
           },
           });
       }
     }else{
       generateID();
     }
-});
-function insertNewUser(){ //function for insertnew user
-  var formData = new FormData(contentAdd);
-  $.ajax({
+  }
+
+  function insertNewUserAction(){ //function for insertnew user
+    var formData = new FormData(frmAdminAddNewUser);
+    $(".loader-div").show();
+    $.ajax({
     url:"adminAddNewUser.php",
     method:"POST",
     dataType: "json",
     data:formData,
     success:function(data){
+      $(".loader-div").hide(); 
       const msg = data.msg;
       const stat = data.status;
-      if(stat == "success"){
-        $('#modalNotif-header').text('Great! Success.');
-        $('#modalNotif-message').text(msg);
-        $('#modalNotif').modal('show');
-      }else{
-        $('#modalNotif-header').text('Opps! Error.');
-        $('#modalNotif-message').text(msg);
-        $('#modalNotif').modal('show');
+      if(stat === "success"){ 
+        modalSuccessShow(msg,refreshPage)
+      } else {
+        modalErrorShow(msg);
       }
+    },error: function(xhr, status, error) {
+      modalErrorShow("The system encountered an error. Please contact support.");
+      $(".loader-div").hide();
     },
     processData: false,
     contentType: false
   }); 
-}
-function generateID(){ //function for auto generated entry of employee number
-  $.ajax({
-        url:"includes/functions.php",
-        method:"POST",
-        data: {GenerateEmpID:1},
-        dataType: 'json',
-        success:function(data){
+  }
+
+  function generateID(){ //function for auto generated entry of employee number
+    $(".loader-div").show();
+    $.ajax({
+      url: "includes/functions.php",
+      method: "POST",
+      data: { GenerateEmpID: 1 },
+      dataType: 'json',
+      success: function(data) {
+        $(".loader-div").hide();
+    
+        if (data && data.last_emp_no) {
           let lastNumber = data.last_emp_no;
           const setEmpID = ++lastNumber;
-          $("#txtAddEmpno").val(setEmpID);
-          if(setEmpID != ''){
-            insertNewUser();
+    
+          // Ensure the generated employee ID is not empty
+          if (setEmpID !== '') {
+            $("#txtAddEmpno").val(setEmpID);
+            if($("#txtAddEmpno").val() !== ''){
+              // Assuming formData contains the necessary details for the new user
+              insertNewUserAction();
+            }else {
+              modalErrorShow("Failed to set the employee ID.");
+            }
+          } else {
+            modalErrorShow("Failed to generate a valid employee ID.");
           }
+        } else {
+          modalErrorShow("Failed to retrieve the last employee number.");
         }
-      })
-}
-function changeMode(){ //behaivior after change of mode
+      },
+      error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
+    });
+    
+  }
+
+  function changeMode(){ //behaivior after change of mode
   $('#txtAddEmpno').val('');
   var ModeValue = $('#txtSelectMode').val();
   if(ModeValue ==1){
@@ -833,7 +871,7 @@ function changeMode(){ //behaivior after change of mode
   }else{
     $('#txtAddEmpno').attr('readonly',false);
   }
-}
+  }
 
 
 

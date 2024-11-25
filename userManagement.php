@@ -67,7 +67,13 @@ require_once('includes/init.php');
                     </div>
                     &nbsp;
                     <div class="col-md-12">
-                        <button type="submit" id="btnAdd" name="btnAdd" class="btn btn-info btn-sm" data-toggle="modal" data-target="#AdminAddNewUser">
+                        <button 
+                        type="submit" 
+                        id="btnAdd" 
+                        name="btnAdd" 
+                        class="btn btn-info btn-sm" 
+                        data-toggle="modal" 
+                        data-target="#AdminAddNewUser">
                           <span class="glyphicon glyphicon-plus"></span>
                             <span class="glyphicon-class">
                               Add New User
@@ -78,7 +84,9 @@ require_once('includes/init.php');
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                <table id="userManage" class="table table-bordered table-striped table-responsive" style="text-align:center; width:100%">
+                <table id="userManage" 
+                class="table table-bordered table-striped table-responsive" 
+                style="text-align:center; width:100%">
                     <thead class="bg-primary">
                         <tr>
                           <th> Action </th>
