@@ -31,7 +31,8 @@
   
         // Handle various cases based on `credentialsMatch`
         if (credentialsMatch == 2) {
-          window.location.href = "homePage.php";
+          resetPasswordAttempt(employeeNo);
+          
         } else if (credentialsMatch == 3) {
           modalErrorShow("Your registration has been disapproved by the administrator. Please contact the Personnel Section.");
           resetCaptcha();
@@ -43,14 +44,14 @@
           handleWrongPassword(employeeNo);
         } else if (credentialsMatch == 0) {
           $('#regRoute').css("display", "inline-flex");
-          modalAlertShow("Oops! Invalid Credentials. Please contact Personnel Section for assistance.");
+          modalAlertShow("Oops! Invalid Credentials. Please contact Personnel Section for assistance.",CloseDynamicModal);
           resetCaptcha();
         } else if (credentialsMatch == 1) {
-          modalAlertShow("Your account is pending approval. Please contact the Personnel Section.");
+          modalAlertShow("Your account is pending approval. Please contact the Personnel Section.",CloseDynamicModal);
           resetCaptcha();
           sessionStorage.clear();
         } else {
-          modalAlertShow("Oops! Invalid Credentials. Please contact Personnel Section.");
+          modalAlertShow("Oops! Invalid Credentials. Please contact Personnel Section.",CloseDynamicModal);
           resetCaptcha();
           sessionStorage.clear();
         }
@@ -118,4 +119,28 @@
       }
     });
   }
-  
+  // Update lock attempt to 0
+  function resetPasswordAttempt(employeeNo){
+      $(".loader-div").show();
+      $.ajax({
+        url:"adminUnLockUser.php",
+        method:"POST",
+        data:{btnAdminUnLockEmpno:employeeNo},
+        dataType: 'json',
+        success:function(data){
+          $(".loader-div").hide();
+          const stat = data.status;  
+          if(stat === "success"){ 
+            modalSuccessShow('You have logged in successfully. Please close this modal to continue to the main page.',redirectPage);
+          } else {
+           modalErrorShow('Something went wrong during the process. Please try again.');
+          }
+        },error: function(xhr, status, error) {
+          modalErrorShow("The system encountered an error. Please contact support.");
+          $(".loader-div").hide();s
+        }
+      });
+  }
+  function redirectPage(){
+    window.location.href = "homePage.php";
+  }

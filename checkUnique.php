@@ -4,7 +4,6 @@ require_once("includes/init.php");
 require_once("includes/helper.php");
 
 if($_POST['type'] == 1){
-    echo $_POST['type'];
     $emailAdd = $_POST['email'];
     $empno = $_POST['empno'];
     $sql_email = "SELECT * FROM userprofile WHERE eaddress = '$emailAdd' AND empno != '$empno' AND eaddress !=''";

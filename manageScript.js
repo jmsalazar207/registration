@@ -214,6 +214,7 @@ jQuery("#txtDivision").on('change',function(){
         $("#UpdateFullName").val(UpdateInfo['fname']+' '+UpdateInfo['mname']+' '+UpdateInfo['sname']+' '+UpdateInfo['ename']); //set fullname to name input
         $("#UpdatePosID").val(UpdateInfo['position_id']); //set PositionID from userprofile to hidden textbox
         
+
         //Condition in Update Item Code 
             const CurrentPosition = UpdateInfo['position_id'];
             if(CurrentPosition !=''){ //Atin neng current position
@@ -522,8 +523,7 @@ jQuery("#txtDivision").on('change',function(){
         $("#CheckUpdateDateUnfilled").html("Oops! The Date Unfilled cannot be later than the Previous Position's Date Filled.").css('color', 'red');
         $("#UpdateDateUnfilled").css('border-color','red');
         $("#UpdateDateUnfilled").focus();
-      }
-      else if(ReasonVacancy ==''){
+      }else if(ReasonVacancy ==''){
         $("#CheckUpdateReasonVacancy").html("To proceed, this field must be completed.").css('color', 'red');
         $("#UpdateReasonVacancy").css('border-color','red');
         $("#UpdateReasonVacancy").focus();

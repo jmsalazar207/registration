@@ -191,7 +191,7 @@ $("#contentsearch").on("submit",function(event){ //trigger search
               $('#FullName').text(fullname);
               modalConfirmShow('Employee Number found. Ready to proceed with registration?',RegisterYes,PassData); //(message,function,data)
             }else{ //registered
-              modalAlertShow('This employee number is already registered in our system.');
+              modalAlertShow('This employee number is already registered in our system.',CloseDynamicModal);
             }
         }
       },error: function(xhr, status, error) {

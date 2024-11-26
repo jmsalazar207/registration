@@ -153,9 +153,11 @@ $(document).on("keyup", ".password-field, .confirm-password-field", function () 
       message.html(""); // Clear message if fields are empty
   }
 });
+
 function refreshPage() {
   location.reload(); // Reloads the current page
 }
+
 function deleteData(PassData){ //dynamic delete details
   var DeleteURL = PassData.valueURL;
   var DeleteID = PassData.valueEmp;
@@ -175,6 +177,10 @@ function deleteData(PassData){ //dynamic delete details
       }
     }
   });
+}
+
+function CloseDynamicModal(){
+  $('#modalDynamic').modal('hide');
 }
 
 

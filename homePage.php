@@ -76,6 +76,8 @@ include "includes/footer.php";
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 <script src="panelScript.js?test=<?php echo time()?>"></script>
+<script src="genFunction.js?test=<?php echo time()?>"></script>
+<script src="modalNotif.js?test=<?php echo time()?>"></script>
 <script>
   $(document).ready(function () {
     $('.sidebar-menu').tree()
@@ -83,6 +85,7 @@ include "includes/footer.php";
 </script>
 <?php
 include "modal/registermodal.php";
+include "modal/modalNotif.php";
 ?>
 </body>
 </html>
