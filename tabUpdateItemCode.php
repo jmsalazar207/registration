@@ -177,7 +177,7 @@
                     Close
                 </button>
                 <button 
-                    type="button"
+                    type="submit"
                     id="btnUpdateItemCode"
                     name="btnUpdateItemCode" 
                     class="btn btn-primary btn-md pull-right">

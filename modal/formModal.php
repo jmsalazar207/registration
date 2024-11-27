@@ -594,7 +594,7 @@
                       Close
                   </button>
                   <button 
-                      type="button"
+                      type="submit"
                       id="btnAddNewUser"
                       name="btnAddNewUser" 
                       class="btn btn-primary">

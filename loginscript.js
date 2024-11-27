@@ -1,5 +1,5 @@
 
-  $("#contentLogin").on("submit", function(event) {
+  $(document).on('submit','#contentLogin',function(event){
     $('#regRoute').css("display", "none");
     event.preventDefault();
   
@@ -63,6 +63,7 @@
       }
     });
   });
+  
   // Handle wrong password attempts
   function handleWrongPassword(employeeNo) {
     $.ajax({
@@ -87,6 +88,7 @@
       }
     });
   }
+
   // Lock account after 3 failed attempts
   function lockAccount(employeeNo) {
     $.ajax({
@@ -103,6 +105,7 @@
       }
     });
   }
+
   // Update attempt count
   function updateAttemptCount(employeeNo, count) {
     $.ajax({
@@ -119,6 +122,7 @@
       }
     });
   }
+
   // Update lock attempt to 0
   function resetPasswordAttempt(employeeNo){
       $(".loader-div").show();
@@ -141,6 +145,7 @@
         }
       });
   }
+  
   function redirectPage(){
     window.location.href = "homePage.php";
   }

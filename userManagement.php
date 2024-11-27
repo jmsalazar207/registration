@@ -143,7 +143,7 @@ require_once('includes/init.php');
 <!-- page script -->
 <?php
   include "modal/formModal.php";
-  include "modal/modalNotif.php"
+  include "modal/modalNotif.php";
 ?>
 <script src="panelScript.js?test=<?php echo time()?>"></script>
 <script src="genFunction.js?test=<?php echo time()?>"></script>

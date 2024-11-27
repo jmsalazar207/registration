@@ -168,7 +168,8 @@
                                 name="txtBirthdate" 
                                 id="txtBirthdate" 
                                 required="true" 
-                                tabindex="7">
+                                tabindex="7"
+                                max ="<?=$today?>">
                         </div>
                         <small id='checktxtBirthdate'></small>
                     </div>
@@ -297,7 +298,7 @@
                     Close
                 </button>
                 <button 
-                    type="button" 
+                    type="submit" 
                     id="btnUpdatePersonalInfo"
                     name="btnUpdatePersonalInfo"
                     class="btn btn-primary btn-md pull-right">

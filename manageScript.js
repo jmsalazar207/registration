@@ -715,23 +715,25 @@ jQuery("#txtDivision").on('change',function(){
     })
   });
 
-  $(document).on('click', '#btnUpdatePersonalInfo', function() {    //admin update personal info
+  $(document).on('submit', '#contentAdminUpdatePersonalInfo', function(event) {    //admin update personal info
+    event.preventDefault(); // Prevent the default form submission
     var PassData = new FormData(contentAdminUpdatePersonalInfo);
     modalConfirmShow('Would you like to confirm and save the changes now?',AdminUpdatePersonalInfo,PassData);
   });
 
-  $(document).on('click', '#btnUpdateItemCode', function() {    //admin update item Code
+  $(document).on('submit', '#contentAdminUpdateItemCode', function(event) {    //admin update item Code
+    event.preventDefault(); // Prevent the default form submission
     var PassData = new FormData(contentAdminUpdateItemCode);
     modalConfirmShow('Would you like to confirm and save the changes now?',AdminUpdateItemCode,PassData); 
   });
 
-  $(document).on('click', '#btnAddNewUser', function(){
+  $(document).on('submit', '#frmAdminAddNewUser', function(event){
+    event.preventDefault(); // Prevent the default form submission
     var PassData = '';
     modalConfirmShow('Would you like to confirm and save the new user details now?',insertNewUser,PassData); 
   });
 
   function insertNewUser(){
-  event.preventDefault();
   const addSelectMode = $('#txtSelectMode').val();
   const addEmpNo = $('#txtAddEmpno').val();
   const addFName = $('#txtAddFName').val();

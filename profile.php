@@ -75,13 +75,20 @@ $today = date('Y-m-d');
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
-  <link rel="stylesheet" href="includes/add.css">
+  <link rel="stylesheet" href="includes/add.css?test=<?php echo time()?>">
+  <link rel="stylesheet" href="includes/loader.css?test=<?php echo time()?>">
    <!-- DataTables -->
    <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
+<div class="loader-div">
+    <img 
+    class="loader-img" 
+    src="images/ajax-loader.gif" 
+    style="height: 50px;width: auto;" />
+  </div>
   <style>
     .ui-datepicker-calendar {
     display: none;
@@ -540,9 +547,12 @@ include "includes/footer.php";
 </script>
 <?php
 include "modal/formModal.php";
+include "modal/modalNotif.php";
 ?>
 <script src="profileScript.js?test=<?php echo time()?>"></script>
 <script src="panelScript.js?test=<?php echo time()?>"></script>
+<script src="genFunction.js?test=<?php echo time()?>"></script>
+<script src="modalNotif.js?test=<?php echo time()?>"></script>
 
 </body>
 </html>

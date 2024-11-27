@@ -1,6 +1,6 @@
 <div class="tab-pane" id="basicInfo">
     <div class="user-block">
-        <form id="frmBasicInfoUpdate" name="frmBasicInfoUpdate" autocomplete="off" >
+        <form id="frmUserBasicInfoUpdate" name="frmUserBasicInfoUpdate" autocomplete="off" >
             <div class="box" style="border:0cm" >
                 <div class="box-body row">
                     <div class="form-group">
@@ -85,9 +85,6 @@
                                         class="col-sm-12" 
                                         style="font-size: 15px;">
                                         House Number
-                                        <span 
-                                            class="requiredField">
-                                        </span>
                                     </label>
                                     <div class="col-sm-12">
                                         <input 
@@ -112,7 +109,6 @@
                                         class="col-sm-12" 
                                         style="font-size: 15px;">
                                         Street
-                                        <span class="requiredField"></span>
                                     </label>
                                     <div class="col-sm-12">
                                         <input 
@@ -151,10 +147,9 @@
                         <div class="form-group">
                             <label 
                                 for="AddRegion" 
-                                class="col-sm-12" 
+                                class="col-sm-12 requiredField" 
                                 style="font-size: 15px;">
                                 Region
-                                <span class="requiredField">*</span>
                             </label>
                             <div class="col-sm-12">
                                 <select 
@@ -170,10 +165,10 @@
                         <div class="form-group">
                             <label 
                                 for="AddProvince" 
-                                class="col-sm-12" 
+                                class="col-sm-12 requiredField" 
                                 style="font-size: 15px;">
                                 Province
-                                <span class="requiredField">*</span></label>
+                            </label>
                                 <div class="col-sm-12">
                                     <select 
                                         class="form-control select2" 
@@ -191,10 +186,10 @@
                         <div class="form-group">
                             <label 
                                 for="AddCity" 
-                                class="col-sm-12" 
+                                class="col-sm-12 requiredField"  
                                 style="font-size: 15px;">
                                 City
-                                <span class="requiredField">*</span></label>
+                            </label>
                                 <div class="col-sm-12">
                                     <select 
                                         class="form-control select2" 
@@ -212,10 +207,10 @@
                         <div class="form-group">
                             <label 
                                 for="AddBarangay" 
-                                class="col-sm-12" 
+                                class="col-sm-12 requiredField" 
                                 style="font-size: 15px;">
                                 Barangay
-                                <span class="requiredField">*</span></label>
+                            </label>
                                 <div class="col-sm-12">
                                     <select 
                                         class="form-control select2"
@@ -233,7 +228,7 @@
                         <div class="form-group">
                             <label 
                                 for="AddZipCode" 
-                                class="col-sm-12" 
+                                class="col-sm-12 requiredField" 
                                 style="font-size: 15px;">
                                 Zip Code
                             </label>
@@ -266,9 +261,6 @@
                                         class="col-sm-12" 
                                         style="font-size: 15px;">
                                         House Number
-                                        <span 
-                                            class="requiredField">
-                                        </span>
                                     </label>
                                     <div class="col-sm-12">
                                         <input 
@@ -289,7 +281,6 @@
                                         class="col-sm-12" 
                                         style="font-size: 15px;">
                                         Street
-                                        <span class="requiredField"></span>
                                     </label>
                                     <div class="col-sm-12">
                                         <input 
@@ -328,10 +319,9 @@
                         <div class="form-group">
                             <label 
                                 for="AddPermanentRegion" 
-                                class="col-sm-12" 
+                                class="col-sm-12 requiredField" 
                                 style="font-size: 15px;">
                                 Region
-                                <span class="requiredField">*</span>
                             </label>
                             <div class="col-sm-12">
                                 <select 
@@ -347,10 +337,10 @@
                         <div class="form-group">
                             <label 
                                 for="AddPermanentProvince" 
-                                class="col-sm-12" 
+                                class="col-sm-12 requiredField" 
                                 style="font-size: 15px;">
                                 Province
-                                <span class="requiredField">*</span></label>
+                            </label>
                                 <div class="col-sm-12">
                                     <select 
                                         class="form-control select2" 
@@ -368,10 +358,10 @@
                         <div class="form-group">
                             <label 
                                 for="AddPermanentCity" 
-                                class="col-sm-12" 
+                                class="col-sm-12 requiredField" 
                                 style="font-size: 15px;">
                                 City
-                                <span class="requiredField">*</span></label>
+                            </label>
                                 <div class="col-sm-12">
                                     <select 
                                         class="form-control select2" 
@@ -389,10 +379,10 @@
                         <div class="form-group">
                             <label 
                                 for="AddPermanentBarangay" 
-                                class="col-sm-12" 
+                                class="col-sm-12 requiredField" 
                                 style="font-size: 15px;">
                                 Barangay
-                                <span class="requiredField">*</span></label>
+                            </label>
                                 <div class="col-sm-12">
                                     <select 
                                         class="form-control select2"
@@ -410,7 +400,7 @@
                         <div class="form-group">
                             <label 
                                 for="AddPermanentZipCode" 
-                                class="col-sm-12" 
+                                class="col-sm-12 requiredField" 
                                 style="font-size: 15px;">
                                 Zip Code
                             </label>
@@ -433,10 +423,9 @@
                             <div class="col-md-12">
                                 <label 
                                     for="AddMobileNo" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Mobile Number
-                                    <span class="requiredField"></span>
                                 </label>
                                 <div class="col-sm-12">
                                     <input 
@@ -448,6 +437,7 @@
                                         value="" 
                                         style="text-transform: uppercase;" 
                                         tabindex="16"
+                                        required
                                         onkeypress="return NumberOnly(event)">
                                         
                                     <small id='CheckAddMobileNo'></small>
@@ -483,10 +473,9 @@
                             <div class="col-md-12">
                                 <label 
                                     for="AddEmail" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Email Address
-                                    <span class="requiredField"></span>
                                 </label>
                                 <div class="col-sm-12">
                                     <input 
@@ -496,7 +485,8 @@
                                         name="AddEmail" 
                                         placeholder="EMAIL ADDRESS" 
                                         value="" 
-                                        tabindex="19">
+                                        tabindex="19"
+                                        required>
                                     <small id='CheckAddEmail'></small>
                                 </div>
                             </div>
@@ -504,7 +494,9 @@
                 </div>
                 <div class="box-footer" style="border:0cm;">
                     <button 
-                        type="submit" 
+                        type="submit"
+                        id="btnUserBasicInfoUpdate"
+                        name="btnUserBasicInfoUpdate" 
                         class="btn btn-primary btn-md pull-right">
                         Save
                     </button>

@@ -151,8 +151,9 @@ function validateFileType() { //check file type
   }
 
 }
+
 var empno = '';
-$("#contentsearch").on("submit",function(event){ //trigger search
+$(document).on('submit','#contentsearch',function(event){
   $('#regRoute').css("display","none");
   event.preventDefault();
   const IDNumber = $('#txtSearch').val();
@@ -203,8 +204,8 @@ $("#contentsearch").on("submit",function(event){ //trigger search
       contentType: false
     }); 
   }
-  
 });
+
 
 function RegisterYes(PassData){ //proceed with the registration 'Yes'
   var empID = PassData.empno;
@@ -233,7 +234,7 @@ function RegisterYes(PassData){ //proceed with the registration 'Yes'
   $('#SearchContent').hide();
 };
 
-$("#contentform").on("submit",function(event){
+$(document).on('submit','#contentform',function(event){
   event.preventDefault();
   const email = $('#AddEmail').val();
   const empno = $('#EmployeeNumber').val();

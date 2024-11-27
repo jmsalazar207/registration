@@ -31,7 +31,7 @@ $(function(){
 })
 
 
-const idleTimeout = 5 * 60 * 1000; // 5 minutes in milliseconds
+const idleTimeout = 59 * 60 * 1000; // 5 minutes in milliseconds
 // const idleTimeout = 5 * 1000; // 30 seconds for testing
 let idleTimer;
 let autoLogoutTimer; // Timer for auto-logout after modal is shown
