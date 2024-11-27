@@ -1032,30 +1032,32 @@ function UserBasicInfoUpdate(formData){ //add/update basic information
 }
 $(document).on('change','#sameAddressCheckbox',function(){
   if ($(this).is(':checked')) {
-    alert("same ya dapat");
-    $('#AddPermanentZipCode').attr('readonly','readonly');
-    $('#AddPermanentZipCode').val($('#AddZipCode').val());
+    $('#AddPermanentZipCode').attr('readonly',true);
     $('#AddPermanentCity').attr('disabled',true);
     $('#AddPermanentProvince').attr('disabled',true);
     $('#AddPermanentRegion').attr('disabled',true);
     $('#AddPermanentBarangay').attr('disabled',true);
-    $('#AddPermanentBarangay').val($('#AddBarangay').val()).trigger('change');
-    $('#AddPermanentCity').val($('#AddCity').val()).trigger('change');
-    $('#AddPermanentProvince').val($('#AddProvince').val()).trigger('change');
-    $('#AddPermanentRegion').val($('#AddRegion').val()).trigger('change');
+    $('#AddPermanentHouseNumber').attr('readonly',true);
+    $('#AddPermanentStreet').attr('readonly',true);
+    $('#AddPermanentSubd').attr('readonly',true);
 
-  }else{
-    alert('ali ya same');
+    $('#AddPermanentZipCode').val('');
+    $('#AddPermanentBarangay').val('').trigger('change');
+    $('#AddPermanentCity').val('').trigger('change');
+    $('#AddPermanentProvince').val('').trigger('change');
+    $('#AddPermanentRegion').val('').trigger('change');
+    $('#AddPermanentHouseNumber').val('');
+    $('#AddPermanentStreet').val('');
+    $('#AddPermanentSubd').val('');
+  } else {
+    $('#AddPermanentZipCode').attr('readonly',false);
     $('#AddPermanentCity').attr('disabled',false);
     $('#AddPermanentProvince').attr('disabled',false);
     $('#AddPermanentRegion').attr('disabled',false);
-    $('#AddPermanentCity').val().trigger('change');
-    $('#AddPermanentProvince').val().trigger('change');
-    $('#AddPermanentRegion').val().trigger('change');
     $('#AddPermanentBarangay').attr('disabled',false);
-    $('#AddPermanentZipCode').attr('readonly',false);
-    $('#AddPermanentBarangay').val().trigger('change');
-    $('#AddPermanentZipCode').val();
+    $('#AddPermanentHouseNumber').attr('readonly',false);
+    $('#AddPermanentStreet').attr('readonly',false);
+    $('#AddPermanentSubd').attr('readonly',false);
    
   }
 });

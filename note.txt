@@ -74,3 +74,172 @@
             <script src="panelScript.js?test=<?php echo time()?>"></script>
 <script src="genFunction.js?test=<?php echo time()?>"></script>
 <script src="modalNotif.js?test=<?php echo time()?>"></script>
+
+
+$.ajax({ //getInfo session populate
+url:"getInfo.php",
+        method:"POST",
+        dataType: 'json',
+        success:function(data){
+          //updateinfo
+            const permhouseNo = data.permNumAdd;
+            const permstreet = data.permStreet;
+            const permRegion_code = data.permRegion;
+            const permProvince_code = data.permProvince;
+            const permCity_code = data.permCity;
+            const permBrgy_code = data.permBarangay;
+            const permSubd = data.permSubd;
+            const permZipCode = data.permZipCode;
+            $("#AddFullName").val(fname+" "+mname+" "+sname+" "+extname);
+            $("#AddSex").val(sex);
+            $("#AddDOB").val(dob);
+            $("#AddStreet").val(street);
+            $("#AddHouseNumber").val(houseNo);
+            $("#AddSubd").val(subd);
+            $("#AddZipCode").val(zip_code);
+            $("#AddPermanentHouseNumber").val(permhouseNo);
+            $("#AddPermanentStreet").val(permstreet);
+            $("#AddPermanentSubd").val(permSubd);
+            $("#AddPermanentZipCode").val(permZipCode);
+            $("#AddMobileNo").val(mobileNumber);
+            $("#AddTelephoneNo").val(telephoneNumber);
+            $("#AddEmail").val(email);
+
+            $(".loader-div").show();
+            var update_region_id = region_code;
+            $.ajax({  
+                url:"includes/functions.php",
+                method:"POST",
+                data:{update_region_id:update_region_id},
+                success:function(data){
+                    $(".loader-div").hide(); 
+                    $('#AddRegion').html(data);
+                },error: function(xhr, status, error) {
+                  modalErrorShow("The system encountered an error. Please contact support.");
+                  $(".loader-div").hide();
+                }
+            });
+
+            $(".loader-div").show();
+            var update_province_id = province_code;
+            $.ajax({
+              url:"includes/functions.php",
+              method:"POST",
+              data:{update_province_id:update_province_id,Where_region_ID:update_region_id},
+              success:function(data){
+                $(".loader-div").hide(); 
+                $('#AddProvince').html(data);
+              },error: function(xhr, status, error) {
+                modalErrorShow("The system encountered an error. Please contact support.");
+                $(".loader-div").hide();
+              }
+          });
+
+            $(".loader-div").show();
+            var update_city_id = city_code;
+            $.ajax({
+              url:"includes/functions.php",
+              method:"POST",
+              data:{update_city_id:update_city_id,Where_province_ID:update_province_id},
+              success:function(data){
+                  $(".loader-div").hide(); 
+                  $('#AddCity').html(data);
+              },error: function(xhr, status, error) {
+                modalErrorShow("The system encountered an error. Please contact support.");
+                $(".loader-div").hide();
+              }
+            });
+
+            $(".loader-div").show();
+            var update_barangay_id = brgy_code;
+            $.ajax({
+              url:"includes/functions.php",
+              method:"POST",
+              data:{update_barangay_id:update_barangay_id,Where_city_ID:update_city_id},
+              success:function(data){
+                $(".loader-div").hide();
+                  $('#AddBarangay').html(data);
+              },error: function(xhr, status, error) {
+                modalErrorShow("The system encountered an error. Please contact support.");
+                $(".loader-div").hide();
+              }
+          });
+
+          // Permanent
+          $(".loader-div").show();
+          var update_Perm_region_id = permRegion_code;
+          $.ajax({
+              url:"includes/functions.php",
+              method:"POST",
+              data:{update_region_id:update_Perm_region_id},
+              success:function(data){
+                $(".loader-div").hide();
+                  $('#AddPermanentRegion').html(data);
+              },error: function(xhr, status, error) {
+                modalErrorShow("The system encountered an error. Please contact support.");
+                $(".loader-div").hide();
+              }
+          });
+
+          $(".loader-div").show();
+          var update_Perm_province_id = permProvince_code;
+          $.ajax({
+            url:"includes/functions.php",
+            method:"POST",
+            data:{update_province_id:update_Perm_province_id,Where_region_ID:update_Perm_region_id},
+            success:function(data){
+              $(".loader-div").hide();
+                $('#AddPermanentProvince').html(data);
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            }
+        });
+
+          $(".loader-div").show();
+          var update_Perm_city_id = permCity_code;
+          $.ajax({
+            url:"includes/functions.php",
+            method:"POST",
+            data:{update_city_id:update_Perm_city_id,Where_province_ID:update_Perm_province_id},
+            success:function(data){
+              $(".loader-div").hide();
+                $('#AddPermanentCity').html(data);
+            }
+        });
+          var update_Perm_barangay_id = permBrgy_code ;
+          $.ajax({
+            url:"includes/functions.php",
+            method:"POST",
+            data:{update_barangay_id:update_Perm_barangay_id,Where_city_ID:update_Perm_city_id},
+            success:function(data){
+                $('#AddPermanentBarangay').html(data);
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            }
+        });
+          },error: function(xhr, status, error) {
+          modalErrorShow("The system encountered an error. Please contact support.");
+          $(".loader-div").hide();
+        }
+ });
+
+
+ AddHouseNumber
+ AddStreet
+ AddSubd
+ AddRegion
+ AddProvince
+ AddCity
+ AddBarangay
+ AddZipCode
+ AddPermanentHouseNumber
+ AddPermanentStreet
+ AddPermanentSubd
+ AddPermanentRegion
+ AddPermanentProvince
+ AddPermanentProvince
+ AddPermanentCity
+ AddPermanentBarangay
+ AddPermanentZipCode
