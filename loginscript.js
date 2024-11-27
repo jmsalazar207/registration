@@ -135,7 +135,7 @@
           $(".loader-div").hide();
           const stat = data.status;  
           if(stat === "success"){ 
-            modalSuccessShow('You have logged in successfully. Please close this modal to continue to the main page.',redirectPage);
+            modalSuccessShow('You have logged in successfully. Please close this modal to continue to the main page.',redirectPage,'');
           } else {
            modalErrorShow('Something went wrong during the process. Please try again.');
           }

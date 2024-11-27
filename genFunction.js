@@ -171,7 +171,7 @@ function deleteData(PassData){ //dynamic delete details
       const msg = data.msg;
       const stat = data.status;
       if(stat == "success"){
-          modalSuccessShow(msg,refreshPage);
+          modalSuccessShow(msg,refreshPage,'');
       } else {
         modalErrorShow(msg);
       }
@@ -181,6 +181,18 @@ function deleteData(PassData){ //dynamic delete details
 
 function CloseDynamicModal(){
   $('#modalDynamic').modal('hide');
+}
+function triggerTableReload(tableId) {
+  if (tables[tableId]) {
+      tables[tableId].ajax.reload(null, false);
+  } else {
+      console.warn(`Table with ID ${tableId} not found!`);
+  }
+}
+
+function clearForm() {
+  $('#yourFormID').find('input, textarea, select').val(''); // Clear all fields
+  $('#yourFormID').find('input:checkbox, input:radio').prop('checked', false); // Uncheck checkboxes and radio buttons
 }
 
 

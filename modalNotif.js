@@ -11,7 +11,7 @@ function modalErrorShow(msg){
     $('#modalDynamic').modal('show');
   } 
 
-  function modalSuccessShow(msg,YesAction){
+  function modalSuccessShow(msg,YesAction,PassData){
     $('#modalDynamicContent').attr('class','modal-contentsuccess');
     $('#modalDynamicHeader').attr('class','modal-headersuccess');
     $('#modalDynamicTitle').text("Great!");
@@ -23,7 +23,7 @@ function modalErrorShow(msg){
     $('#modalDynamicButton').off('click');
     // Attach new event listeners
     $('#modalDynamicButton').on('click', function () {
-        YesAction(); // Call the Yes action
+        YesAction(PassData); // Call the Yes action
         $('#modalDynamic').modal('hide'); // Close the modal  
     });
     staticModal();

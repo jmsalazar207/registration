@@ -244,7 +244,7 @@ jQuery("#txtDivision").on('change',function(){
         const msg = data.msg;
         const stat = data.status;  
         if(stat === "success"){ 
-          modalSuccessShow(msg,refreshPage);
+          modalSuccessShow(msg,refreshPage,'');
         } else {
           modalErrorShow(msg);
         }
@@ -267,7 +267,7 @@ jQuery("#txtDivision").on('change',function(){
         const msg = data.msg;
         const stat = data.status;  
         if(stat === "success"){ 
-          modalSuccessShow(msg,refreshPage)
+          modalSuccessShow(msg,refreshPage,'');
         } else {
           modalErrorShow(msg);
         }
@@ -290,7 +290,7 @@ jQuery("#txtDivision").on('change',function(){
         const msg = data.msg;
         const stat = data.status;  
         if(stat === "success"){ 
-          modalSuccessShow(msg,refreshPage);
+          modalSuccessShow(msg,refreshPage,'');
         } else {
           modalErrorShow(msg);
         }
@@ -313,7 +313,7 @@ jQuery("#txtDivision").on('change',function(){
         const msg = data.msg;
         const stat = data.status;  
         if(stat === "success"){ 
-          modalSuccessShow(msg,refreshPage);
+          modalSuccessShow(msg,refreshPage,'');
         } else {
          modalErrorShow(msg);
         }
@@ -336,7 +336,7 @@ jQuery("#txtDivision").on('change',function(){
         const msg = data.msg;
         const stat = data.status;  
         if(stat === "success"){ 
-          modalSuccessShow(msg,refreshPage);
+          modalSuccessShow(msg,refreshPage,'');
         } else {
           modalErrorShow(msg);
         }
@@ -466,7 +466,7 @@ jQuery("#txtDivision").on('change',function(){
                         const msg = data.msg;
                         const stat = data.status;
                         if(stat === "success"){ 
-                          modalSuccessShow(msg,refreshPage)
+                          modalSuccessShow(msg,refreshPage,'');
                         } else {
                           modalErrorShow(msg);
                         }
@@ -565,7 +565,7 @@ jQuery("#txtDivision").on('change',function(){
           const msg = data.msg;
           const stat = data.status;
           if(stat === "success"){ 
-            modalSuccessShow(msg,refreshPage)
+            modalSuccessShow(msg,refreshPage,'');
           } else {
             modalErrorShow(msg);
           }
@@ -814,7 +814,7 @@ jQuery("#txtDivision").on('change',function(){
       const msg = data.msg;
       const stat = data.status;
       if(stat === "success"){ 
-        modalSuccessShow(msg,refreshPage)
+        modalSuccessShow(msg,refreshPage,'');
       } else {
         modalErrorShow(msg);
       }

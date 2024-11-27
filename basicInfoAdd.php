@@ -17,6 +17,7 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
     $profileUpdate['region'] = sanitize(strtoupper($_POST['AddRegion']));
     $profileUpdate['province'] = sanitize(strtoupper($_POST['AddProvince']));
     $profileUpdate['city'] = sanitize(strtoupper($_POST['AddCity']));
+    $profileUpdate['barangay'] = sanitize(strtoupper($_POST['AddBarangay']));
     $profileUpdate['subd'] = sanitize(strtoupper($_POST['AddSubd']));
     $profileUpdate['zip_code'] = sanitize(strtoupper($_POST['AddZipCode']));
     $profileUpdate['mobile'] = sanitize(strtoupper($_POST['AddMobileNo']));

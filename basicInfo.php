@@ -31,7 +31,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="margin-bottom: 20px;" >
                         <div class="col-md-6">
                             <label 
                                 for="AddSex" 
@@ -71,11 +71,16 @@
                             </div>
                         </div>
                     </div>
+                    <br>
+                    <div class="form-group col-md-12">
+                        <input type="checkbox" id="sameAddressCheckbox" style="margin-left: 15px;"> 
+                        <label for="sameAddressCheckbox" style="margin-left: 5px;">Use the same address.</label>
+                    </div>
                     <div class="card col-md-6"> <!-- card for residential -->
                         <div class="form-group col-md-12">
-                            <h5 style="font-weight: bolder;" >
+                            <h4 style="font-weight: bolder;" >
                                 Residential Address
-                            </h5>
+                            </h4>
                         </div>
                         <div class="form-group">
                             <div class="row">
@@ -247,11 +252,12 @@
                             </div>
                         </div>
                     </div> <!-- end card for residential -->
+
                     <div class="card col-md-6"> <!-- card for permanent -->
                         <div class="form-group col-md-12">
-                            <h5 style="font-weight: bolder;" >
+                            <h4 style="font-weight: bolder;" >
                                 Permanent Address
-                            </h5>
+                            </h4>
                         </div>
                         <div class="form-group">
                             <div class="row">
@@ -390,7 +396,8 @@
                                         id="AddPermanentBarangay" 
                                         name="AddPermanentBarangay" 
                                         required="true" 
-                                        tabindex="15">
+                                        tabindex="15"
+                                        style="pointer-events: none;">
                                             <option>
                                                 SELECT MUNICIPALITY FIRST
                                             </option>

@@ -336,7 +336,7 @@ $(document).on('submit','#contentform',function(event){
                 const msg = data.msg;
                 const stat = data.status;
                 if(stat == "success"){
-                  modalSuccessShow(msg,refreshPage);
+                  modalSuccessShow(msg,refreshPage,'');
                 } else {
                   modalErrorShow(msg)
                   resetCaptcha();
