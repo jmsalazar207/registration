@@ -7,7 +7,7 @@
                         <div class="col-md-2">
                             <label 
                                 for="Citizenship" 
-                                class="col-sm-12" 
+                                class="col-sm-12 requiredField" 
                                 style="font-size: 15px;">
                                 Citizenship
                             </label>
@@ -20,7 +20,8 @@
                                 type="checkbox"
                                 name="chkFilipino"
                                 id="chkFilipino"
-                                tabindex="1"> 
+                                tabindex="1"
+                                required> 
                                 FILIPINO
                             </div>
                         </div>

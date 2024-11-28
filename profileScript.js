@@ -385,6 +385,30 @@ $(function(){
             $("#infoEmail").text(email);
             
             //updateinfo
+            const sameAddress = data.sameAddress;
+            if(sameAddress ==1){
+              $('#sameAddressCheckbox').prop('checked', true);
+              $('#AddPermanentZipCode').attr('readonly',true);
+              $('#AddPermanentCity').attr('disabled',true);
+              $('#AddPermanentProvince').attr('disabled',true);
+              $('#AddPermanentRegion').attr('disabled',true);
+              $('#AddPermanentBarangay').attr('disabled',true);
+              $('#AddPermanentHouseNumber').attr('readonly',true);
+              $('#AddPermanentStreet').attr('readonly',true);
+              $('#AddPermanentSubd').attr('readonly',true);
+              $('#AddPermanentZipCode').attr('required',false);
+            }else{
+              $('#sameAddressCheckbox').prop('checked', false);
+              $('#AddPermanentZipCode').attr('readonly',false);
+              $('#AddPermanentCity').attr('disabled',false);
+              $('#AddPermanentProvince').attr('disabled',false);
+              $('#AddPermanentRegion').attr('disabled',false);
+              $('#AddPermanentBarangay').attr('disabled',false);
+              $('#AddPermanentHouseNumber').attr('readonly',false);
+              $('#AddPermanentStreet').attr('readonly',false);
+              $('#AddPermanentSubd').attr('readonly',false);
+              $('#AddPermanentZipCode').attr('required',true);
+            }
             const permhouseNo = data.permNumAdd;
             const permstreet = data.permStreet;
             const permRegion_code = data.permRegion;
@@ -762,156 +786,83 @@ $(function(){
     });  
 });
 
-function reloadFormBasicInfo(){ //reload form basic info after success
+function resetFormBasicInfo(){
+  $(".loader-div").show();
   clearForm();
   $.ajax({ //getInfo session populate
-    url:"getInfo.php",
+      url:"getInfo.php",
+      method:"POST",
+      dataType: 'json',
+      success:function(data){
+          const permhouseNo = data.permNumAdd;
+          const permstreet = data.permStreet;
+          const permRegion_code = data.permRegion;
+          const permProvince_code = data.permProvince;
+          const permCity_code = data.permCity;
+          const permBrgy_code = data.permBarangay;
+          const permSubd = data.permSubd;
+          const permZipCode = data.permZipCode;
+        $(".loader-div").hide(); 
+        // Permanent
+        $(".loader-div").show();
+        $("#AddPermanentHouseNumber").val(permhouseNo);
+          $("#AddPermanentStreet").val(permstreet);
+          $("#AddPermanentSubd").val(permSubd);
+          $("#AddPermanentZipCode").val(permZipCode);
+        var update_Perm_region_id = permRegion_code;
+        $.ajax({
+            url:"includes/functions.php",
             method:"POST",
-            dataType: 'json',
+            data:{update_region_id:update_Perm_region_id},
             success:function(data){
-              //updateinfo
-                const permhouseNo = data.permNumAdd;
-                const permstreet = data.permStreet;
-                const permRegion_code = data.permRegion;
-                const permProvince_code = data.permProvince;
-                const permCity_code = data.permCity;
-                const permBrgy_code = data.permBarangay;
-                const permSubd = data.permSubd;
-                const permZipCode = data.permZipCode;
-                $("#AddFullName").val(fname+" "+mname+" "+sname+" "+extname);
-                $("#AddSex").val(sex);
-                $("#AddDOB").val(dob);
-                $("#AddStreet").val(street);
-                $("#AddHouseNumber").val(houseNo);
-                $("#AddSubd").val(subd);
-                $("#AddZipCode").val(zip_code);
-                $("#AddPermanentHouseNumber").val(permhouseNo);
-                $("#AddPermanentStreet").val(permstreet);
-                $("#AddPermanentSubd").val(permSubd);
-                $("#AddPermanentZipCode").val(permZipCode);
-                $("#AddMobileNo").val(mobileNumber);
-                $("#AddTelephoneNo").val(telephoneNumber);
-                $("#AddEmail").val(email);
-    
-                $(".loader-div").show();
-                var update_region_id = region_code;
-                $.ajax({  
-                    url:"includes/functions.php",
-                    method:"POST",
-                    data:{update_region_id:update_region_id},
-                    success:function(data){
-                        $(".loader-div").hide(); 
-                        $('#AddRegion').html(data);
-                    },error: function(xhr, status, error) {
-                      modalErrorShow("The system encountered an error. Please contact support.");
-                      $(".loader-div").hide();
-                    }
-                });
-    
-                $(".loader-div").show();
-                var update_province_id = province_code;
-                $.ajax({
-                  url:"includes/functions.php",
-                  method:"POST",
-                  data:{update_province_id:update_province_id,Where_region_ID:update_region_id},
-                  success:function(data){
-                    $(".loader-div").hide(); 
-                    $('#AddProvince').html(data);
-                  },error: function(xhr, status, error) {
-                    modalErrorShow("The system encountered an error. Please contact support.");
-                    $(".loader-div").hide();
-                  }
-              });
-    
-                $(".loader-div").show();
-                var update_city_id = city_code;
-                $.ajax({
-                  url:"includes/functions.php",
-                  method:"POST",
-                  data:{update_city_id:update_city_id,Where_province_ID:update_province_id},
-                  success:function(data){
-                      $(".loader-div").hide(); 
-                      $('#AddCity').html(data);
-                  },error: function(xhr, status, error) {
-                    modalErrorShow("The system encountered an error. Please contact support.");
-                    $(".loader-div").hide();
-                  }
-                });
-    
-                $(".loader-div").show();
-                var update_barangay_id = brgy_code;
-                $.ajax({
-                  url:"includes/functions.php",
-                  method:"POST",
-                  data:{update_barangay_id:update_barangay_id,Where_city_ID:update_city_id},
-                  success:function(data){
-                    $(".loader-div").hide();
-                      $('#AddBarangay').html(data);
-                  },error: function(xhr, status, error) {
-                    modalErrorShow("The system encountered an error. Please contact support.");
-                    $(".loader-div").hide();
-                  }
-              });
-    
-              // Permanent
-              $(".loader-div").show();
-              var update_Perm_region_id = permRegion_code;
-              $.ajax({
-                  url:"includes/functions.php",
-                  method:"POST",
-                  data:{update_region_id:update_Perm_region_id},
-                  success:function(data){
-                    $(".loader-div").hide();
-                      $('#AddPermanentRegion').html(data);
-                  },error: function(xhr, status, error) {
-                    modalErrorShow("The system encountered an error. Please contact support.");
-                    $(".loader-div").hide();
-                  }
-              });
-    
-              $(".loader-div").show();
-              var update_Perm_province_id = permProvince_code;
-              $.ajax({
-                url:"includes/functions.php",
-                method:"POST",
-                data:{update_province_id:update_Perm_province_id,Where_region_ID:update_Perm_region_id},
-                success:function(data){
-                  $(".loader-div").hide();
-                    $('#AddPermanentProvince').html(data);
-                },error: function(xhr, status, error) {
-                  modalErrorShow("The system encountered an error. Please contact support.");
-                  $(".loader-div").hide();
-                }
-            });
-    
-              $(".loader-div").show();
-              var update_Perm_city_id = permCity_code;
-              $.ajax({
-                url:"includes/functions.php",
-                method:"POST",
-                data:{update_city_id:update_Perm_city_id,Where_province_ID:update_Perm_province_id},
-                success:function(data){
-                  $(".loader-div").hide();
-                    $('#AddPermanentCity').html(data);
-                }
-            });
-              var update_Perm_barangay_id = permBrgy_code ;
-              $.ajax({
-                url:"includes/functions.php",
-                method:"POST",
-                data:{update_barangay_id:update_Perm_barangay_id,Where_city_ID:update_Perm_city_id},
-                success:function(data){
-                    $('#AddPermanentBarangay').html(data);
-                },error: function(xhr, status, error) {
-                  modalErrorShow("The system encountered an error. Please contact support.");
-                  $(".loader-div").hide();
-                }
-            });
-              },error: function(xhr, status, error) {
+              $(".loader-div").hide();
+                $('#AddPermanentRegion').html(data);
+            },error: function(xhr, status, error) {
               modalErrorShow("The system encountered an error. Please contact support.");
               $(".loader-div").hide();
             }
-     });
+        });
+
+        $(".loader-div").show();
+        var update_Perm_province_id = permProvince_code;
+        $.ajax({
+          url:"includes/functions.php",
+          method:"POST",
+          data:{update_province_id:update_Perm_province_id,Where_region_ID:update_Perm_region_id},
+          success:function(data){
+            $(".loader-div").hide();
+              $('#AddPermanentProvince').html(data);
+          },error: function(xhr, status, error) {
+            modalErrorShow("The system encountered an error. Please contact support.");
+            $(".loader-div").hide();
+          }
+      });
+
+        $(".loader-div").show();
+        var update_Perm_city_id = permCity_code;
+        $.ajax({
+          url:"includes/functions.php",
+          method:"POST",
+          data:{update_city_id:update_Perm_city_id,Where_province_ID:update_Perm_province_id},
+          success:function(data){
+            $(".loader-div").hide();
+              $('#AddPermanentCity').html(data);
+          }
+      });
+        var update_Perm_barangay_id = permBrgy_code ;
+        $.ajax({
+          url:"includes/functions.php",
+          method:"POST",
+          data:{update_barangay_id:update_Perm_barangay_id,Where_city_ID:update_Perm_city_id},
+          success:function(data){
+              $('#AddPermanentBarangay').html(data);
+          },error: function(xhr, status, error) {
+            modalErrorShow("The system encountered an error. Please contact support.");
+            $(".loader-div").hide();
+          }
+      });
+      }
+  });
 }
 
 function UserBasicInfoUpdate(formData){ //add/update basic information
@@ -984,7 +935,7 @@ function UserBasicInfoUpdate(formData){ //add/update basic information
                   const msg = data.msg;
                   const stat = data.status;
                   if(stat === "success"){ 
-                    modalSuccessShow(msg,reloadFormBasicInfo,'');
+                    modalSuccessShow(msg,resetFormBasicInfo,'');
                   } else {
                     modalErrorShow(msg);
                   }
@@ -1030,7 +981,17 @@ function UserBasicInfoUpdate(formData){ //add/update basic information
 }
   
 }
+
 $(document).on('change','#sameAddressCheckbox',function(){
+    $('#AddPermanentZipCode').val('');
+    $('#AddPermanentBarangay').val('').trigger('change');
+    $('#AddPermanentCity').val('').trigger('change');
+    $('#AddPermanentProvince').val('').trigger('change');
+    $('#AddPermanentRegion').val('').trigger('change');
+    $('#AddPermanentHouseNumber').val('');
+    $('#AddPermanentStreet').val('');
+    $('#AddPermanentSubd').val('');
+
   if ($(this).is(':checked')) {
     $('#AddPermanentZipCode').attr('readonly',true);
     $('#AddPermanentCity').attr('disabled',true);
@@ -1040,16 +1001,9 @@ $(document).on('change','#sameAddressCheckbox',function(){
     $('#AddPermanentHouseNumber').attr('readonly',true);
     $('#AddPermanentStreet').attr('readonly',true);
     $('#AddPermanentSubd').attr('readonly',true);
-
-    $('#AddPermanentZipCode').val('');
-    $('#AddPermanentBarangay').val('').trigger('change');
-    $('#AddPermanentCity').val('').trigger('change');
-    $('#AddPermanentProvince').val('').trigger('change');
-    $('#AddPermanentRegion').val('').trigger('change');
-    $('#AddPermanentHouseNumber').val('');
-    $('#AddPermanentStreet').val('');
-    $('#AddPermanentSubd').val('');
+    $('#AddPermanentZipCode').attr('required',false);
   } else {
+    $('#AddPermanentZipCode').attr('required',true);
     $('#AddPermanentZipCode').attr('readonly',false);
     $('#AddPermanentCity').attr('disabled',false);
     $('#AddPermanentProvince').attr('disabled',false);
@@ -1065,8 +1019,132 @@ $(document).on('change','#sameAddressCheckbox',function(){
 $(document).on('submit','#frmUserBasicInfoUpdate', function(event){
   event.preventDefault();
   var PassData = new FormData(frmUserBasicInfoUpdate);
+  PassData.append('sameAddressCheckbox', $('#sameAddressCheckbox').is(':checked') ? 1 : 0);
   modalConfirmShow('Would you like to confirm and save the changes now?',UserBasicInfoUpdate,PassData); 
 });
+
+$(document).on('submit','#frmOtherInfoUpdate', function(event){
+  event.preventDefault();
+  var PassData = new FormData(frmOtherInfoUpdate);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserOtherBasicInfoUpdate,PassData);
+});
+
+function UserOtherBasicInfoUpdate(formData){
+  const gsis = $('#gsisNo').val();
+  const pagibig = $('#pagibigNo').val();
+  const philhealth = $('#philhealthNo').val();
+  const sss = $('#sssNo').val();
+  const tin = $('#tinNo').val();
+
+
+  $("#CheckGSIS").html("");
+  $("#gsisNo").css('border-color', '');
+  $("#CheckPAGIBIG").html("");
+  $("#pagibigNo").css('border-color', '');
+  $("#CheckPHILHEALTH").html("");
+  $("#philhealthNo").css('border-color', '');
+  $("#CheckSSS").html("");
+  $("#sssNo").css('border-color', '');
+  $("#CheckTIN").html("");
+  $("#tinNo").css('border-color', '');
+
+  $(".loader-div").show();
+  $.ajax({ //check ID Number if existed 
+    url:"checkExist.php",
+    method:"POST",
+    data: {gsis:gsis,pagibig:pagibig,philhealth:philhealth,sss:sss,tin:tin},
+    dataType: 'json',
+    success:function(data){
+      $(".loader-div").hide(); 
+        const UniqueGSIS = data.gsis;
+        const UniquePAGIBIG = data.pagibig;
+        const UniquePHILHEALTH = data.philhealth;
+        const UniqueSSS = data.sss;
+        const UniqueTIN = data.tin;
+        if(UniqueGSIS >0){
+            $("#CheckGSIS").html("The ID Number provided has already been used.").css('color', 'red');
+            $("#gsisNo").css('border-color', 'red');
+        }else if(UniquePAGIBIG >0){
+          $("#CheckPAGIBIG").html("The ID Number provided has already been used.").css('color', 'red');
+          $("#pagibigNo").css('border-color', 'red');
+        }else if(UniquePHILHEALTH >0){
+          $("#CheckPHILHEALTH").html("The ID Number provided has already been used.").css('color', 'red');
+          $("#philhealthNo").css('border-color', 'red');
+        }else if(UniqueSSS >0){
+          $("#CheckSSS").html("The ID Number provided has already been used.").css('color', 'red');
+          $("#sssNo").css('border-color', 'red');
+        }else if(UniqueTIN >0){
+          $("#CheckTIN").html("The ID Number provided has already been used.").css('color', 'red');
+          $("#tinNo").css('border-color', 'red');
+        } else {
+          $(".loader-div").show();
+          $.ajax({ 
+            url:"checkExist.php",
+            method:"POST",
+            data:{BasicOtherInfo:1},
+            dataType: 'json',
+            success:function(data){
+              $(".loader-div").hide(); 
+              const BasicOtherInfo = data.Basic_Other_Info;
+              if(BasicOtherInfo){
+                $(".loader-div").show();
+                  $.ajax({
+                  url:"otherInfoUpdate.php",
+                  method:"POST",
+                  dataType: "json",
+                  data:formData,
+                  success:function(data){
+                    $(".loader-div").hide(); 
+                    const msg = data.msg;
+                    const stat = data.status;
+                    if(stat === "success"){ 
+                      modalSuccessShow(msg,clearForm)
+                    } else {
+                      modalErrorShow(msg);
+                    }
+                  },error: function(xhr, status, error) {
+                    modalErrorShow("The system encountered an error. Please contact support.");
+                    $(".loader-div").hide();
+                  },   
+                  processData: false,
+                  contentType: false
+                  }); 
+              } else {
+                $(".loader-div").show();
+                $.ajax({
+                  url:"otherInfoAdd.php",
+                  method:"POST",
+                  dataType: "json",
+                  data:formData,
+                  success:function(data){
+                    $(".loader-div").hide(); 
+                    const msg = data.msg;
+                    const stat = data.status;
+                    if(stat === "success"){ 
+                      modalSuccessShow(msg,clearForm)
+                    } else {
+                      modalErrorShow(msg);
+                    }
+                  },error: function(xhr, status, error) {
+                    modalErrorShow("The system encountered an error. Please contact support.");
+                    $(".loader-div").hide();
+                  },
+                  processData: false,
+                  contentType: false
+                });
+              }
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            }
+            });
+        }
+    },error: function(xhr, status, error) {
+      modalErrorShow("The system encountered an error. Please contact support.");
+      $(".loader-div").hide();
+    }, 
+  });
+}
 
 
 
@@ -1099,6 +1177,7 @@ $("#form_other_info").on("submit",function(event){
 
   });
 });
+
 $("#frmFamilyBackgroundAdd").on("submit",function(event){
   event.preventDefault();
   const FBSname = $("#FBSname").val();
@@ -1458,123 +1537,6 @@ $("#frmVoluntaryAdd").on("submit",function(event){
 
 
 
-$("#frmOtherInfoUpdate").on("submit",function(event){
-  event.preventDefault();
-  var validated = 0;
-  const gsis = $('#gsisNo').val();
-  const pagibig = $('#pagibigNo').val();
-  const philhealth = $('#philhealthNo').val();
-  const sss = $('#sssNo').val();
-  const tin = $('#tinNo').val();
-
-  var validated = 1;
-  $("#CheckGSIS").html("");
-  $("#gsisNo").css('border-color', '');
-  $("#CheckPAGIBIG").html("");
-  $("#pagibigNo").css('border-color', '');
-  $("#CheckPHILHEALTH").html("");
-  $("#philhealthNo").css('border-color', '');
-  $("#CheckSSS").html("");
-  $("#sssNo").css('border-color', '');
-  $("#CheckTIN").html("");
-  $("#tinNo").css('border-color', '');
-  $.ajax({ //check ID Number if existed 
-    url:"checkExist.php",
-    method:"POST",
-    data: {gsis:gsis,pagibig:pagibig,philhealth:philhealth,sss:sss,tin:tin},
-    dataType: 'json',
-    success:function(data){
-        const UniqueGSIS = data.gsis;
-        const UniquePAGIBIG = data.pagibig;
-        const UniquePHILHEALTH = data.philhealth;
-        const UniqueSSS = data.sss;
-        const UniqueTIN = data.tin;
-        if(UniqueGSIS >0){
-            $("#CheckGSIS").html("The ID Number provided has already been used.").css('color', 'red');
-            $("#gsisNo").css('border-color', 'red');
-            validated = 0;
-        }
-        if(UniquePAGIBIG >0){
-          $("#CheckPAGIBIG").html("The ID Number provided has already been used.").css('color', 'red');
-          $("#pagibigNo").css('border-color', 'red');
-          validated = 0;
-        }
-        if(UniquePHILHEALTH >0){
-          $("#CheckPHILHEALTH").html("The ID Number provided has already been used.").css('color', 'red');
-          $("#philhealthNo").css('border-color', 'red');
-          validated = 0;
-        }
-        if(UniqueSSS >0){
-          $("#CheckSSS").html("The ID Number provided has already been used.").css('color', 'red');
-          $("#sssNo").css('border-color', 'red');
-          validated = 0;
-        }
-        if(UniqueTIN >0){
-          $("#CheckTIN").html("The ID Number provided has already been used.").css('color', 'red');
-          $("#tinNo").css('border-color', 'red');
-          validated = 0;
-        }
-        if(validated==1){
-          $.ajax({ 
-            url:"checkExist.php",
-            method:"POST",
-            data:{BasicOtherInfo:1},
-            dataType: 'json',
-            success:function(data){
-              const BasicOtherInfo = data.Basic_Other_Info;
-              if(BasicOtherInfo){
-                   var formData = new FormData(frmOtherInfoUpdate);
-                    $.ajax({
-                    url:"otherInfoUpdate.php",
-                    method:"POST",
-                    dataType: "json",
-                    data:formData,
-                    success:function(data){
-                      const msg = data.msg;
-                      const stat = data.status;
-                      if(stat == "success"){
-                          $('#modalNotif-header').text('Great! Success.');
-                          $('#modalNotif-message').text(msg);
-                           $('#modalNotif').modal('show');
-                      }
-                      else{
-                          $('#alertMessage').text(msg);
-                          $('#modalAlert').modal('show'); 
-                      }
-                    },   
-                    processData: false,
-                    contentType: false
-                  }); 
-              }else{
-                var formData = new FormData(frmOtherInfoUpdate);
-                $.ajax({
-                  url:"otherInfoAdd.php",
-                  method:"POST",
-                  dataType: "json",
-                  data:formData,
-                  success:function(data){
-                    const msg = data.msg;
-                    const stat = data.status;
-                    if(stat == "success"){
-                        $('#modalNotif-header').text('Great! Success.');
-                        $('#modalNotif-message').text(msg);
-                        $('#modalNotif').modal('show');
-                    }else{
-                      $('#modalNotif-header').text('Opps!');
-                      $('#modalNotif-message').text(msg);
-                      $('#modalNotif').modal('show');
-                    }
-                  },
-                  processData: false,
-                  contentType: false
-                });
-              }
-            }
-            });
-        }
-    }, 
-  });
-});
 $("#frmProfileChangePass").on("submit", function(event){ //confirm the old password first
   event.preventDefault();
   const id = $('#sessionID').val().split("03-");

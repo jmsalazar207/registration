@@ -54,7 +54,7 @@ function modalErrorShow(msg){
     $('#modalDynamicConfirmTitle').text("Confirmation");
     $('#modalDynamicConfirmMessage').text(msg);
     $('#modalDynamicConfirmBody').attr('class','modal-bodyYellow');
-    $('#modalDynamicConfirmIcon').attr('class','glyphicon glyphicon-info-sign s_icon');
+    $('#modalDynamicConfirmIcon').attr('class','glyphicon glyphicon-question-sign s_icon');
     $('#modalDynamicConfirmFooter').attr('class','modal-footerYellow');
     $('#modalDynamicConfirmButtonYes').attr('class','btn btn-modalSave btn-sm');
     $('#modalDynamicConfirmButtonNo').attr('class','btn btn-modalNo btn-sm');

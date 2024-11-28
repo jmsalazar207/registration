@@ -1,6 +1,6 @@
 <div class="tab-pane" id="basicInfo">
     <div class="user-block">
-        <form id="frmUserBasicInfoUpdate" name="frmUserBasicInfoUpdate" autocomplete="off" >
+        <form id="frmUserBasicInfoUpdate" name="frmUserBasicInfoUpdate" autocomplete="off" method="POST">
             <div class="box" style="border:0cm" >
                 <div class="box-body row">
                     <div class="form-group">
@@ -73,8 +73,16 @@
                     </div>
                     <br>
                     <div class="form-group col-md-12">
-                        <input type="checkbox" id="sameAddressCheckbox" style="margin-left: 15px;"> 
-                        <label for="sameAddressCheckbox" style="margin-left: 5px;">Use the same address.</label>
+                        <input 
+                        type="checkbox" 
+                        id="sameAddressCheckbox" 
+                        name="sameAddressCheckbox" 
+                        style="margin-left: 15px;"> 
+                        <label 
+                        for="sameAddressCheckbox" 
+                        style="margin-left: 5px;">
+                            Use the same address.
+                        </label>
                     </div>
                     <div class="card col-md-6"> <!-- card for residential -->
                         <div class="form-group col-md-12">
