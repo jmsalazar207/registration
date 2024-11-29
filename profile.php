@@ -340,7 +340,7 @@ include "includes/footer.php";
 
 <script>
   $(function () {
-    $('#tblReferences').DataTable({
+    tables['tblReferences'] =  $('#tblReferences').DataTable({
       ajax: {
           url: 'references_ajax.php',
           type: 'POST',
@@ -360,7 +360,7 @@ include "includes/footer.php";
          { "bSortable": false, "aTargets": [0] }
       ]
     }); //end table
-    $('#tblSkills').DataTable({
+    tables['tblSkills'] =  $('#tblSkills').DataTable({
       ajax: {
           url: 'skills_ajax.php',
           type: 'POST',
@@ -378,7 +378,7 @@ include "includes/footer.php";
          { "bSortable": false, "aTargets": [0] }
       ]
     }); //end table
-        $('#tblnonAcademic').DataTable({
+    tables['tblnonAcademic'] =  $('#tblnonAcademic').DataTable({
       ajax: {
           url: 'non-academic_ajax.php',
           type: 'POST',
@@ -396,7 +396,7 @@ include "includes/footer.php";
          { "bSortable": false, "aTargets": [0] }
       ]
     }); //end table
-    $('#tbltraining').DataTable({
+    tables['tbltraining'] = $('#tbltraining').DataTable({
       ajax: {
           url: 'training_ajax.php',
           type: 'POST',
@@ -420,7 +420,7 @@ include "includes/footer.php";
          { "bSortable": false, "aTargets": [0] }
       ]
     }); //end table
-      $('#tblVoluntary').DataTable({
+    tables['tblVoluntary'] = $('#tblVoluntary').DataTable({
       ajax: {
           url: 'voluntaryWork_ajax.php',
           type: 'POST',
@@ -441,7 +441,7 @@ include "includes/footer.php";
          { "bSortable": false, "aTargets": [0] }
       ]
     }); //end table
-    $('#tblcareer').DataTable({
+    tables['tblcareer'] = $('#tblcareer').DataTable({
       ajax: {
           url: 'career_ajax.php',
           type: 'POST',
@@ -467,7 +467,7 @@ include "includes/footer.php";
          { "bSortable": false, "aTargets": [0] }
       ]
     }); //end table
-    $('#tblEligibility').DataTable({
+    tables['tblEligibility'] = $('#tblEligibility').DataTable({
       ajax: {
           url: 'eligibility_ajax.php',
           type: 'POST',
@@ -492,7 +492,7 @@ include "includes/footer.php";
          { "bSortable": false, "aTargets": [0] }
       ]
     }); //end table
-    $('#tblAcads').DataTable({
+    tables['tblAcads'] = $('#tblAcads').DataTable({
       ajax: {
           url: 'academic_ajax.php',
           type: 'POST',
@@ -519,7 +519,7 @@ include "includes/footer.php";
       ]
     }); //end table
 
-    $('#tblFBMember').DataTable({
+    tables['tblFBMember'] = $('#tblFBMember').DataTable({
       ajax: {
           url: 'familyBackground_ajax.php',
           type: 'POST',

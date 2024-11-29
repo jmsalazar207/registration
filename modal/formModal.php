@@ -2923,7 +2923,7 @@
             <div class="modal-content">
                 <form 
                     method="POST" 
-                    id="contentUpdateFB" 
+                    id="frmUserFamilyBackgroundUpdate" 
                     autocomplete="off">
                     <div class="modal-header">
                         <button 
@@ -2944,7 +2944,7 @@
                                     <div class="col-md-12">
                                         <label 
                                             for="Updaterelation" 
-                                            class="col-sm-12" 
+                                            class="col-sm-12 requiredField" 
                                             style="font-size: 15px;">
                                             Family Relation
                                         </label>
@@ -2979,7 +2979,7 @@
                                     <div class="col-md-6">
                                         <label 
                                             for="updateFBSname" 
-                                            class="col-sm-12" 
+                                            class="col-sm-12 requiredField" 
                                             style="font-size: 15px;">
                                             Surname
                                         </label>
@@ -2998,7 +2998,7 @@
                                     <div class="col-md-6">
                                         <label 
                                             for="updateFBFname" 
-                                            class="col-sm-12" 
+                                            class="col-sm-12 requiredField" 
                                             style="font-size: 15px;">
                                             First Name
                                         </label>
@@ -3064,7 +3064,7 @@
                                     <div class="col-md-3">
                                         <label 
                                             for="updateFBDOB" 
-                                            class="col-sm-12" 
+                                            class="col-sm-12 requiredField" 
                                             style="font-size: 15px;">
                                             Birthday
                                         </label>

@@ -16,6 +16,7 @@ function staticConfirmModal(){
     keyboard: false     // Prevent close on pressing Esc
   });
 }
+let tables = {};
 let isCaptchaValid = false;
 
   function onCaptchaSuccess() {
@@ -160,13 +161,16 @@ function refreshPage() {
 
 function deleteData(PassData){ //dynamic delete details
   var DeleteURL = PassData.valueURL;
-  var DeleteID = PassData.valueEmp;
+  var DeleteID = PassData.valueID;
+
+  $(".loader-div").show();
   $.ajax({
     url:DeleteURL,
     method:"POST",
     dataType: "json",
     data:{DeleteID:DeleteID},
     success:function(data){
+      $(".loader-div").hide();
       $('#modalConfirmDelete').modal('hide');
       const msg = data.msg;
       const stat = data.status;
@@ -175,6 +179,9 @@ function deleteData(PassData){ //dynamic delete details
       } else {
         modalErrorShow(msg);
       }
+    },error: function(xhr, status, error) {
+      modalErrorShow("The system encountered an error. Please contact support.");
+      $(".loader-div").hide();
     }
   });
 }
@@ -182,18 +189,23 @@ function deleteData(PassData){ //dynamic delete details
 function CloseDynamicModal(){
   $('#modalDynamic').modal('hide');
 }
+
 function triggerTableReload(tableId) {
+  // Check if the table instance exists in the `tables` object
   if (tables[tableId]) {
+      // Reload the table's data via AJAX, without resetting the pagination
       tables[tableId].ajax.reload(null, false);
   } else {
+      // Warn if the table with the specified ID is not found
       console.warn(`Table with ID ${tableId} not found!`);
   }
 }
-
 function clearForm() {
   $('#yourFormID').find('input, textarea, select').val(''); // Clear all fields
   $('#yourFormID').find('input:checkbox, input:radio').prop('checked', false); // Uncheck checkboxes and radio buttons
 }
+
+
 
 
 

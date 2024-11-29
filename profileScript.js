@@ -646,8 +646,7 @@ $(function(){
 
                 //Family Background
                 if(civilStatus==1 || civilStatus=='' || civilStatus == null){
-                  $("#optSpouse").attr("disabled",true);
-                  $("#optSpouse").attr("title","Spouse selection is unavailable due to the individual's marital status.");
+                  $("#optSpouse").remove();
                 }
                 //other infor part 2
                 if(data.q1a != ''){
@@ -737,7 +736,11 @@ $(function(){
         }
     });
 
-    $(".loader-div").show();
+    checkAlreadyEncode(); //check all already recorded  
+});
+
+function checkAlreadyEncode(){
+  $(".loader-div").show();
     $.ajax({ 
       url:"checkExist.php",
       method:"POST",
@@ -752,39 +755,39 @@ $(function(){
           const eligibilityCount = data.eligibility;
           const trainingCount = data.training;
           const careerCount = data.career;
+         
           $("#encodedCount").val(acadCount);
           $("#encodedEligibilityCount").val(eligibilityCount);
           $("#encodedTrainingCount").val(trainingCount);
           $("#encodedCareerCount").val(careerCount);
           if(spouse>0){
-              $("#optSpouse").attr("disabled",true);
-              $("#optSpouse").attr("title","You've already recorded 'SPOUSE'. Feel free to review the table below for any updates if necessary.");
+            $("#optFather").remove();
           }
           if(father>0){
-            $("#optFather").attr("disabled",true);
-            $("#optFather").attr("title","You've already recorded 'FATHER'. Feel free to review the table below for any updates if necessary.");
+            $("#optFather").remove();
           }
           if(mother>0){
-            $("#optMother").attr("disabled",true);
-            $("#optMother").attr("title","You've already recorded 'MOTHER'. Feel free to review the table below for any updates if necessary.");
+            $("#optMother").remove();
           }
           const elementary = data.elementary; //for educ background
           const secondary = data.secondary; //for educ background
           if(elementary){
-            $("#optElementary").attr("disabled",true);
-            $("#optElementary").attr("title","You've already recorded 'ELEMENTARY'. Feel free to review the table below for any updates if necessary.");
+            $("#optElementary").remove();
           }
           if(secondary){
-            $("#optSecondary").attr("disabled",true);
-            $("#optSecondary").attr("title","You've already recorded 'SECONDARY'. Feel free to review the table below for any updates if necessary.");
+            $("#optSecondary").remove();
           }
           
       },error: function(xhr, status, error) {
         modalErrorShow("The system encountered an error. Please contact support.");
         $(".loader-div").hide();
       }
-    });  
-});
+    }); 
+}
+
+function resetFormFamilyBackground() {
+  $('#frmUserFamilyBackgroundAdd')[0].reset(); // Reset all inputs in the form
+}
 
 function resetFormBasicInfo(){
   $(".loader-div").show();
@@ -982,53 +985,6 @@ function UserBasicInfoUpdate(formData){ //add/update basic information
   
 }
 
-$(document).on('change','#sameAddressCheckbox',function(){
-    $('#AddPermanentZipCode').val('');
-    $('#AddPermanentBarangay').val('').trigger('change');
-    $('#AddPermanentCity').val('').trigger('change');
-    $('#AddPermanentProvince').val('').trigger('change');
-    $('#AddPermanentRegion').val('').trigger('change');
-    $('#AddPermanentHouseNumber').val('');
-    $('#AddPermanentStreet').val('');
-    $('#AddPermanentSubd').val('');
-
-  if ($(this).is(':checked')) {
-    $('#AddPermanentZipCode').attr('readonly',true);
-    $('#AddPermanentCity').attr('disabled',true);
-    $('#AddPermanentProvince').attr('disabled',true);
-    $('#AddPermanentRegion').attr('disabled',true);
-    $('#AddPermanentBarangay').attr('disabled',true);
-    $('#AddPermanentHouseNumber').attr('readonly',true);
-    $('#AddPermanentStreet').attr('readonly',true);
-    $('#AddPermanentSubd').attr('readonly',true);
-    $('#AddPermanentZipCode').attr('required',false);
-  } else {
-    $('#AddPermanentZipCode').attr('required',true);
-    $('#AddPermanentZipCode').attr('readonly',false);
-    $('#AddPermanentCity').attr('disabled',false);
-    $('#AddPermanentProvince').attr('disabled',false);
-    $('#AddPermanentRegion').attr('disabled',false);
-    $('#AddPermanentBarangay').attr('disabled',false);
-    $('#AddPermanentHouseNumber').attr('readonly',false);
-    $('#AddPermanentStreet').attr('readonly',false);
-    $('#AddPermanentSubd').attr('readonly',false);
-   
-  }
-});
-
-$(document).on('submit','#frmUserBasicInfoUpdate', function(event){
-  event.preventDefault();
-  var PassData = new FormData(frmUserBasicInfoUpdate);
-  PassData.append('sameAddressCheckbox', $('#sameAddressCheckbox').is(':checked') ? 1 : 0);
-  modalConfirmShow('Would you like to confirm and save the changes now?',UserBasicInfoUpdate,PassData); 
-});
-
-$(document).on('submit','#frmOtherInfoUpdate', function(event){
-  event.preventDefault();
-  var PassData = new FormData(frmOtherInfoUpdate);
-  modalConfirmShow('Would you like to confirm and save the changes now?',UserOtherBasicInfoUpdate,PassData);
-});
-
 function UserOtherBasicInfoUpdate(formData){
   const gsis = $('#gsisNo').val();
   const pagibig = $('#pagibigNo').val();
@@ -1146,6 +1102,457 @@ function UserOtherBasicInfoUpdate(formData){
   });
 }
 
+function byBirth(){
+  var byBirth = document.getElementById("chkByBirth");
+  if(byBirth.checked ==true){
+    $("#DualCitizenCountry").attr("disabled",false);
+    $("#chkByNaturalization").prop('checked', false);
+    $("#lblDualCitizenCountry").attr('class','col-sm-12 requiredField');
+  }else{
+    $("#lblDualCitizenCountry").attr('class','col-sm-12');
+    $("#DualCitizenCountry").attr("disabled",true);
+  }
+}
+
+function byNaturalization(){
+  var byNaturalization = document.getElementById("chkByNaturalization");
+  if (byNaturalization.checked ==true){
+    $("#DualCitizenCountry").attr("disabled",false);
+    $("#chkByBirth").prop('checked', false);
+    $("#lblDualCitizenCountry").attr('class','col-sm-12 requiredField');
+  }else{
+    $("#lblDualCitizenCountry").attr('class','col-sm-12');
+    $("#DualCitizenCountry").attr("disabled",true);
+  }
+}
+
+function Others(){
+  var selectValue = $("#CivilStatus").val();
+  if(selectValue>4){
+  $("#OthersCivilStatus").attr("disabled",false);
+  $("#lblOthersCivilStatus").attr('class','col-sm-12 requiredField');
+  }else{
+  $("#lblOthersCivilStatus").attr('class','col-sm-12');
+  $("#OthersCivilStatus").val('');
+  $("#OthersCivilStatus").attr("disabled",true);
+  }
+}
+
+function FBMember(){  
+  var selectValue = $("#relation").val();
+  if(selectValue >1){
+    $("#divSpouseFields").hide();
+    $("#FBoccupation").attr("disabled",true);
+    $("#FBBusinessName").attr("disabled",true);
+    $("#FBBusinessAddress").attr("disabled",true);
+    $("#FBTelephoneNo").attr("disabled",true);
+  }else{
+    $("#divSpouseFields").show();
+  }
+}
+
+function UserFamilyBackgroundUpdate(formData){
+  const FBSname = $("#FBSname").val();
+  const FBFname = $("#FBFname").val();
+  const FBMname = $("#FBMname").val();
+  const FBbirthday = $("#FBDOB").val();
+  var selectRelation = $("#relation").val();
+  var age = computeBday(FBbirthday);
+
+  $("#CheckFBSname").html("");
+  $("#FBSname").css('border-color', '');
+  $("#CheckFBFname").html("");
+  $("#FBFname").css('border-color', '');
+  $("#CheckFBMname").html("");
+  $("#FBMname").css('border-color', '');
+  $("#CheckFBDOB").html("");
+
+  if(selectRelation !=2 && age <18){
+    $("#CheckFBDOB").html("Please furnish a valid date of birth ensuring the individual is aged 18 years or older.").css('color', 'red');
+    validatePass = 0;
+  }else if(FBSname.length<2){
+    $("#CheckFBSname").html("Please enter last name atleast 2 characters.").css('color', 'red');
+    $("#FBSname").css('border-color', 'red');
+    $("#FBSname").focus();
+  }else if(FBFname.length <2){
+    $("#CheckFBFname").html("Please enter first name atleast 2 characters.").css('color', 'red');
+    $("#FBFname").css('border-color', 'red');
+    $("#FBFname").focus();
+  }else if(FBMname.length !='' && FBMname.length <2 ){
+    $("#CheckFBMname").html("Please enter middle name atleast 2 characters.").css('color', 'red');
+    $("#FBMname").css('border-color', 'red');
+    $("#FBMname").focus();
+  } else {
+    $(".loader-div").show();
+    $.ajax({
+      url:"familyBackgroundAdd.php",
+      method:"POST",
+      dataType: "json",
+      data:formData,
+      success:function(data){
+        $(".loader-div").hide(); 
+        const msg = data.msg;
+        const stat = data.status;
+        if(stat === "success"){ 
+          modalSuccessShow(msg,triggerTableReload,'tblFBMember');
+          resetFormFamilyBackground();
+          checkAlreadyEncode();
+        } else {
+          modalErrorShow(msg);
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      },
+      processData: false,
+      contentType: false
+
+    });
+  }
+}
+
+function btnFBUpdate(getFBid){ //open modal family update
+  $(".loader-div").show();
+  $.ajax({
+      url:"includes/functions.php",
+      method:"POST",
+      data:{getFBid:getFBid},
+      success:function(data){
+        $(".loader-div").hide(); 
+        const FBdata = JSON.parse(data);
+        const FBrelation = FBdata['relation'];
+        const FBSurName = FBdata['surname'];
+        const FBFirstName = FBdata['firstname'];
+        const FBMiddleName = FBdata['middlename'];
+        const FBExtName = FBdata['extname'];
+        const FBOccupation = FBdata['occupation'];
+        const FBBusiness = FBdata['businessName'];
+        const FBBusinessAddress = FBdata['businessAddress'];
+        const FBTelephone = FBdata['telephoneNo'];
+        const FBbirthday = FBdata['birthday'];
+        const FBid = FBdata['id'];
+        $("#FBid").val(FBid);
+        $("#updateFBSname").val(FBSurName);
+        $("#updateFBFname").val(FBFirstName);
+        $("#updateFBMname").val(FBMiddleName);
+        $("#updateFBExtName").val(FBExtName);
+        $("#updateFBDOB").val(FBbirthday);
+        $("#updateFBoccupation").val(FBOccupation);
+        $("#updateFBBusinessName").val(FBBusiness);
+        $("#updateFBBusinessAddress").val(FBBusinessAddress);
+        $("#updateFBTelephoneNo").val(FBTelephone);
+        $("#updaterelation").val(FBrelation).trigger('change');
+        $("#updaterelation").attr("disabled",true);
+        $('#updateFB').modal('show');
+        if(FBrelation >1){
+          $("#divupdateSpouseFields").hide();
+          $("#updateFBoccupation").attr("disabled",true);
+          $("#updateFBBusinessName").attr("disabled",true);
+          $("#updateFBBusinessAddress").attr("disabled",true);
+          $("#updateFBTelephoneNo").attr("disabled",true);
+        }else{
+          $("#divupdateSpouseFields").show();
+          $("#updateFBoccupation").attr("disabled",false);
+          $("#updateFBBusinessName").attr("disabled",false);
+          $("#updateFBBusinessAddress").attr("disabled",false);
+          $("#updateFBTelephoneNo").attr("disabled",false);
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
+});
+}
+
+$(document).on('change','#sameAddressCheckbox',function(){
+    $('#AddPermanentZipCode').val('');
+    $('#AddPermanentBarangay').val('').trigger('change');
+    $('#AddPermanentCity').val('').trigger('change');
+    $('#AddPermanentProvince').val('').trigger('change');
+    $('#AddPermanentRegion').val('').trigger('change');
+    $('#AddPermanentHouseNumber').val('');
+    $('#AddPermanentStreet').val('');
+    $('#AddPermanentSubd').val('');
+
+  if ($(this).is(':checked')) {
+    $('#AddPermanentZipCode').attr('readonly',true);
+    $('#AddPermanentCity').attr('disabled',true);
+    $('#AddPermanentProvince').attr('disabled',true);
+    $('#AddPermanentRegion').attr('disabled',true);
+    $('#AddPermanentBarangay').attr('disabled',true);
+    $('#AddPermanentHouseNumber').attr('readonly',true);
+    $('#AddPermanentStreet').attr('readonly',true);
+    $('#AddPermanentSubd').attr('readonly',true);
+    $('#AddPermanentZipCode').attr('required',false);
+  } else {
+    $('#AddPermanentZipCode').attr('required',true);
+    $('#AddPermanentZipCode').attr('readonly',false);
+    $('#AddPermanentCity').attr('disabled',false);
+    $('#AddPermanentProvince').attr('disabled',false);
+    $('#AddPermanentRegion').attr('disabled',false);
+    $('#AddPermanentBarangay').attr('disabled',false);
+    $('#AddPermanentHouseNumber').attr('readonly',false);
+    $('#AddPermanentStreet').attr('readonly',false);
+    $('#AddPermanentSubd').attr('readonly',false);
+   
+  }
+});
+
+$(document).on('submit','#frmUserBasicInfoUpdate', function(event){
+  event.preventDefault();
+  var PassData = new FormData(frmUserBasicInfoUpdate);
+  PassData.append('sameAddressCheckbox', $('#sameAddressCheckbox').is(':checked') ? 1 : 0);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserBasicInfoUpdate,PassData); 
+});
+
+$(document).on('submit','#frmUserOtherInfoUpdate', function(event){
+  event.preventDefault();
+  var PassData = new FormData(frmOtherInfoUpdate);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserOtherBasicInfoUpdate,PassData);
+});
+
+$(document).on('click','#chkByBirth', function(){
+  byBirth();
+});
+
+$(document).on('click', '#chkByNaturalization', function(){
+  byNaturalization();
+});
+
+$(document).on('change', '#CivilStatus', function(){
+  Others();
+});
+
+$(document).on('input', '#Height', function () {
+  let value = $(this).val() || ""; // Get the current input value (or fallback to empty)
+
+  // Remove non-numeric characters
+  value = value.replace(/[^0-9]/g, "");
+
+  // Prevent the user from entering all zeros (e.g., "000")
+  if (/^0+$/.test(value)) {
+      value = ""; // Reset the value if it's all zeros
+  } else {
+      // Automatically add the decimal point after the first digit
+      if (value.length > 1) {
+          value = value[0] + '.' + value.slice(1); // Insert decimal after the first digit
+      }
+
+      // Limit to 2 decimal places
+      const decimalIndex = value.indexOf('.');
+      if (decimalIndex !== -1 && value.length > decimalIndex + 3) {
+          value = value.substring(0, decimalIndex + 3); // Keep 2 digits after the decimal
+      }
+  }
+
+  // Update the input field with the formatted value
+  $(this).val(value);
+});
+
+$(document).on('input', '#Weight', function () { 
+  let value = $(this).val() || ""; // Get the current input value (or fallback to empty)
+
+  // Remove all non-numeric characters except for a decimal point
+  value = value.replace(/[^0-9.]/g, "");
+
+  // Prevent entering leading zeros (except for '0.' for decimal values)
+  if (value.startsWith("0") && value.length > 1 && value !== "0.") {
+      value = value.substring(1); // Remove leading zero
+  }
+
+  // Prevent starting with a decimal point (e.g., ".5" is not allowed)
+  if (value.startsWith(".")) {
+      value = "0" + value; // Prepend 0 if the value starts with a decimal
+  }
+
+  // Limit digits before the decimal point to 3
+  const decimalIndex = value.indexOf('.');
+  if (decimalIndex !== -1) {
+      // Limit digits before the decimal to 3
+      let integerPart = value.substring(0, decimalIndex);
+      if (integerPart.length > 3) {
+          integerPart = integerPart.substring(0, 3); // Keep only 3 digits before the decimal
+      }
+      // Keep the decimal part intact (only 2 digits after the decimal)
+      let decimalPart = value.substring(decimalIndex, decimalIndex + 3); // Ensure 2 digits after the decimal
+
+      value = integerPart + decimalPart;
+  } else {
+      // If no decimal point, limit the integer part to 3 digits
+      value = value.substring(0, 3);
+  }
+
+  // Ensure the weight is at least 10 kg (if it's below 10 kg, we won't update the input)
+  if (parseFloat(value) < 10 && value !== "0.") {
+      return; // Do nothing if the weight is below 10 kg
+  }
+
+  // Update the input field with the formatted value
+  $(this).val(value);
+});
+
+$(document).on('input', '#philhealthNo', function () {  //PHILHEALTH FORMAT XX-XXXXXXXXX-X
+  let value = $(this).val() || ""; // Get the current input value (or fallback to empty)
+  
+  // Remove all non-numeric characters
+  value = value.replace(/\D/g, "");
+
+  // Add dashes after the 2nd and 11th digits
+  if (value.length > 2) {
+      value = value.substring(0, 2) + "-" + value.substring(2);
+  }
+  if (value.length > 12) {
+      value = value.substring(0, 12) + "-" + value.substring(12);
+  }
+
+  // Limit the input to a maximum of 13 characters (XX-XXXXXXXXX-X)
+  if (value.length > 14) {
+      value = value.substring(0, 14);
+  }
+
+  // Update the input field with the formatted value
+  $(this).val(value);
+});
+
+$(document).on('input', '#sssNo', function () { //SSS FORMAT XX-XXXXXXX-X
+  let value = $(this).val() || ""; // Get the current input value (or fallback to empty)
+
+  // Remove all non-numeric characters
+  value = value.replace(/\D/g, "");
+
+  // Add dash after the 2nd digit
+  if (value.length > 2) {
+      value = value.substring(0, 2) + "-" + value.substring(2);
+  }
+
+  // Add dash after the 9th digit
+  if (value.length > 10) {
+      value = value.substring(0, 10) + "-" + value.substring(10);
+  }
+
+  // Limit the input to a maximum of 12 characters (XX-XXXXXXX-X)
+  if (value.length > 12) {
+      value = value.substring(0, 12);
+  }
+
+  // Update the input field with the formatted value
+  $(this).val(value);
+});
+
+$(document).on('input', '#pagibigNo', function () { //PAGIBIG FORMAT XXXX-XXXX-XXXX
+  let value = $(this).val() || ""; // Get the current input value (or fallback to empty)
+
+  // Remove all non-numeric characters
+  value = value.replace(/\D/g, "");
+
+  // Add dash after the 2nd digit
+  if (value.length > 4) {
+      value = value.substring(0, 4) + "-" + value.substring(4);
+  }
+
+  // Add dash after the 9th digit
+  if (value.length > 9) {
+      value = value.substring(0, 9) + "-" + value.substring(9);
+  }
+
+  // Limit the input to a maximum of 12 characters (XX-XXXXXXX-X)
+  if (value.length > 14) {
+      value = value.substring(0, 14);
+  }
+
+  // Update the input field with the formatted value
+  $(this).val(value);
+});
+
+$(document).on('input', '#tinNo', function () { //tin number format XXX-XXX-XXX
+  let value = $(this).val() || ""; // Get the current input value (or fallback to empty)
+
+  // Remove all non-numeric characters
+  value = value.replace(/\D/g, "");
+
+  // Add dash after the 2nd digit
+  if (value.length > 3) {
+      value = value.substring(0, 3) + "-" + value.substring(3);
+  }
+
+  // Add dash after the 9th digit
+  if (value.length > 7) {
+      value = value.substring(0, 7) + "-" + value.substring(7);
+  }
+
+  // Limit the input to a maximum of 12 characters (XX-XXXXXXX-X)
+  if (value.length > 11) {
+      value = value.substring(0, 11);
+  }
+
+  // Update the input field with the formatted value
+  $(this).val(value);
+});
+
+$(document).on('input', '#gsisNo', function () { //tin number format XXX-XXX-XXX
+  let value = $(this).val() || ""; // Get the current input value (or fallback to empty)
+
+  // Remove all non-numeric characters
+  value = value.replace(/\D/g, "");
+
+  // Limit the input to a maximum of 12 characters (XX-XXXXXXX-X)
+  if (value.length > 10) {
+      value = value.substring(0, 10);
+  }
+
+  // Update the input field with the formatted value
+  $(this).val(value);
+});
+
+$(document).on('submit', '#frmUserFamilyBackgroundAdd', function(event){
+  event.preventDefault();
+  var PassData = new FormData(frmUserFamilyBackgroundAdd);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserFamilyBackgroundUpdate,PassData);
+});
+
+$(document).on('change','#relation', function(){
+  FBMember();
+});
+
+$(document).on('click', '#btnUserFamilyBackgroundUpdate', function(){
+  var  getFBid = $(this).attr('value');
+  btnFBUpdate(getFBid);
+});
+
+$(document).on('click', '#btnUserDeleteFamilyBackground', function(){
+  const valueID = $(this).attr('data-valueID');
+  const valueURL = $(this).attr('data-valueURL');
+  var PassData = {
+    valueEmp:valueID,
+    valueURL:valueURL
+  };
+  modalConfirmShow('Would you like to permanently delete this information? This action cannot be undone.',deleteData,PassData);
+});
+
+
+
+// event.preventDefault();
+// var PassData = new FormData(frmOtherInfoUpdate);
+// modalConfirmShow('Would you like to confirm and save the changes now?',UserOtherBasicInfoUpdate,PassData);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1178,75 +1585,7 @@ $("#form_other_info").on("submit",function(event){
   });
 });
 
-$("#frmFamilyBackgroundAdd").on("submit",function(event){
-  event.preventDefault();
-  const FBSname = $("#FBSname").val();
-  const FBFname = $("#FBFname").val();
-  const FBMname = $("#FBMname").val();
-  const FBbirthday = $("#FBDOB").val();
-  var selectRelation = $("#relation").val();
-  var bday = new Date(FBbirthday);
-  var month_diff = Date.now() - bday.getTime();
-  var age_dt = new Date(month_diff); 
-  var year = age_dt.getUTCFullYear();
-  var age = Math.abs(year - 1970);
-  validatePass = 1;
 
-  $("#CheckFBSname").html("");
-  $("#FBSname").css('border-color', '');
-  $("#CheckFBFname").html("");
-  $("#FBFname").css('border-color', '');
-  $("#CheckFBMname").html("");
-  $("#FBMname").css('border-color', '');
-  $("#CheckFBDOB").html("");
-  if(selectRelation !=2 && age <18){
-    $("#CheckFBDOB").html("Please furnish a valid date of birth ensuring the individual is aged 18 years or older.").css('color', 'red');
-    validatePass = 0;
-  }
-  if(FBSname.length<2){
-    $("#CheckFBSname").html("Please enter last name atleast 2 characters.").css('color', 'red');
-    $("#FBSname").css('border-color', 'red');
-    $("#FBSname").focus();
-    validatePass = 0;
-  }
-  if(FBFname.length <2){
-    $("#CheckFBFname").html("Please enter first name atleast 2 characters.").css('color', 'red');
-    $("#FBFname").css('border-color', 'red');
-    $("#FBFname").focus();
-    validatePass = 0;
-  }
-  if(FBMname.length !='' && FBMname.length <2 ){
-    $("#CheckFBMname").html("Please enter middle name atleast 2 characters.").css('color', 'red');
-    $("#FBMname").css('border-color', 'red');
-    $("#FBMname").focus();
-    validatePass = 0;
-  }
-  if (validatePass ==1){
-    var formData = new FormData(frmFamilyBackgroundAdd);
-    $.ajax({
-      url:"familyBackgroundAdd.php",
-              method:"POST",
-              dataType: "json",
-              data:formData,
-              success:function(data){
-                const msg = data.msg;
-                const stat = data.status;
-                if(stat == "success"){
-                    $('#modalNotif-header').text('Great! Success.');
-                    $('#modalNotif-message').text(msg);
-                     $('#modalNotif').modal('show');
-                }
-                else{
-                    $('#alertMessage').text(msg);
-                    $('#modalAlert').modal('show'); 
-                }
-              },
-              processData: false,
-              contentType: false
-
-    });
-  }
-});
 $("#frmAcademicAdd").on("submit",function(event){
   event.preventDefault();
   var formData = new FormData(frmAcademicAdd);
@@ -1594,27 +1933,7 @@ $("#frmProfileChangePass").on("submit", function(event){ //confirm the old passw
     }
   });
 });
-function byBirth(){
-  var byBirth = document.getElementById("chkByBirth");
-  if(byBirth.checked ==true){
-    $("#DualCitizenCountry").attr("disabled",false);
-    $("#chkByNaturalization").prop('checked', false);
-  }else{
-      
-    $("#DualCitizenCountry").attr("disabled",true);
-    // $("#DualCitizenCountry").remove();
-  }
-}
-function byNaturalization(){
-  var byNaturalization = document.getElementById("chkByNaturalization");
-  if (byNaturalization.checked ==true){
-    $("#DualCitizenCountry").attr("disabled",false);
-    $("#chkByBirth").prop('checked', false);
-  }else{
-    // $("#DualCitizenCountry").val().trigger('change');
-    $("#DualCitizenCountry").attr("disabled",true);
-  }
-}
+
 function careerPresentCheck(){
   var careerPresent = document.getElementById("careerPresent");
   if (careerPresent.checked ==true){
@@ -1624,18 +1943,7 @@ function careerPresentCheck(){
     $("#careerDateTo").attr('required', 'required');
   }
 }
-function FBMember(){  
-  var selectValue = $("#relation").val();
-  if(selectValue >1){
-    $("#divSpouseFields").hide();
-    $("#FBoccupation").attr("disabled",true);
-    $("#FBBusinessName").attr("disabled",true);
-    $("#FBBusinessAddress").attr("disabled",true);
-    $("#FBTelephoneNo").attr("disabled",true);
-  }else{
-    $("#divSpouseFields").show();
-  }
-}
+
 function PeriodTo(){
   const selected_educLevel = $("#acadEducLevel").val();
   const periodTo = $("#acadPeriodTo").val();
@@ -1739,15 +2047,7 @@ function EducLevel(){
     $("#acadNameSchool").html('<option value="">No Available Option</option>');
   }
 }
-function Others(){
-    var selectValue = $("#CivilStatus").val();
-    if(selectValue>4){
-    $("#OthersCivilStatus").attr("disabled",false);
-    }else{
-    $("#OthersCivilStatus").val('');
-    $("#OthersCivilStatus").attr("disabled",true);
-    }
-}
+
 function btnAcadViewUploaded(uploadedAcadMOV){
   $('#downloadDocs').attr('href','uploadedMOV/'+uploadedAcadMOV)
   $('#ViewVerifiedMOV').attr('src','uploadedMOV/'+uploadedAcadMOV);
@@ -1843,53 +2143,7 @@ function btnTrainingUpdate(getTraining){
       }
 });
 }
-  function btnFBUpdate(getFBid){
-  $.ajax({
-      url:"includes/functions.php",
-      method:"POST",
-      data:{getFBid:getFBid},
-      success:function(data){
-        const FBdata = JSON.parse(data);
-        const FBrelation = FBdata['relation'];
-        const FBSurName = FBdata['surname'];
-        const FBFirstName = FBdata['firstname'];
-        const FBMiddleName = FBdata['middlename'];
-        const FBExtName = FBdata['extname'];
-        const FBOccupation = FBdata['occupation'];
-        const FBBusiness = FBdata['businessName'];
-        const FBBusinessAddress = FBdata['businessAddress'];
-        const FBTelephone = FBdata['telephoneNo'];
-        const FBbirthday = FBdata['birthday'];
-        const FBid = FBdata['id'];
-        $("#FBid").val(FBid);
-        $("#updateFBSname").val(FBSurName);
-        $("#updateFBFname").val(FBFirstName);
-        $("#updateFBMname").val(FBMiddleName);
-        $("#updateFBExtName").val(FBExtName);
-        $("#updateFBDOB").val(FBbirthday);
-        $("#updateFBoccupation").val(FBOccupation);
-        $("#updateFBBusinessName").val(FBBusiness);
-        $("#updateFBBusinessAddress").val(FBBusinessAddress);
-        $("#updateFBTelephoneNo").val(FBTelephone);
-        $("#updaterelation").val(FBrelation).trigger('change');
-        $("#updaterelation").attr("disabled",true);
-        $('#updateFB').modal('show');
-        if(FBrelation >1){
-          $("#divupdateSpouseFields").hide();
-          $("#updateFBoccupation").attr("disabled",true);
-          $("#updateFBBusinessName").attr("disabled",true);
-          $("#updateFBBusinessAddress").attr("disabled",true);
-          $("#updateFBTelephoneNo").attr("disabled",true);
-        }else{
-          $("#divupdateSpouseFields").show();
-          $("#updateFBoccupation").attr("disabled",false);
-          $("#updateFBBusinessName").attr("disabled",false);
-          $("#updateFBBusinessAddress").attr("disabled",false);
-          $("#updateFBTelephoneNo").attr("disabled",false);
-        }
-      }
-});
-}
+
 function btnAcadUpdate(getAcads){
   $('#UpdateacadHighestLevel').attr('readonly',false);
   $("#UpdateacadYearGraduated").attr('required',false);

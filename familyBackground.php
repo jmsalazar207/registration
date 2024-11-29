@@ -1,6 +1,6 @@
 <div class="tab-pane" id="familyBackground">
     <div class="user-block">
-        <form id="frmFamilyBackgroundAdd" name="frmFamilyBackgroundAdd" autocomplete="off" >
+        <form id="frmUserFamilyBackgroundAdd" name="frmUserFamilyBackgroundAdd" autocomplete="off" >
             <div class="box" style="border:0cm" >
                 <div class="box-body row">
                     <div class="card col-md-12">
@@ -8,7 +8,7 @@
                             <div class="col-md-12">
                                 <label 
                                     for="relation" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Family Relation
                                 </label>
@@ -24,7 +24,6 @@
                                         name="relation" 
                                         required
                                         tabindex="1"
-                                        onchange="FBMember()"
                                         >
                                         <option name = "optNone" id="optNone" value="">SELECT FAMILY RELATION </option>
                                         <option name = "optSpouse" id="optSpouse" value="1">Spouse</option>
@@ -39,7 +38,7 @@
                             <div class="col-md-6">
                                 <label 
                                     for="FBSname" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Surname
                                 </label>
@@ -58,7 +57,7 @@
                             <div class="col-md-6">
                                 <label 
                                     for="FBFname" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     First Name
                                 </label>
@@ -124,7 +123,7 @@
                             <div class="col-md-3">
                                 <label 
                                     for="FBDOB" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Birthday
                                 </label>
@@ -145,7 +144,7 @@
                             <div class="col-md-6">
                                 <label 
                                     for="FBoccupation" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Occupation
                                 </label>
@@ -161,7 +160,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label 
-                                    for="FBBusinessName" 
+                                    for="FBBusinessName requiredField" 
                                     class="col-sm-12" 
                                     style="font-size: 15px;">
                                     Employeer / Business Name
@@ -178,7 +177,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label 
-                                    for="FBBusinessAddress" 
+                                    for="FBBusinessAddress requiredField" 
                                     class="col-sm-12" 
                                     style="font-size: 15px;">
                                     Business Address
@@ -196,7 +195,7 @@
                             <div class="col-md-6">
                                 <label 
                                     for="FBTelephoneNo" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Telephone Number
                                 </label>
@@ -215,10 +214,12 @@
                     <div class="box-footer" style="border:0cm;">
                         <button 
                             type="submit" 
+                            id="btnUserFamilyBackgroundAdd"
+                            name="btnUserFamilyBackgroundAdd"
                             class="btn btn-primary btn-md pull-right"
                             tabindex="11"
                             >    
-                            Insert
+                            Add
                         </button>
                     </div>
             </div>

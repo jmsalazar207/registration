@@ -10,18 +10,17 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
     $dataReturn['status'] = "failed";
     $dataReturn['msg'] = "Session has expired. Please relogin your account.";
     echo json_encode($dataReturn);
-}else{ 
-    
-                    $id = $_POST['DeleteID'];
-                    $FBDelete['status'] =4;
-                    $DeleteFBQuery = $dbConn->update('lib_family_background','id',$id, $FBDelete);
-                    if($DeleteFBQuery){
-                        $dataReturn['status'] = "success";
-                        $dataReturn['msg'] = "Family Background Details successfully deleted";
-                        echo json_encode($dataReturn);
-                    }else {
-                        $dataReturn['status'] = "failed";
-                        $dataReturn['msg'] = "Oops! Something went wrong. Please try again later.";
-                        echo json_encode($dataReturn);
-                    }
+} else { 
+    $id = $_POST['DeleteID'];
+    $FBDelete['status'] =4;
+    $DeleteFBQuery = $dbConn->update('lib_family_background','id',$id, $FBDelete);
+    if($DeleteFBQuery){
+        $dataReturn['status'] = "success";
+        $dataReturn['msg'] = "Family Background Details successfully deleted";
+        echo json_encode($dataReturn);
+    }else {
+        $dataReturn['status'] = "failed";
+        $dataReturn['msg'] = "Oops! Something went wrong. Please try again later.";
+        echo json_encode($dataReturn);
+    }
 }

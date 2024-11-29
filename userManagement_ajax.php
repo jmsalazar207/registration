@@ -114,7 +114,7 @@ if($empRecords){
                      </button>
                   </td>
             <td>
-               <button class='btn btn-danger btn-sm' id = 'btnDelete' name ='btnDelete' data-valueEmp = '$empno' data-valueURL = '$url'  title='Remove Information' >
+               <button class='btn btn-danger btn-sm' id = 'btnAdminDelete' name ='btnAdminDelete' data-valueID = '$empno' data-valueURL = '$url'  title='Remove Information' >
                   Remove
                </button>
             </td>

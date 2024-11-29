@@ -70,13 +70,13 @@ if($empRecords){
    }
    $action = "
             <td>
-               <button class='btn btn-info btn-sm' id = 'btnFBUpdate' name ='btnFBUpdate' onclick ='btnFBUpdate(this.value)' value = '$id'  title='View' >
-                  View Info
+               <button class='btn btn-primary btn-sm' id = 'btnUserFamilyBackgroundUpdate' name ='btnUserFamilyBackgroundUpdate' value = '$id'  title='View' >
+                  Update 
                </button>
             </td>
             <td>
-               <button class='btn btn-danger btn-sm' id = 'btnDelete' name ='btnDelete' onclick ='btnDelete(this.value)' value = '$deleteValue'  title='Remove' >
-                  Remove Info
+               <button class='btn btn-danger btn-sm' id = 'btnUserDeleteFamilyBackground' name ='btnUserDeleteFamilyBackground' data-valueID = '$id' data-valueURL = '$url'  title='Remove' >
+                  Remove
                </button>
             </td>
             "; 

@@ -690,11 +690,11 @@ jQuery("#txtDivision").on('change',function(){
     modalConfirmShow('Would you like to proceed with resetting this password?',resetPassword,PassData);
   });
 
-  $(document).on('click', '#btnDelete', function() {    //delete user acount action
-    const valueEmp = $(this).attr('data-valueEmp');
+  $(document).on('click', '#btnAdminDelete', function() {    //delete user acount action
+    const valueID = $(this).attr('data-valueID');
     const valueURL = $(this).attr('data-valueURL');
     var PassData = {
-      valueEmp:valueEmp,
+      valueID:valueID,
       valueURL:valueURL
     };
     modalConfirmShow('Would you like to permanently delete this information? This action cannot be undone.',deleteData,PassData);
@@ -702,15 +702,20 @@ jQuery("#txtDivision").on('change',function(){
   
   $(document).on('click', '#btnAdminUpdate', function() {   //open admin Update modal with populated information
     var updateEmpno = $(this).attr('value');
+    $(".loader-div").show();
     $.ajax({
       url:"includes/functions.php",
       method:"POST",
       data:{sessionEmpno:updateEmpno},
       success:function(data){
+        $(".loader-div").hide(); 
         UpdateInfo = JSON.parse(data);
         hideDivItemCode();
         populateAdminUpdateModal(UpdateInfo);
         $('#formAdminUserUpdate').modal('show');
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
       }
     })
   });
