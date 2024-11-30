@@ -1,5 +1,627 @@
 // const { ajax } = require("jquery");
 
+  //Kapag meg select Region
+  jQuery(document).ready(function() {
+    $('.search-box input[type="text"]').on("keyup input", function(){
+      /* Get input value on change */
+      var inputVal = $(this).val();
+      var resultDropdown = $(this).siblings(".result");
+      if(inputVal.length){
+          $.get("ajax_search.php", {term: inputVal}).done(function(data){
+              // Display the returned data in browser
+              resultDropdown.html(data);
+          });
+      } else{
+          resultDropdown.empty();
+      }
+  });
+  
+  // Set search input value on click of result item
+  $(document).on("click", ".result p", function(){
+  // Set the filter to the clicked school's name
+  $(this).parents(".search-box").find('#txtFilter').val($(this).find('.schl_name').text());
+  // Set the school ID from the clicked result
+  $(this).parents(".search-box").find('#txtID').val($(this).find('.school_id').text());
+  // Clear the result dropdown
+  $(this).parents(".search-box").find('#txtUpdateFilter').val($(this).find('.schl_name').text());
+  // Set the school ID from the clicked result
+  $(this).parents(".search-box").find('#txtUpdateID').val($(this).find('.school_id').text());
+  // Clear the result dropdown
+  $(this).parent(".result").empty();
+  });
+$('.select2').select2();
+jQuery("#AddRegion").on('change',function(){  //End select Region
+    var regionAction = jQuery(this).attr("id");
+    var region_id = jQuery(this).val();
+    if(region_id){
+        jQuery.ajax({
+        url:"includes/functions.php",
+        method:"POST",
+        data:{regionAction:regionAction, region_id:region_id},
+        success:function(data){
+
+            jQuery('#AddProvince').html(data);
+            jQuery('#AddCity').html('<option value="">SELECT PROVINCE FIRST</option>');  
+            jQuery('#AddBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');
+        }
+    });
+    }else{
+        jQuery('#AddProvince').html('<option value="">SELECT REGION FIRST</option>');
+        jQuery('#AddCity').html('<option value="">SELECT PROVINCE FIRST</option>');
+        jQuery('#AddBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');
+    }
+});
+jQuery("#AddProvince").on('change',function(){  //Kapag meg Select province
+  var provinceAction = jQuery(this).attr("id");
+  var province_id = jQuery(this).val();
+  if(province_id){
+      jQuery.ajax({
+      url:"includes/functions.php",
+      method:"POST",
+      data:{provinceAction:provinceAction, province_id:province_id},
+      success:function(data){
+          jQuery('#AddCity').html(data);
+          jQuery('#AddBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');  
+      }
+  });
+  }else{
+      jQuery('#AddCity').html('<option value="">SELECT PROVINCE FIRST</option>');
+      jQuery('#AddBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');
+  }
+});
+jQuery("#AddCity").on('change',function(){
+  var cityAction = jQuery(this).attr("id");
+  var city_id = jQuery(this).val();
+  if(city_id){
+      jQuery.ajax({
+      url:"includes/functions.php",
+      method:"POST",
+      data:{cityAction:cityAction, city_id:city_id},
+      success:function(data){
+          jQuery('#AddBarangay').html(data);
+           
+      }
+  });
+  }else{
+      jQuery('#AddBarangay').html('<option value="">SELECT PROVINCE FIRST</option>');
+     
+  }
+});
+jQuery("#AddPermanentRegion").on('change',function(){
+  var regionAction = jQuery(this).attr("id");
+  var region_id = jQuery(this).val();
+  if(region_id){
+      jQuery.ajax({
+      url:"includes/functions.php",
+      method:"POST",
+      data:{regionAction:regionAction, region_id:region_id},
+      success:function(data){
+
+          jQuery('#AddPermanentProvince').html(data);
+          jQuery('#AddPermanentCity').html('<option value="">SELECT PROVINCE FIRST</option>');
+          jQuery('#AddPermanentBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');  
+      }
+  });
+  }else{
+      jQuery('#AddPermanentProvince').html('<option value="">SELECT REGION FIRST</option>');
+      jQuery('#AddPermanentCity').html('<option value="">SELECT PROVINCE FIRST</option>');
+      jQuery('#AddPermanentBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');
+  }
+});
+jQuery("#AddPermanentProvince").on('change',function(){
+  var provinceAction = jQuery(this).attr("id");
+  var province_id = jQuery(this).val();
+  if(province_id){
+      jQuery.ajax({
+      url:"includes/functions.php",
+      method:"POST",
+      data:{provinceAction:provinceAction, province_id:province_id},
+      success:function(data){
+          jQuery('#AddPermanentCity').html(data);
+          jQuery('#AddPermanentBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');  
+      }
+  });
+  }else{
+      jQuery('#AddPermanentCity').html('<option value="">SELECT PROVINCE FIRST</option>');
+      jQuery('#AddPermanentBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');
+  }
+});
+jQuery("#AddPermanentCity").on('change',function(){
+  var cityAction = jQuery(this).attr("id");
+  var city_id = jQuery(this).val();
+  if(city_id){
+      jQuery.ajax({
+      url:"includes/functions.php",
+      method:"POST",
+      data:{cityAction:cityAction, city_id:city_id},
+      success:function(data){
+          jQuery('#AddPermanentBarangay').html(data);
+           
+      }
+  });
+  }else{
+      jQuery('#AddPermanentBarangay').html('<option value="">SELECT PROVINCE FIRST</option>');
+     
+  }
+});
+});
+
+//kapag meg select barangay
+
+$(function(){
+  //Date picker
+  $('#datepicker').datepicker({
+    autoclose: true
+  });
+  let year_start = 1940;
+  let year_end = (new Date).getFullYear(); // current year
+  let year_selected = '';
+
+  let YearOption = '';
+  YearOption = '<option value="">Year</option>'; // first option
+
+  for (let i = year_start; i <= year_end; i++) {
+      let selected = (i === year_selected ? ' selected' : '');
+      YearOption += '<option value="' + i + '"' + selected + '>' + i + '</option>';
+  }
+  $("#acadPeriodFrom").html(YearOption);
+  $("#acadPeriodTo").html(YearOption);
+  $("#acadYearGraduated").html(YearOption);
+
+  $("#UpdateacadPeriodFrom").html(YearOption);
+  $("#UpdateacadPeriodTo").html(YearOption);
+  $("#UpdateacadYearGraduated").html(YearOption);
+
+$(".loader-div").show();
+$.ajax({ //set 3 entry in person references
+  url:"checkExist.php",
+  method:"POST",
+  data:{countReference:1},
+  dataType: 'json',
+  success:function(data){
+    $(".loader-div").hide(); 
+    const countReference = data.countRef;
+    if(countReference==3){
+      $('#frmReferencesAdd').hide(); //hide insert form
+      $('#refLimitInfo').show(); //show info
+    }
+  },error: function(xhr, status, error) {
+    modalErrorShow("The system encountered an error. Please contact support.");
+    $(".loader-div").hide();
+  }
+});
+
+$(".loader-div").show();
+$.ajax({ //work experience present checkbox hide when already encoded present work
+  url:"checkExist.php",
+  method:"POST",
+  data:{countPresent:1},
+  dataType: 'json',
+  success:function(data){
+    $(".loader-div").hide(); 
+    const countPresent = data.countPresent;
+    if(countPresent){
+      $('#labelCareerPresent').hide();
+      $('#careerPresent').hide();
+    }
+  },error: function(xhr, status, error) {
+    modalErrorShow("The system encountered an error. Please contact support.");
+    $(".loader-div").hide();
+  }
+});
+
+  getInfo();
+  checkAlreadyEncode(); //check all already recorded  
+});
+
+  function getInfo(){
+    $(".loader-div").show();
+  $.ajax({ //getInfo session populate
+      url:"getInfo.php",
+      method:"POST",
+      dataType: 'json',
+      success:function(data){
+        $(".loader-div").hide(); 
+          const empno = data.empno;
+          const fname = data.fname;
+          const sname = data.sname;
+          const mname = data.mname;
+          const extname = data.ename;
+          var sex = data.sex;
+          if(sex > 0){
+            sex = 'FEMALE'
+          }else{
+            sex = 'MALE'
+          }
+          const dob = data.birthdate;
+          const position = data.position_name;
+          const division = data.division_name;
+          const unit = data.unit_name;
+          const region = data.region_name;
+          const province = data.prov_name;
+          const city = data.city_name;
+          const brgy = data.brgy_name;
+          const houseNo = data.numAdd;
+          const street = data.street;
+          const mobileNumber = data.mobile;
+          const telephoneNumber = data.telephone;
+          const email = data.eaddress
+          const region_code = data.region;
+          const province_code = data.province;
+          const city_code = data.city;
+          const brgy_code = data.barangay;
+          const subd = data.subd;
+          const zip_code = data.zip_code;
+
+          //profileCard
+          $("#profileFullName").text(fname+" "+sname);
+          $("#profilePosition").text(position);
+          $("#profileDivision").text(division);
+          $("#profileUnit").text(unit);
+          //overView
+          $("#infoEmpno").text(empno);
+          $("#infoFullName").text(fname+" "+mname+" "+sname+" "+extname);
+          $("#infoPosition").text(position);
+          $("#infoDivision").text(division);
+          $("#infoUnit").text(unit);
+          $("#infoAddress").text(houseNo+" "+street+" "+brgy+" "+city+" "+province+" "+region);
+          $("#infoMobileNo").text(mobileNumber);
+          $("#infoEmail").text(email);
+          
+          //updateinfo
+          const sameAddress = data.sameAddress;
+          if(sameAddress ==1){
+            $('#sameAddressCheckbox').prop('checked', true);
+            $('#AddPermanentZipCode').attr('readonly',true);
+            $('#AddPermanentCity').attr('disabled',true);
+            $('#AddPermanentProvince').attr('disabled',true);
+            $('#AddPermanentRegion').attr('disabled',true);
+            $('#AddPermanentBarangay').attr('disabled',true);
+            $('#AddPermanentHouseNumber').attr('readonly',true);
+            $('#AddPermanentStreet').attr('readonly',true);
+            $('#AddPermanentSubd').attr('readonly',true);
+            $('#AddPermanentZipCode').attr('required',false);
+          }else{
+            $('#sameAddressCheckbox').prop('checked', false);
+            $('#AddPermanentZipCode').attr('readonly',false);
+            $('#AddPermanentCity').attr('disabled',false);
+            $('#AddPermanentProvince').attr('disabled',false);
+            $('#AddPermanentRegion').attr('disabled',false);
+            $('#AddPermanentBarangay').attr('disabled',false);
+            $('#AddPermanentHouseNumber').attr('readonly',false);
+            $('#AddPermanentStreet').attr('readonly',false);
+            $('#AddPermanentSubd').attr('readonly',false);
+            $('#AddPermanentZipCode').attr('required',true);
+          }
+          const permhouseNo = data.permNumAdd;
+          const permstreet = data.permStreet;
+          const permRegion_code = data.permRegion;
+          const permProvince_code = data.permProvince;
+          const permCity_code = data.permCity;
+          const permBrgy_code = data.permBarangay;
+          const permSubd = data.permSubd;
+          const permZipCode = data.permZipCode;
+          $("#AddFullName").val(fname+" "+mname+" "+sname+" "+extname);
+          $("#AddSex").val(sex);
+          $("#AddDOB").val(dob);
+          $("#AddStreet").val(street);
+          $("#AddHouseNumber").val(houseNo);
+          $("#AddSubd").val(subd);
+          $("#AddZipCode").val(zip_code);
+          $("#AddPermanentHouseNumber").val(permhouseNo);
+          $("#AddPermanentStreet").val(permstreet);
+          $("#AddPermanentSubd").val(permSubd);
+          $("#AddPermanentZipCode").val(permZipCode);
+          $("#AddMobileNo").val(mobileNumber);
+          $("#AddTelephoneNo").val(telephoneNumber);
+          $("#AddEmail").val(email);
+
+          $(".loader-div").show();
+          var update_region_id = region_code;
+          $.ajax({  
+              url:"includes/functions.php",
+              method:"POST",
+              data:{update_region_id:update_region_id},
+              success:function(data){
+                  $(".loader-div").hide(); 
+                  $('#AddRegion').html(data);
+              },error: function(xhr, status, error) {
+                modalErrorShow("The system encountered an error. Please contact support.");
+                $(".loader-div").hide();
+              }
+          });
+
+          $(".loader-div").show();
+          var update_province_id = province_code;
+          $.ajax({
+            url:"includes/functions.php",
+            method:"POST",
+            data:{update_province_id:update_province_id,Where_region_ID:update_region_id},
+            success:function(data){
+              $(".loader-div").hide(); 
+              $('#AddProvince').html(data);
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            }
+        });
+
+          $(".loader-div").show();
+          var update_city_id = city_code;
+          $.ajax({
+            url:"includes/functions.php",
+            method:"POST",
+            data:{update_city_id:update_city_id,Where_province_ID:update_province_id},
+            success:function(data){
+                $(".loader-div").hide(); 
+                $('#AddCity').html(data);
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            }
+          });
+
+          $(".loader-div").show();
+          var update_barangay_id = brgy_code;
+          $.ajax({
+            url:"includes/functions.php",
+            method:"POST",
+            data:{update_barangay_id:update_barangay_id,Where_city_ID:update_city_id},
+            success:function(data){
+              $(".loader-div").hide();
+                $('#AddBarangay').html(data);
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            }
+        });
+
+        // Permanent
+        $(".loader-div").show();
+        var update_Perm_region_id = permRegion_code;
+        $.ajax({
+            url:"includes/functions.php",
+            method:"POST",
+            data:{update_region_id:update_Perm_region_id},
+            success:function(data){
+              $(".loader-div").hide();
+                $('#AddPermanentRegion').html(data);
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            }
+        });
+
+        $(".loader-div").show();
+        var update_Perm_province_id = permProvince_code;
+        $.ajax({
+          url:"includes/functions.php",
+          method:"POST",
+          data:{update_province_id:update_Perm_province_id,Where_region_ID:update_Perm_region_id},
+          success:function(data){
+            $(".loader-div").hide();
+              $('#AddPermanentProvince').html(data);
+          },error: function(xhr, status, error) {
+            modalErrorShow("The system encountered an error. Please contact support.");
+            $(".loader-div").hide();
+          }
+      });
+
+        $(".loader-div").show();
+        var update_Perm_city_id = permCity_code;
+        $.ajax({
+          url:"includes/functions.php",
+          method:"POST",
+          data:{update_city_id:update_Perm_city_id,Where_province_ID:update_Perm_province_id},
+          success:function(data){
+            $(".loader-div").hide();
+              $('#AddPermanentCity').html(data);
+          }
+      });
+        var update_Perm_barangay_id = permBrgy_code ;
+        $.ajax({
+          url:"includes/functions.php",
+          method:"POST",
+          data:{update_barangay_id:update_Perm_barangay_id,Where_city_ID:update_Perm_city_id},
+          success:function(data){
+              $('#AddPermanentBarangay').html(data);
+          },error: function(xhr, status, error) {
+            modalErrorShow("The system encountered an error. Please contact support.");
+            $(".loader-div").hide();
+          }
+      });
+      
+      //otherinfo
+      const birth_place = data.pob;
+      const citizenship = data.citizenship;
+      const byBirth = data.byBirth;
+      const byNaturalization = data.byNaturalization;
+      const countryCitizenship = data.country_citizenship; //Find database
+      const civilStatus = data.civil_status;
+      const civilStatus_other = data.civil_status_other;
+      const height = data.height;
+      const weight = data.weight;
+      const bloodType = data.blood_type;
+      const GSIS = data.gsis_no;
+      const PAGIBIG = data.pagibig_no;
+      const PHILHEALTH = data.philhealth_no;
+      const SSS = data.sss_no;
+      const TIN = data.tin_no;
+      $("#gsisNo").val(GSIS);
+      $("#pagibigNo").val(PAGIBIG);
+      $("#philhealthNo").val(PHILHEALTH);
+      $("#sssNo").val(SSS);
+      $("#tinNo").val(TIN);
+      $("#Weight").val(weight);
+      $("#Height").val(height);
+      $("#OthersCivilStatus").val(civilStatus_other);
+      $("#CivilStatus").val(civilStatus).trigger('change');
+
+      $(".loader-div").show();
+      var citi_country = countryCitizenship;
+      $.ajax({
+        url:"includes/functions.php",
+        method:"POST",
+        data:{citi_country:citi_country},
+        success:function(data){
+          $(".loader-div").hide(); 
+          $("#DualCitizenCountry").html(data);
+        },error: function(xhr, status, error) {
+          modalErrorShow("The system encountered an error. Please contact support.");
+          $(".loader-div").hide();
+        }
+      });
+
+      $(".loader-div").show();
+      $.ajax({
+        url:"includes/functions.php",
+        method:"POST",
+        data:{blood_type_id:bloodType},
+        success:function(data){
+          $(".loader-div").hide(); 
+          $("#BloodType").html(data);
+        },error: function(xhr, status, error) {
+          modalErrorShow("The system encountered an error. Please contact support.");
+          $(".loader-div").hide();
+        }
+      });
+
+      if(byNaturalization =='on'){
+        $("#chkByNaturalization").prop('checked', true);
+        $("#DualCitizenCountry").attr("disabled",false);
+      }
+      if(byBirth =='on'){
+        $("#chkByBirth").prop('checked', true);
+        $("#DualCitizenCountry").attr("disabled",false);
+      }
+      if(citizenship =='on'){
+        $("#chkFilipino").prop('checked', true);
+      }
+
+      $(".loader-div").show();
+      var pob = birth_place;
+      $.ajax({
+        url:"includes/functions.php",
+        method:"POST",
+        data:{pob:pob},
+        success:function(data){
+          $(".loader-div").hide(); 
+          $('#PlaceOfBirth').html(data);
+        },error: function(xhr, status, error) {
+          modalErrorShow("The system encountered an error. Please contact support.");
+          $(".loader-div").hide();
+        }
+      });
+
+      $(".loader-div").show();
+      var eligibility = '';
+      $.ajax({
+        url:"includes/functions.php",
+        method:"POST",
+        data:{eligibility:eligibility},
+        success:function(data){
+          $(".loader-div").hide(); 
+            $('#eligibilityCredentials').html(data);
+        },error: function(xhr, status, error) {
+          modalErrorShow("The system encountered an error. Please contact support.");
+          $(".loader-div").hide();
+        }
+      });
+
+              //Family Background
+              if(civilStatus==1 || civilStatus=='' || civilStatus == null){
+                $("#optSpouse").remove();
+              }else{
+                // $("#relation").append('<option name = "optSpouse" id="optSpouse" value="1">Spouse</option>');
+              }
+              //other infor part 2
+              if(data.q1a != ''){
+                $("#q1a_"+data.q1a).prop("checked", true)
+              }
+              if(data.q1b != ''){
+                $("#q1b_"+data.q1b).prop("checked", true)
+              }
+              $("#q1b_details").val(data.q1b_details);
+
+              if(data.q2a != ''){
+                $("#q2a_"+data.q2a).prop("checked", true)
+              }
+
+              $("#q2a_details").val(data.q2a_details);
+
+
+              if(data.q2b != ''){
+                $("#q2b_"+data.q2b).prop("checked", true)
+              } 
+              $("#q2b_datefiled").val(data.q2b_datefiled);
+              $("#q2_status").val(data.q2_status);
+
+
+              if(data.q3 != ''){
+                $("#q3_"+data.q3).prop("checked", true)
+              }
+              $("#q3_details").val(data.q3_details);
+
+              if(data.q4 != ''){
+                $("#q4_"+data.q4).prop("checked", true)
+              }
+              $("#q4_details").val(data.q4_details);
+
+              if(data.q5a != ''){
+                $("#q5a_"+data.q5a).prop("checked", true)
+              }
+              $("#q5a_details").val(data.q5a_details);
+
+              if(data.q5b != ''){
+                $("#q5b_"+data.q5b).prop("checked", true)
+              }
+              $("#q5b_details").val(data.q5b_details);
+
+              if(data.q6 != ''){
+                $("#q6_"+data.q6).prop("checked", true)
+              }
+              $("#q6_details").val(data.q6_details);
+
+              if(data.q7a != ''){
+                $("#q7a_"+data.q7a).prop("checked", true)
+              }
+              $("#q7a_details").val(data.q7a_details);
+
+              if(data.q7b != ''){
+                $("#q7b_"+data.q7b).prop("checked", true)
+              }
+              $("#q7b_details").val(data.q7b_details);
+
+              if(data.q7c != ''){
+                $("#q7c_"+data.q7c).prop("checked", true)
+              }
+              $("#q7c_details").val(data.q7c_details);
+              $('#GovernId').val(data.id);
+              $('#GovernIDTitle').val(data.govern_id_title);
+              $('#GovernIDNo').val(data.govern_id_no);
+              $('#GovernIDDateIssue').val(data.govern_id_date);
+
+              $(".loader-div").show();
+              var poi = data.govern_id_place;
+              $.ajax({
+              url:"includes/functions.php",
+              method:"POST",
+              data:{pob:poi},
+              success:function(data){
+                $(".loader-div").hide(); 
+                  $('#GovernIDPlaceIssue').html(data);
+              },error: function(xhr, status, error) {
+                modalErrorShow("The system encountered an error. Please contact support.");
+                $(".loader-div").hide();
+              }
+            });
+
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
+  });
+  }
 
   function validateFileTypeCareer() { //check file type
     var selectedFile = document.getElementById('careerMOV').files[0];
@@ -117,627 +739,71 @@
     }
   }
 
-  function sameAddress(){
-
-  }
-
-  //Kapag meg select Region
-  jQuery(document).ready(function() {
-        $('.search-box input[type="text"]').on("keyup input", function(){
-          /* Get input value on change */
-          var inputVal = $(this).val();
-          var resultDropdown = $(this).siblings(".result");
-          if(inputVal.length){
-              $.get("ajax_search.php", {term: inputVal}).done(function(data){
-                  // Display the returned data in browser
-                  resultDropdown.html(data);
-              });
-          } else{
-              resultDropdown.empty();
-          }
-      });
-      
-      // Set search input value on click of result item
-      $(document).on("click", ".result p", function(){
-      // Set the filter to the clicked school's name
-      $(this).parents(".search-box").find('#txtFilter').val($(this).find('.schl_name').text());
-      // Set the school ID from the clicked result
-      $(this).parents(".search-box").find('#txtID').val($(this).find('.school_id').text());
-      // Clear the result dropdown
-      $(this).parents(".search-box").find('#txtUpdateFilter').val($(this).find('.schl_name').text());
-      // Set the school ID from the clicked result
-      $(this).parents(".search-box").find('#txtUpdateID').val($(this).find('.school_id').text());
-      // Clear the result dropdown
-      $(this).parent(".result").empty();
-      });
-    $('.select2').select2();
-    jQuery("#AddRegion").on('change',function(){  //End select Region
-        var regionAction = jQuery(this).attr("id");
-        var region_id = jQuery(this).val();
-        if(region_id){
-            jQuery.ajax({
-            url:"includes/functions.php",
-            method:"POST",
-            data:{regionAction:regionAction, region_id:region_id},
-            success:function(data){
-
-                jQuery('#AddProvince').html(data);
-                jQuery('#AddCity').html('<option value="">SELECT PROVINCE FIRST</option>');  
-                jQuery('#AddBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');
-            }
-        });
-        }else{
-            jQuery('#AddProvince').html('<option value="">SELECT REGION FIRST</option>');
-            jQuery('#AddCity').html('<option value="">SELECT PROVINCE FIRST</option>');
-            jQuery('#AddBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');
-        }
-    });
-    jQuery("#AddProvince").on('change',function(){  //Kapag meg Select province
-      var provinceAction = jQuery(this).attr("id");
-      var province_id = jQuery(this).val();
-      if(province_id){
-          jQuery.ajax({
-          url:"includes/functions.php",
-          method:"POST",
-          data:{provinceAction:provinceAction, province_id:province_id},
-          success:function(data){
-              jQuery('#AddCity').html(data);
-              jQuery('#AddBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');  
-          }
-      });
-      }else{
-          jQuery('#AddCity').html('<option value="">SELECT PROVINCE FIRST</option>');
-          jQuery('#AddBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');
-      }
-    });
-    jQuery("#AddCity").on('change',function(){
-      var cityAction = jQuery(this).attr("id");
-      var city_id = jQuery(this).val();
-      if(city_id){
-          jQuery.ajax({
-          url:"includes/functions.php",
-          method:"POST",
-          data:{cityAction:cityAction, city_id:city_id},
-          success:function(data){
-              jQuery('#AddBarangay').html(data);
-               
-          }
-      });
-      }else{
-          jQuery('#AddBarangay').html('<option value="">SELECT PROVINCE FIRST</option>');
-         
-      }
-    });
-    jQuery("#AddPermanentRegion").on('change',function(){
-      var regionAction = jQuery(this).attr("id");
-      var region_id = jQuery(this).val();
-      if(region_id){
-          jQuery.ajax({
-          url:"includes/functions.php",
-          method:"POST",
-          data:{regionAction:regionAction, region_id:region_id},
-          success:function(data){
-
-              jQuery('#AddPermanentProvince').html(data);
-              jQuery('#AddPermanentCity').html('<option value="">SELECT PROVINCE FIRST</option>');
-              jQuery('#AddPermanentBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');  
-          }
-      });
-      }else{
-          jQuery('#AddPermanentProvince').html('<option value="">SELECT REGION FIRST</option>');
-          jQuery('#AddPermanentCity').html('<option value="">SELECT PROVINCE FIRST</option>');
-          jQuery('#AddPermanentBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');
-      }
-    });
-    jQuery("#AddPermanentProvince").on('change',function(){
-      var provinceAction = jQuery(this).attr("id");
-      var province_id = jQuery(this).val();
-      if(province_id){
-          jQuery.ajax({
-          url:"includes/functions.php",
-          method:"POST",
-          data:{provinceAction:provinceAction, province_id:province_id},
-          success:function(data){
-              jQuery('#AddPermanentCity').html(data);
-              jQuery('#AddPermanentBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');  
-          }
-      });
-      }else{
-          jQuery('#AddPermanentCity').html('<option value="">SELECT PROVINCE FIRST</option>');
-          jQuery('#AddPermanentBarangay').html('<option value="">SELECT MUNICIPALITY FIRST</option>');
-      }
-    });
-    jQuery("#AddPermanentCity").on('change',function(){
-      var cityAction = jQuery(this).attr("id");
-      var city_id = jQuery(this).val();
-      if(city_id){
-          jQuery.ajax({
-          url:"includes/functions.php",
-          method:"POST",
-          data:{cityAction:cityAction, city_id:city_id},
-          success:function(data){
-              jQuery('#AddPermanentBarangay').html(data);
-               
-          }
-      });
-      }else{
-          jQuery('#AddPermanentBarangay').html('<option value="">SELECT PROVINCE FIRST</option>');
-         
-      }
-  });
-  });
-
-//kapag meg select barangay
- 
-$(function(){
-      //Date picker
-      $('#datepicker').datepicker({
-        autoclose: true
-      });
-      let year_start = 1940;
-      let year_end = (new Date).getFullYear(); // current year
-      let year_selected = '';
-
-      let YearOption = '';
-      YearOption = '<option value="">Year</option>'; // first option
-
-      for (let i = year_start; i <= year_end; i++) {
-          let selected = (i === year_selected ? ' selected' : '');
-          YearOption += '<option value="' + i + '"' + selected + '>' + i + '</option>';
-      }
-      $("#acadPeriodFrom").html(YearOption);
-      $("#acadPeriodTo").html(YearOption);
-      $("#acadYearGraduated").html(YearOption);
-
-      $("#UpdateacadPeriodFrom").html(YearOption);
-      $("#UpdateacadPeriodTo").html(YearOption);
-      $("#UpdateacadYearGraduated").html(YearOption);
-
-    $(".loader-div").show();
-    $.ajax({ //set 3 entry in person references
-      url:"checkExist.php",
-      method:"POST",
-      data:{countReference:1},
-      dataType: 'json',
-      success:function(data){
-        $(".loader-div").hide(); 
-        const countReference = data.countRef;
-        if(countReference==3){
-          $('#frmReferencesAdd').hide(); //hide insert form
-          $('#refLimitInfo').show(); //show info
-        }
-      },error: function(xhr, status, error) {
-        modalErrorShow("The system encountered an error. Please contact support.");
-        $(".loader-div").hide();
-      }
-    });
-
-    $(".loader-div").show();
-    $.ajax({ //work experience present checkbox hide when already encoded present work
-      url:"checkExist.php",
-      method:"POST",
-      data:{countPresent:1},
-      dataType: 'json',
-      success:function(data){
-        $(".loader-div").hide(); 
-        const countPresent = data.countPresent;
-        if(countPresent){
-          $('#labelCareerPresent').hide();
-          $('#careerPresent').hide();
-        }
-      },error: function(xhr, status, error) {
-        modalErrorShow("The system encountered an error. Please contact support.");
-        $(".loader-div").hide();
-      }
-    });
-
-    $(".loader-div").show();
-    $.ajax({ //getInfo session populate
-        url:"getInfo.php",
+  function UserFamilyBackgroundUpdate (formData){ //update family member action
+    const FBSname = $("#updateFBSname").val();
+    const FBFname = $("#updateFBFname").val();
+    const FBMname = $("#updateFBMname").val();
+    const FBbirthday = $("#updateFBDOB").val();
+    var selectRelation = $("#updaterelation").val();
+    var age = computeBday(FBbirthday);
+  
+    $("#CheckupdateFBSname").html("");
+    $("#updateFBSname").css('border-color', '');
+    $("#CheckupdateFBFname").html("");
+    $("#updateFBFname").css('border-color', '');
+    $("#CheckupdateFBMname").html("");
+    $("#updateFBMname").css('border-color', '');
+    $("#updateCheckFBDOB").html("");
+  
+    if(selectRelation !=2 && age < 18){
+      $("#updateCheckFBDOB").html("Please furnish a valid date of birth ensuring the individual is aged 18 years or older.").css('color', 'red');
+      validatePass = 0;
+      // $("#updateFB").modal({"backdrop": "static"});
+    }else if(FBSname.length<2){
+      $("#CheckupdateFBSname").html("Please enter first name atleast 2 characters.").css('color', 'red');
+      $("#updateFBSname").css('border-color', 'red');
+      $("#updateFBSname").focus();
+      // $("#updateFB").modal({"backdrop": "static"});
+    }else if(FBFname.length <2){
+      $("#CheckupdateFBFname").html("Please enter last name atleast 2 characters.").css('color', 'red');
+      $("#updateFBFname").css('border-color', 'red');
+      $("#updateFBFname").focus();
+      // $("#updateFB").modal({"backdrop": "static"});
+    }else if(FBMname.length !='' && FBMname.length <2 ){
+      $("#CheckupdateFBMname").html("Please enter middle name atleast 2 characters.").css('color', 'red');
+      $("#updateFBMname").css('border-color', 'red');
+      $("#updateFBMname").focus();
+      // $("#updateFB").modal({"backdrop": "static"});
+    } else {
+      $(".loader-div").show();
+      $.ajax({
+        url:"familyBackgroundUpdate.php",
         method:"POST",
-        dataType: 'json',
+        dataType: "json",
+        data:formData,
         success:function(data){
           $(".loader-div").hide(); 
-            const empno = data.empno;
-            const fname = data.fname;
-            const sname = data.sname;
-            const mname = data.mname;
-            const extname = data.ename;
-            var sex = data.sex;
-            if(sex > 0){
-              sex = 'FEMALE'
-            }else{
-              sex = 'MALE'
-            }
-            const dob = data.birthdate;
-            const position = data.position_name;
-            const division = data.division_name;
-            const unit = data.unit_name;
-            const region = data.region_name;
-            const province = data.prov_name;
-            const city = data.city_name;
-            const brgy = data.brgy_name;
-            const houseNo = data.numAdd;
-            const street = data.street;
-            const mobileNumber = data.mobile;
-            const telephoneNumber = data.telephone;
-            const email = data.eaddress
-            const region_code = data.region;
-            const province_code = data.province;
-            const city_code = data.city;
-            const brgy_code = data.barangay;
-            const subd = data.subd;
-            const zip_code = data.zip_code;
-
-            //profileCard
-            $("#profileFullName").text(fname+" "+sname);
-            $("#profilePosition").text(position);
-            $("#profileDivision").text(division);
-            $("#profileUnit").text(unit);
-            //overView
-            $("#infoEmpno").text(empno);
-            $("#infoFullName").text(fname+" "+mname+" "+sname+" "+extname);
-            $("#infoPosition").text(position);
-            $("#infoDivision").text(division);
-            $("#infoUnit").text(unit);
-            $("#infoAddress").text(houseNo+" "+street+" "+brgy+" "+city+" "+province+" "+region);
-            $("#infoMobileNo").text(mobileNumber);
-            $("#infoEmail").text(email);
-            
-            //updateinfo
-            const sameAddress = data.sameAddress;
-            if(sameAddress ==1){
-              $('#sameAddressCheckbox').prop('checked', true);
-              $('#AddPermanentZipCode').attr('readonly',true);
-              $('#AddPermanentCity').attr('disabled',true);
-              $('#AddPermanentProvince').attr('disabled',true);
-              $('#AddPermanentRegion').attr('disabled',true);
-              $('#AddPermanentBarangay').attr('disabled',true);
-              $('#AddPermanentHouseNumber').attr('readonly',true);
-              $('#AddPermanentStreet').attr('readonly',true);
-              $('#AddPermanentSubd').attr('readonly',true);
-              $('#AddPermanentZipCode').attr('required',false);
-            }else{
-              $('#sameAddressCheckbox').prop('checked', false);
-              $('#AddPermanentZipCode').attr('readonly',false);
-              $('#AddPermanentCity').attr('disabled',false);
-              $('#AddPermanentProvince').attr('disabled',false);
-              $('#AddPermanentRegion').attr('disabled',false);
-              $('#AddPermanentBarangay').attr('disabled',false);
-              $('#AddPermanentHouseNumber').attr('readonly',false);
-              $('#AddPermanentStreet').attr('readonly',false);
-              $('#AddPermanentSubd').attr('readonly',false);
-              $('#AddPermanentZipCode').attr('required',true);
-            }
-            const permhouseNo = data.permNumAdd;
-            const permstreet = data.permStreet;
-            const permRegion_code = data.permRegion;
-            const permProvince_code = data.permProvince;
-            const permCity_code = data.permCity;
-            const permBrgy_code = data.permBarangay;
-            const permSubd = data.permSubd;
-            const permZipCode = data.permZipCode;
-            $("#AddFullName").val(fname+" "+mname+" "+sname+" "+extname);
-            $("#AddSex").val(sex);
-            $("#AddDOB").val(dob);
-            $("#AddStreet").val(street);
-            $("#AddHouseNumber").val(houseNo);
-            $("#AddSubd").val(subd);
-            $("#AddZipCode").val(zip_code);
-            $("#AddPermanentHouseNumber").val(permhouseNo);
-            $("#AddPermanentStreet").val(permstreet);
-            $("#AddPermanentSubd").val(permSubd);
-            $("#AddPermanentZipCode").val(permZipCode);
-            $("#AddMobileNo").val(mobileNumber);
-            $("#AddTelephoneNo").val(telephoneNumber);
-            $("#AddEmail").val(email);
-
-            $(".loader-div").show();
-            var update_region_id = region_code;
-            $.ajax({  
-                url:"includes/functions.php",
-                method:"POST",
-                data:{update_region_id:update_region_id},
-                success:function(data){
-                    $(".loader-div").hide(); 
-                    $('#AddRegion').html(data);
-                },error: function(xhr, status, error) {
-                  modalErrorShow("The system encountered an error. Please contact support.");
-                  $(".loader-div").hide();
-                }
-            });
-
-            $(".loader-div").show();
-            var update_province_id = province_code;
-            $.ajax({
-              url:"includes/functions.php",
-              method:"POST",
-              data:{update_province_id:update_province_id,Where_region_ID:update_region_id},
-              success:function(data){
-                $(".loader-div").hide(); 
-                $('#AddProvince').html(data);
-              },error: function(xhr, status, error) {
-                modalErrorShow("The system encountered an error. Please contact support.");
-                $(".loader-div").hide();
-              }
-          });
-
-            $(".loader-div").show();
-            var update_city_id = city_code;
-            $.ajax({
-              url:"includes/functions.php",
-              method:"POST",
-              data:{update_city_id:update_city_id,Where_province_ID:update_province_id},
-              success:function(data){
-                  $(".loader-div").hide(); 
-                  $('#AddCity').html(data);
-              },error: function(xhr, status, error) {
-                modalErrorShow("The system encountered an error. Please contact support.");
-                $(".loader-div").hide();
-              }
-            });
-
-            $(".loader-div").show();
-            var update_barangay_id = brgy_code;
-            $.ajax({
-              url:"includes/functions.php",
-              method:"POST",
-              data:{update_barangay_id:update_barangay_id,Where_city_ID:update_city_id},
-              success:function(data){
-                $(".loader-div").hide();
-                  $('#AddBarangay').html(data);
-              },error: function(xhr, status, error) {
-                modalErrorShow("The system encountered an error. Please contact support.");
-                $(".loader-div").hide();
-              }
-          });
-
-          // Permanent
-          $(".loader-div").show();
-          var update_Perm_region_id = permRegion_code;
-          $.ajax({
-              url:"includes/functions.php",
-              method:"POST",
-              data:{update_region_id:update_Perm_region_id},
-              success:function(data){
-                $(".loader-div").hide();
-                  $('#AddPermanentRegion').html(data);
-              },error: function(xhr, status, error) {
-                modalErrorShow("The system encountered an error. Please contact support.");
-                $(".loader-div").hide();
-              }
-          });
-
-          $(".loader-div").show();
-          var update_Perm_province_id = permProvince_code;
-          $.ajax({
-            url:"includes/functions.php",
-            method:"POST",
-            data:{update_province_id:update_Perm_province_id,Where_region_ID:update_Perm_region_id},
-            success:function(data){
-              $(".loader-div").hide();
-                $('#AddPermanentProvince').html(data);
-            },error: function(xhr, status, error) {
-              modalErrorShow("The system encountered an error. Please contact support.");
-              $(".loader-div").hide();
-            }
-        });
-
-          $(".loader-div").show();
-          var update_Perm_city_id = permCity_code;
-          $.ajax({
-            url:"includes/functions.php",
-            method:"POST",
-            data:{update_city_id:update_Perm_city_id,Where_province_ID:update_Perm_province_id},
-            success:function(data){
-              $(".loader-div").hide();
-                $('#AddPermanentCity').html(data);
-            }
-        });
-          var update_Perm_barangay_id = permBrgy_code ;
-          $.ajax({
-            url:"includes/functions.php",
-            method:"POST",
-            data:{update_barangay_id:update_Perm_barangay_id,Where_city_ID:update_Perm_city_id},
-            success:function(data){
-                $('#AddPermanentBarangay').html(data);
-            },error: function(xhr, status, error) {
-              modalErrorShow("The system encountered an error. Please contact support.");
-              $(".loader-div").hide();
-            }
-        });
-        
-        //otherinfo
-        const birth_place = data.pob;
-        const citizenship = data.citizenship;
-        const byBirth = data.byBirth;
-        const byNaturalization = data.byNaturalization;
-        const countryCitizenship = data.country_citizenship; //Find database
-        const civilStatus = data.civil_status;
-        const civilStatus_other = data.civil_status_other;
-        const height = data.height;
-        const weight = data.weight;
-        const bloodType = data.blood_type;
-        const GSIS = data.gsis_no;
-        const PAGIBIG = data.pagibig_no;
-        const PHILHEALTH = data.philhealth_no;
-        const SSS = data.sss_no;
-        const TIN = data.tin_no;
-        $("#gsisNo").val(GSIS);
-        $("#pagibigNo").val(PAGIBIG);
-        $("#philhealthNo").val(PHILHEALTH);
-        $("#sssNo").val(SSS);
-        $("#tinNo").val(TIN);
-        $("#Weight").val(weight);
-        $("#Height").val(height);
-        $("#OthersCivilStatus").val(civilStatus_other);
-        $("#CivilStatus").val(civilStatus).trigger('change');
-
-        $(".loader-div").show();
-        var citi_country = countryCitizenship;
-        $.ajax({
-          url:"includes/functions.php",
-          method:"POST",
-          data:{citi_country:citi_country},
-          success:function(data){
-            $(".loader-div").hide(); 
-            $("#DualCitizenCountry").html(data);
-          },error: function(xhr, status, error) {
-            modalErrorShow("The system encountered an error. Please contact support.");
-            $(".loader-div").hide();
+          $('#updateFB').modal('hide');
+          const msg = data.msg;
+          const stat = data.status;
+          if(stat === "success"){ 
+            // /$('#updateFB').modal('hide');
+            modalSuccessShow(msg,triggerTableReload,'tblFBMember');
+            resetFormFamilyBackground();
+            checkAlreadyEncode();
+          } else {
+            modalErrorShow(msg);
           }
-        });
-
-        $(".loader-div").show();
-        $.ajax({
-          url:"includes/functions.php",
-          method:"POST",
-          data:{blood_type_id:bloodType},
-          success:function(data){
-            $(".loader-div").hide(); 
-            $("#BloodType").html(data);
-          },error: function(xhr, status, error) {
-            modalErrorShow("The system encountered an error. Please contact support.");
-            $(".loader-div").hide();
-          }
-        });
-
-        if(byNaturalization =='on'){
-          $("#chkByNaturalization").prop('checked', true);
-          $("#DualCitizenCountry").attr("disabled",false);
-        }
-        if(byBirth =='on'){
-          $("#chkByBirth").prop('checked', true);
-          $("#DualCitizenCountry").attr("disabled",false);
-        }
-        if(citizenship =='on'){
-          $("#chkFilipino").prop('checked', true);
-        }
-
-        $(".loader-div").show();
-        var pob = birth_place;
-        $.ajax({
-          url:"includes/functions.php",
-          method:"POST",
-          data:{pob:pob},
-          success:function(data){
-            $(".loader-div").hide(); 
-            $('#PlaceOfBirth').html(data);
-          },error: function(xhr, status, error) {
-            modalErrorShow("The system encountered an error. Please contact support.");
-            $(".loader-div").hide();
-          }
-        });
-
-        $(".loader-div").show();
-        var eligibility = '';
-        $.ajax({
-          url:"includes/functions.php",
-          method:"POST",
-          data:{eligibility:eligibility},
-          success:function(data){
-            $(".loader-div").hide(); 
-              $('#eligibilityCredentials').html(data);
-          },error: function(xhr, status, error) {
-            modalErrorShow("The system encountered an error. Please contact support.");
-            $(".loader-div").hide();
-          }
-        });
-
-                //Family Background
-                if(civilStatus==1 || civilStatus=='' || civilStatus == null){
-                  $("#optSpouse").remove();
-                }
-                //other infor part 2
-                if(data.q1a != ''){
-                  $("#q1a_"+data.q1a).prop("checked", true)
-                }
-                if(data.q1b != ''){
-                  $("#q1b_"+data.q1b).prop("checked", true)
-                }
-                $("#q1b_details").val(data.q1b_details);
-
-                if(data.q2a != ''){
-                  $("#q2a_"+data.q2a).prop("checked", true)
-                }
-
-                $("#q2a_details").val(data.q2a_details);
-
-
-                if(data.q2b != ''){
-                  $("#q2b_"+data.q2b).prop("checked", true)
-                } 
-                $("#q2b_datefiled").val(data.q2b_datefiled);
-                $("#q2_status").val(data.q2_status);
-
-
-                if(data.q3 != ''){
-                  $("#q3_"+data.q3).prop("checked", true)
-                }
-                $("#q3_details").val(data.q3_details);
-
-                if(data.q4 != ''){
-                  $("#q4_"+data.q4).prop("checked", true)
-                }
-                $("#q4_details").val(data.q4_details);
-
-                if(data.q5a != ''){
-                  $("#q5a_"+data.q5a).prop("checked", true)
-                }
-                $("#q5a_details").val(data.q5a_details);
-
-                if(data.q5b != ''){
-                  $("#q5b_"+data.q5b).prop("checked", true)
-                }
-                $("#q5b_details").val(data.q5b_details);
-
-                if(data.q6 != ''){
-                  $("#q6_"+data.q6).prop("checked", true)
-                }
-                $("#q6_details").val(data.q6_details);
-
-                if(data.q7a != ''){
-                  $("#q7a_"+data.q7a).prop("checked", true)
-                }
-                $("#q7a_details").val(data.q7a_details);
-
-                if(data.q7b != ''){
-                  $("#q7b_"+data.q7b).prop("checked", true)
-                }
-                $("#q7b_details").val(data.q7b_details);
-
-                if(data.q7c != ''){
-                  $("#q7c_"+data.q7c).prop("checked", true)
-                }
-                $("#q7c_details").val(data.q7c_details);
-                $('#GovernId').val(data.id);
-                $('#GovernIDTitle').val(data.govern_id_title);
-                $('#GovernIDNo').val(data.govern_id_no);
-                $('#GovernIDDateIssue').val(data.govern_id_date);
-
-                $(".loader-div").show();
-                var poi = data.govern_id_place;
-                $.ajax({
-                url:"includes/functions.php",
-                method:"POST",
-                data:{pob:poi},
-                success:function(data){
-                  $(".loader-div").hide(); 
-                    $('#GovernIDPlaceIssue').html(data);
-                },error: function(xhr, status, error) {
-                  modalErrorShow("The system encountered an error. Please contact support.");
-                  $(".loader-div").hide();
-                }
-              });
-
         },error: function(xhr, status, error) {
           modalErrorShow("The system encountered an error. Please contact support.");
           $(".loader-div").hide();
-        }
-    });
-
-    checkAlreadyEncode(); //check all already recorded  
-});
+        },
+        processData: false,
+        contentType: false
+  
+      });
+    }
+  }
 
 function checkAlreadyEncode(){
   $(".loader-div").show();
@@ -761,13 +827,34 @@ function checkAlreadyEncode(){
           $("#encodedTrainingCount").val(trainingCount);
           $("#encodedCareerCount").val(careerCount);
           if(spouse>0){
-            $("#optFather").remove();
+            $("#optSpouse").remove();
+          }else{
+            $.ajax({ 
+              url:"checkExist.php",
+              method:"POST",
+              data:{CivilStatus:1},
+              dataType: 'json',
+              success:function(data){
+                const civilStat = data.civil_status;
+                if (spouse == 0  && $("#optSpouse").length === 0 && civilStat !=1) {
+                  $("#relation").append('<option name="optSpouse" id="optSpouse" value="1">Spouse</option>');
+                }
+              }
+            });
           }
           if(father>0){
             $("#optFather").remove();
+          }else{
+            if ($("#optFather").length === 0) {
+              $("#relation").append('<option name = "optFather" id="optFather" value="3">Father</option>');
+            }
           }
           if(mother>0){
             $("#optMother").remove();
+          }else{
+            if ($("#optMother").length === 0) {
+              $("#relation").append('<option name = "optMother" id="optMother" value="4">Mother</option>');
+            }
           }
           const elementary = data.elementary; //for educ background
           const secondary = data.secondary; //for educ background
@@ -787,6 +874,8 @@ function checkAlreadyEncode(){
 
 function resetFormFamilyBackground() {
   $('#frmUserFamilyBackgroundAdd')[0].reset(); // Reset all inputs in the form
+  var selectRelation = 0;
+  FBMember(selectRelation);
 }
 
 function resetFormBasicInfo(){
@@ -1054,7 +1143,8 @@ function UserOtherBasicInfoUpdate(formData){
                     const msg = data.msg;
                     const stat = data.status;
                     if(stat === "success"){ 
-                      modalSuccessShow(msg,clearForm)
+                      modalSuccessShow(msg,clearForm);
+                      getInfo();
                     } else {
                       modalErrorShow(msg);
                     }
@@ -1138,20 +1228,20 @@ function Others(){
   }
 }
 
-function FBMember(){  
-  var selectValue = $("#relation").val();
-  if(selectValue >1){
-    $("#divSpouseFields").hide();
-    $("#FBoccupation").attr("disabled",true);
-    $("#FBBusinessName").attr("disabled",true);
-    $("#FBBusinessAddress").attr("disabled",true);
-    $("#FBTelephoneNo").attr("disabled",true);
-  }else{
-    $("#divSpouseFields").show();
+function FBMember(value) {
+
+  if (value == 1) { // If "Spouse" is selected
+      $("#divSpouseFields").show(); // Hide the spouse-related fields container
+      // Disable all related fields in a single line
+      $("#FBoccupation, #FBBusinessName, #FBBusinessAddress, #FBTelephoneNo").attr("disabled", false);
+  } else {
+      $("#divSpouseFields").hide(); // Show the spouse-related fields container
+      // Enable all related fields in a single line
+      $("#FBoccupation, #FBBusinessName, #FBBusinessAddress, #FBTelephoneNo").attr("disabled", true);
   }
 }
 
-function UserFamilyBackgroundUpdate(formData){
+function UserFamilyBackgroundAdd(formData){
   const FBSname = $("#FBSname").val();
   const FBFname = $("#FBFname").val();
   const FBMname = $("#FBMname").val();
@@ -1244,6 +1334,7 @@ function btnFBUpdate(getFBid){ //open modal family update
         $("#updaterelation").val(FBrelation).trigger('change');
         $("#updaterelation").attr("disabled",true);
         $('#updateFB').modal('show');
+
         if(FBrelation >1){
           $("#divupdateSpouseFields").hide();
           $("#updateFBoccupation").attr("disabled",true);
@@ -1307,7 +1398,7 @@ $(document).on('submit','#frmUserBasicInfoUpdate', function(event){
 
 $(document).on('submit','#frmUserOtherInfoUpdate', function(event){
   event.preventDefault();
-  var PassData = new FormData(frmOtherInfoUpdate);
+  var PassData = new FormData(frmUserOtherInfoUpdate);
   modalConfirmShow('Would you like to confirm and save the changes now?',UserOtherBasicInfoUpdate,PassData);
 });
 
@@ -1504,30 +1595,43 @@ $(document).on('input', '#gsisNo', function () { //tin number format XXX-XXX-XXX
   $(this).val(value);
 });
 
-$(document).on('submit', '#frmUserFamilyBackgroundAdd', function(event){
+$(document).on('submit', '#frmUserFamilyBackgroundAdd', function(event){  //trigger submit family background insert
   event.preventDefault();
   var PassData = new FormData(frmUserFamilyBackgroundAdd);
-  modalConfirmShow('Would you like to confirm and save the changes now?',UserFamilyBackgroundUpdate,PassData);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserFamilyBackgroundAdd,PassData);
 });
 
-$(document).on('change','#relation', function(){
-  FBMember();
+$(document).on('change','#relation', function(){  //onchange function for selecting family member
+  var selectRelation = $(this).val();
+  FBMember(selectRelation);
 });
 
-$(document).on('click', '#btnUserFamilyBackgroundUpdate', function(){
+$(document).on('click', '#btnUserFamilyBackgroundUpdate', function(){ //modal show for family background update
   var  getFBid = $(this).attr('value');
   btnFBUpdate(getFBid);
 });
 
-$(document).on('click', '#btnUserDeleteFamilyBackground', function(){
+$(document).on('submit', '#frmUserFamilyBackgroundUpdate', function(event){   //trigger update family background
+  event.preventDefault();
+  var PassData = new FormData(frmUserFamilyBackgroundUpdate);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserFamilyBackgroundUpdate,PassData);
+});
+
+$(document).on('click', '#btnUserDeleteFamilyBackground', function(){ //delete family background details
   const valueID = $(this).attr('data-valueID');
   const valueURL = $(this).attr('data-valueURL');
+  var TableID = 'tblFBMember';
   var PassData = {
-    valueEmp:valueID,
-    valueURL:valueURL
+    valueID:valueID,
+    valueURL:valueURL,
+    TableID:TableID,
+    ActionAfter1: resetFormFamilyBackground,
+    ActionAfter2: checkAlreadyEncode
   };
   modalConfirmShow('Would you like to permanently delete this information? This action cannot be undone.',deleteData,PassData);
 });
+
+
 
 
 
@@ -2109,17 +2213,6 @@ function btnNonAcademicUpdate(getNonAcademic){
       }
 });
 }
-function btnDelete(Value){
-  var btnValue = Value;
-  const array = btnValue.split(",");
-  const ID = array[0];
-  const PHP = array[1];
-  $('#DeleteID').val('');
-  $('#DeletePHP').val('');
-  $('#DeleteID').val(ID);
-  $('#DeletePHP').val(PHP);
-  $('#modalConfirmDelete').modal('show');
-}
 function btnTrainingUpdate(getTraining){
   $.ajax({
       url:"includes/functions.php",
@@ -2357,81 +2450,7 @@ function btnVoluntaryUpdate(getVoluntary){
       }
 });
 }
-$("#contentUpdateFB").on("submit",function(event){
-  event.preventDefault();
-  const FBSname = $("#updateFBSname").val();
-  const FBFname = $("#updateFBFname").val();
-  const FBMname = $("#updateFBMname").val();
-  const FBbirthday = $("#updateFBDOB").val();
-  var selectRelation = $("#updaterelation").val();
-  var bday = new Date(FBbirthday);
-  var month_diff = Date.now() - bday.getTime();
-  var age_dt = new Date(month_diff); 
-  var year = age_dt.getUTCFullYear();
-  var age = Math.abs(year - 1970);
-  validatePass = 1;
 
-  $("#CheckupdateFBSname").html("");
-  $("#updateFBSname").css('border-color', '');
-  $("#CheckupdateFBFname").html("");
-  $("#updateFBFname").css('border-color', '');
-  $("#CheckupdateFBMname").html("");
-  $("#updateFBMname").css('border-color', '');
-  $("#updateCheckFBDOB").html("");
-  if(selectRelation !=2 && age < 18){
-    $("#updateCheckFBDOB").html("Please furnish a valid date of birth ensuring the individual is aged 18 years or older.").css('color', 'red');
-    validatePass = 0;
-    $("#updateFB").modal({"backdrop": "static"});
-  }
-  if(FBSname.length<2){
-    $("#CheckupdateFBSname").html("Please enter first name atleast 2 characters.").css('color', 'red');
-    $("#updateFBSname").css('border-color', 'red');
-    $("#updateFBSname").focus();
-    validatePass = 0;
-    $("#updateFB").modal({"backdrop": "static"});
-  }
-  if(FBFname.length <2){
-    $("#CheckupdateFBFname").html("Please enter last name atleast 2 characters.").css('color', 'red');
-    $("#updateFBFname").css('border-color', 'red');
-    $("#updateFBFname").focus();
-    validatePass = 0;
-    $("#updateFB").modal({"backdrop": "static"});
-  }
-  if(FBMname.length !='' && FBMname.length <2 ){
-    $("#CheckupdateFBMname").html("Please enter middle name atleast 2 characters.").css('color', 'red');
-    $("#updateFBMname").css('border-color', 'red');
-    $("#updateFBMname").focus();
-    validatePass = 0;
-    $("#updateFB").modal({"backdrop": "static"});
-  }
-  if (validatePass ==1){
-  
-    var formData = new FormData(contentUpdateFB);
-    $.ajax({
-      url:"familyBackgroundUpdate.php",
-              method:"POST",
-              dataType: "json",
-              data:formData,
-              success:function(data){
-                $('#updateFB').modal('hide');
-                const msg = data.msg;
-                const stat = data.status;
-                if(stat == "success"){
-                    $('#modalNotif-header').text('Great! Success.');
-                    $('#modalNotif-message').text(msg);
-                     $('#modalNotif').modal('show');
-                }
-                else{
-                    $('#alertMessage').text(msg);
-                    $('#modalAlert').modal('show'); 
-                }
-              },
-              processData: false,
-              contentType: false
-
-    });
-  }
-});
 $('#contentUpdateAcads').on("submit",function(event){
   event.preventDefault();
   const acadPeriodFrom = $("#UpdateacadPeriodFrom").val();
@@ -2719,34 +2738,9 @@ $('#frmNonAcademicUpdate').on("submit",function(event){
     });
   }
 });
-$("#frmConfirmDelete").on("submit",function(event){
-  $deleteURL = $('#DeletePHP').val();
-  event.preventDefault();
-  var formData = new FormData(frmConfirmDelete);
-  $.ajax({
-    url:$deleteURL,
-    method:"POST",
-    dataType: "json",
-    data:formData,
-    success:function(data){
-      $('#modalConfirmDelete').modal('hide');
-      const msg = data.msg;
-      const stat = data.status;
-      if(stat == "success"){
-          $('#modalNotif-header').text('Great! Success.');
-          $('#modalNotif-message').text(msg);
-            $('#modalNotif').modal('show');
-            }
-      else{
-          $('#alertMessage').text(msg);
-          $('#modalAlert').modal('show'); 
-      }
-    },
-    processData: false,
-    contentType: false
 
-  });
-});
+
+
 $("#frmGovernID").on("submit",function(event){
   event.preventDefault();
   $.ajax({ 

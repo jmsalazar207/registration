@@ -54,7 +54,6 @@ if($empRecords){
    foreach($empRecords as $row){
 	$id = $row['id'];
    $url = "familyBackgroundDelete.php";
-   $deleteValue = $id.','.$url;
    $relation = $row['relation'];
    if($relation ==1){
       $relation = 'Spouse';

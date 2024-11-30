@@ -234,6 +234,7 @@ jQuery("#txtDivision").on('change',function(){
 
   function ApproveRegistration(btnApproveEmpno){
     $(".loader-div").show();
+    var TableID ='userManage';
     $.ajax({
       url:"adminApproveUser.php",
       method:"POST",
@@ -244,7 +245,8 @@ jQuery("#txtDivision").on('change',function(){
         const msg = data.msg;
         const stat = data.status;  
         if(stat === "success"){ 
-          modalSuccessShow(msg,refreshPage,'');
+          $('#formApprove').modal('hide');
+          modalSuccessShow(msg,triggerTableReload,TableID);
         } else {
           modalErrorShow(msg);
         }
@@ -257,6 +259,7 @@ jQuery("#txtDivision").on('change',function(){
 
   function DisapproveRegistration(btnDisapproveEmpno) {
     $(".loader-div").show();
+    var TableID ='userManage';
     $.ajax({
       url:"adminDisapproveUser.php",
       method:"POST",
@@ -267,7 +270,8 @@ jQuery("#txtDivision").on('change',function(){
         const msg = data.msg;
         const stat = data.status;  
         if(stat === "success"){ 
-          modalSuccessShow(msg,refreshPage,'');
+          $('#formApprove').modal('hide');
+          modalSuccessShow(msg,triggerTableReload,TableID);
         } else {
           modalErrorShow(msg);
         }
@@ -280,6 +284,7 @@ jQuery("#txtDivision").on('change',function(){
 
   function adminLockAcount(btnAdminLockEmpno){
     $(".loader-div").show();
+    var TableID ='userManage';
     $.ajax({
       url:"adminLockUser.php",
       method:"POST",
@@ -290,7 +295,7 @@ jQuery("#txtDivision").on('change',function(){
         const msg = data.msg;
         const stat = data.status;  
         if(stat === "success"){ 
-          modalSuccessShow(msg,refreshPage,'');
+          modalSuccessShow(msg,triggerTableReload,TableID);
         } else {
           modalErrorShow(msg);
         }
@@ -303,6 +308,7 @@ jQuery("#txtDivision").on('change',function(){
 
   function adminUnlockAccount(btnAdminUnLockEmpno){
     $(".loader-div").show();
+    var TableID ='userManage';
     $.ajax({
       url:"adminUnLockUser.php",
       method:"POST",
@@ -313,7 +319,7 @@ jQuery("#txtDivision").on('change',function(){
         const msg = data.msg;
         const stat = data.status;  
         if(stat === "success"){ 
-          modalSuccessShow(msg,refreshPage,'');
+          modalSuccessShow(msg,triggerTableReload,TableID);
         } else {
          modalErrorShow(msg);
         }
@@ -326,6 +332,7 @@ jQuery("#txtDivision").on('change',function(){
 
   function resetPassword(btnResetPassword){
     $(".loader-div").show();
+    var TableID = 'userManage';
     $.ajax({
       url:"resetPassword.php",
       method:"POST",
@@ -336,7 +343,7 @@ jQuery("#txtDivision").on('change',function(){
         const msg = data.msg;
         const stat = data.status;  
         if(stat === "success"){ 
-          modalSuccessShow(msg,refreshPage,'');
+          modalSuccessShow(msg,triggerTableReload,TableID);
         } else {
           modalErrorShow(msg);
         }
@@ -456,6 +463,7 @@ jQuery("#txtDivision").on('change',function(){
                     $("#checktxtMobileNumber").html("The mobile number provided has already been used.").css('color', 'red');
                   } else {
                     $(".loader-div").show();
+                     var TableID = 'userManage';
                     $.ajax({
                       url:"adminUpdateNewUser.php",
                       method:"POST",
@@ -466,7 +474,8 @@ jQuery("#txtDivision").on('change',function(){
                         const msg = data.msg;
                         const stat = data.status;
                         if(stat === "success"){ 
-                          modalSuccessShow(msg,refreshPage,'');
+                          $('#formAdminUserUpdate').modal('hide');
+                          modalSuccessShow(msg,triggerTableReload,TableID);
                         } else {
                           modalErrorShow(msg);
                         }
@@ -555,6 +564,7 @@ jQuery("#txtDivision").on('change',function(){
 
   function AdminUpdateItemCodeAction(formData){ //action for update itemcode
       $(".loader-div").show();
+      var TableID = 'userManage';
       $.ajax({
         url:"adminUpdateItemCode.php",
         method:"POST",
@@ -565,7 +575,8 @@ jQuery("#txtDivision").on('change',function(){
           const msg = data.msg;
           const stat = data.status;
           if(stat === "success"){ 
-            modalSuccessShow(msg,refreshPage,'');
+            $('#formAdminUserUpdate').modal('hide');
+            modalSuccessShow(msg,triggerTableReload,TableID);
           } else {
             modalErrorShow(msg);
           }
@@ -693,9 +704,11 @@ jQuery("#txtDivision").on('change',function(){
   $(document).on('click', '#btnAdminDelete', function() {    //delete user acount action
     const valueID = $(this).attr('data-valueID');
     const valueURL = $(this).attr('data-valueURL');
+    const TableID = 'userManage';
     var PassData = {
       valueID:valueID,
-      valueURL:valueURL
+      valueURL:valueURL,
+      TableID:TableID
     };
     modalConfirmShow('Would you like to permanently delete this information? This action cannot be undone.',deleteData,PassData);
   });

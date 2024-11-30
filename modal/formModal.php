@@ -2976,7 +2976,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group" id="divRequiredFields">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <label 
                                             for="updateFBSname" 
                                             class="col-sm-12 requiredField" 
@@ -2995,7 +2995,7 @@
                                         </div>
                                     
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <label 
                                             for="updateFBFname" 
                                             class="col-sm-12 requiredField" 
@@ -3014,7 +3014,7 @@
                                         </div>
                                         
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <label 
                                             for="updateFBMname" 
                                             class="col-sm-12" 
@@ -3031,7 +3031,7 @@
                                             <small id='CheckupdateFBMname'></small>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <label 
                                             for="updateFBExtName" 
                                             class="col-sm-12" 
@@ -3061,7 +3061,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <label 
                                             for="updateFBDOB" 
                                             class="col-sm-12 requiredField" 
@@ -3158,8 +3158,10 @@
                         </button>
                         <button 
                             type="submit" 
+                            id="btnUserFamilyBackgroundUpdate"
+                            name="btnUserFamilyBackgroundUpdate"
                             class="btn btn-primary">
-                            Submit
+                            Save
                         </button>
                     </div>
                 </form>

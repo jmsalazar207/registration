@@ -6,11 +6,7 @@ date_default_timezone_set('Asia/Manila');
 
 $today = date('Y-m-d H:i:s');
 $dataReturn = [];
-if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["token-expire"])) {
-    $dataReturn['status'] = "failed";
-    $dataReturn['msg'] = "Session has expired. Please relogin your account.";
-    echo json_encode($dataReturn);
-} else { 
+if (isset($_POST['DeleteID'])) {
     $id = $_POST['DeleteID'];
     $FBDelete['status'] =4;
     $DeleteFBQuery = $dbConn->update('lib_family_background','id',$id, $FBDelete);
@@ -24,3 +20,4 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
         echo json_encode($dataReturn);
     }
 }
+

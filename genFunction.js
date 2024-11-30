@@ -162,7 +162,7 @@ function refreshPage() {
 function deleteData(PassData){ //dynamic delete details
   var DeleteURL = PassData.valueURL;
   var DeleteID = PassData.valueID;
-
+  var TableID = PassData.TableID;
   $(".loader-div").show();
   $.ajax({
     url:DeleteURL,
@@ -171,11 +171,18 @@ function deleteData(PassData){ //dynamic delete details
     data:{DeleteID:DeleteID},
     success:function(data){
       $(".loader-div").hide();
-      $('#modalConfirmDelete').modal('hide');
       const msg = data.msg;
       const stat = data.status;
       if(stat == "success"){
-          modalSuccessShow(msg,refreshPage,'');
+        // Execute the passed functions after deletion
+        if (typeof PassData.ActionAfter1 === "function") {
+          PassData.ActionAfter1();
+        }
+        if (typeof PassData.ActionAfter2 === "function") {
+          PassData.ActionAfter2();
+        }
+          modalSuccessShow(msg,triggerTableReload,TableID);
+         
       } else {
         modalErrorShow(msg);
       }
@@ -200,6 +207,7 @@ function triggerTableReload(tableId) {
       console.warn(`Table with ID ${tableId} not found!`);
   }
 }
+
 function clearForm() {
   $('#yourFormID').find('input, textarea, select').val(''); // Clear all fields
   $('#yourFormID').find('input:checkbox, input:radio').prop('checked', false); // Uncheck checkboxes and radio buttons

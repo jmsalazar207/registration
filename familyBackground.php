@@ -160,8 +160,8 @@
                             </div>
                             <div class="col-md-6">
                                 <label 
-                                    for="FBBusinessName requiredField" 
-                                    class="col-sm-12" 
+                                    for="FBBusinessName" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Employeer / Business Name
                                 </label>
@@ -177,8 +177,8 @@
                             </div>
                             <div class="col-md-6">
                                 <label 
-                                    for="FBBusinessAddress requiredField" 
-                                    class="col-sm-12" 
+                                    for="FBBusinessAddress" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Business Address
                                 </label>

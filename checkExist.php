@@ -56,10 +56,18 @@ if(isset($_POST['gsis'])){
 
     echo json_encode($count);
 }
+if (isset($_POST['CivilStatus'])){
+   $SesssionEmpno = $_SESSION['userID'];
+   $sql_civil_status = "SELECT civil_status FROM lib_personal_info WHERE empno ='$SesssionEmpno'";
+   $civilStat = $dbConn->findFirstQuery($sql_civil_status);
+   echo json_encode($civilStat);
+
+}
 if (isset($_POST['employeeNumber'])){
     $FBEmpno = $_SESSION['userID'];
 
-    $sql_spouse = "SELECT * FROM lib_family_background WHERE empno = '$FBEmpno' AND relation = 1";
+
+    $sql_spouse = "SELECT * FROM lib_family_background WHERE empno = '$FBEmpno' AND relation = 1 AND status !=4";
     $dbConn->findFirstQuery($sql_spouse);
     $count['spouse'] = $dbConn->count();
 

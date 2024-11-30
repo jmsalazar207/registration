@@ -151,7 +151,7 @@ require_once('includes/init.php');
 <script src="modalNotif.js?test=<?php echo time()?>"></script>
 <script>
   $(function () {
-    var tblID = $('#userManage').DataTable({
+    tables['userManage'] = $('#userManage').DataTable({
       ajax: {
           url: 'userManagement_ajax.php',
           type: 'POST',

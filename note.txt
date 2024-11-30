@@ -243,3 +243,6 @@ url:"getInfo.php",
  AddPermanentCity
  AddPermanentBarangay
  AddPermanentZipCode
+
+ var TableID = 'userManage';
+ triggerTableReload,TableID
