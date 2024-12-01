@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2024 at 10:19 AM
+-- Generation Time: Dec 01, 2024 at 08:27 PM
 -- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- PHP Version: 8.1.17
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -35,6 +35,7 @@ CREATE TABLE `lib_academic` (
   `acad_degree` int(10) NOT NULL,
   `acad_from` int(25) NOT NULL,
   `acad_to` int(25) NOT NULL,
+  `ifGraduated` int(10) DEFAULT NULL,
   `acad_highest_level` varchar(50) NOT NULL,
   `acad_year_graduated` int(25) NOT NULL,
   `acad_honors` varchar(50) NOT NULL,
@@ -49,17 +50,13 @@ CREATE TABLE `lib_academic` (
 -- Dumping data for table `lib_academic`
 --
 
-INSERT INTO `lib_academic` (`id`, `empno`, `acad_level`, `acad_school`, `acad_degree`, `acad_from`, `acad_to`, `acad_highest_level`, `acad_year_graduated`, `acad_honors`, `acad_uploaded_mov`, `acad_status`, `acad_remarks`, `updated_by`, `datetime_updated`) VALUES
-(1, '03-10961', 2, 36345, 1, 2011, 2015, 'GRADUATED', 2015, '', '', 4, '', '', NULL),
-(2, '03-10961', 1, 28836, 1, 2005, 2011, 'GRADUATED', 2011, '', '', 4, '', '', NULL),
-(3, '03-10961', 2, 36345, 1, 2011, 2015, 'GRADUATED', 2015, '', '', 4, '', '', NULL),
-(4, '03-10961', 3, 209, 32, 2015, 2019, 'GRADUATED', 2019, '', '03-10961_Acad_3.pdf', 4, '', '03-10961', '2024-09-11'),
-(5, '03-10961', 4, 209, 229, 2019, 2021, 'GRADUATED', 2021, '', '03-10961_Acad_4.pdf', 4, '', '', NULL),
-(6, '03-10961', 5, 196, 122, 2023, 2024, '1ST SEM', 0, '', '03-10961_Acad_5.pdf', 4, '', '', NULL),
-(7, '03-10961', 1, 28836, 1, 2005, 2011, 'GRADUATED', 2011, '', '', 5, '', '', NULL),
-(8, '03-10961', 2, 36345, 1, 2011, 2015, 'GRADUATED', 2015, '', '', 5, '', '', NULL),
-(9, '03-10961', 3, 209, 32, 2015, 2019, 'GRADUATED', 2019, '', '03-10961_Acad_8.pdf', 1, '', '03-10961', '2024-11-08'),
-(10, '03-12456', 3, 196, 32, 2017, 2021, '10000', 2021, '10000', '03-12456_Acad_0.pdf', 0, '', '', NULL);
+INSERT INTO `lib_academic` (`id`, `empno`, `acad_level`, `acad_school`, `acad_degree`, `acad_from`, `acad_to`, `ifGraduated`, `acad_highest_level`, `acad_year_graduated`, `acad_honors`, `acad_uploaded_mov`, `acad_status`, `acad_remarks`, `updated_by`, `datetime_updated`) VALUES
+(1, '03-10961', 3, 209, 32, 2015, 2019, 1, 'GRADUATED', 2019, '', '03-10961_Acad_0.pdf', 4, '', '03-10961', '2024-12-02'),
+(2, '03-10961', 1, 28836, 1, 2005, 2011, 1, 'GRADUATED', 2011, '', '', 4, '', '', NULL),
+(3, '03-10961', 2, 36345, 1, 2011, 2015, 1, 'GRADUATED', 2015, '', '', 4, '', '', NULL),
+(4, '03-10961', 1, 28836, 1, 2005, 2011, 1, 'GRADUATED', 2011, '', '', 4, '', '', NULL),
+(5, '03-10961', 1, 28836, 1, 2005, 2011, 1, 'GRADUATED', 2011, '', '', 4, '', '', NULL),
+(6, '03-10961', 2, 36345, 1, 2011, 2015, 1, 'GRADUATED', 2015, '', '', 4, '', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -42245,12 +42242,7 @@ CREATE TABLE `lib_career` (
 --
 
 INSERT INTO `lib_career` (`id`, `empno`, `career_date_from`, `career_date_to`, `career_position_title`, `career_organization`, `career_salary`, `career_compensention_level`, `career_status_appointment`, `career_govt_service`, `career_uploaded_mov`, `career_status`, `career_remarks`, `updated_by`, `datetime_updated`, `career_present`) VALUES
-(1, '03-10961', '2019-11-04', '2022-07-17', 'COMPUTER MAINTENANCE TECHNOLOGISTS I', 'DSWD FO 3', '22000', 'SG 11', 'MOA', 2, '03-10961_Career_0.pdf', 1, '', '03-10961', '2024-09-11', ''),
-(2, '03-10961', '2022-07-18', '2024-07-21', 'COMPUTER PROGRAMMER II', 'DSWD FO 3', '36619', 'SG 15', 'MOA', 2, '03-10961_Career_1.pdf', 1, '', '03-10961', '2024-09-11', ''),
-(3, '03-10961', '2024-07-22', '0000-00-00', 'INFORMATION TECHNOLOGY OFFICER I', 'DSWD FO 3', '51315', 'SG 19', 'MOA', 2, '03-10961_Career_2.pdf', 4, '', '03-10961', '2024-09-11', 'on'),
-(4, '03-10961', '2024-07-22', '0000-00-00', 'INFORMATION TECHNOLOGY OFFICER I', 'DSWD FO 3', '51315', 'SG 19', 'MOA', 2, '03-10961_Career_3.pdf', 1, '', '03-10961', '2024-09-11', 'on'),
-(5, '03-12456', '2021-10-25', '2024-05-10', 'SOFTWARE ENGINEER I ', 'TSUKIDEN GLOBAL SOLUTIONS INC', '19000', 'N/A', 'REGULAR', 2, '03-12456_Career_0.pdf', 0, '', '', '0000-00-00', ''),
-(6, '03-12456', '2024-08-01', '0000-00-00', 'COMPUTER PROGRAMMER III - SOFTWARE QUALITY ASSURAN', 'DSWD FIELD OFFICE III', '46725', 'SG 18', 'COS', 2, '03-12456_Career_1.pdf', 0, '', '', '0000-00-00', 'on');
+(1, '03-10961', '2019-11-04', '2024-07-18', 'CP2', 'DSWD', '35000', '', 'MOA', 1, '03-10961_Career_0.pdf', 4, '', '03-10961', '2024-12-02', '');
 
 -- --------------------------------------------------------
 
@@ -46431,9 +46423,10 @@ CREATE TABLE `lib_eligibility` (
 --
 
 INSERT INTO `lib_eligibility` (`id`, `empno`, `eligibility_credentials`, `eligibility_rating`, `eligibility_exam_date`, `eligibility_exam_place`, `eligibility_license`, `eligibility_validity_date`, `eligibility_uploaded_mov`, `eligibility_status`, `eligibility_remarks`, `updated_by`, `datetime_updated`) VALUES
-(1, '03-10961', '2', '81.79', '2023-08-20', 'ANGELES CITY', '', '0000-00-00', '03-10961_Eligibility_0.pdf', 4, '', '03-10961', '2024-09-11'),
-(2, '03-10961', '2', '81.76', '2023-08-20', 'ANGELES CITY', '', '0000-00-00', '03-10961_Eligibility_1.pdf', 0, '', '', NULL),
-(3, '03-12456', '10', '100', '2021-10-10', 'ASD DUMY', '1234567890', '2100-10-10', '03-12456_Eligibility_0.pdf', 0, '', '', NULL);
+(1, '03-10961', '2', '81.90', '2023-08-20', 'ANGELES CITY', '', '0000-00-00', '03-10961_Eligibility_0.pdf', 4, '', '', NULL),
+(2, '03-10961', '1', '85', '2024-03-31', 'GUAGUA', '', '0000-00-00', '03-10961_Eligibility_1.pdf', 0, '', '', NULL),
+(3, '03-10961', '6', '', '2019-04-12', 'SAN FERNANDO PAMPANGA ', '', '0000-00-00', '03-10961_Eligibility_2.pdf', 0, '', '', NULL),
+(4, '03-10961', '10', '80', '2022-12-22', 'SAN FERNANDO CITY PAMPANGA', '213123', '2027-12-02', '03-10961_Eligibility_3.pdf', 4, '', '03-10961', '2024-12-02');
 
 -- --------------------------------------------------------
 
@@ -46490,8 +46483,8 @@ CREATE TABLE `lib_family_background` (
 INSERT INTO `lib_family_background` (`id`, `empno`, `relation`, `surname`, `firstname`, `middlename`, `extname`, `occupation`, `businessName`, `businessAddress`, `telephoneNo`, `birthday`, `status`) VALUES
 (1, '03-10961', 3, 'SALAZAR', 'JOEL', 'VITAL', '', '', '', '', '', '1966-07-12', 4),
 (2, '03-10961', 4, 'SALAZAR', 'PERLITA', 'MELQUIADES', '', '', '', '', '', '1968-04-24', 4),
-(3, '03-10961', 3, 'SALAZAR', 'JOEL', 'VITAL', '', '', '', '', '', '1966-12-07', 0),
-(4, '03-10961', 4, 'SALAZAR', 'PERLITA', 'MELQUIADES', '', '', '', '', '', '1968-12-24', 0),
+(3, '03-10961', 3, 'SALAZAR', 'JOEL', 'VITAL', '', '', '', '', '', '1966-12-07', 4),
+(4, '03-10961', 4, 'SALAZAR', 'PERLITA', 'MELQUIADES', '', '', '', '', '', '1968-12-24', 4),
 (5, '03-10961', 2, 'SALAZAR', 'JORDAN', 'MULDONG', '', '', '', '', '', '2020-07-21', 0),
 (6, '03-12456', 4, 'DUMMY', 'DUMMY', 'DUMMY', '', '', '', '', '', '1976-12-05', 4),
 (7, '03-12456', 4, 'DUMMY', 'DUMMY', 'DUMMY', '', '', '', '', '', '1977-05-18', 0);
@@ -106193,7 +106186,10 @@ CREATE TABLE `lib_voluntary` (
 --
 
 INSERT INTO `lib_voluntary` (`id`, `empno`, `vw_name_address`, `vw_date_from`, `vw_date_to`, `vw_no_hrs`, `vw_position`, `vw_status`) VALUES
-(1, '03-12456', 'SAPILITANG ORGANISASYON', '2024-11-10', '2024-11-11', 1000, 'ABCD', 0);
+(1, '03-12456', 'SAPILITANG ORGANISASYON', '2024-11-10', '2024-11-11', 1000, 'ABCD', 0),
+(2, '03-10961', 'ASDASDASD', '2024-12-02', '2024-12-02', 8, 'SDFSDFSDF', 0),
+(3, '03-10961', 'ASDASD', '2024-12-11', '2024-12-12', 8, 'ASDASDSA', 0),
+(4, '03-10961', 'ASDASD', '2024-12-16', '2024-12-16', 8, 'ASDFASDFASDF', 0);
 
 -- --------------------------------------------------------
 
@@ -109172,7 +109168,7 @@ ALTER TABLE `userprofile`
 -- AUTO_INCREMENT for table `lib_academic`
 --
 ALTER TABLE `lib_academic`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `lib_account_status`
@@ -109190,7 +109186,7 @@ ALTER TABLE `lib_blood_types`
 -- AUTO_INCREMENT for table `lib_career`
 --
 ALTER TABLE `lib_career`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `lib_classification_employment`
@@ -109232,7 +109228,7 @@ ALTER TABLE `lib_division`
 -- AUTO_INCREMENT for table `lib_eligibility`
 --
 ALTER TABLE `lib_eligibility`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `lib_emp_status`
@@ -109376,7 +109372,7 @@ ALTER TABLE `lib_unit`
 -- AUTO_INCREMENT for table `lib_voluntary`
 --
 ALTER TABLE `lib_voluntary`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_employee_appointment_history`
