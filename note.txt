@@ -25,6 +25,14 @@
           modalErrorShow(msg);
         }
 
+if(stat === "success"){
+        modalSuccessShow(msg,triggerTableReload,'tblEligibility');
+        $('#frmUserEligibilitydAdd')[0].reset();
+        $('#eligibilityCredentials').val('').trigger('change');
+
+      } else {
+        modalErrorShow(msg);
+      }
 		
 		data-callback="onCaptchaSuccess" 
                     data-expired-callback="onCaptchaExpired" 

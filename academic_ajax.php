@@ -73,7 +73,6 @@ if($empRecords){
    foreach($empRecords as $row){
 	$id = $row['id'];
     $url = "academicDelete.php";
-    $deleteValue = $id.','.$url;
     $uploadedAcadMOV = $row['acad_uploaded_mov'];
     $acad_level =$row['acad_level'];
     $acad_status = $row['acad_status'];
@@ -96,12 +95,12 @@ if($empRecords){
         $acad_status = "<span class='badge bg-light-blue'>PENDING FOR VERIFICATION</span>";
         $action = "
              <td>
-                <button class='btn btn-info btn-sm' id = 'btnAcadUpdate' name ='btnAcadUpdate' onclick ='btnAcadUpdate(this.value)' value = '$id'  title='View' >
-                  View
+                <button class='btn btn-info btn-sm' id = 'btnUserAcadsUpdate' name ='btnUserAcadsUpdate' value = '$id'  title='View' >
+                  Update
                </button>
              </td>
              <td>
-               <button class='btn btn-danger btn-sm' id = 'btnDelete' name ='btnDelete' onclick ='btnDelete(this.value)' value = '$deleteValue'  title='Remove Information' >
+               <button class='btn btn-danger btn-sm' id = 'btnUserAcadsDelete' name ='btnUserAcadsDelete' data-valueID = '$id' data-valueURL = '$url' title='Remove Information' >
                   Remove
                </button>
             </td>
@@ -111,12 +110,12 @@ if($empRecords){
         $acad_status = "<span class='badge bg-green'>VERIFIED</span>";
         $action ="
             <td>
-                <button class='btn btn-info btn-sm' id = 'btnAcadViewUploaded' name ='btnAcadViewUploaded' onclick ='btnAcadViewUploaded(this.value)' value = '$uploadedAcadMOV'  title='View Uploaded' >
+                <button class='btn btn-info btn-sm' id = 'btnUserAcadViewUploaded' name ='btnUserAcadViewUploaded' value = '$uploadedAcadMOV'  title='View Uploaded' >
                   View
                </button>
              </td>
              <td>
-               <button class='btn btn-danger btn-sm' id = 'btnDelete' name ='btnDelete' onclick ='btnDelete(this.value)' value = '$deleteValue'  title='Remove Information' >
+               <button class='btn btn-danger btn-sm' id = 'btnUserAcadsDelete' name ='btnUserAcadsDelete' data-valueID = '$id' data-valueURL = '$url' title='Remove Information' >
                   Remove
                </button>
             </td>
@@ -126,12 +125,12 @@ if($empRecords){
         $acad_status = "<span class='badge bg-red'>FOR COMPLIANCE</span>";
         $action = "
              <td>
-                <button class='btn btn-info btn-sm' id = 'btnAcadUpdate' name ='btnAcadUpdate' onclick ='btnAcadUpdate(this.value)' value = '$id'  title='View' >
-                  View
+                <button class='btn btn-info btn-sm' id = 'btnUserAcadsUpdate' name ='btnUserAcadsUpdate' value = '$id'  title='View' >
+                  Update
                </button>
              </td>
              <td>
-               <button class='btn btn-danger btn-sm' id = 'btnDelete' name ='btnDelete' onclick ='btnDelete(this.value)' value = '$deleteValue'  title='Remove Information' >
+               <button class='btn btn-danger btn-sm' id = 'btnUserAcadsDelete' name ='btnUserAcadsDelete' data-valueID = '$id' data-valueURL = '$url' title='Remove Information' >
                   Remove
                </button>
             </td>
@@ -141,26 +140,17 @@ if($empRecords){
         $acad_status = "<span class='badge bg-green'>GOOD</span>";
         $action = "
              <td>
-                <button class='btn btn-info btn-sm' id = 'btnAcadUpdate' name ='btnAcadUpdate' onclick ='btnAcadUpdate(this.value)' value = '$id'  title='View' >
-                  View
+                <button class='btn btn-info btn-sm' id = 'btnUserAcadsUpdate' name ='btnUserAcadsUpdate' value = '$id'  title='View' >
+                  Update
                </button>
              </td>
              <td>
-               <button class='btn btn-danger btn-sm' id = 'btnDelete' name ='btnDelete' onclick ='btnDelete(this.value)' value = '$deleteValue'  title='Remove Information' >
+               <button class='btn btn-danger btn-sm' id = 'btnUserAcadsDelete' name ='btnUserAcadsDelete' data-valueID = '$id' data-valueURL = '$url' title='Remove Information' >
                   Remove
                </button>
             </td>
              "; 
     }
-    // if($acad_status ==3){
-    //     $acad_status = 'REQUESTED CHANGES';
-    // }
-//    $action = "
-//             <td>
-//                <button class='' id = 'btnAcadUpdate' name ='btnAcadUpdate' onclick ='btnAcadUpdate(this.value)' value = '$id'  title='View' >
-//                   View Info
-//                </button>
-//             </td>"; 
    
    $data[] = array(
       "Action" => $action,

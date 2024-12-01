@@ -1322,7 +1322,7 @@
                         </button>
                         <h4 class="modal-title">Update Career Details</h4>
                     </div>
-                    <form id="frmCareerdUpdate" name="frmCareerdUpdate" autocomplete="off" >
+                    <form id="frmUserCareerdUpdate" name="frmUserCareerdUpdate" autocomplete="off" >
                         <div class="box" style="border:0cm" >
                             <div class="box-body row">
                                 <div class="card col-md-6" style="width:750px; height:auto">
@@ -1330,7 +1330,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="UpdatecareerDateFrom" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Date From
                                             </label>
@@ -1360,7 +1360,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="UpdatecareerDateTo" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Date To
                                             </label>
@@ -1379,7 +1379,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="UpdatecareerPosition" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Position Title
                                             </label>
@@ -1388,6 +1388,7 @@
                                                 class="form-control" 
                                                 id="UpdatecareerPosition" 
                                                 name="UpdatecareerPosition"
+                                                required
                                                 tabindex="2">
                                             </div>
                                         </div>
@@ -1396,7 +1397,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="UpdatecareerOrganization" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Organization
                                             </label>
@@ -1414,7 +1415,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="UpdatecareerSalary" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Monthly Salary  
                                             </label>
@@ -1450,7 +1451,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="UpdatecareerStatusAppointment" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Status of Appointment
                                             </label>
@@ -1459,6 +1460,7 @@
                                                 class="form-control" 
                                                 id="UpdatecareerStatusAppointment" 
                                                 name="UpdatecareerStatusAppointment"
+                                                required
                                                 tabindex="">
                                             </div>
                                         </div>
@@ -1467,7 +1469,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="UpdatecareerGovtService" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Government Service
                                             </label>
@@ -1552,7 +1554,7 @@
                                     <button 
                                         type="submit" 
                                         class="btn btn-primary btn-md pull-right">
-                                        Update
+                                        Save
                                     </button>
                                 </div>
                         </div>
@@ -1690,7 +1692,7 @@
         <div class="modal fade" id = "updateAcads">
             <div class="modal-dialog" style="width:auto; height:auto;" >
                 <div class="modal-content">
-                    <form id="contentUpdateAcads" name="contentUpdateAcads" autocomplete="off" >
+                    <form id="frmUserAcadsUpdate" name="frmUserAcadsUpdate" autocomplete="off" >
                         <div class="modal-header">
                             <button 
                                 type="button" 
@@ -1710,7 +1712,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="UpdateacadEducLevel" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Education Level
                                             </label>
@@ -1754,7 +1756,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="UpdateacadNameSchool" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Name of School
                                             </label>
@@ -1792,7 +1794,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="UpdateacadDegree" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Basic Education / Degree / Course  
                                             </label>
@@ -1815,7 +1817,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="UpdateacadPeriodFrom" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 From (YYYY)
                                             </label>
@@ -1826,6 +1828,7 @@
                                             class="form-control select2"
                                             style="width: 100%;"  
                                             tabindex="4"
+                                            required
                                             >
                                             </select>
                                                 <small id='CheckacadPeriodFrom'></small>
@@ -1836,7 +1839,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="UpdateacadPeriodTo" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 To (YYYY)
                                             </label>
@@ -1847,6 +1850,7 @@
                                                 class="form-control select2"
                                                 style="width: 100%;"  
                                                 tabindex="5"
+                                                required
                                                 onchange="PeriodTo()";
                                                 >
                                             </select>
@@ -1854,11 +1858,24 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="form-group" id="divifGraduatedUpdate" hidden>
+                                        <div class="col-md-12" >
+                                            <label 
+                                            for="UpdateifGraduated"
+                                            class="col-md-12" 
+                                            style="font-size: 15px;">
+                                            <input  type="checkbox"
+                                            id="UpdateifGraduated" 
+                                            name="UpdateifGraduated">
+                                            Graduated
+                                            </label>
+                                        </div>
+                                    </div>  
                                     <div class="form-group">
                                         <div class="col-md-12">
                                             <label 
                                                 for="UpdateacadHighestLevel" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Highest Level/Units Earned  
                                             </label>
@@ -1878,6 +1895,7 @@
                                             <label 
                                                 for="UpdateacadYearGraduated" 
                                                 class="col-sm-12" 
+                                                id="lblUpdateacadYearGraduated"
                                                 style="font-size: 15px;">
                                                 Year Graduated (YYYY) 
                                             </label>
@@ -1971,7 +1989,7 @@
                                 <button 
                                     type="submit" 
                                     class="btn btn-primary">
-                                    Submit
+                                    Save
                                 </button>
                             </div>
                         </div>
@@ -3185,7 +3203,7 @@
                             </button>
                             <h4 class="modal-title">Eligibility</h4>
                         </div>
-                    <form id="frmEligibilitydUpdate" name="frmEligibilitydUpdate" autocomplete="off" >
+                    <form id="frmUserEligibilitydUpdate" name="frmUserEligibilitydUpdate" autocomplete="off" >
                         <div class="box" style="border:0cm" >
                             <div class="box-body row">
                                 <div class="card col-md-6" style="height: auto; width:750px"> 
@@ -3193,7 +3211,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="UpdateeligibilityCredentials" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Credentials
                                             </label>
@@ -3229,6 +3247,7 @@
                                             <label 
                                                 for="UpdateeligibilityRating" 
                                                 class="col-sm-12" 
+                                                id="lblUpdateeligibilityRating"
                                                 style="font-size: 15px;">
                                                 Rating
                                             </label>
@@ -3245,9 +3264,9 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="UpdateeligibilityExamDate" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
-                                                Date of Examination
+                                                Date of Examination / Confirnment
                                             </label>
                                             <div class="col-sm-12">
                                                 <input 
@@ -3265,9 +3284,9 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="UpdateeligibilityPlaceExamination" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
-                                                Place of Examination  
+                                                Place of Examination / Confirnment
                                             </label>
                                             <div class="col-sm-12">
                                                 <input 
@@ -3284,6 +3303,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="UpdateeligibilityNumber" 
+                                                id="lblUpdateeligibilityNumber"
                                                 class="col-sm-12" 
                                                 style="font-size: 15px;">
                                                 License Number  
@@ -3303,6 +3323,7 @@
                                             <label 
                                                 for="UpdateeligibilityValidityDate" 
                                                 class="col-sm-12" 
+                                                id="lblUpdateeligibilityValidityDate"
                                                 style="font-size: 15px;">
                                                 Date of Validity  
                                             </label>

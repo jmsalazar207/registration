@@ -72,12 +72,12 @@ if($empRecords){
       $career_status = "<span class='badge bg-light-blue'>PENDING FOR VERIFICATION</span>";
       $action = "
             <td>
-               <button class='btn btn-info btn-sm' id = 'btnCareerUpdate' name ='btnCareerUpdate' onclick ='btnCareerUpdate(this.value)' value = '$id'  title='View' >
-                  View
+               <button class='btn btn-info btn-sm' id = 'btnUserCareerUpdate' name ='btnUserCareerUpdate' value = '$id'  title='View' >
+                  Update
                </button>
             </td>
             <td>
-               <button class='btn btn-danger btn-sm' id = 'btnDelete' name ='btnDelete' onclick ='btnDelete(this.value)' value = '$deleteValue'  title='Remove Information' >
+               <button class='btn btn-danger btn-sm' id = 'btnUserCareerDelete' name ='btnUserCareerDelete' data-valueID = '$id' data-valueURL = '$url'  title='Remove Information' >
                   Remove
                </button>
             </td>
@@ -87,12 +87,12 @@ if($empRecords){
    $career_status = "<span class='badge bg-green'>VERIFIED</span>";
    $action ="
        <td>
-           <button class='btn btn-info btn-sm' id = 'btnCareerViewUploaded' name ='btnCareerViewUploaded' onclick ='btnCareerViewUploaded(this.value)' value = '$uploadedCareerMOV'  title='View Uploaded' >
+           <button class='btn btn-info btn-sm' id = 'btnUserCareerViewUploaded' name ='btnUserCareerViewUploaded' value = '$uploadedCareerMOV'  title='View Uploaded' >
              View
           </button>
         </td>
         <td>
-               <button class='btn btn-danger btn-sm' id = 'btnDelete' name ='btnDelete' onclick ='btnDelete(this.value)' value = '$deleteValue'  title='Remove Information' >
+               <button class='btn btn-danger btn-sm' id = 'btnUserCareerDelete' name ='btnUserCareerDelete' data-valueID = '$id' data-valueURL = '$url'  title='Remove Information' >
                   Remove
                </button>
             </td>
@@ -102,12 +102,12 @@ if($career_status ==2){
    $career_status = "<span class='badge bg-red'>FOR COMPLIANCE</span>";
    $action = "
             <td>
-               <button class='btn btn-info btn-sm' id = 'btnCareerUpdate' name ='btnCareerUpdate' onclick ='btnCareerUpdate(this.value)' value = '$id'  title='View' >
-                  View
+               <button class='btn btn-info btn-sm' id = 'btnUserCareerUpdate' name ='btnUserCareerUpdate' value = '$id'  title='View' >
+                  Update
                </button>
             </td>
             <td>
-               <button class='btn btn-danger btn-sm' id = 'btnDelete' name ='btnDelete' onclick ='btnDelete(this.value)' value = '$deleteValue'  title='Remove Information' >
+               <button class='btn btn-danger btn-sm' id = 'btnUserCareerDelete' name ='btnUserCareerDelete' data-valueID = '$id' data-valueURL = '$url'  title='Remove Information' >
                   Remove
                </button>
             </td>

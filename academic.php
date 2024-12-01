@@ -1,6 +1,6 @@
 <div class="tab-pane" id="academic">
     <div class="user-block">
-        <form id="frmAcademicAdd" name="frmAcademicAdd" autocomplete="off" >
+        <form id="frmUserAcademicAdd" name="frmUserAcademicAdd" autocomplete="off" >
             <div class="box" style="border:0cm" >
                 <div class="box-body row">
                     <div class="card col-md-12">
@@ -8,7 +8,7 @@
                             <div class="col-md-12">
                                 <label 
                                     for="acadEducLevel" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Education Level
                                 </label>
@@ -28,7 +28,6 @@
                                         name="acadEducLevel" 
                                         required
                                         tabindex="1"
-                                        onchange="EducLevel()"
                                         >
                                         <option name = "optNone" id="optNone" value="">SELECT EDUCATIONAL LEVEL </option>
                                         <option name = "optElementary" id="optElementary" value="1">Elementary</option>
@@ -44,7 +43,7 @@
                             <div class="col-md-12">
                                 <label 
                                     for="acadNameSchool" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Name of School
                                 </label>
@@ -82,7 +81,7 @@
                             <div class="col-md-12">
                                 <label 
                                     for="acadDegree" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Basic Education / Degree / Course  
                                 </label>
@@ -105,7 +104,7 @@
                             <div class="col-md-6">
                                 <label 
                                     for="acadPeriodFrom" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     From (YYYY)
                                 </label>
@@ -116,6 +115,7 @@
                                 class="form-control select2"
                                 style="width: 100%;"  
                                 tabindex="4"
+                                required
                                 >
                                 </select>
                                 <small id='CheckacadPeriodFrom'></small>
@@ -124,7 +124,7 @@
                             <div class="col-md-6">
                                 <label 
                                     for="acadPeriodTo" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     To (YYYY)
                                 </label>
@@ -135,18 +135,32 @@
                                     class="form-control select2"
                                     style="width: 100%;"  
                                     tabindex="5"
-                                    onchange="PeriodTo()";
                                     >
                                     </select>
                                     <small id='CheckacadPeriodTo'></small>
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group" id="divifGraduated" hidden>
+                            <div class="col-md-12" >
+                                <label 
+                                for="ifGraduated"
+                                class="col-md-12" 
+                                style="font-size: 15px;">
+                                <input  type="checkbox"
+                                id="ifGraduated" 
+                                name="ifGraduated">
+                                Graduated
+                                </label>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="col-md-6">
                                 <label 
                                     for="acadHighestLevel" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField"
+                                    id="lblacadHighestLevel"
+                                    name ="lblacadHighestLevel"
                                     style="font-size: 15px;">
                                     Highest Level/Units Earned  
                                 </label>
@@ -165,6 +179,8 @@
                             <div class="col-md-6">
                                 <label 
                                     for="acadYearGraduated" 
+                                    id="lblacadYearGraduated"
+                                    name="lblacadYearGraduated"
                                     class="col-sm-12" 
                                     style="font-size: 15px;">
                                     Year Graduated (YYYY) 
@@ -204,7 +220,7 @@
                             <div class="col-md-6" id = "divAcadMOV" name = "divAcadMOV" hidden>
                                 <label 
                                     for="acadMOV" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Upload MOV  
                                 </label>
@@ -231,7 +247,7 @@
                             class="btn btn-primary btn-md pull-right"
                             tabindex="9"
                             >
-                            Insert
+                            Add
                         </button>
                     </div>
             </div>

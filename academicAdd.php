@@ -14,6 +14,7 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
     if(empty($_FILES['acadMOV']['tmp_name'])){ 
         $id = $_SESSION['userID'];  
         $acads['empno'] = $id;
+        $acads['ifGraduated'] = $_POST['ifGraduated'];
         $acads['acad_level'] =$_POST['acadEducLevel'];
         $acads['acad_school'] = sanitize(strtoupper($_POST['txtID']));
         $acads['acad_degree'] = sanitize(strtoupper($_POST['acadDegree']));
@@ -42,6 +43,7 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
         $target_file = $target_dir.$UploadFile;
         $uploadOk = 1;
         $acads['empno'] = $id;
+        $acads['ifGraduated'] = $_POST['ifGraduated'];
         $acads['acad_level'] =$_POST['acadEducLevel'];
         $acads['acad_school'] = sanitize(strtoupper($_POST['acadNameSchool']));
         $acads['acad_degree'] = sanitize(strtoupper($_POST['acadDegree']));

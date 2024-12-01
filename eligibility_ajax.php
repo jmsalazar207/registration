@@ -55,19 +55,18 @@ if($empRecords){
    foreach($empRecords as $row){
    $id = $row['id'];
    $url = "eligibilityDelete.php";
-   $deleteValue = $id.','.$url;
    $eligibility_status = $row['eligibility_status'];
    $eligibility_uploaded_mov = $row['eligibility_uploaded_mov'];
    if($eligibility_status == 0){
       $eligibility_status = "<span class='badge bg-light-blue'>PENDING FOR VERIFICATION</span>";
    $action = "
       <td>
-         <button class='btn btn-info btn sm' id = 'btnEligibilityUpdate' name ='btnEligibilityUpdate' onclick ='btnEligibilityUpdate(this.value)' value = '$id'  title='View' >
-            View Info
+         <button class='btn btn-info btn sm' id = 'btnUserEligibilityUpdate' name ='btnUserEligibilityUpdate' value = '$id'  title='View' >
+            Update
          </button>
       </td>
       <td>
-         <button class='btn btn-danger btn-sm' id = 'btnDelete' name ='btnDelete' onclick ='btnDelete(this.value)' value = '$deleteValue'  title='Remove Information' >
+         <button class='btn btn-danger btn-sm' id = 'btnUserEligibilityDelete' name ='btnUserEligibilityDelete' data-valueID = '$id' data-valueURL = '$url'  title='Remove Information' >
             Remove
          </button>
       </td>
@@ -77,27 +76,27 @@ if($empRecords){
       $eligibility_status = "<span class='badge bg-green'>VERIFIED</span>";
       $action = "
          <td>
-            <button class='btn btn-info btn sm' id = 'btnEligibilityViewUploaded' name ='btnEligibilityViewUploaded' onclick ='btnEligibilityViewUploaded(this.value)' value = '$eligibility_uploaded_mov'  title='View' >
+            <button class='btn btn-info btn sm' id = 'btnUserEligibilityViewUploaded' name ='btnUserEligibilityViewUploaded' value = '$eligibility_uploaded_mov'  title='View' >
                View
             </button>
          </td>
-         <td>
-            <button class='btn btn-danger btn-sm' id = 'btnDelete' name ='btnDelete' onclick ='btnDelete(this.value)' value = '$deleteValue'  title='Remove Information' >
-               Remove
-            </button>
-         </td>
+      <td>
+         <button class='btn btn-danger btn-sm' id = 'btnUserEligibilityDelete' name ='btnUserEligibilityDelete' data-valueID = '$id' data-valueURL = '$url'  title='Remove Information' >
+            Remove
+         </button>
+      </td>
          "; 
    }
    if($eligibility_status == 2){
       $eligibility_status = "<span class='badge bg-red'>FOR COMPLIANCE</span>";
    $action = "
       <td>
-         <button class='btn btn-info btn sm' id = 'btnEligibilityUpdate' name ='btnEligibilityUpdate' onclick ='btnEligibilityUpdate(this.value)' value = '$id'  title='View' >
+         <button class='btn btn-info btn sm' id = 'btnUserEligibilityUpdate' name ='btnUserEligibilityUpdate' value = '$id'  title='View' >
             View
          </button>
       </td>
       <td>
-         <button class='btn btn-danger btn-sm' id = 'btnDelete' name ='btnDelete' onclick ='btnDelete(this.value)' value = '$deleteValue'  title='Remove Information' >
+         <button class='btn btn-danger btn-sm' id = 'btnUserEligibilityDelete' name ='btnUserEligibilityDelete' data-valueID = '$id' data-valueURL = '$url'  title='Remove Information' >
             Remove
          </button>
       </td>

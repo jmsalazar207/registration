@@ -860,9 +860,17 @@ function checkAlreadyEncode(){
           const secondary = data.secondary; //for educ background
           if(elementary){
             $("#optElementary").remove();
+          }else{
+            if ($("#optElementary").length === 0) {
+              $("#acadEducLevel").append('<option name = "optElementary" id="optElementary" value="1">Elementary</option>');
+            }
           }
           if(secondary){
             $("#optSecondary").remove();
+          }else{
+            if ($("#optElementary").length === 0) {
+            $("#acadEducLevel").append('<option name = "optSecondary" id="optSecondary" value="2">Secondary</option>');
+            }
           }
           
       },error: function(xhr, status, error) {
@@ -1355,6 +1363,695 @@ function btnFBUpdate(getFBid){ //open modal family update
 });
 }
 
+function EducLevel(selectLevelValue){
+  resetFrmEducBackground();
+  if(selectLevelValue ==1){
+    $('#divifGraduated').hide();
+    $("#ifGraduated").prop('checked', true);
+    $('#lblacadYearGraduated').attr('class','col-sm-12 requiredField');
+    $("#acadDegree").html('<option value="1">PRIMARY EDUCATION</option>'); //set acad degree dropdown option
+    $("#acadHighestLevel").val('GRADUATED'); //set highest level value
+    $("#acadHighestLevel").attr('readonly','readonly'); // set readonly highest level
+    $("#acadMOV").attr('disabled','disabled'); //set upload file to disabled
+    $("#divAcadMOV").hide();
+    $("#acadYearGraduated").attr('required','required'); // set year graduated to required field
+    $("#acadNameSchool").prop('disabled', true);
+    $("#acadNameSchool").attr('required',false);
+    $("#txtFilter").attr('required','required');
+    $("#txtFilter").show();
+  }else if(selectLevelValue ==2){
+    $("#ifGraduated").prop('checked', true);
+    $('#divifGraduated').hide();
+    $('#lblacadYearGraduated').attr('class','col-sm-12 requiredField');
+    $("#acadDegree").html('<option value="1">SECONDARY EDUCATION</option>'); //set acad degree dropdown option
+    $("#acadHighestLevel").val('GRADUATED'); //set highest level value
+    $("#acadHighestLevel").attr('readonly','readonly'); // set readonly highest level
+    $("#acadMOV").attr('disabled','disabled'); //set upload file to disabled
+    $("#divAcadMOV").hide();
+    $("#acadYearGraduated").attr('required','required'); // set year graduated to required field
+    $("#acadNameSchool").prop('disabled', true);
+    $("#acadNameSchool").attr('required',false);
+    $("#txtFilter").attr('required','required');
+    $("#txtFilter").show();
+  }else if(selectLevelValue ==3){
+    $('#divifGraduated').show();
+    $.ajax({
+      url:"includes/functions.php",
+      method:"POST",
+      data:{optionCollegeCourse:0},
+      success:function(data){
+          $('#acadDegree').html(data);
+        }
+      });
+      $.ajax({
+        url:"includes/functions.php",
+        method:"POST",
+        data:{optionCollegeSchool:0},
+        success:function(data){
+            $('#acadNameSchool').html(data);
+          }
+        });
+  }else if(selectLevelValue ==4){
+    $.ajax({
+      url:"includes/functions.php",
+      method:"POST",
+      data:{optionTrainingCourse:0},
+      success:function(data){
+          $('#acadDegree').html(data);
+        }
+      });
+      $.ajax({
+        url:"includes/functions.php",
+        method:"POST",
+        data:{optionCollegeSchool:0},
+        success:function(data){
+            $('#acadNameSchool').html(data);
+          }
+        });
+  }else if(selectLevelValue ==5){
+    $.ajax({
+      url:"includes/functions.php",
+      method:"POST",
+      data:{optionGraduateStudies:0},
+      success:function(data){
+          $('#acadDegree').html(data);
+        }
+      });
+      $.ajax({
+        url:"includes/functions.php",
+        method:"POST",
+        data:{optionCollegeSchool:0},
+        success:function(data){
+            $('#acadNameSchool').html(data);
+          }
+        });
+  }else{
+    $("#divAcadMOV").hide();
+    $("#acadDegree").html('<option value="">No Available Option</option>');
+    $("#acadNameSchool").html('<option value="">No Available Option</option>');
+    $("#acadDegree").html('<option value="">SELECT EDUCATIONAL LEVEL FIRST</option>');
+  }
+}
+
+function resetFrmEducBackground(){
+  // $('#frmUserAcademicAdd')[0].reset();
+  $("#ifGraduated").prop('checked', false);
+  $("#acadNameSchool").attr('required','required');
+  $("#acadNameSchool").prop('disabled', false);
+  $("#txtFilter").hide();
+  $("#txtFilter").attr('required',false);
+  $("#acadHighestLevel").val('');
+  $("#acadHighestLevel").attr('readonly',false);
+  $("#acadMOV").attr('required','required');
+  $("#acadYearGraduated").attr('required',false);
+  $('#acadYearGraduated').val('').trigger("change");
+  $("#acadMOV").attr('disabled',false); //set upload file to disabled
+  $("#divAcadMOV").show();
+  $('#divifGraduated').hide();
+  // $('#acadDegree').val('').trigger('change');
+  $('#acadPeriodFrom').val('').trigger('change');
+  $('#acadPeriodTo').val('').trigger('change');
+  $('#lblacadYearGraduated').attr('class','col-sm-12');
+  $("#acadDegree").html('<option value="">SELECT EDUCATIONAL LEVEL FIRST</option>');
+}
+
+function PeriodTo(){
+  const selected_educLevel = $("#acadEducLevel").val();
+  const periodTo = $("#acadPeriodTo").val();
+  if(selected_educLevel ==1){
+    $('#acadYearGraduated').val(periodTo).trigger("change");
+  }else if(selected_educLevel ==2){
+    $('#acadYearGraduated').val(periodTo).trigger("change");
+  }
+}
+
+function UserAcadacemicAdd(formData){
+  const acadPeriodFrom = $("#acadPeriodFrom").val();
+  const acadPeriodTo = $("#acadPeriodTo").val();
+  const acadLevel = $("#acadEducLevel").val();
+  const totalYear = (acadPeriodTo-acadPeriodFrom);
+  const acadYearGraduated = $("#acadYearGraduated").val();
+
+  $("#CheckacadPeriodTo").html("");
+  $("#CheckacadYearGraduated").html("");
+  $("#acadPeriodTo").css('border-color', '');
+  $("#acadPeriodFrom").css('border-color', '');
+  $("#acadYearGraduated").css('border-color', '');
+
+  if(acadPeriodFrom > acadPeriodTo){
+    $("#CheckacadPeriodTo").html("Date error: Please verify the encoded year").css('color', 'red');
+    $("#acadPeriodTo").css('border-color', 'red');
+    $("#acadPeriodFrom").css('border-color', 'red');
+    $("#acadPeriodTo").focus();
+  }else if(acadLevel ==1 && totalYear<6){
+    $("#CheckacadPeriodTo").html("Date error: Please note that the encoded year of attendance is not equivalent to 6 years.").css('color', 'red');
+    $("#acadPeriodTo").css('border-color', 'red');
+    $("#acadPeriodFrom").css('border-color', 'red');
+  }else if($('#ifGraduated').prop('checked') && acadYearGraduated != acadPeriodTo){
+    $("#CheckacadYearGraduated").html("Date error: Please verify the encoded year").css('color', 'red');
+    $("#acadPeriodTo").css('border-color', 'red');
+    $("#acadYearGraduated").css('border-color', 'red');
+    $("#acadYearGraduated").focus();
+  }else{
+    $(".loader-div").show();
+    $.ajax({
+      url:"academicAdd.php",
+      method:"POST",
+      dataType: "json",
+      data:formData,
+      success:function(data){
+        $(".loader-div").hide(); 
+        const msg = data.msg;
+        const stat = data.status;
+        if(stat === "success"){
+          modalSuccessShow(msg,triggerTableReload,'tblAcads');
+          resetFrmEducBackground();
+          checkAlreadyEncode();
+          $('#acadEducLevel').val('').trigger('change');
+        } else {
+          modalErrorShow(msg);
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      },
+      processData: false,
+      contentType: false
+    });
+  }
+}
+
+function btnAcadUpdate(getAcads){
+  $(".loader-div").show();
+  $('#divifGraduatedUpdate').hide();
+  $('#UpdateacadHighestLevel').attr('readonly',false);
+  $("#UpdateacadYearGraduated").attr('required',false);
+  $('#divReuploadMOV').show();
+  $("#txtUpdateFilter").attr('required',false);
+  $("#txtUpdateFilter").hide();
+  $("#UpdateacadNameSchool").prop('disabled',false);
+  $("#UpdateacadNameSchool").attr('required','required');
+  $.ajax({
+      url:"includes/functions.php",
+      method:"POST",
+      data:{getAcads:getAcads},
+      success:function(data){
+        $(".loader-div").hide(); 
+        const AcadsData = JSON.parse(data);
+        const AcadsLevel = AcadsData['acad_level'];
+        const AcadsSchool = AcadsData['acad_school'];
+        const AcadsDegree = AcadsData['acad_degree'];
+        const AcadsifGraduated = AcadsData['ifGraduated'];
+        const AcadsPrimarySchoolID = AcadsData['primary_school_id'];
+        const AcadsPrimarySchoolName = AcadsData['primary_school_title'];
+        if(AcadsifGraduated ==1){
+          $('#UpdateifGraduated').prop('checked',true);
+          $("#lblUpdateacadYearGraduated").attr('class','col-sm-12 requiredField');
+          $('#UpdateacadYearGraduated').attr('required',true);
+          $('#UpdateacadHighestLevel').val('GRADUATED');
+          $('#UpdateacadHighestLevel').attr('readonly',true);
+        } else {
+          $('#UpdateifGraduated').prop('checked',false);
+          $("#lblUpdateacadYearGraduated").attr('class','col-sm-12');
+          $('#UpdateacadYearGraduated').attr('required',false);
+          $('#UpdateacadHighestLevel').val('');
+          $('#UpdateacadHighestLevel').attr('readonly',false);
+        }
+        $('#acadsId').val(AcadsData['id']);
+        $('#UpdateacadEducLevel').val(AcadsData['acad_level']).trigger('change');
+        $('#updateacadEducLevel').attr('readonly','readonly');
+        $('#UpdateacadPeriodFrom').val(AcadsData['acad_from']).trigger('change');
+        $('#UpdateacadPeriodTo').val(AcadsData['acad_to']).trigger('change');
+        $('#UpdateacadYearGraduated').val(AcadsData['acad_year_graduated']).trigger('change');
+        $('#UpdateacadHighestLevel').val(AcadsData['acad_highest_level']);
+        $('#UpdateacadHonors').val(AcadsData['acad_honors']);
+        $('#UpdateacadEducLevelValue').val(AcadsData['acad_level']);
+        if(AcadsLevel ==1){ //Elementary
+          $("#UpdateacadDegree").html('<option value="1">PRIMARY EDUCATION</option>');
+          $('#UpdateacadHighestLevel').attr('readonly','readonly');
+          $("#UpdateacadYearGraduated").attr('required','required');
+          $("#UpdateacadNameSchool").prop('disabled',true);
+          $("#UpdateacadNameSchool").attr('required',false);
+          $("#txtUpdateFilter").show();
+          $("#txtUpdateID").val(AcadsPrimarySchoolID); 
+          $("#txtUpdateFilter").val(AcadsPrimarySchoolName);
+          $("#txtUpdateFilter").attr('required','required');
+           $('#divReuploadMOV').hide();
+            const uploadedMOV = "pdf.pdf"
+            $('#currentAcadsFileName').val(uploadedMOV); //set filename to hidden textbox
+            var pdfURL = 'images/'+uploadedMOV; //pdf directory 
+            const iframePDF = document.getElementById('UploadedMOV'); //iframe id
+            iframePDF.src = `${pdfURL}?t=${new Date().getTime()}`; //embed the url pdf to iframe with time value to get the latest version
+          $('#updateAcads').modal('show');
+        }else if(AcadsLevel ==2){ //High school
+          $("#UpdateacadDegree").html('<option value="1">SECONDARY EDUCATION</option>');
+          $('#UpdateacadHighestLevel').attr('readonly','readonly');
+          $("#UpdateacadYearGraduated").attr('required','required');
+          $("#UpdateacadNameSchool").prop('disabled',true);
+          $("#UpdateacadNameSchool").attr('required',false);
+          $("#txtUpdateFilter").show();
+          $("#txtUpdateID").val(AcadsPrimarySchoolID); 
+          $("#txtUpdateFilter").val(AcadsPrimarySchoolName);
+          $("#txtUpdateFilter").attr('required','required');
+          $('#divReuploadMOV').hide();
+            const uploadedMOV = "pdf.pdf"
+            $('#currentAcadsFileName').val(uploadedMOV); //set filename to hidden textbox
+            var pdfURL = 'images/'+uploadedMOV; //pdf directory 
+            const iframePDF = document.getElementById('UploadedMOV'); //iframe id
+            iframePDF.src = `${pdfURL}?t=${new Date().getTime()}`; //embed the url pdf to iframe with time value to get the latest version
+            $('#updateAcads').modal('show');
+        }else if(AcadsLevel ==3){ //college
+          $(".loader-div").show();
+          $('#divifGraduatedUpdate').show();
+          $.ajax({
+            url:"includes/functions.php", 
+            method:"POST",
+            data:{optionCollegeSchool:AcadsSchool},
+            success:function(data){
+              $(".loader-div").hide(); 
+                $('#UpdateacadNameSchool').html(data);
+              },error: function(xhr, status, error) {
+                modalErrorShow("The system encountered an error. Please contact support.");
+                $(".loader-div").hide();
+              }
+          });
+          $.ajax({
+            url:"includes/functions.php", 
+            method:"POST",
+            data:{optionCollegeCourse:AcadsDegree},
+            success:function(data){
+              $(".loader-div").hide();
+                $('#UpdateacadDegree').html(data);
+              },error: function(xhr, status, error) {
+                modalErrorShow("The system encountered an error. Please contact support.");
+                $(".loader-div").hide();
+              }
+          });
+          const uploadedMOV = AcadsData['acad_uploaded_mov']; //retrieve file name
+          $('#currentAcadsFileName').val(uploadedMOV); //set filename to hidden textbox
+          var pdfURL = 'uploadedMOV/'+uploadedMOV; //pdf directory 
+          const iframePDF = document.getElementById('UploadedMOV'); //iframe id
+          iframePDF.src = `${pdfURL}?t=${new Date().getTime()}`; //embed the url pdf to iframe with time value to get the latest version
+          $('#updateAcads').modal('show');
+        }else if(AcadsLevel ==4){ //vocational
+          $('#divifGraduatedUpdate').show();
+          $.ajax({
+            url:"includes/functions.php", 
+            method:"POST",
+            data:{optionCollegeSchool:AcadsSchool},
+            success:function(data){
+                $('#UpdateacadNameSchool').html(data);
+              },error: function(xhr, status, error) {
+                modalErrorShow("The system encountered an error. Please contact support.");
+                $(".loader-div").hide();
+              }
+            });
+          $.ajax({
+            url:"includes/functions.php", 
+            method:"POST",
+            data:{optionTrainingCourse:AcadsDegree},
+            success:function(data){
+                $('#UpdateacadDegree').html(data);
+              },error: function(xhr, status, error) {
+                modalErrorShow("The system encountered an error. Please contact support.");
+                $(".loader-div").hide();
+              }
+            });
+          const uploadedMOV = AcadsData['acad_uploaded_mov']; //retrieve file name
+          $('#currentAcadsFileName').val(uploadedMOV); //set filename to hidden textbox
+          var pdfURL = 'uploadedMOV/'+uploadedMOV; //pdf directory 
+          const iframePDF = document.getElementById('UploadedMOV'); //iframe id
+          iframePDF.src = `${pdfURL}?t=${new Date().getTime()}`; //embed the url pdf to iframe with time value to get the latest version
+          $('#updateAcads').modal('show');
+        }else{
+          $('#divifGraduatedUpdate').show();
+          $.ajax({
+            url:"includes/functions.php", 
+            method:"POST",
+            data:{optionCollegeSchool:AcadsSchool},
+            success:function(data){
+                $('#UpdateacadNameSchool').html(data);
+              },error: function(xhr, status, error) {
+                modalErrorShow("The system encountered an error. Please contact support.");
+                $(".loader-div").hide();
+              }
+          });
+          $.ajax({
+              url:"includes/functions.php", 
+              method:"POST",
+              data:{optionGraduateStudies:AcadsDegree},
+              success:function(data){
+                  $('#UpdateacadDegree').html(data);
+                }
+          });
+          const uploadedMOV = AcadsData['acad_uploaded_mov']; //retrieve file name
+          $('#currentAcadsFileName').val(uploadedMOV); //set filename to hidden textbox
+          var pdfURL = 'uploadedMOV/'+uploadedMOV; //pdf directory 
+          const iframePDF = document.getElementById('UploadedMOV'); //iframe id
+          iframePDF.src = `${pdfURL}?t=${new Date().getTime()}`; //embed the url pdf to iframe with time value to get the latest version
+          $('#updateAcads').modal('show');
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
+});
+}
+
+function UserAcadsUpdate(formData){
+  const acadPeriodFrom = $("#UpdateacadPeriodFrom").val();
+  const acadPeriodTo = $("#UpdateacadPeriodTo").val();
+  const acadLevel = $("#UpdateacadEducLevel").val();
+  const totalYear = (acadPeriodTo-acadPeriodFrom);
+  const acadYearGraduated = $("#UpdateacadYearGraduated").val();
+
+  $("#CheckUpdateacadPeriodTo").html("");
+  $("#CheckUpdateacadYearGraduated").html("");
+  $("#UpdateacadPeriodTo").css('border-color', '');
+  $("#UpdateacadPeriodFrom").css('border-color', '');
+  $("#UpdateacadYearGraduated").css('border-color', '');
+
+  if(acadPeriodFrom >= acadPeriodTo){
+    $("#CheckUpdateacadPeriodTo").html("Date error: Please verify the encoded year").css('color', 'red');
+    $("#UpdateacadPeriodTo").focus();
+  }else if(acadLevel ==1 && totalYear<6){
+    $("#CheckUpdateacadPeriodTo").html("Date error: Please note that the encoded year of attendance is not equivalent to 6 years.").css('color', 'red');
+    $("#UpdateacadPeriodTo").focus();
+  }else if($('#UpdateifGraduated').prop('checked') && acadYearGraduated != acadPeriodTo){
+    $("#CheckUpdateacadYearGraduated").html("Date error: Please verify the encoded year").css('color', 'red');
+    $("#UpdateacadYearGraduated").focus();
+  }else{
+    $(".loader-div").show();
+    $.ajax({
+      url:"academicUpdate.php",
+      method:"POST",
+      dataType: "json",
+      data:formData,
+      success:function(data){
+        $(".loader-div").hide();
+        $('#updateAcads').modal('hide');
+        const msg = data.msg;
+        const stat = data.status;
+        if(stat === "success"){ 
+          modalSuccessShow(msg,triggerTableReload,'tblAcads');
+          checkAlreadyEncode();
+        } else {
+          modalErrorShow(msg);
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      },
+      processData: false,
+      contentType: false
+
+    });
+   }
+}
+
+function UserEligibilitydAdd(formData){
+  $(".loader-div").show();
+  $.ajax({
+    url:"eligibilityAdd.php",
+    method:"POST",
+    dataType: "json",
+    data:formData,
+    success:function(data){
+      $(".loader-div").hide(); 
+      const msg = data.msg;
+      const stat = data.status;
+      if(stat === "success"){
+        modalSuccessShow(msg,triggerTableReload,'tblEligibility');
+        $('#frmUserEligibilitydAdd')[0].reset();
+        $('#eligibilityCredentials').val('').trigger('change');
+
+      } else {
+        modalErrorShow(msg);
+      }
+    },error: function(xhr, status, error) {
+      modalErrorShow("The system encountered an error. Please contact support.");
+      $(".loader-div").hide();
+    },
+    processData: false,
+    contentType: false
+  });
+}
+
+function btnAcadViewUploaded(uploadedAcadMOV){
+  $('#downloadDocs').attr('href','uploadedMOV/'+uploadedAcadMOV)
+  $('#ViewVerifiedMOV').attr('src','uploadedMOV/'+uploadedAcadMOV);
+  $('#ViewUploadedMOV').modal('show');
+}
+
+function btnEligibilityViewUploaded(uploadedEligibilityMOV){
+  $('#downloadDocs').attr('href','uploadedMOV/'+uploadedEligibilityMOV)
+  $('#ViewVerifiedMOV').attr('src','uploadedMOV/'+uploadedEligibilityMOV);
+  $('#ViewUploadedMOV').modal('show');
+}
+
+function checkUpdateEligibility(eligibilityValue){
+  $('#UpdateeligibilityRating').attr('readonly',true);
+  $('#UpdateeligibilityRating').attr('required',false);
+  $('#lblUpdateeligibilityRating').attr('class','col-sm-12'); 
+  $('#UpdateeligibilityNumber').attr('required',false);
+  $('#UpdateeligibilityNumber').attr('readonly',true);
+  $('#lblUpdateeligibilityNumber').attr('class','col-sm-12');
+  $('#UpdateeligibilityValidityDate').attr('required',false);
+  $('#UpdateeligibilityValidityDate').attr('readonly',true);
+  $('#lblUpdateeligibilityValidityDate').attr('class','col-sm-12');
+  if(eligibilityValue ==1 || eligibilityValue ==2 || eligibilityValue ==3){
+    $('#UpdateeligibilityRating').attr('readonly',false);
+    $('#UpdateeligibilityRating').attr('required',true);
+    $('#lblUpdateeligibilityRating').attr('class','col-sm-12 requiredField');
+  }else if(eligibilityValue==10){
+    $('#UpdateeligibilityRating').attr('readonly',false);
+    $('#UpdateeligibilityRating').attr('required',true);
+    $('#lblUpdateeligibilityRating').attr('class','col-sm-12 requiredField');    
+    $('#UpdateeligibilityNumber').attr('required',true);  
+    $('#UpdateeligibilityNumber').attr('readonly',false);
+    $('#lblUpdateeligibilityNumber').attr('class','col-sm-12 requiredField');
+    $('#UpdateeligibilityValidityDate').attr('required',true);
+    $('#UpdateeligibilityValidityDate').attr('readonly',false);
+    $('#lblUpdateeligibilityValidityDate').attr('class','col-sm-12 requiredField');
+  }
+}
+
+function btnEligibilityUpdate(getEligibility){
+  $.ajax({
+      url:"includes/functions.php",
+      method:"POST",
+      data:{getEligibility:getEligibility},
+      success:function(data){
+        const EligibilityData = JSON.parse(data);
+        $('#Eligibilityid').val(EligibilityData['id']);
+        const credit_eligibility = EligibilityData['eligibility_credentials'];
+        checkUpdateEligibility(credit_eligibility);
+        $.ajax({
+          url:"includes/functions.php", 
+          method:"POST",
+          data:{eligibility:credit_eligibility},
+          success:function(data){
+              $('#UpdateeligibilityCredentials').html(data);
+            }
+          });
+        $('#UpdateeligibilityCredentials').attr('disabled','disabled')
+        $('#UpdateeligibilityRating').val(EligibilityData['eligibility_rating']);
+        $('#UpdateeligibilityExamDate').val(EligibilityData['eligibility_exam_date']);
+        $('#UpdateeligibilityPlaceExamination').val(EligibilityData['eligibility_exam_place']);
+        $('#UpdateeligibilityNumber').val(EligibilityData['eligibility_license'])
+        $('#UpdateeligibilityValidityDate').val(EligibilityData['eligibility_validity_date']);
+        const uploadedEligibilityMOV = EligibilityData['eligibility_uploaded_mov']; //retrieve file name
+        $('#currentEligibilityFileName').val(uploadedEligibilityMOV); //set filename to hidden textbox
+        var pdfEligibilityURL = 'uploadedMOV/'+uploadedEligibilityMOV; //pdf directory 
+        const iframeEligibilityPDF = document.getElementById('UploadedEligibilityMOV'); //iframe id
+        iframeEligibilityPDF.src = `${pdfEligibilityURL}?t=${new Date().getTime()}`; //embed the url pdf to iframe with time value to get the latest version
+        $('#updateEligibility').modal('show');
+      }
+});
+}
+
+function UserEligibilitydUpdate(formData){
+  $(".loader-div").show();
+  $.ajax({
+    url:"eligibilityUpdate.php",
+    method:"POST",
+    dataType: "json",
+    data:formData,
+    success:function(data){
+      $(".loader-div").hide();
+      $('#updateEligibility').modal('hide');
+      const msg = data.msg;
+      const stat = data.status;
+      if(stat === "success"){ 
+        modalSuccessShow(msg,triggerTableReload,'tblEligibility');
+      } else {
+        modalErrorShow(msg);
+      }
+    },error: function(xhr, status, error) {
+      modalErrorShow("The system encountered an error. Please contact support.");
+      $(".loader-div").hide();
+    },
+    processData: false,
+    contentType: false
+
+  });
+}
+
+function UserCareerdAdd(formData){
+  $(".loader-div").show();
+  $.ajax({
+    url:"careerAdd.php",
+    method:"POST",
+    dataType: "json",
+    data:formData,
+    success:function(data){
+      $(".loader-div").hide();
+      const msg = data.msg;
+      const stat = data.status;
+      if(stat === "success"){
+        modalSuccessShow(msg,triggerTableReload,'tblcareer');
+        $('#frmUserCareerdAdd')[0].reset();
+        $('#careerGovt').val('').trigger('change');
+      } else {
+        modalErrorShow(msg);
+      }
+    },error: function(xhr, status, error) {
+      modalErrorShow("The system encountered an error. Please contact support.");
+      $(".loader-div").hide();
+    },
+    processData: false,
+    contentType: false
+  });
+}
+
+function btnCareerViewUploaded(uploadedCareerMOV){
+  $('#downloadDocs').attr('href','uploadedMOV/'+uploadedCareerMOV)
+  $('#ViewVerifiedMOV').attr('src','uploadedMOV/'+uploadedCareerMOV);
+  $('#ViewUploadedMOV').modal('show');
+}
+
+function btnCareerUpdate(getCareer){
+  $(".loader-div").show();
+  $.ajax({
+      url:"includes/functions.php",
+      method:"POST",
+      data:{getCareer:getCareer},
+      success:function(data){
+        $(".loader-div").hide(); 
+        const CareerData = JSON.parse(data);
+        $('#careerID').val(CareerData['id']);
+        $('#UpdatecareerDateFrom').val(CareerData['career_date_from']);
+        $('#UpdatecareerGovtService').val(CareerData['career_govt_service']).trigger('change');
+        $('#UpdatecareerDateTo').val(CareerData['career_date_to']);
+        $('#UpdatecareerPosition').val(CareerData['career_position_title']);      
+        $('#UpdatecareerOrganization').val(CareerData['career_organization']);
+        $('#UpdatecareerSalary').val(CareerData['career_salary']);
+        $('#UpdatecareerCompensention').val(CareerData['career_compensention_level']);
+        $('#UpdatecareerStatusAppointment').val(CareerData['career_status_appointment']);
+        const uploadedMOV = CareerData['career_uploaded_mov']; //retrieve file name
+        $('#currentCareerFileName').val(uploadedMOV); //set filename to hidden textbox
+        var pdfURL = 'uploadedMOV/'+uploadedMOV; //pdf directory 
+        const iframeCareerPDF = document.getElementById('UploadedCareerMOV'); //iframe id
+        iframeCareerPDF.src = `${pdfURL}?t=${new Date().getTime()}`; //embed the url pdf to iframe with time value to get the latest version
+
+        $('#updateCareer').modal('show');
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
+});
+}
+
+function UserCareerUpdate(formData){
+  $(".loader-div").show();
+  $.ajax({
+    url:"careerUpdate.php",
+    method:"POST",
+    dataType: "json",
+    data:formData,
+    success:function(data){
+      $(".loader-div").hide(); 
+      $('#updateCareer').modal('hide');
+      const msg = data.msg;
+      const stat = data.status;
+      if(stat === "success"){
+      modalSuccessShow(msg,triggerTableReload,'tblcareer');
+    } else {
+      modalErrorShow(msg);
+    }
+    },error: function(xhr, status, error) {
+      modalErrorShow("The system encountered an error. Please contact support.");
+      $(".loader-div").hide();
+    },
+    processData: false,
+    contentType: false
+
+  });
+}
+
+function UserVoluntaryAdd(formData){
+  $(".loader-div").show();
+  $.ajax({
+    url:"voluntaryWorkAdd.php",
+    method:"POST",
+    dataType: "json",
+    data:formData,
+    success:function(data){
+      $(".loader-div").hide();
+      const msg = data.msg;
+      const stat = data.status;
+      if(stat === "success"){
+        modalSuccessShow(msg,triggerTableReload,'tblVoluntary');
+        $('#frmUserVoluntaryAdd')[0].reset();
+      } else {
+        modalErrorShow(msg);
+      }
+    },error: function(xhr, status, error) {
+      modalErrorShow("The system encountered an error. Please contact support.");
+      $(".loader-div").hide();
+    },
+    processData: false,
+    contentType: false
+  });
+}
+
+function btnVoluntaryUpdate(getVoluntary){
+  $(".loader-div").show();
+  $.ajax({
+      url:"includes/functions.php",
+      method:"POST",
+      data:{getVoluntary:getVoluntary},
+      success:function(data){
+        $(".loader-div").hide(); 
+        const VoluntaryData = JSON.parse(data);
+        $('#voluntaryID').val(VoluntaryData['id']);
+        $('#UpdatevoluntaryNAO').val(VoluntaryData['vw_name_address']);
+        $('#UpdatevoluntaryDateFrom').val(VoluntaryData['vw_date_from']);
+        $('#UpdatevoluntaryDateTo').val(VoluntaryData['vw_date_to']);
+        $('#UpdatevoluntaryTotalHrs').val(VoluntaryData['vw_no_hrs']);
+        $('#UpdatevoluntaryPosition').val(VoluntaryData['vw_position']);
+        $('#updateVoluntary').modal('show');
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
+});
+}
+ 
+$(document).on('change','#UpdateifGraduated', function(){
+  if ($(this).is(':checked')) {
+    $("#lblUpdateacadYearGraduated").attr('class','col-sm-12 requiredField');
+    $('#UpdateacadYearGraduated').attr('required',true);
+    $('#UpdateacadHighestLevel').val('GRADUATED');
+    $('#UpdateacadHighestLevel').attr('readonly',true);
+  } else {
+    $("#lblUpdateacadYearGraduated").attr('class','col-sm-12');
+    $('#UpdateacadYearGraduated').attr('required',false);
+    $('#UpdateacadHighestLevel').val('');
+    $('#UpdateacadHighestLevel').attr('readonly',false);
+  }
+});
+
 $(document).on('change','#sameAddressCheckbox',function(){
     $('#AddPermanentZipCode').val('');
     $('#AddPermanentBarangay').val('').trigger('change');
@@ -1631,6 +2328,204 @@ $(document).on('click', '#btnUserDeleteFamilyBackground', function(){ //delete f
   modalConfirmShow('Would you like to permanently delete this information? This action cannot be undone.',deleteData,PassData);
 });
 
+$(document).on('submit', '#frmUserAcademicAdd', function(event){
+  event.preventDefault();
+  var PassData  = new FormData(frmUserAcademicAdd);
+  PassData.append('ifGraduated', $('#ifGraduated').is(':checked') ? 1 : 0);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserAcadacemicAdd,PassData);
+});
+
+$(document).on('change','#acadEducLevel', function(){
+  var selectLevelValue = $('#acadEducLevel').val();
+EducLevel(selectLevelValue);
+});
+
+$(document).on('change','#acadPeriodTo', function(){
+  PeriodTo();
+});
+
+$(document).on('change','#ifGraduated',function(){
+if ($(this).is(':checked')) {
+  $("#lblacadYearGraduated").attr('class','col-sm-12 requiredField');
+  $('#acadYearGraduated').attr('required',true);
+  $('#acadHighestLevel').val('GRADUATED');
+  $('#acadHighestLevel').attr('readonly',true);
+} else {
+  $("#lblacadYearGraduated").attr('class','col-sm-12');
+  $('#acadYearGraduated').attr('required',false);
+  $('#acadHighestLevel').val('');
+  $('#acadHighestLevel').attr('readonly',false);
+}
+});
+
+$(document).on('click', '#btnUserAcadsUpdate', function(){
+  var  getAcads = $(this).attr('value');
+  btnAcadUpdate(getAcads);
+}); 
+
+$(document).on('submit','#frmUserAcadsUpdate',function(event){
+  event.preventDefault();
+  var PassData = new FormData(frmUserAcadsUpdate);
+  PassData.append('UpdateifGraduated', $('#UpdateifGraduated').is(':checked') ? 1 : 0);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserAcadsUpdate,PassData);
+});
+
+$(document).on('click', '#btnUserAcadsDelete', function(){ //delete family background details
+  const valueID = $(this).attr('data-valueID');
+  const valueURL = $(this).attr('data-valueURL');
+  var TableID = 'tblAcads';
+  var PassData = {
+    valueID:valueID,
+    valueURL:valueURL,
+    TableID:TableID,
+    ActionAfter1: resetFrmEducBackground,
+    ActionAfter2: checkAlreadyEncode
+  };
+  modalConfirmShow('Would you like to permanently delete this information? This action cannot be undone.',deleteData,PassData);
+});
+
+$(document).on('change','#eligibilityCredentials', function(){
+  $('#eligibilityRating').attr('readonly',true);
+  $('#eligibilityRating').attr('required',false);
+  $('#lbleligibilityRating').attr('class','col-sm-12');
+  $('#eligibilityNumber').attr('required',false);
+  $('#eligibilityNumber').attr('readonly',true);
+  $('#lbleligibilityNumber').attr('class','col-sm-12');
+  $('#eligibilityValidityDate').attr('required',false);
+  $('#eligibilityValidityDate').attr('readonly',true);
+  $('#lbleligibilityValidityDate').attr('class','col-sm-12');
+  var eligibilityValue = $(this).val();
+  if(eligibilityValue ==1 || eligibilityValue ==2 || eligibilityValue ==3){
+    $('#eligibilityRating').attr('readonly',false);
+    $('#eligibilityRating').attr('required',true);
+    $('#lbleligibilityRating').attr('class','col-sm-12 requiredField');
+  }else if(eligibilityValue==10){
+    $('#eligibilityRating').attr('readonly',false);
+    $('#eligibilityRating').attr('required',true);
+    $('#lbleligibilityRating').attr('class','col-sm-12 requiredField');    
+    $('#eligibilityNumber').attr('required',true);  
+    $('#eligibilityNumber').attr('readonly',false);
+    $('#lbleligibilityNumber').attr('class','col-sm-12 requiredField');
+    $('#eligibilityValidityDate').attr('required',true);
+    $('#eligibilityValidityDate').attr('readonly',false);
+    $('#lbleligibilityValidityDate').attr('class','col-sm-12 requiredField');
+  }
+});
+
+$(document).on('submit','#frmUserEligibilitydAdd', function(event){
+  event.preventDefault();
+  var PassData  = new FormData(frmUserEligibilitydAdd);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserEligibilitydAdd,PassData);
+});
+
+$(document).on('click','#btnUserAcadViewUploaded',function(){
+  var uploadedAcadMOV = $(this).attr('value');
+  btnAcadViewUploaded(uploadedAcadMOV)
+});
+
+$(document).on('click','#btnUserEligibilityViewUploaded',function(){
+  var uploadedEligibilityMOV = $(this).attr('value');
+  btnEligibilityViewUploaded(uploadedEligibilityMOV)
+});
+
+$(document).on('click','#btnUserEligibilityUpdate', function(){
+  var  getEligibility = $(this).attr('value');
+  btnEligibilityUpdate(getEligibility)
+});
+
+$(document).on('click', '#btnUserEligibilityDelete', function(){ //delete family background details
+  const valueID = $(this).attr('data-valueID');
+  const valueURL = $(this).attr('data-valueURL');
+  var TableID = 'tblEligibility';
+  var PassData = {
+    valueID:valueID,
+    valueURL:valueURL,
+    TableID:TableID,
+    ActionAfter1: '',
+    ActionAfter2: ''
+  };
+  modalConfirmShow('Would you like to permanently delete this information? This action cannot be undone.',deleteData,PassData);
+});
+
+$(document).on('submit','#frmUserEligibilitydUpdate',function(event){
+  event.preventDefault();
+  var PassData = new FormData(frmUserEligibilitydUpdate);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserEligibilitydUpdate,PassData);
+});
+
+$(document).on('submit','#frmUserCareerdAdd',function(event){
+  event.preventDefault();
+  var PassData  = new FormData(frmUserCareerdAdd);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserCareerdAdd,PassData);
+});
+
+$(document).on('click','#btnUserCareerUpdate',function(event){
+  var getCareer =  $(this).attr('value');
+  btnCareerUpdate(getCareer);
+});
+
+$(document).on('submit','#btnUserCareerViewUploaded',function(){
+  var uploadedCareerMOV = $(this).attr('value');
+  btnCareerViewUploaded(uploadedCareerMOV);
+});
+
+$(document).on('submit','#frmUserCareerdUpdate',function(event){
+  event.preventDefault();
+  var PassData = new FormData(frmUserCareerdUpdate);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserCareerUpdate,PassData);
+});
+
+$(document).on('click', '#btnUserCareerDelete', function(){ //delete family background details
+  const valueID = $(this).attr('data-valueID');
+  const valueURL = $(this).attr('data-valueURL');
+  var TableID = 'tblcareer';
+  var PassData = {
+    valueID:valueID,
+    valueURL:valueURL,
+    TableID:TableID,
+    ActionAfter1: '',
+    ActionAfter2: ''
+  };
+  modalConfirmShow('Would you like to permanently delete this information? This action cannot be undone.',deleteData,PassData);
+});
+
+$(document).on('submit','#frmUserVoluntaryAdd',function(event){
+  event.preventDefault();
+  var PassData  = new FormData(frmUserVoluntaryAdd);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserVoluntaryAdd,PassData);
+});
+
+$(document).on('click','#btnUserVoluntaryUpdate',function(event){
+  var getVoluntary =  $(this).attr('value');
+  btnVoluntaryUpdate(getVoluntary);
+});
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1690,86 +2585,8 @@ $("#form_other_info").on("submit",function(event){
 });
 
 
-$("#frmAcademicAdd").on("submit",function(event){
-  event.preventDefault();
-  var formData = new FormData(frmAcademicAdd);
-  const acadPeriodFrom = $("#acadPeriodFrom").val();
-  const acadPeriodTo = $("#acadPeriodTo").val();
-  const acadLevel = $("#acadEducLevel").val();
-  const totalYear = (acadPeriodTo-acadPeriodFrom);
-  const acadYearGraduated = $("#acadYearGraduated").val();
 
-  $("#CheckacadPeriodTo").html("");
-  $("#CheckacadYearGraduated").html("");
-  $("#acadPeriodTo").css('border-color', '');
-  $("#acadPeriodFrom").css('border-color', '');
-  $("#acadYearGraduated").css('border-color', '');
 
-  if(acadPeriodFrom > acadPeriodTo){
-    $("#CheckacadPeriodTo").html("Date error: Please verify the encoded year").css('color', 'red');
-    $("#acadPeriodTo").css('border-color', 'red');
-    $("#acadPeriodFrom").css('border-color', 'red');
-    $("#acadPeriodTo").focus();
-  }else if(acadLevel ==1 && totalYear<6){
-    $("#CheckacadPeriodTo").html("Date error: Please note that the encoded year of attendance is not equivalent to 6 years.").css('color', 'red');
-    $("#acadPeriodTo").css('border-color', 'red');
-    $("#acadPeriodFrom").css('border-color', 'red');
-  }else if(acadYearGraduated != '' && acadYearGraduated != acadPeriodTo){
-    $("#CheckacadYearGraduated").html("Date error: Please verify the encoded year").css('color', 'red');
-    $("#acadPeriodTo").css('border-color', 'red');
-    $("#acadYearGraduated").css('border-color', 'red');
-    $("#acadYearGraduated").focus();
-  }else{
-    $.ajax({
-      url:"academicAdd.php",
-              method:"POST",
-              dataType: "json",
-              data:formData,
-              success:function(data){
-                const msg = data.msg;
-                const stat = data.status;
-                if(stat == "success"){
-                    $('#modalNotif-header').text('Great! Success.');
-                    $('#modalNotif-message').text(msg);
-                     $('#modalNotif').modal('show');
-                }
-                else{
-                  $('#modalNotif-header').text('Opps!');
-                  $('#modalNotif-message').text(msg);
-                  $('#modalNotif').modal('show');
-                }
-              },
-              processData: false,
-              contentType: false
-    });
-  }
-
-});
-$("#frmCareerdAdd").on("submit",function(event){
-  event.preventDefault();
-  var formData = new FormData(frmCareerdAdd);
-  $.ajax({
-    url:"careerAdd.php",
-            method:"POST",
-            dataType: "json",
-            data:formData,
-            success:function(data){
-              const msg = data.msg;
-              const stat = data.status;
-              if(stat == "success"){
-                  $('#modalNotif-header').text('Great! Success.');
-                  $('#modalNotif-message').text(msg);
-                   $('#modalNotif').modal('show');
-              }
-              else{
-                  $('#alertMessage').text(msg);
-                  $('#modalAlert').modal('show'); 
-              }
-            },
-            processData: false,
-            contentType: false
-  });
-});
 $("#frmnonAcademicAdd").on("submit",function(event){
   event.preventDefault();
   const nonAcademic = $('#nonAcademicTitle').val();
@@ -1921,56 +2738,8 @@ $("#frmTrainingAdd").on("submit",function(event){
             contentType: false
   });
 });
-$("#frmEligibilitydAdd").on("submit",function(event){
-  event.preventDefault();
-  var formData = new FormData(frmEligibilitydAdd);
-  $.ajax({
-    url:"eligibilityAdd.php",
-            method:"POST",
-            dataType: "json",
-            data:formData,
-            success:function(data){
-              const msg = data.msg;
-              const stat = data.status;
-              if(stat == "success"){
-                  $('#modalNotif-header').text('Great! Success.');
-                  $('#modalNotif-message').text(msg);
-                   $('#modalNotif').modal('show');
-              }
-              else{
-                  $('#alertMessage').text(msg);
-                  $('#modalAlert').modal('show'); 
-              }
-            },
-            processData: false,
-            contentType: false
-  });
-});
-$("#frmVoluntaryAdd").on("submit",function(event){
-  event.preventDefault();
-  var formData = new FormData(frmVoluntaryAdd);
-  $.ajax({
-    url:"voluntaryWorkAdd.php",
-            method:"POST",
-            dataType: "json",
-            data:formData,
-            success:function(data){
-              const msg = data.msg;
-              const stat = data.status;
-              if(stat == "success"){
-                  $('#modalNotif-header').text('Great! Success.');
-                  $('#modalNotif-message').text(msg);
-                   $('#modalNotif').modal('show');
-              }
-              else{
-                  $('#alertMessage').text(msg);
-                  $('#modalAlert').modal('show'); 
-              }
-            },
-            processData: false,
-            contentType: false
-  });
-});
+
+
 
 
 
@@ -2048,125 +2817,12 @@ function careerPresentCheck(){
   }
 }
 
-function PeriodTo(){
-  const selected_educLevel = $("#acadEducLevel").val();
-  const periodTo = $("#acadPeriodTo").val();
-  if(selected_educLevel ==1){
-    $('#acadYearGraduated').val(periodTo).trigger("change");
-  }else if(selected_educLevel ==2){
-    $('#acadYearGraduated').val(periodTo).trigger("change");
-  }
-}
-function resetFrmEducBackground(){
-  $("#acadNameSchool").attr('required','required');
-  $("#acadNameSchool").prop('disabled', false);
-  $("#txtFilter").hide();
-  $("#txtFilter").attr('required',false);
-  $("#acadHighestLevel").val('');
-  $("#acadHighestLevel").attr('readonly',false);
-  $("#acadMOV").attr('required','required');
-  $("#acadYearGraduated").attr('required',false);
-  $('#acadYearGraduated').val('').trigger("change");
-  $("#acadMOV").attr('disabled',false); //set upload file to disabled
-  $("#divAcadMOV").show();
-}
-function EducLevel(){
-  resetFrmEducBackground();
-  var selectLevelValue = $("#acadEducLevel").val();
-  if(selectLevelValue ==1){
-    $("#acadDegree").html('<option value="1">PRIMARY EDUCATION</option>'); //set acad degree dropdown option
-    $("#acadHighestLevel").val('GRADUATED'); //set highest level value
-    $("#acadHighestLevel").attr('readonly','readonly'); // set readonly highest level
-    $("#acadMOV").attr('disabled','disabled'); //set upload file to disabled
-    $("#divAcadMOV").hide();
-    $("#acadYearGraduated").attr('required','required'); // set year graduated to required field
-    $("#acadNameSchool").prop('disabled', true);
-    $("#acadNameSchool").attr('required',false);
-    $("#txtFilter").attr('required','required');
-    $("#txtFilter").show();
-  }else if(selectLevelValue ==2){
-    $("#acadDegree").html('<option value="1">SECONDARY EDUCATION</option>'); //set acad degree dropdown option
-    $("#acadHighestLevel").val('GRADUATED'); //set highest level value
-    $("#acadHighestLevel").attr('readonly','readonly'); // set readonly highest level
-    $("#acadMOV").attr('disabled','disabled'); //set upload file to disabled
-    $("#divAcadMOV").hide();
-    $("#acadYearGraduated").attr('required','required'); // set year graduated to required field
-    $("#acadNameSchool").prop('disabled', true);
-    $("#acadNameSchool").attr('required',false);
-    $("#txtFilter").attr('required','required');
-    $("#txtFilter").show();
-  }else if(selectLevelValue ==3){
-    $.ajax({
-      url:"includes/functions.php",
-      method:"POST",
-      data:{optionCollegeCourse:0},
-      success:function(data){
-          $('#acadDegree').html(data);
-        }
-      });
-      $.ajax({
-        url:"includes/functions.php",
-        method:"POST",
-        data:{optionCollegeSchool:0},
-        success:function(data){
-            $('#acadNameSchool').html(data);
-          }
-        });
-  }else if(selectLevelValue ==4){
-    $.ajax({
-      url:"includes/functions.php",
-      method:"POST",
-      data:{optionTrainingCourse:0},
-      success:function(data){
-          $('#acadDegree').html(data);
-        }
-      });
-      $.ajax({
-        url:"includes/functions.php",
-        method:"POST",
-        data:{optionCollegeSchool:0},
-        success:function(data){
-            $('#acadNameSchool').html(data);
-          }
-        });
-  }else if(selectLevelValue ==5){
-    $.ajax({
-      url:"includes/functions.php",
-      method:"POST",
-      data:{optionGraduateStudies:0},
-      success:function(data){
-          $('#acadDegree').html(data);
-        }
-      });
-      $.ajax({
-        url:"includes/functions.php",
-        method:"POST",
-        data:{optionCollegeSchool:0},
-        success:function(data){
-            $('#acadNameSchool').html(data);
-          }
-        });
-  }else{
-    $("#acadDegree").html('<option value="">No Available Option</option>');
-    $("#acadNameSchool").html('<option value="">No Available Option</option>');
-  }
-}
 
-function btnAcadViewUploaded(uploadedAcadMOV){
-  $('#downloadDocs').attr('href','uploadedMOV/'+uploadedAcadMOV)
-  $('#ViewVerifiedMOV').attr('src','uploadedMOV/'+uploadedAcadMOV);
-  $('#ViewUploadedMOV').modal('show');
-}
-function btnEligibilityViewUploaded(uploadedEligibilityMOV){
-  $('#downloadDocs').attr('href','uploadedMOV/'+uploadedEligibilityMOV)
-  $('#ViewVerifiedMOV').attr('src','uploadedMOV/'+uploadedEligibilityMOV);
-  $('#ViewUploadedMOV').modal('show');
-}
-function btnCareerViewUploaded(uploadedCareerMOV){
-  $('#downloadDocs').attr('href','uploadedMOV/'+uploadedCareerMOV)
-  $('#ViewVerifiedMOV').attr('src','uploadedMOV/'+uploadedCareerMOV);
-  $('#ViewUploadedMOV').modal('show');
-}
+
+
+
+
+
 function btnTrainingViewUploaded(uploadedTrainingMOV){
   $('#downloadDocs').attr('href','uploadedMOV/'+uploadedTrainingMOV)
   $('#ViewVerifiedMOV').attr('src','uploadedMOV/'+uploadedTrainingMOV);
@@ -2237,324 +2893,17 @@ function btnTrainingUpdate(getTraining){
 });
 }
 
-function btnAcadUpdate(getAcads){
-  $('#UpdateacadHighestLevel').attr('readonly',false);
-  $("#UpdateacadYearGraduated").attr('required',false);
-  $('#divReuploadMOV').show();
-  $("#txtUpdateFilter").attr('required',false);
-  $("#txtUpdateFilter").hide();
-  $("#UpdateacadNameSchool").prop('disabled',false);
-  $("#UpdateacadNameSchool").attr('required','required');
-  $.ajax({
-      url:"includes/functions.php",
-      method:"POST",
-      data:{getAcads:getAcads},
-      success:function(data){
-        const AcadsData = JSON.parse(data);
-        const AcadsLevel = AcadsData['acad_level'];
-        const AcadsSchool = AcadsData['acad_school'];
-        const AcadsDegree = AcadsData['acad_degree'];
-        const AcadsPrimarySchoolID = AcadsData['primary_school_id'];
-        const AcadsPrimarySchoolName = AcadsData['primary_school_title'];
-        $('#acadsId').val(AcadsData['id']);
-        $('#UpdateacadEducLevel').val(AcadsData['acad_level']).trigger('change');
-        $('#updateacadEducLevel').attr('readonly','readonly');
-        $('#UpdateacadPeriodFrom').val(AcadsData['acad_from']).trigger('change');
-        $('#UpdateacadPeriodTo').val(AcadsData['acad_to']).trigger('change');
-        $('#UpdateacadYearGraduated').val(AcadsData['acad_year_graduated']).trigger('change');
-        $('#UpdateacadHighestLevel').val(AcadsData['acad_highest_level']);
-        $('#UpdateacadHonors').val(AcadsData['acad_honors']);
-        $('#UpdateacadEducLevelValue').val(AcadsData['acad_level']);
-        if(AcadsLevel ==1){ //Elementary
-          $("#UpdateacadDegree").html('<option value="1">PRIMARY EDUCATION</option>');
-          $('#UpdateacadHighestLevel').attr('readonly','readonly');
-          $("#UpdateacadYearGraduated").attr('required','required');
-          $("#UpdateacadNameSchool").prop('disabled',true);
-          $("#UpdateacadNameSchool").attr('required',false);
-          $("#txtUpdateFilter").show();
-          $("#txtUpdateID").val(AcadsPrimarySchoolID); 
-          $("#txtUpdateFilter").val(AcadsPrimarySchoolName);
-          $("#txtUpdateFilter").attr('required','required');
-           $('#divReuploadMOV').hide();
-            const uploadedMOV = "pdf.pdf"
-            $('#currentAcadsFileName').val(uploadedMOV); //set filename to hidden textbox
-            var pdfURL = 'images/'+uploadedMOV; //pdf directory 
-            const iframePDF = document.getElementById('UploadedMOV'); //iframe id
-            iframePDF.src = `${pdfURL}?t=${new Date().getTime()}`; //embed the url pdf to iframe with time value to get the latest version
-          $('#updateAcads').modal('show');
-        }else if(AcadsLevel ==2){ //High school
-          $("#UpdateacadDegree").html('<option value="1">SECONDARY EDUCATION</option>');
-          $('#UpdateacadHighestLevel').attr('readonly','readonly');
-          $("#UpdateacadYearGraduated").attr('required','required');
-          $("#UpdateacadNameSchool").prop('disabled',true);
-          $("#UpdateacadNameSchool").attr('required',false);
-          $("#txtUpdateFilter").show();
-          $("#txtUpdateID").val(AcadsPrimarySchoolID); 
-          $("#txtUpdateFilter").val(AcadsPrimarySchoolName);
-          $("#txtUpdateFilter").attr('required','required');
-          $('#divReuploadMOV').hide();
-            const uploadedMOV = "pdf.pdf"
-            $('#currentAcadsFileName').val(uploadedMOV); //set filename to hidden textbox
-            var pdfURL = 'images/'+uploadedMOV; //pdf directory 
-            const iframePDF = document.getElementById('UploadedMOV'); //iframe id
-            iframePDF.src = `${pdfURL}?t=${new Date().getTime()}`; //embed the url pdf to iframe with time value to get the latest version
-            $('#updateAcads').modal('show');
-        }else if(AcadsLevel ==3){ //college
-          $.ajax({
-            url:"includes/functions.php", 
-            method:"POST",
-            data:{optionCollegeSchool:AcadsSchool},
-            success:function(data){
-                $('#UpdateacadNameSchool').html(data);
-              }
-            });
-            $.ajax({
-              url:"includes/functions.php", 
-              method:"POST",
-              data:{optionCollegeCourse:AcadsDegree},
-              success:function(data){
-                  $('#UpdateacadDegree').html(data);
-                }
-              });
-          const uploadedMOV = AcadsData['acad_uploaded_mov']; //retrieve file name
-          $('#currentAcadsFileName').val(uploadedMOV); //set filename to hidden textbox
-          var pdfURL = 'uploadedMOV/'+uploadedMOV; //pdf directory 
-          const iframePDF = document.getElementById('UploadedMOV'); //iframe id
-          iframePDF.src = `${pdfURL}?t=${new Date().getTime()}`; //embed the url pdf to iframe with time value to get the latest version
-          $('#updateAcads').modal('show');
-        }else if(AcadsLevel ==4){ //vocational
-          $.ajax({
-            url:"includes/functions.php", 
-            method:"POST",
-            data:{optionCollegeSchool:AcadsSchool},
-            success:function(data){
-                $('#UpdateacadNameSchool').html(data);
-              }
-            });
-            $.ajax({
-              url:"includes/functions.php", 
-              method:"POST",
-              data:{optionTrainingCourse:AcadsDegree},
-              success:function(data){
-                  $('#UpdateacadDegree').html(data);
-                }
-              });
-          const uploadedMOV = AcadsData['acad_uploaded_mov']; //retrieve file name
-          $('#currentAcadsFileName').val(uploadedMOV); //set filename to hidden textbox
-          var pdfURL = 'uploadedMOV/'+uploadedMOV; //pdf directory 
-          const iframePDF = document.getElementById('UploadedMOV'); //iframe id
-          iframePDF.src = `${pdfURL}?t=${new Date().getTime()}`; //embed the url pdf to iframe with time value to get the latest version
-          $('#updateAcads').modal('show');
-        }else{
-          $.ajax({
-            url:"includes/functions.php", 
-            method:"POST",
-            data:{optionCollegeSchool:AcadsSchool},
-            success:function(data){
-                $('#UpdateacadNameSchool').html(data);
-              }
-            });
-            $.ajax({
-              url:"includes/functions.php", 
-              method:"POST",
-              data:{optionGraduateStudies:AcadsDegree},
-              success:function(data){
-                  $('#UpdateacadDegree').html(data);
-                }
-              });
-          const uploadedMOV = AcadsData['acad_uploaded_mov']; //retrieve file name
-          $('#currentAcadsFileName').val(uploadedMOV); //set filename to hidden textbox
-          var pdfURL = 'uploadedMOV/'+uploadedMOV; //pdf directory 
-          const iframePDF = document.getElementById('UploadedMOV'); //iframe id
-          iframePDF.src = `${pdfURL}?t=${new Date().getTime()}`; //embed the url pdf to iframe with time value to get the latest version
-          $('#updateAcads').modal('show');
-        }
-      }
-});
-}
+
 function openChangePassword(){
   $('#changePassword').modal('show');
 }
-function btnEligibilityUpdate(getEligibility){
-  $.ajax({
-      url:"includes/functions.php",
-      method:"POST",
-      data:{getEligibility:getEligibility},
-      success:function(data){
-        const EligibilityData = JSON.parse(data);
-        $('#Eligibilityid').val(EligibilityData['id']);
-        const credit_eligibility = EligibilityData['eligibility_credentials'];
-        $.ajax({
-          url:"includes/functions.php", 
-          method:"POST",
-          data:{eligibility:credit_eligibility},
-          success:function(data){
-              $('#UpdateeligibilityCredentials').html(data);
-            }
-          });
-          $('#UpdateeligibilityCredentials').attr('disabled','disabled')
-        $('#UpdateeligibilityRating').val(EligibilityData['eligibility_rating']);
-        $('#UpdateeligibilityExamDate').val(EligibilityData['eligibility_exam_date']);
-        $('#UpdateeligibilityPlaceExamination').val(EligibilityData['eligibility_exam_place']);
-        $('#UpdateeligibilityNumber').val(EligibilityData['eligibility_license'])
-        $('#UpdateeligibilityValidityDate').val(EligibilityData['eligibility_validity_date']);
-        const uploadedEligibilityMOV = EligibilityData['eligibility_uploaded_mov']; //retrieve file name
-        $('#currentEligibilityFileName').val(uploadedEligibilityMOV); //set filename to hidden textbox
-        var pdfEligibilityURL = 'uploadedMOV/'+uploadedEligibilityMOV; //pdf directory 
-        const iframeEligibilityPDF = document.getElementById('UploadedEligibilityMOV'); //iframe id
-        iframeEligibilityPDF.src = `${pdfEligibilityURL}?t=${new Date().getTime()}`; //embed the url pdf to iframe with time value to get the latest version
-        $('#updateEligibility').modal('show');
-      }
-});
-}
-function btnCareerUpdate(getCareer){
-  $.ajax({
-      url:"includes/functions.php",
-      method:"POST",
-      data:{getCareer:getCareer},
-      success:function(data){
-        const CareerData = JSON.parse(data);
-        $('#careerID').val(CareerData['id']);
-        $('#UpdatecareerDateFrom').val(CareerData['career_date_from']);
-        $('#UpdatecareerGovtService').val(CareerData['career_govt_service']).trigger('change');
-        $('#UpdatecareerDateTo').val(CareerData['career_date_to']);
-        $('#UpdatecareerPosition').val(CareerData['career_position_title']);      
-        $('#UpdatecareerOrganization').val(CareerData['career_organization']);
-        $('#UpdatecareerSalary').val(CareerData['career_salary']);
-        $('#UpdatecareerCompensention').val(CareerData['career_compensention_level']);
-        $('#UpdatecareerStatusAppointment').val(CareerData['career_status_appointment']);
-        const uploadedMOV = CareerData['career_uploaded_mov']; //retrieve file name
-        $('#currentCareerFileName').val(uploadedMOV); //set filename to hidden textbox
-        var pdfURL = 'uploadedMOV/'+uploadedMOV; //pdf directory 
-        const iframeCareerPDF = document.getElementById('UploadedCareerMOV'); //iframe id
-        iframeCareerPDF.src = `${pdfURL}?t=${new Date().getTime()}`; //embed the url pdf to iframe with time value to get the latest version
 
-        $('#updateCareer').modal('show');
-      }
-});
-}
-function btnVoluntaryUpdate(getVoluntary){
-  $.ajax({
-      url:"includes/functions.php",
-      method:"POST",
-      data:{getVoluntary:getVoluntary},
-      success:function(data){
-        const VoluntaryData = JSON.parse(data);
-        $('#voluntaryID').val(VoluntaryData['id']);
-        $('#UpdatevoluntaryNAO').val(VoluntaryData['vw_name_address']);
-        $('#UpdatevoluntaryDateFrom').val(VoluntaryData['vw_date_from']);
-        $('#UpdatevoluntaryDateTo').val(VoluntaryData['vw_date_to']);
-        $('#UpdatevoluntaryTotalHrs').val(VoluntaryData['vw_no_hrs']);
-        $('#UpdatevoluntaryPosition').val(VoluntaryData['vw_position']);
-        $('#updateVoluntary').modal('show');
-      }
-});
-}
 
-$('#contentUpdateAcads').on("submit",function(event){
-  event.preventDefault();
-  const acadPeriodFrom = $("#UpdateacadPeriodFrom").val();
-  const acadPeriodTo = $("#UpdateacadPeriodTo").val();
-  const acadLevel = $("#UpdateacadEducLevel").val();
-  const totalYear = (acadPeriodTo-acadPeriodFrom);
-  const acadYearGraduated = $("#UpdateacadYearGraduated").val();
 
-  $("#CheckUpdateacadPeriodTo").html("");
-  $("#CheckUpdateacadYearGraduated").html("");
-  $("#UpdateacadPeriodTo").css('border-color', '');
-  $("#UpdateacadPeriodFrom").css('border-color', '');
-  $("#UpdateacadYearGraduated").css('border-color', '');
 
-  if(acadPeriodFrom >= acadPeriodTo){
-    $("#CheckUpdateacadPeriodTo").html("Date error: Please verify the encoded year").css('color', 'red');
-    $("#UpdateacadPeriodTo").focus();
-  }else if(acadLevel ==1 && totalYear<6){
-    $("#CheckUpdateacadPeriodTo").html("Date error: Please note that the encoded year of attendance is not equivalent to 6 years.").css('color', 'red');
-    $("#UpdateacadPeriodTo").focus();
-  }else if(acadYearGraduated != '' && acadYearGraduated != acadPeriodTo){
-    $("#CheckUpdateacadYearGraduated").html("Date error: Please verify the encoded year").css('color', 'red');
-    $("#UpdateacadYearGraduated").focus();
-  }else{
-  var formData = new FormData(contentUpdateAcads);
-    $.ajax({
-      url:"academicUpdate.php",
-              method:"POST",
-              dataType: "json",
-              data:formData,
-              success:function(data){
-                $('#updateAcads').modal('hide');
-                const msg = data.msg;
-                const stat = data.status;
-                if(stat == "success"){
-                    $('#modalNotif-header').text('Great! Success.');
-                    $('#modalNotif-message').text(msg);
-                     $('#modalNotif').modal('show');
-                      }
-                else{
-                    $('#alertMessage').text(msg);
-                    $('#modalAlert').modal('show'); 
-                }
-              },
-              processData: false,
-              contentType: false
 
-    });
-   }
-});
-$('#frmEligibilitydUpdate').on("submit",function(event){
-  event.preventDefault();
-  var formData = new FormData(frmEligibilitydUpdate);
-  $.ajax({
-    url:"eligibilityUpdate.php",
-            method:"POST",
-            dataType: "json",
-            data:formData,
-            success:function(data){
-              $('#updateEligibility').modal('hide');
-              const msg = data.msg;
-              const stat = data.status;
-              if(stat == "success"){
-                  $('#modalNotif-header').text('Great! Success.');
-                  $('#modalNotif-message').text(msg);
-                   $('#modalNotif').modal('show');
-                    }
-              else{
-                  $('#alertMessage').text(msg);
-                  $('#modalAlert').modal('show'); 
-              }
-            },
-            processData: false,
-            contentType: false
 
-  });
-});
-$('#frmCareerdUpdate').on("submit",function(event){
-  event.preventDefault();
-  var formData = new FormData(frmCareerdUpdate);
-  $.ajax({
-    url:"careerUpdate.php",
-            method:"POST",
-            dataType: "json",
-            data:formData,
-            success:function(data){
-              $('#updateCareer').modal('hide');
-              const msg = data.msg;
-              const stat = data.status;
-              if(stat == "success"){
-                  $('#modalNotif-header').text('Great! Success.');
-                  $('#modalNotif-message').text(msg);
-                   $('#modalNotif').modal('show');
-                    }
-              else{
-                  $('#alertMessage').text(msg);
-                  $('#modalAlert').modal('show'); 
-              }
-            },
-            processData: false,
-            contentType: false
 
-  });
-});
 $('#frmVoluntaryUpdate').on("submit",function(event){
   event.preventDefault();
   var formData = new FormData(frmVoluntaryUpdate);

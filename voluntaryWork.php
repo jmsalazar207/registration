@@ -1,6 +1,6 @@
 <div class="tab-pane" id="voluntaryWork">
     <div class="user-block">
-        <form id="frmVoluntaryAdd" name="frmVoluntaryAdd" autocomplete="off" >
+        <form id="frmUserVoluntaryAdd" name="frmUserVoluntaryAdd" autocomplete="off" >
             <div class="box" style="border:0cm" >
                 <div class="box-body row">
                     <div class="card col-md-12">
@@ -8,7 +8,7 @@
                             <div class="col-md-12">
                                 <label 
                                     for="voluntaryNAO" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Name & Address of Organization
                                 </label>
@@ -32,7 +32,7 @@
                             <div class="col-md-4">
                                 <label 
                                     for="voluntaryDateFrom" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Date From
                                 </label>
@@ -42,13 +42,14 @@
                                     class="form-control" 
                                     id="voluntaryDateFrom" 
                                     name="voluntaryDateFrom"
+                                    required
                                     tabindex="2">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <label 
                                     for="voluntaryDateTo" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Date To
                                 </label>
@@ -58,13 +59,14 @@
                                     class="form-control" 
                                     id="voluntaryDateTo" 
                                     name="voluntaryDateTo"
+                                    required
                                     tabindex="2">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <label 
                                     for="voluntaryTotalHrs" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Total Hours
                                 </label>
@@ -73,6 +75,7 @@
                                     class="form-control" 
                                     id="voluntaryTotalHrs" 
                                     name="voluntaryTotalHrs"
+                                    required
                                     onkeypress="return NumberOnly(event)" 
                                     tabindex="2">
                                 </div>
@@ -82,7 +85,7 @@
                             <div class="col-md-12">
                                 <label 
                                     for="voluntaryPosition" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Position/Nature of Work
                                 </label>
@@ -103,7 +106,7 @@
                         <button 
                             type="submit" 
                             class="btn btn-primary btn-md pull-right">
-                            Insert
+                            Add
                         </button>
                     </div>
             </div>

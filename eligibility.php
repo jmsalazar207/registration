@@ -1,6 +1,6 @@
 <div class="tab-pane" id="eligibility">
     <div class="user-block">
-        <form id="frmEligibilitydAdd" name="frmEligibilitydAdd" autocomplete="off" >
+        <form id="frmUserEligibilitydAdd" name="frmUserEligibilitydAdd" autocomplete="off" >
             <div class="box" style="border:0cm" >
                 <div class="box-body row">
                     <div class="card col-md-12">
@@ -8,7 +8,7 @@
                             <div class="col-md-12">
                                 <label 
                                     for="eligibilityCredentials" 
-                                    class="col-sm-12"   
+                                    class="col-sm-12 requiredField"   
                                     style="font-size: 15px;">
                                     Credentials
                                 </label>
@@ -41,6 +41,8 @@
                                 <label 
                                     for="eligibilityRating" 
                                     class="col-sm-12" 
+                                    id="lbleligibilityRating"
+                                    name="lbleligibilityRating"
                                     style="font-size: 15px;">
                                     Rating
                                 </label>
@@ -50,6 +52,7 @@
                                     id="eligibilityRating" 
                                     name="eligibilityRating"
                                     tabindex="2"
+                                    readonly
                                     onkeypress="filterNumbersAndDots(event)">
                                 </div>
                             </div>
@@ -58,9 +61,9 @@
                             <div class="col-md-6">
                                 <label 
                                     for="eligibilityExamDate" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
-                                    Date of Examination
+                                    Date of Examination / Confernment
                                 </label>
                                 <div class="col-sm-12">
                                     <input 
@@ -78,9 +81,9 @@
                             <div class="col-md-12">
                                 <label 
                                     for="eligibilityPlaceExamination" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
-                                    Place of Examination  
+                                    Place of Examination / Confernment
                                 </label>
                                 <div class="col-sm-12">
                                     <input 
@@ -99,6 +102,7 @@
                                 <label 
                                     for="eligibilityNumber" 
                                     class="col-sm-12" 
+                                    id="lbleligibilityNumber"
                                     style="font-size: 15px;">
                                     License Number  
                                 </label>
@@ -108,12 +112,14 @@
                                     class="form-control" 
                                     id="eligibilityNumber" 
                                     name="eligibilityNumber"
+                                    readonly
                                     tabindex="5">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <label 
                                     for="eligibilityValidityDate" 
+                                    id="lbleligibilityValidityDate"
                                     class="col-sm-12" 
                                     style="font-size: 15px;">
                                     Date of Validity  
@@ -124,13 +130,14 @@
                                     class="form-control" 
                                     id="eligibilityValidityDate" 
                                     name="eligibilityValidityDate"
-                                    tabindex="6">
+                                    tabindex="6"
+                                    readonly>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <label 
                                     for="eligibilityUploadMOV" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Upload MOV  
                                 </label>
@@ -157,7 +164,7 @@
                             class="btn btn-primary btn-md pull-right"
                             tabindex="7"
                             >
-                            Insert
+                            Add
                         </button>
                     </div>
             </div>

@@ -1,6 +1,6 @@
 <div class="tab-pane" id="career">
     <div class="user-block">
-        <form id="frmCareerdAdd" name="frmCareerdAdd" autocomplete="off" >
+        <form id="frmUserCareerdAdd" name="frmUserCareerdAdd" autocomplete="off" >
             <div class="box" style="border:0cm" >
                 <div class="box-body row">
                     <div class="card col-md-12">
@@ -12,7 +12,7 @@
                                     > 
                                 <label 
                                     for="careerDateFrom" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Date From
                                 </label>
@@ -34,7 +34,7 @@
                             <div class="col-md-6">
                                 <label 
                                     for="careerDateTo" 
-                                    class="col-sm-3" 
+                                    class="col-sm-3 requiredField" 
                                     style="font-size: 15px;">
                                     Date To
                                 </label>
@@ -67,7 +67,7 @@
                             <div class="col-md-12">
                                 <label 
                                     for="careerPosition" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Position Title
                                 </label>
@@ -76,6 +76,7 @@
                                     class="form-control" 
                                     id="careerPosition" 
                                     name="careerPosition"
+                                    required
                                     tabindex="3"
                                     style="text-transform: uppercase;">
                                 </div>
@@ -85,7 +86,7 @@
                             <div class="col-md-12">
                                 <label 
                                     for="careerOrganization" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Organization
                                 </label>
@@ -104,7 +105,7 @@
                             <div class="col-md-4">
                                 <label 
                                     for="careerSalary" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Monthly Salary  
                                 </label>
@@ -138,7 +139,7 @@
                             <div class="col-md-4">
                                 <label 
                                     for="careerStatusAppointment" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Status of Appointment
                                 </label>
@@ -148,6 +149,7 @@
                                     id="careerStatusAppointment" 
                                     name="careerStatusAppointment"
                                     tabindex="7"
+                                    required
                                     style="text-transform: uppercase;">
                                 </div>
                             </div>
@@ -156,7 +158,7 @@
                             <div class="col-md-6">
                                 <label 
                                     for="careerGovtService" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Government Service
                                 </label>
@@ -193,7 +195,7 @@
                             <div class="col-md-6">
                                 <label 
                                     for="careerMOV" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Upload MOV  
                                 </label>
@@ -220,7 +222,7 @@
                             class="btn btn-primary btn-md pull-right"
                             tabindex="10"
                             >
-                            Insert
+                            Add
                         </button>
                     </div>
             </div>
