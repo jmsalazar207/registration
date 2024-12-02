@@ -1,6 +1,6 @@
 <div class="tab-pane" id="training">
     <div class="user-block">
-        <form id="frmTrainingAdd" name="frmTrainingAdd" autocomplete="off" >
+        <form id="frmUserTrainingAdd" name="frmUserTrainingAdd" autocomplete="off" >
             <div class="box" style="border:0cm" >
                 <div class="box-body row">
                     <div class="card col-md-12">
@@ -8,7 +8,7 @@
                             <div class="col-md-12">
                                 <label 
                                     for="trainingTitle" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Title of LDI
                                 </label>
@@ -22,6 +22,7 @@
                                     id="trainingTitle" 
                                     name="trainingTitle"
                                     tabindex="2"
+                                    required
                                     style="text-transform: uppercase;" >
                                 </div>
                             </div>
@@ -30,7 +31,7 @@
                             <div class="col-md-6">
                                 <label 
                                     for="trainingDateFrom" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Date From
                                 </label>
@@ -52,7 +53,7 @@
                             <div class="col-md-6">
                                 <label 
                                     for="trainingDateTo" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Date To
                                 </label>
@@ -72,7 +73,7 @@
                             <div class="col-md-6">
                                 <label 
                                     for="trainingHours" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Total Number Of Hours  
                                 </label>
@@ -89,7 +90,7 @@
                             <div class="col-md-6">
                                 <label 
                                     for="trainingType" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Type of LDI
                                 </label>
@@ -100,6 +101,7 @@
                                     style="width: 100%;"
                                     id="trainingType" 
                                     name="trainingType"
+                                    required
                                     tabindex="">
                                         <option 
                                         name ="optNone" 
@@ -133,7 +135,7 @@
                             <div class="col-md-6">
                                 <label 
                                     for="trainingConductedBy" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Conducted / Sponsored by
                                 </label>
@@ -143,13 +145,14 @@
                                     id="trainingConductedBy" 
                                     name="trainingConductedBy"
                                     tabindex=""
+                                    required
                                     style="text-transform: uppercase;" >
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <label 
                                     for="trainingUploadMOV" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Upload MOV
                                 </label>
@@ -174,7 +177,7 @@
                         <button 
                             type="submit" 
                             class="btn btn-primary btn-md pull-right">
-                            Insert
+                            Add
                         </button>
                     </div>
             </div>

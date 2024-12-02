@@ -49,8 +49,7 @@ $empRecords = $dbConn->findQuery($sql_emp);
 if($empRecords){
    foreach($empRecords as $row){
 	$id = $row['id'];
-   $url = "voluntaryWorkDelete.php";
-   $deleteValue = $id.','.$url;    
+   $url = "voluntaryWorkDelete.php"; 
 
    $action = "
             <td>
@@ -59,7 +58,7 @@ if($empRecords){
                </button>
             </td>
             <td>
-               <button class='btn btn-danger btn-sm' id = 'btnDelete' name ='btnDelete' onclick ='btnDelete(this.value)' value = '$deleteValue'  title='Remove Information' >
+               <button class='btn btn-danger btn-sm' id = 'btnUserVoluntaryDelete' name ='btnUserVoluntaryDelete' data-valueID ='$id' data-valueURL='$url'  title='Remove Information' >
                   Remove
                </button>
             </td>

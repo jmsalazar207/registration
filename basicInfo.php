@@ -466,7 +466,6 @@
                                     class="col-sm-12" 
                                     style="font-size: 15px;">
                                     Telephone Number
-                                    <span class="requiredField"></span>
                                 </label>
                                 <div class="col-sm-12">
                                     <input 

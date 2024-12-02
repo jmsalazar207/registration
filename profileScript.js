@@ -2038,6 +2038,35 @@ function btnVoluntaryUpdate(getVoluntary){
 });
 }
  
+function UserVoluntaryUpdate(formData){
+  $(".loader-div").show();
+    $.ajax({
+      url:"voluntaryWorkUpdate.php",
+      method:"POST",
+      dataType: "json",
+      data:formData,
+      success:function(data){
+        $(".loader-div").hide(); 
+        $('#updateVoluntary').modal('hide');
+        const msg = data.msg;
+        const stat = data.status;
+        if(stat === "success"){
+          modalSuccessShow(msg,triggerTableReload,'tblVoluntary');
+          $('#frmUserVoluntaryAdd')[0].reset();
+        } else {
+          modalErrorShow(msg);
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      },
+      processData: false,
+      contentType: false
+  
+    });
+
+}
+
 $(document).on('change','#UpdateifGraduated', function(){
   if ($(this).is(':checked')) {
     $("#lblUpdateacadYearGraduated").attr('class','col-sm-12 requiredField');
@@ -2500,6 +2529,66 @@ $(document).on('click','#btnUserVoluntaryUpdate',function(event){
   btnVoluntaryUpdate(getVoluntary);
 });
 
+$(document).on('submit','#frmUserVoluntaryUpdate',function(event){
+  event.preventDefault();
+  var PassData = new FormData(frmUserVoluntaryUpdate);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserVoluntaryUpdate,PassData);
+});
+
+$(document).on('click', '#btnUserVoluntaryDelete', function(){ //delete family background details
+  const valueID = $(this).attr('data-valueID');
+  const valueURL = $(this).attr('data-valueURL');
+  var TableID = 'tblVoluntary';
+  var PassData = {
+    valueID:valueID,
+    valueURL:valueURL,
+    TableID:TableID,
+    ActionAfter1: '',
+    ActionAfter2: ''
+  };
+  modalConfirmShow('Would you like to permanently delete this information? This action cannot be undone.',deleteData,PassData);
+});
+
+
+$(document).on('submit','#frmUserTrainingAdd',function(event){
+  event.preventDefault();
+  var PassData  = new FormData(frmUserTrainingAdd);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserVoluntaryAdd,PassData);
+});
+
+function UserTrainingAdd(formData){
+  $(".loader-div").show();
+  $.ajax({
+    url:"trainingAdd.php",
+    method:"POST",
+    dataType: "json",
+    data:formData,
+    success:function(data){
+      $(".loader-div").hide();
+      const msg = data.msg;
+      const stat = data.status;
+      if(stat === "success"){
+        modalSuccessShow(msg,triggerTableReload,'tbltraining');
+        $('#frmUserTrainingAdd')[0].reset();
+        $('#trainingType').val('').trigger('change');
+      } else {
+        modalErrorShow(msg);
+      }
+    },error: function(xhr, status, error) {
+      modalErrorShow("The system encountered an error. Please contact support.");
+      $(".loader-div").hide();
+    },
+    processData: false,
+    contentType: false
+  });
+}
+  
+  
+  
+
+
+
+
 
 
   
@@ -2713,31 +2802,6 @@ $("#frmSkillsAdd").on("submit",function(event){
     });
   }
 });
-$("#frmTrainingAdd").on("submit",function(event){
-  event.preventDefault();
-  var formData = new FormData(frmTrainingAdd);
-  $.ajax({
-    url:"trainingAdd.php",
-            method:"POST",
-            dataType: "json",
-            data:formData,
-            success:function(data){
-              const msg = data.msg;
-              const stat = data.status;
-              if(stat == "success"){
-                  $('#modalNotif-header').text('Great! Success.');
-                  $('#modalNotif-message').text(msg);
-                   $('#modalNotif').modal('show');
-              }
-              else{
-                  $('#alertMessage').text(msg);
-                  $('#modalAlert').modal('show'); 
-              }
-            },
-            processData: false,
-            contentType: false
-  });
-});
 
 
 
@@ -2904,33 +2968,7 @@ function openChangePassword(){
 
 
 
-$('#frmVoluntaryUpdate').on("submit",function(event){
-  event.preventDefault();
-  var formData = new FormData(frmVoluntaryUpdate);
-  $.ajax({
-    url:"voluntaryWorkUpdate.php",
-            method:"POST",
-            dataType: "json",
-            data:formData,
-            success:function(data){
-              $('#updateVoluntary').modal('hide');
-              const msg = data.msg;
-              const stat = data.status;
-              if(stat == "success"){
-                  $('#modalNotif-header').text('Great! Success.');
-                  $('#modalNotif-message').text(msg);
-                   $('#modalNotif').modal('show');
-                    }
-              else{
-                  $('#alertMessage').text(msg);
-                  $('#modalAlert').modal('show'); 
-              }
-            },
-            processData: false,
-            contentType: false
 
-  });
-});
 $('#frmTrainingdUpdate').on("submit",function(event){
   event.preventDefault();
   var formData = new FormData(frmTrainingdUpdate);

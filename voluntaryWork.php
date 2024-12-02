@@ -43,6 +43,7 @@
                                     id="voluntaryDateFrom" 
                                     name="voluntaryDateFrom"
                                     required
+                                    max="<?=$today?>"
                                     tabindex="2">
                                 </div>
                             </div>
@@ -60,6 +61,7 @@
                                     id="voluntaryDateTo" 
                                     name="voluntaryDateTo"
                                     required
+                                    max="<?=$today?>"
                                     tabindex="2">
                                 </div>
                             </div>

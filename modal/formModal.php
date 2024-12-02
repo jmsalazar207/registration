@@ -1577,7 +1577,7 @@
                         </button>
                         <h4 class="modal-title">Update Career Details</h4>
                     </div>
-                    <form id="frmVoluntaryUpdate" name="frmVoluntaryUpdate" autocomplete="off" >
+                    <form id="frmUserVoluntaryUpdate" name="frmUserVoluntaryUpdate" autocomplete="off" >
                         <div class="box" style="border:0cm" >
                             <div class="box-body row">
                                 <div class="card col-md-12">
@@ -1585,7 +1585,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="UpdatevoluntaryNAO" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Name & Address of Organization
                                             </label>
@@ -1603,6 +1603,7 @@
                                                 id="UpdatevoluntaryNAO" 
                                                 name="UpdatevoluntaryNAO"
                                                 required
+                                                style="text-transform: uppercase;"
                                                 tabindex="1">
                                             </div>
                                         </div>
@@ -1611,7 +1612,7 @@
                                         <div class="col-md-4">
                                             <label 
                                                 for="UpdatevoluntaryDateFrom" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Date From
                                             </label>
@@ -1621,13 +1622,16 @@
                                                 class="form-control" 
                                                 id="UpdatevoluntaryDateFrom" 
                                                 name="UpdatevoluntaryDateFrom"
+                                                required
+                                                max="<?=$today?>"
+                                                style="text-transform: uppercase;"
                                                 tabindex="2">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <label 
                                                 for="UpdatevoluntaryDateTo" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Date To
                                             </label>
@@ -1637,13 +1641,16 @@
                                                 class="form-control" 
                                                 id="UpdatevoluntaryDateTo" 
                                                 name="UpdatevoluntaryDateTo"
+                                                required
+                                                max="<?=$today?>"
+                                                style="text-transform: uppercase;"
                                                 tabindex="2">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <label 
                                                 for="UpdatevoluntaryTotalHrs" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Total Hours
                                             </label>
@@ -1652,6 +1659,8 @@
                                                 class="form-control" 
                                                 id="UpdatevoluntaryTotalHrs" 
                                                 name="UpdatevoluntaryTotalHrs"
+                                                required
+                                                style="text-transform: uppercase;"
                                                 tabindex="2">
                                             </div>
                                         </div>
@@ -1660,7 +1669,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="UpdatevoluntaryPosition" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Position/Nature of Work
                                             </label>
@@ -1670,6 +1679,7 @@
                                                 id="UpdatevoluntaryPosition" 
                                                 name="UpdatevoluntaryPosition"
                                                 required
+                                                style="text-transform: uppercase;"
                                                 tabindex="3">
                                             </div>
                                         </div>
@@ -1680,7 +1690,7 @@
                                     <button 
                                         type="submit" 
                                         class="btn btn-primary btn-md pull-right">
-                                        Update
+                                        Save
                                     </button>
                                 </div>
                         </div>
