@@ -95,7 +95,7 @@ if($empRecords){
         $acad_status = "<span class='badge bg-light-blue'>PENDING FOR VERIFICATION</span>";
         $action = "
              <td>
-                <button class='btn btn-info btn-sm' id = 'btnUserAcadsUpdate' name ='btnUserAcadsUpdate' value = '$id'  title='View' >
+                <button class='btn btn-primary btn-sm' id = 'btnUserAcadsUpdate' name ='btnUserAcadsUpdate' value = '$id'  title='View' >
                   Update
                </button>
              </td>
@@ -125,7 +125,7 @@ if($empRecords){
         $acad_status = "<span class='badge bg-red'>FOR COMPLIANCE</span>";
         $action = "
              <td>
-                <button class='btn btn-info btn-sm' id = 'btnUserAcadsUpdate' name ='btnUserAcadsUpdate' value = '$id'  title='View' >
+                <button class='btn btn-primary btn-sm' id = 'btnUserAcadsUpdate' name ='btnUserAcadsUpdate' value = '$id'  title='View' >
                   Update
                </button>
              </td>
@@ -140,7 +140,7 @@ if($empRecords){
         $acad_status = "<span class='badge bg-green'>GOOD</span>";
         $action = "
              <td>
-                <button class='btn btn-info btn-sm' id = 'btnUserAcadsUpdate' name ='btnUserAcadsUpdate' value = '$id'  title='View' >
+                <button class='btn btn-primary btn-sm' id = 'btnUserAcadsUpdate' name ='btnUserAcadsUpdate' value = '$id'  title='View' >
                   Update
                </button>
              </td>

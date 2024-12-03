@@ -1,6 +1,6 @@
 <div class="tab-pane" id="references">
     <div class="user-block">
-        <form id="frmReferencesAdd" name="frmReferencesAdd" autocomplete="off" >
+        <form id="frmUserReferencesAdd" name="frmUserReferencesAdd" autocomplete="off" >
             <div class="box" style="border:0cm" >
                 <div class="box-body row">
                     <div class="card col-md-12">
@@ -8,7 +8,7 @@
                             <div class="col-md-12">
                                 <label 
                                     for="referencesName" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Name
                                 </label>
@@ -30,7 +30,7 @@
                             <div class="col-md-12">
                                 <label 
                                     for="referencesAddress" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Address
                                 </label>
@@ -48,7 +48,7 @@
                             <div class="col-md-12">
                                 <label 
                                     for="referencesMobile" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Telephone Number
                                 </label>
@@ -71,7 +71,7 @@
                         <button 
                             type="submit" 
                             class="btn btn-primary btn-md pull-right">
-                            Insert
+                            Add
                         </button>
                     </div>
             </div>

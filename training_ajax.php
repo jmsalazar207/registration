@@ -52,7 +52,6 @@ if($empRecords){
    foreach($empRecords as $row){
 	$id = $row['id'];
    $url = "trainingDelete.php";
-    $deleteValue = $id.','.$url;
    $uploadedTrainingMOV = $row['training_uploaded_mov'];
     $training_type = $row['training_type'];
     if($training_type==1){
@@ -69,12 +68,12 @@ if($empRecords){
       $training_status = "<span class='badge bg-light-blue'>PENDING FOR VERIFICATION</span>";
       $action = "
       <td>
-         <button class='btn btn-info btn-sm' id = 'btnTrainingUpdate' name ='btnTrainingUpdate' onclick ='btnTrainingUpdate(this.value)' value = '$id'  title='View' >
-            View Info
+         <button class='btn btn-primary btn-sm' id = 'btnUserTrainingUpdate' name ='btnUserTrainingUpdate' value = '$id'  title='View' >
+            Update
          </button>
       </td>
       <td>
-         <button class='btn btn-danger btn-sm' id = 'btnDelete' name ='btnDelete' onclick ='btnDelete(this.value)' value = '$deleteValue'  title='Remove Information' >
+         <button class='btn btn-danger btn-sm' id = 'btnUserTrainingDelete' name ='btnUserTrainingDelete' data-valueID='$id' data-valueURL='$url' title='Remove Information' >
             Remove
          </button>
       </td>
@@ -88,8 +87,8 @@ if($empRecords){
             View
          </button>
        </td>
-       <td>
-         <button class='btn btn-danger btn-sm' id = 'btnDelete' name ='btnDelete' onclick ='btnDelete(this.value)' value = '$deleteValue'  title='Remove Information' >
+      <td>
+         <button class='btn btn-danger btn-sm' id = 'btnUserTrainingDelete' name ='btnUserTrainingDelete' data-valueID='$id' data-valueURL='$url' title='Remove Information' >
             Remove
          </button>
       </td>
@@ -99,12 +98,12 @@ if($empRecords){
       $training_status = "<span class='badge bg-red'>FOR COMPLIANCE</span>";
       $action = "
       <td>
-         <button class='btn btn-info btn-sm' id = 'btnTrainingUpdate' name ='btnTrainingUpdate' onclick ='btnTrainingUpdate(this.value)' value = '$id'  title='View' >
-            View Info
+         <button class='btn btn-primary btn-sm' id = 'btnUserTrainingUpdate' name ='btnUserTrainingUpdate' value = '$id'  title='View' >
+            Update
          </button>
       </td>
       <td>
-         <button class='btn btn-danger btn-sm' id = 'btnDelete' name ='btnDelete' onclick ='btnDelete(this.value)' value = '$deleteValue'  title='Remove Information' >
+         <button class='btn btn-danger btn-sm' id = 'btnUserTrainingDelete' name ='btnUserTrainingDelete' data-valueID='$id' data-valueURL='$url' title='Remove Information' >
             Remove
          </button>
       </td>

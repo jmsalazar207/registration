@@ -2723,7 +2723,7 @@
         <div class="modal fade" id="updateTraining">
             <div class="modal-dialog" style="width:auto; height:auto;" >
                 <div class="modal-content">
-                    <form id="frmTrainingdUpdate" name="frmTrainingdUpdate" autocomplete="off" >
+                    <form id="frmUserTrainingdUpdate" name="frmUserTrainingdUpdate" autocomplete="off" >
                         <div class="modal-header">
                             <button 
                                 type="button" 
@@ -2743,7 +2743,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="updatetrainingTitle" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Title of LDI
                                             </label>
@@ -2760,7 +2760,8 @@
                                                 class="form-control" 
                                                 id="updatetrainingTitle" 
                                                 name="updatetrainingTitle"
-                                                tabindex="2">
+                                                required
+                                                tabindex="1">
                                             </div>
                                         </div>
                                     </div>
@@ -2768,7 +2769,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="updatetrainingDateFrom" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Date From
                                             </label>
@@ -2783,7 +2784,7 @@
                                                 id="updatetrainingDateFrom" 
                                                 name="updatetrainingDateFrom"
                                                 required
-                                                tabindex="1">
+                                                tabindex="2">
                                             </div>
                                         </div>
                                     </div>
@@ -2791,7 +2792,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="updatetrainingDateTo" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Date To
                                             </label>
@@ -2802,7 +2803,7 @@
                                                 id="updatetrainingDateTo" 
                                                 name="updatetrainingDateTo"
                                                 required
-                                                tabindex="1">
+                                                tabindex="3">
                                             </div>
                                         </div>
                                     </div>
@@ -2828,7 +2829,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="updatetrainingType" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Type of LDI
                                             </label>
@@ -2839,7 +2840,8 @@
                                                 style="width: 100%;"
                                                 id="updatetrainingType" 
                                                 name="updatetrainingType"
-                                                tabindex="">
+                                                required
+                                                tabindex="5">
                                                     <option 
                                                     name ="updateoptNone" 
                                                     id = "updateoptNone" 
@@ -2872,7 +2874,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="updatetrainingConductedBy" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Conducted / Sponsored by
                                             </label>
@@ -2881,7 +2883,8 @@
                                                 class="form-control" 
                                                 id="updatetrainingConductedBy" 
                                                 name="updatetrainingConductedBy"
-                                                tabindex="">
+                                                required
+                                                tabindex="6">
                                             </div>
                                         </div>
                                     </div>
@@ -2900,7 +2903,7 @@
                                                     id="UpdateTrainingMOV" 
                                                     name="UpdateTrainingMOV" 
                                                     value="" 
-                                                    tabindex="9"
+                                                    tabindex="7"
                                                     accept="application/pdf"
                                                     onchange="validateUpdateFileTypeTraining()">
                                                 <small id='CheckUpdateTrainingMOV'></small>
@@ -2937,7 +2940,7 @@
                                     <button 
                                         type="submit" 
                                         class="btn btn-primary btn-md pull-right">
-                                        Update
+                                        Save
                                     </button>
                                 </div>
                         </div>
@@ -3440,7 +3443,7 @@
                         </button>
                         <h4 class="modal-title">Special Skills and Hobbies Information</h4>
                     </div>
-                    <form id="frmSkillsUpdate" name="frmSkillsUpdate" autocomplete="off" >
+                    <form id="frmUserSkillsUpdate" name="frmUserSkillsUpdate" autocomplete="off" >
                         <div class="box" style="border:0cm" >
                             <div class="box-body row">
                                 <div class="card col-md-12">
@@ -3448,7 +3451,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="updateskillsTitle" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Special Skills and Hobbies
                                             </label>
@@ -3466,6 +3469,7 @@
                                                 id="updateskillsTitle" 
                                                 name="updateskillsTitle"
                                                 tabindex="2"
+                                                required
                                                 style="text-transform: uppercase;">
                                                 <small id="CheckUpdateSkills"></small>
                                             </div>
@@ -3477,7 +3481,7 @@
                                     <button 
                                         type="submit" 
                                         class="btn btn-primary btn-md pull-right">
-                                        Update
+                                        Save
                                     </button>
                                 </div>
                         </div>
@@ -3500,7 +3504,7 @@
                         </button>
                         <h4 class="modal-title">References</h4>
                     </div>
-                    <form id="frmReferencesUpdate" name="frmReferencesUpdate" autocomplete="off" >
+                    <form id="frmUserReferencesUpdate" name="frmUserReferencesUpdate" autocomplete="off" >
                         <div class="box" style="border:0cm" >
                             <div class="box-body row">
                                 <div class="card col-md-12">
@@ -3508,7 +3512,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="updateReferencesName" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Name
                                             </label>
@@ -3536,7 +3540,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="updateReferencesAddress" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Address
                                             </label>
@@ -3556,7 +3560,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="updateReferencesMobile" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Address
                                             </label>
@@ -3579,7 +3583,7 @@
                                     <button 
                                         type="submit" 
                                         class="btn btn-primary btn-md pull-right">
-                                        Update
+                                        Save
                                     </button>
                                 </div>
                         </div>
@@ -3603,7 +3607,7 @@
                         
                         <h4 class="modal-title">Non-Academic Distinctions / Recognition Information</h4>
                     </div>
-                    <form id="frmNonAcademicUpdate" name="frmNonAcademicUpdate" autocomplete="off" >
+                    <form id="frmUserNonAcademicUpdate" name="frmUserNonAcademicUpdate" autocomplete="off" >
                         <div class="box" style="border:0cm" >
                             <div class="box-body row">
                                 <div class="card col-md-12">
@@ -3611,7 +3615,7 @@
                                         <div class="col-md-12">
                                             <label 
                                                 for="updateNonAcademicTitle" 
-                                                class="col-sm-12" 
+                                                class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Non-Academic Distinctions / Recognition
                                             </label>
@@ -3629,6 +3633,7 @@
                                                 id="updateNonAcademicTitle" 
                                                 name="updateNonAcademicTitle"
                                                 tabindex="1"
+                                                required
                                                 style="text-transform: uppercase;">
                                                 <small id='CheckUpdateNonAcademic'></small>
                                             </div>
@@ -3640,7 +3645,7 @@
                                     <button 
                                         type="submit" 
                                         class="btn btn-primary btn-md pull-right">
-                                        Update
+                                        Save
                                     </button>
                                 </div>
                         </div>

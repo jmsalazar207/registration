@@ -53,7 +53,7 @@ if($empRecords){
 
    $action = "
             <td>
-               <button class='btn btn-info btn-sm' id = 'btnUserVoluntaryUpdate' name ='btnUserVoluntaryUpdate' value = '$id'  title='View' >
+               <button class='btn btn-primary btn-sm' id = 'btnUserVoluntaryUpdate' name ='btnUserVoluntaryUpdate' value = '$id'  title='View' >
                   Update
                </button>
             </td>

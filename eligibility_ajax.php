@@ -61,7 +61,7 @@ if($empRecords){
       $eligibility_status = "<span class='badge bg-light-blue'>PENDING FOR VERIFICATION</span>";
    $action = "
       <td>
-         <button class='btn btn-info btn sm' id = 'btnUserEligibilityUpdate' name ='btnUserEligibilityUpdate' value = '$id'  title='View' >
+         <button class='btn btn-primary btn sm' id = 'btnUserEligibilityUpdate' name ='btnUserEligibilityUpdate' value = '$id'  title='View' >
             Update
          </button>
       </td>
@@ -76,7 +76,7 @@ if($empRecords){
       $eligibility_status = "<span class='badge bg-green'>VERIFIED</span>";
       $action = "
          <td>
-            <button class='btn btn-info btn sm' id = 'btnUserEligibilityViewUploaded' name ='btnUserEligibilityViewUploaded' value = '$eligibility_uploaded_mov'  title='View' >
+            <button class='btn btn-info btn-sm' id = 'btnUserEligibilityViewUploaded' name ='btnUserEligibilityViewUploaded' value = '$eligibility_uploaded_mov'  title='View' >
                View
             </button>
          </td>
@@ -91,8 +91,8 @@ if($empRecords){
       $eligibility_status = "<span class='badge bg-red'>FOR COMPLIANCE</span>";
    $action = "
       <td>
-         <button class='btn btn-info btn sm' id = 'btnUserEligibilityUpdate' name ='btnUserEligibilityUpdate' value = '$id'  title='View' >
-            View
+         <button class='btn btn-primary btn-sm' id = 'btnUserEligibilityUpdate' name ='btnUserEligibilityUpdate' value = '$id'  title='View' >
+            Update
          </button>
       </td>
       <td>

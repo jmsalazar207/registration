@@ -46,17 +46,16 @@ if($empRecords){
    foreach($empRecords as $row){
 	$id = $row['id'];
    $url = "non-AcademicDelete.php";
-   $deleteValue = $id.','.$url;
 
    $action = "
             <td>
-               <button class='btn btn-info btn-sm' id = 'btnNonAcademicUpdate' name ='btnNonAcademicUpdate' onclick ='btnNonAcademicUpdate(this.value)' value = '$id'  title='View' >
-                  Update Info
+               <button class='btn btn-info btn-sm' id = 'btnUserNonAcademicUpdate' name ='btnUserNonAcademicUpdate' value = '$id'  title='View' >
+                  Update
                </button>
             </td>
             <td>
-               <button class='btn btn-danger btn-sm' id = 'btnDelete' name ='btnDelete' onclick ='btnDelete(this.value)' value = '$deleteValue'  title='View' >
-                  Remove Info
+               <button class='btn btn-danger btn-sm' id = 'btnUserNonAcademicDelete' name ='btnUserNonAcademicDelete' data-valueID = '$id' data-valueURL = '$url'>
+                  Remove
                </button>
             </td>
             "; 

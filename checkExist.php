@@ -168,6 +168,7 @@ if(isset($_POST['PositionName'])){ //Check exist add
     $RefMobile = $_POST['RefMobNumber'];
     $ID = $_SESSION['userID'];
     $sql_refMobile = "SELECT * FROM lib_references WHERE empno = '$ID' AND ref_mobile = '$RefMobile' AND ref_status != 4";
+
     $dbConn->findFirstQuery($sql_refMobile);
     $count['countRefMobile'] = $dbConn->count();
 

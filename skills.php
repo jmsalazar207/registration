@@ -1,6 +1,6 @@
 <div class="tab-pane" id="skills">
     <div class="user-block">
-        <form id="frmSkillsAdd" name="frmSkillsAdd" autocomplete="off" >
+        <form id="frmUserSkillsAdd" name="frmUserSkillsAdd" autocomplete="off" >
             <div class="box" style="border:0cm" >
                 <div class="box-body row">
                     <div class="card col-md-12">
@@ -8,7 +8,7 @@
                             <div class="col-md-12">
                                 <label 
                                     for="skillsTitle" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Special Skills and Hobbies
                                 </label>
@@ -34,7 +34,7 @@
                         <button 
                             type="submit" 
                             class="btn btn-primary btn-md pull-right">
-                            Insert
+                            Add
                         </button>
                     </div>
             </div>

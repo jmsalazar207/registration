@@ -72,7 +72,7 @@ if($empRecords){
       $career_status = "<span class='badge bg-light-blue'>PENDING FOR VERIFICATION</span>";
       $action = "
             <td>
-               <button class='btn btn-info btn-sm' id = 'btnUserCareerUpdate' name ='btnUserCareerUpdate' value = '$id'  title='View' >
+               <button class='btn btn-primary btn-sm' id = 'btnUserCareerUpdate' name ='btnUserCareerUpdate' value = '$id'  title='View' >
                   Update
                </button>
             </td>
@@ -102,7 +102,7 @@ if($career_status ==2){
    $career_status = "<span class='badge bg-red'>FOR COMPLIANCE</span>";
    $action = "
             <td>
-               <button class='btn btn-info btn-sm' id = 'btnUserCareerUpdate' name ='btnUserCareerUpdate' value = '$id'  title='View' >
+               <button class='btn btn-primary btn-sm' id = 'btnUserCareerUpdate' name ='btnUserCareerUpdate' value = '$id'  title='View' >
                   Update
                </button>
             </td>

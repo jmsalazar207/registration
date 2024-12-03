@@ -21,7 +21,7 @@
                                     class="form-control" 
                                     id="trainingTitle" 
                                     name="trainingTitle"
-                                    tabindex="2"
+                                    tabindex="1"
                                     required
                                     style="text-transform: uppercase;" >
                                 </div>
@@ -46,7 +46,7 @@
                                     id="trainingDateFrom" 
                                     name="trainingDateFrom"
                                     required
-                                    tabindex="1"
+                                    tabindex="2"
                                     max="<?=$today?>">
                                 </div>
                             </div>
@@ -64,7 +64,7 @@
                                     id="trainingDateTo" 
                                     name="trainingDateTo"
                                     required
-                                    tabindex="1"
+                                    tabindex="3"
                                     max="<?=$today?>">
                                 </div>
                             </div>
@@ -102,7 +102,7 @@
                                     id="trainingType" 
                                     name="trainingType"
                                     required
-                                    tabindex="">
+                                    tabindex="5">
                                         <option 
                                         name ="optNone" 
                                         id = "optNone" 
@@ -144,7 +144,7 @@
                                     class="form-control" 
                                     id="trainingConductedBy" 
                                     name="trainingConductedBy"
-                                    tabindex=""
+                                    tabindex="6"
                                     required
                                     style="text-transform: uppercase;" >
                                 </div>
@@ -162,7 +162,7 @@
                                     class="form-control" 
                                     id="trainingUploadMOV" 
                                     name="trainingUploadMOV"
-                                    tabindex=""
+                                    tabindex="7"
                                     required
                                     accept="application/pdf"
                                     style="text-transform: uppercase;"

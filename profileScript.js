@@ -2067,6 +2067,347 @@ function UserVoluntaryUpdate(formData){
 
 }
 
+function UserTrainingAdd(formData){
+  $(".loader-div").show();
+  $.ajax({
+    url:"trainingAdd.php",
+    method:"POST",
+    dataType: "json",
+    data:formData,
+    success:function(data){
+      $(".loader-div").hide();
+      const msg = data.msg;
+      const stat = data.status;
+      if(stat === "success"){
+        modalSuccessShow(msg,triggerTableReload,'tbltraining');
+        $('#frmUserTrainingAdd')[0].reset();
+        $('#trainingType').val('').trigger('change');
+      } else {
+        modalErrorShow(msg);
+      }
+    },error: function(xhr, status, error) {
+      modalErrorShow("The system encountered an error. Please contact support.");
+      $(".loader-div").hide();
+    },
+    processData: false,
+    contentType: false
+  });
+}
+
+function btnTrainingUpdate(getTraining){
+  $(".loader-div").show();
+  $.ajax({
+      url:"includes/functions.php",
+      method:"POST",
+      data:{getTraining:getTraining},
+      success:function(data){
+        const TrainingData = JSON.parse(data);
+        $(".loader-div").hide(); 
+        $('#TrainingID').val(TrainingData['id']);
+        $('#updatetrainingTitle').val(TrainingData['training_title']);
+        $('#updatetrainingDateFrom').val(TrainingData['training_date_from']);
+        $('#updatetrainingDateTo').val(TrainingData['training_date_to']);
+        $('#updatetrainingHours').val(TrainingData['training_hours']);
+        $('#updatetrainingType').val(TrainingData['training_type']).trigger("change");
+        $('#updatetrainingConductedBy').val(TrainingData['training_conducted_by']);
+        const uploadedTrainingMOV = TrainingData['training_uploaded_mov']; //retrieve file name
+        $('#currentTrainingFileName').val(uploadedTrainingMOV); //set filename to hidden textbox
+        var pdfURL = 'uploadedMOV/'+uploadedTrainingMOV; //pdf directory 
+        const iframeTrainingPDF = document.getElementById('UploadedTrainingMOV'); //iframe id
+        iframeTrainingPDF.src = `${pdfURL}?t=${new Date().getTime()}`; //embed the url pdf to iframe with time value to get the latest version
+        $('#updateTraining').modal('show');
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
+});
+} 
+
+function UserTrainingdUpdate(formData){
+  $(".loader-div").show();
+  $.ajax({
+    url:"trainingUpdate.php",
+    method:"POST",
+    dataType: "json",
+    data:formData,
+    success:function(data){
+      $(".loader-div").hide(); 
+      $('#updateTraining').modal('hide');
+      const msg = data.msg;
+      const stat = data.status;
+      if(stat === "success"){
+        modalSuccessShow(msg,triggerTableReload,'tbltraining');
+        $('#frmUserTrainingdUpdate')[0].reset();
+      } else {
+        modalErrorShow(msg);
+      }
+    } ,error: function(xhr, status, error) {
+      modalErrorShow("The system encountered an error. Please contact support.");
+      $(".loader-div").hide();
+    },
+    processData: false,
+    contentType: false
+
+  });
+}
+
+function UserSkillsAdd(formData){
+  $('#checkSkillsTitle').html("");
+  $('#skillsTitle').css('border-color','');
+  const skillsTitle = $('#skillsTitle').val();
+  if(skillsTitle.length<3){
+    $('#checkSkillsTitle').html("Please input atleast 3 character").css('color', 'red');
+    $('#skillsTitle').css('border-color', 'red');
+  }else{
+    $(".loader-div").show();
+    $.ajax({
+      url:"skillsAdd.php",
+      method:"POST",
+      dataType: "json",
+      data:formData,
+      success:function(data){
+        $(".loader-div").hide(); 
+        const msg = data.msg;
+        const stat = data.status;
+        if(stat === "success"){
+          modalSuccessShow(msg,triggerTableReload,'tblSkills');
+          $('#frmUserSkillsAdd')[0].reset();
+        } else {
+          modalErrorShow(msg);
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      },
+      processData: false,
+      contentType: false
+    });
+  }
+}
+
+function btnSkillsUpdate(getSkills){
+  $(".loader-div").show();
+  $.ajax({
+      url:"includes/functions.php",
+      method:"POST",
+      data:{getSkills:getSkills},
+      success:function(data){
+        $(".loader-div").hide(); 
+        const SkillsData = JSON.parse(data);
+        $('#SkillsID').val(SkillsData['id']);
+        $('#updateskillsTitle').val(SkillsData['skills_title']);
+        $('#updateSkills').modal('show');
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
+});
+}
+
+function UserSkillsUpdate(formData){
+  const UpdateSkills = $('#updateskillsTitle').val();
+  $("#CheckUpdateSkills").html("").css('color', 'red');
+  $("#updateskillsTitle").css('border-color', '');
+  if(UpdateSkills.length<3){
+    $("#CheckUpdateSkills").html("Please input atleast 3 character").css('color', 'red');
+    $("#updateskillsTitle").css('border-color', 'red');
+  }else{
+		$(".loader-div").show();
+    $.ajax({
+      url:"skillsUpdate.php",
+      method:"POST",
+      dataType: "json",
+      data:formData,
+      success:function(data){
+        $(".loader-div").hide(); 
+        $('#updateSkills').modal('hide');
+        const msg = data.msg;
+        const stat = data.status;
+        if(stat === "success"){
+          modalSuccessShow(msg,triggerTableReload,'tblSkills');
+          $('#frmUserSkillsAdd')[0].reset();
+        } else {
+          modalErrorShow(msg);
+        }
+      },
+      processData: false,
+      contentType: false
+    });
+  }
+}
+
+function UsernonAcademicAdd(formData){
+  const nonAcademic = $('#nonAcademicTitle').val();
+  $("#CheckNonAcademic").html("").css('color', 'red');
+  $("#nonAcademicTitle").css('border-color', '');
+  if(nonAcademic.length<3){
+    $("#CheckNonAcademic").html("Please input atleast 3 character").css('color', 'red');
+    $("#nonAcademicTitle").css('border-color', 'red');
+  }else{
+		$(".loader-div").show();
+    $.ajax({
+      url:"non-AcademicAdd.php",
+      method:"POST",
+      dataType: "json",
+      data:formData,
+      success:function(data){ 
+        $(".loader-div").hide(); 
+        const msg = data.msg;
+        const stat = data.status;
+        if(stat === "success"){
+          modalSuccessShow(msg,triggerTableReload,'tblnonAcademic');
+          $('#frmUsernonAcademicAdd')[0].reset();
+        } else {
+          modalErrorShow(msg);
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      },
+      processData: false,
+      contentType: false
+    });
+  }
+}
+
+function btnNonAcademicUpdate(getNonAcademic){
+  $(".loader-div").show();
+  $.ajax({
+      url:"includes/functions.php",
+      method:"POST",
+      data:{getNonAcademic:getNonAcademic},
+      success:function(data){  
+        $(".loader-div").hide(); 
+        const NonAcademicData = JSON.parse(data);
+        $('#NonAcademicID').val(NonAcademicData['id']);
+        $('#updateNonAcademicTitle').val(NonAcademicData['non_academic_title']);
+        $('#updateNonAcademic').modal('show');
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
+});
+}
+
+function UserNonAcademicUpdate(formData){
+  const UpdatenonAcademic = $('#updateNonAcademicTitle').val();
+  $("#CheckUpdateNonAcademic").html("").css('color', 'red');
+  $("#updateNonAcademicTitle").css('border-color', '');
+  if(UpdatenonAcademic.length<3){
+    $("#CheckUpdateNonAcademic").html("Please input atleast 3 character").css('color', 'red');
+    $("#updateNonAcademicTitle").css('border-color', 'red');
+  }else{
+		$(".loader-div").show();
+    $.ajax({
+      url:"non-academicUpdate.php",
+      method:"POST",
+      dataType: "json",
+      data:formData,
+      success:function(data){
+        $(".loader-div").hide(); 
+        $('#updateNonAcademic').modal('hide');
+        const msg = data.msg;
+        const stat = data.status;
+        if(stat === "success"){
+          modalSuccessShow(msg,triggerTableReload,'tblnonAcademic');
+          $('#frmUsernonAcademicAdd')[0].reset();
+        } else {
+          modalErrorShow(msg);
+        }
+      },
+      processData: false,
+      contentType: false
+    });
+  }
+}
+
+function UserReferencesAdd(formData){
+  $('#checkreferencesName').html("");
+  $('#referencesName').css('border-color','');
+  $('#checkreferencesAddress').html("");
+  $('#referencesAddress').css('border-color','');
+  $('#checkreferencesMobile').html("");
+  $('#referencesMobile').css('border-color','');
+  const RefTelNo = $('#referencesMobile').val();
+  const RefName = $('#referencesName').val();
+  const RefAddress = $('#referencesAddress').val();
+  if(RefName.length<3){
+    $('#checkreferencesName').html("Please input atleast 3 character").css('color', 'red');
+    $('#referencesName').css('border-color','red');
+  }else if(RefAddress.length<3){
+    $('#checkreferencesAddress').html("Please input atleast 3 character").css('color', 'red');;
+    $('#referencesAddress').css('border-color','red');
+  }else if((RefTelNo.length != 11) || ((RefTelNo.slice(0, 2)) !== "09")){
+    $('#checkreferencesMobile').html("The mobile number should adhere to the format starting with '09' and must consist of precisely 11 digits.").css('color', 'red');
+    $('#referencesMobile').css('border-color','red');
+  }else{
+		$(".loader-div").show();
+    const RefMobNumber = $('#referencesMobile').val();
+    $.ajax({ //check Ref Number if existed 
+      url:"checkExist.php",
+      method:"POST",
+      data: {RefMobNumber:RefMobNumber},
+      dataType: 'json',
+      success:function(data){
+        $(".loader-div").hide(); 
+        const countRefMobile = data.countRefMobile;
+        if (countRefMobile){
+          $('#checkreferencesMobile').html("Oops! It looks like this mobile number has already been assigned to another person. Please double-check and update if necessary.").css('color', 'red');
+          $('#referencesMobile').css('border-color','red');
+        }else{
+          $(".loader-div").show();
+          $.ajax({
+            url:"referencesAdd.php",
+            method:"POST",
+            dataType: "json",
+            data:formData,
+            success:function(data){
+              $(".loader-div").hide();
+              const msg = data.msg;
+              const stat = data.status;
+              if(stat === "success"){
+                modalSuccessShow(msg,triggerTableReload,'tblReferences');
+                $('#frmUserReferencesAdd')[0].reset();
+              } else {
+                modalErrorShow(msg);
+              }
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            },
+            processData: false,
+            contentType: false
+          });
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
+    });
+  }
+}
+
+function btnReferencesUpdate(getRef){
+  $(".loader-div").show();
+  $.ajax({
+      url:"includes/functions.php",
+      method:"POST",
+      data:{getRef:getRef},
+      success:function(data){
+        $(".loader-div").hide(); 
+        const RefData = JSON.parse(data);
+        $('#ReferencesID').val(RefData['id']);
+        $('#updateReferencesName').val(RefData['ref_name']);
+        $('#updateReferencesAddress').val(RefData['ref_address']);
+        $('#updateReferencesMobile').val(RefData['ref_mobile']);
+        $('#updateReferences').modal('show');
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
+});
+}
+
 $(document).on('change','#UpdateifGraduated', function(){
   if ($(this).is(':checked')) {
     $("#lblUpdateacadYearGraduated").attr('class','col-sm-12 requiredField');
@@ -2535,7 +2876,7 @@ $(document).on('submit','#frmUserVoluntaryUpdate',function(event){
   modalConfirmShow('Would you like to confirm and save the changes now?',UserVoluntaryUpdate,PassData);
 });
 
-$(document).on('click', '#btnUserVoluntaryDelete', function(){ //delete family background details
+$(document).on('click', '#btnUserVoluntaryDelete', function(){ 
   const valueID = $(this).attr('data-valueID');
   const valueURL = $(this).attr('data-valueURL');
   var TableID = 'tblVoluntary';
@@ -2549,42 +2890,190 @@ $(document).on('click', '#btnUserVoluntaryDelete', function(){ //delete family b
   modalConfirmShow('Would you like to permanently delete this information? This action cannot be undone.',deleteData,PassData);
 });
 
-
 $(document).on('submit','#frmUserTrainingAdd',function(event){
   event.preventDefault();
   var PassData  = new FormData(frmUserTrainingAdd);
-  modalConfirmShow('Would you like to confirm and save the changes now?',UserVoluntaryAdd,PassData);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserTrainingAdd,PassData);
 });
 
-function UserTrainingAdd(formData){
-  $(".loader-div").show();
-  $.ajax({
-    url:"trainingAdd.php",
-    method:"POST",
-    dataType: "json",
-    data:formData,
-    success:function(data){
-      $(".loader-div").hide();
-      const msg = data.msg;
-      const stat = data.status;
-      if(stat === "success"){
-        modalSuccessShow(msg,triggerTableReload,'tbltraining');
-        $('#frmUserTrainingAdd')[0].reset();
-        $('#trainingType').val('').trigger('change');
-      } else {
-        modalErrorShow(msg);
+$(document).on('click','#btnUserTrainingUpdate',function(){
+  var getTraining =  $(this).attr('value');
+  btnTrainingUpdate(getTraining);
+});
+
+$(document).on('submit','#frmUserTrainingdUpdate',function(event){
+  event.preventDefault();
+  var PassData = new FormData(frmUserTrainingdUpdate);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserTrainingdUpdate,PassData);
+});
+
+$(document).on('click', '#btnUserTrainingDelete', function(){
+  const valueID = $(this).attr('data-valueID');
+  const valueURL = $(this).attr('data-valueURL');
+  var TableID = 'tbltraining';
+  var PassData = {
+    valueID:valueID,
+    valueURL:valueURL,
+    TableID:TableID,
+    ActionAfter1: '',
+    ActionAfter2: ''
+  };
+  modalConfirmShow('Would you like to permanently delete this information? This action cannot be undone.',deleteData,PassData);
+});
+
+$(document).on('submit','#frmUserSkillsAdd',function(event){
+  event.preventDefault();
+  var PassData  = new FormData(frmUserSkillsAdd);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserSkillsAdd,PassData);
+});
+
+$(document).on('click','#btnUserSkillsUpdate',function(){
+  var getSkills =  $(this).attr('value');
+  btnSkillsUpdate(getSkills);
+});
+
+$(document).on('submit','#frmUserSkillsUpdate',function(event){
+  event.preventDefault();
+  var PassData = new FormData(frmUserSkillsUpdate);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserSkillsUpdate,PassData);
+});
+
+$(document).on('click', '#btnUserSkillsDelete', function(){
+  const valueID = $(this).attr('data-valueID');
+  const valueURL = $(this).attr('data-valueURL');
+  var TableID = 'tblSkills';
+  var PassData = {
+    valueID:valueID,
+    valueURL:valueURL,
+    TableID:TableID,
+    ActionAfter1: '',
+    ActionAfter2: ''
+  };
+  modalConfirmShow('Would you like to permanently delete this information? This action cannot be undone.',deleteData,PassData);
+});
+
+$(document).on('submit','#frmUsernonAcademicAdd',function(event){
+  event.preventDefault();
+  var PassData  = new FormData(frmUsernonAcademicAdd);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UsernonAcademicAdd,PassData);
+});
+
+$(document).on('click','#btnUserNonAcademicUpdate',function(){
+  var getNonAcademic =  $(this).attr('value');
+  btnNonAcademicUpdate(getNonAcademic);
+});
+
+$(document).on('submit','#frmUserNonAcademicUpdate',function(event){
+  event.preventDefault();
+  var PassData = new FormData(frmUserNonAcademicUpdate);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserNonAcademicUpdate,PassData);
+});
+
+$(document).on('click', '#btnUserNonAcademicDelete', function(){
+  const valueID = $(this).attr('data-valueID');
+  const valueURL = $(this).attr('data-valueURL');
+  var TableID = 'tblnonAcademic';
+  var PassData = {
+    valueID:valueID,
+    valueURL:valueURL,
+    TableID:TableID,
+    ActionAfter1: '',
+    ActionAfter2: ''
+  };
+  modalConfirmShow('Would you like to permanently delete this information? This action cannot be undone.',deleteData,PassData);
+});
+
+$(document).on('submit','#frmUserReferencesAdd',function(event){
+  event.preventDefault();
+  var PassData  = new FormData(frmUserReferencesAdd);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserReferencesAdd,PassData);
+});
+
+$(document).on('click','#btnUserReferencesUpdate',function(){
+  var getRef =  $(this).attr('value');
+  btnReferencesUpdate(getRef);
+});
+
+$(document).on('submit','#frmUserReferencesUpdate',function(event){
+  event.preventDefault();
+  var PassData = new FormData(frmUserReferencesUpdate);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserReferencesUpdate,PassData);
+});
+
+function UserReferencesUpdate(formData){
+  $('#CheckUpdateReferencesName').html("");
+  $('#updateReferencesName').css('border-color','');
+  $('#CheckUpdateReferencesAddress').html("");
+  $('#updateReferencesAddress').css('border-color','');
+  $('#CheckUpdateReferencesMobile').html("");
+  $('#updateReferencesMobile').css('border-color','');
+  const UpdateRefTelNo = $('#updateReferencesMobile').val();
+  const UpdateRefName = $('#updateReferencesName').val();
+  const UpdateRefAddress = $('#updateReferencesAddress').val();
+  if(UpdateRefName.length<3){
+    $('#CheckUpdateReferencesName').html("Please input atleast 3 character").css('color', 'red');
+    $('#updateReferencesName').css('border-color','red');
+  }else if(UpdateRefAddress.length<3){
+    $('#CheckUpdateReferencesAddress').html("Please input atleast 3 character").css('color', 'red');;
+    $('#updateReferencesAddress').css('border-color','red');
+  }else if((UpdateRefTelNo.length != 11) || ((UpdateRefTelNo.slice(0, 2)) !== "09")){
+    $('#CheckUpdateReferencesMobile').html("The mobile number should adhere to the format starting with '09' and must consist of precisely 11 digits.").css('color', 'red');
+    $('#updateReferencesMobile').css('border-color','red');
+  }else{
+		$(".loader-div").show();
+    $.ajax({ //check Ref Number if existed 
+      url:"checkExist.php",
+      method:"POST",
+      data: {RefMobNumber:UpdateRefTelNo},
+      dataType: 'json',
+      success:function(data){
+        $(".loader-div").hide(); 
+        const countRefMobile = data.countRefMobile;
+        if (countRefMobile){
+          $('#CheckUpdateReferencesMobile').html("Oops! It looks like this mobile number has already been assigned to another person. Please double-check and update if necessary.").css('color', 'red');
+          $('#updateReferencesMobile').css('border-color','red');
+        }else{
+          $(".loader-div").show();
+            $.ajax({
+            url:"referencesUpdate.php",
+            method:"POST",
+            dataType: "json",
+            data:formData,
+            success:function(data){
+              $(".loader-div").hide(); 
+              $('#updateReferences').modal('hide');
+              const msg = data.msg;
+              const stat = data.status;
+                if(stat === "success"){
+                  modalSuccessShow(msg,triggerTableReload,'tblReferences');
+                  $('#frmUserReferencesAdd')[0].reset();
+                } else {
+                  modalErrorShow(msg);
+                }
+              },
+              processData: false,
+              contentType: false
+            });
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
       }
-    },error: function(xhr, status, error) {
-      modalErrorShow("The system encountered an error. Please contact support.");
-      $(".loader-div").hide();
-    },
-    processData: false,
-    contentType: false
-  });
+    });
+  }
+
 }
   
+
+
+
+
+
   
-  
+
+
+
+
 
 
 
@@ -2676,132 +3165,8 @@ $("#form_other_info").on("submit",function(event){
 
 
 
-$("#frmnonAcademicAdd").on("submit",function(event){
-  event.preventDefault();
-  const nonAcademic = $('#nonAcademicTitle').val();
-  $("#CheckNonAcademic").html("").css('color', 'red');
-  $("#nonAcademicTitle").css('border-color', '');
-  if(nonAcademic.length<3){
-    $("#CheckNonAcademic").html("Please input atleast 3 character").css('color', 'red');
-    $("#nonAcademicTitle").css('border-color', 'red');
-  }else{
-    var formData = new FormData(frmnonAcademicAdd);
-    $.ajax({
-      url:"non-AcademicAdd.php",
-              method:"POST",
-              dataType: "json",
-              data:formData,
-              success:function(data){ 
-                const msg = data.msg;
-                const stat = data.status;
-                if(stat == "success"){
-                    $('#modalNotif-header').text('Great! Success.');
-                    $('#modalNotif-message').text(msg);
-                     $('#modalNotif').modal('show');
-                }
-                else{
-                    $('#alertMessage').text(msg);
-                    $('#modalAlert').modal('show'); 
-                }
-              },
-              processData: false,
-              contentType: false
-    });
-  }
-});
-$("#frmReferencesAdd").on("submit",function(event){
-  event.preventDefault();
-  $('#checkreferencesName').html("");
-  $('#referencesName').css('border-color','');
-  $('#checkreferencesAddress').html("");
-  $('#referencesAddress').css('border-color','');
-  $('#checkreferencesMobile').html("");
-  $('#referencesMobile').css('border-color','');
-  const RefTelNo = $('#referencesMobile').val();
-  const RefName = $('#referencesName').val();
-  const RefAddress = $('#referencesAddress').val();
-  if(RefName.length<3){
-    $('#checkreferencesName').html("Please input atleast 3 character").css('color', 'red');
-    $('#referencesName').css('border-color','red');
-  }else if(RefAddress.length<3){
-    $('#checkreferencesAddress').html("Please input atleast 3 character").css('color', 'red');;
-    $('#referencesAddress').css('border-color','red');
-  }else if((RefTelNo.length != 11) || ((RefTelNo.slice(0, 2)) !== "09")){
-    $('#checkreferencesMobile').html("The mobile number should adhere to the format starting with '09' and must consist of precisely 11 digits.").css('color', 'red');
-    $('#referencesMobile').css('border-color','red');
-  }else{
-    const RefMobNumber = $('#referencesMobile').val();
-    $.ajax({ //check Ref Number if existed 
-      url:"checkExist.php",
-      method:"POST",
-      data: {RefMobNumber:RefMobNumber},
-      dataType: 'json',
-      success:function(data){
-        const countRefMobile = data.countRefMobile;
-        if (countRefMobile){
-          $('#checkreferencesMobile').html("Oops! It looks like this mobile number has already been assigned to another person. Please double-check and update if necessary.").css('color', 'red');
-          $('#referencesMobile').css('border-color','red');
-        }else{
-          var formData = new FormData(frmReferencesAdd);
-          $.ajax({
-            url:"referencesAdd.php",
-                    method:"POST",
-                    dataType: "json",
-                    data:formData,
-                    success:function(data){
-                      const msg = data.msg;
-                      const stat = data.status;
-                      if(stat == "success"){
-                          $('#modalNotif-header').text('Great! Success.');
-                          $('#modalNotif-message').text(msg);
-                          $('#modalNotif').modal('show');
-                      }
-                      else{
-                          $('#alertMessage').text(msg);
-                          $('#modalAlert').modal('show'); 
-                      }
-                    },
-                    processData: false,
-                    contentType: false
-          });
-        }
-      }
-    });
-  }
-});
-$("#frmSkillsAdd").on("submit",function(event){
-  event.preventDefault();
-  $('#checkSkillsTitle').html("");
-  $('#skillsTitle').css('border-color','');
-  const skillsTitle = $('#skillsTitle').val();
-  if(skillsTitle.length<3){
-    $('#checkSkillsTitle').html("Please input atleast 3 character").css('color', 'red');
-    $('#skillsTitle').css('border-color', 'red');
-  }else{
-    var formData = new FormData(frmSkillsAdd);
-    $.ajax({
-      url:"skillsAdd.php",
-              method:"POST",
-              dataType: "json",
-              data:formData,
-              success:function(data){
-                const msg = data.msg;
-                const stat = data.status;
-                if(stat == "success"){
-                    $('#modalNotif-header').text('Great! Success.');
-                    $('#modalNotif-message').text(msg);
-                     $('#modalNotif').modal('show');
-                }
-                else{
-                    $('#alertMessage').text(msg);
-                    $('#modalAlert').modal('show'); 
-                }
-              },
-              processData: false,
-              contentType: false
-    });
-  }
-});
+
+
 
 
 
@@ -2892,70 +3257,10 @@ function btnTrainingViewUploaded(uploadedTrainingMOV){
   $('#ViewVerifiedMOV').attr('src','uploadedMOV/'+uploadedTrainingMOV);
   $('#ViewUploadedMOV').modal('show');
 }
-function btnSkillsUpdate(getSkills){
-  $.ajax({
-      url:"includes/functions.php",
-      method:"POST",
-      data:{getSkills:getSkills},
-      success:function(data){
-        const SkillsData = JSON.parse(data);
-        $('#SkillsID').val(SkillsData['id']);
-        $('#updateskillsTitle').val(SkillsData['skills_title']);
-        $('#updateSkills').modal('show');
-      }
-});
-}
-function btnReferencesUpdate(getRef){
-  $.ajax({
-      url:"includes/functions.php",
-      method:"POST",
-      data:{getRef:getRef},
-      success:function(data){
-        const RefData = JSON.parse(data);
-        $('#ReferencesID').val(RefData['id']);
-        $('#updateReferencesName').val(RefData['ref_name']);
-        $('#updateReferencesAddress').val(RefData['ref_address']);
-        $('#updateReferencesMobile').val(RefData['ref_mobile']);
-        $('#updateReferences').modal('show');
-      }
-});
-}
-function btnNonAcademicUpdate(getNonAcademic){
-  $.ajax({
-      url:"includes/functions.php",
-      method:"POST",
-      data:{getNonAcademic:getNonAcademic},
-      success:function(data){  
-        const NonAcademicData = JSON.parse(data);
-        $('#NonAcademicID').val(NonAcademicData['id']);
-        $('#updateNonAcademicTitle').val(NonAcademicData['non_academic_title']);
-        $('#updateNonAcademic').modal('show');
-      }
-});
-}
-function btnTrainingUpdate(getTraining){
-  $.ajax({
-      url:"includes/functions.php",
-      method:"POST",
-      data:{getTraining:getTraining},
-      success:function(data){
-        const TrainingData = JSON.parse(data);
-        $('#TrainingID').val(TrainingData['id']);
-        $('#updatetrainingTitle').val(TrainingData['training_title']);
-        $('#updatetrainingDateFrom').val(TrainingData['training_date_from']);
-        $('#updatetrainingDateTo').val(TrainingData['training_date_to']);
-        $('#updatetrainingHours').val(TrainingData['training_hours']);
-        $('#updatetrainingType').val(TrainingData['training_type']).trigger("change");
-        $('#updatetrainingConductedBy').val(TrainingData['training_conducted_by']);
-        const uploadedTrainingMOV = TrainingData['training_uploaded_mov']; //retrieve file name
-        $('#currentTrainingFileName').val(uploadedTrainingMOV); //set filename to hidden textbox
-        var pdfURL = 'uploadedMOV/'+uploadedTrainingMOV; //pdf directory 
-        const iframeTrainingPDF = document.getElementById('UploadedTrainingMOV'); //iframe id
-        iframeTrainingPDF.src = `${pdfURL}?t=${new Date().getTime()}`; //embed the url pdf to iframe with time value to get the latest version
-        $('#updateTraining').modal('show');
-      }
-});
-}
+
+
+
+
 
 
 function openChangePassword(){
@@ -2969,162 +3274,10 @@ function openChangePassword(){
 
 
 
-$('#frmTrainingdUpdate').on("submit",function(event){
-  event.preventDefault();
-  var formData = new FormData(frmTrainingdUpdate);
-  $.ajax({
-    url:"trainingUpdate.php",
-            method:"POST",
-            dataType: "json",
-            data:formData,
-            success:function(data){
-              $('#updateTraining').modal('hide');
-              const msg = data.msg;
-              const stat = data.status;
-              if(stat == "success"){
-                  $('#modalNotif-header').text('Great! Success.');
-                  $('#modalNotif-message').text(msg);
-                   $('#modalNotif').modal('show');
-                    }
-              else{
-                  $('#alertMessage').text(msg);
-                  $('#modalAlert').modal('show'); 
-              }
-            },
-            processData: false,
-            contentType: false
 
-  });
-});
-$('#frmSkillsUpdate').on("submit",function(event){
-  event.preventDefault();
-  const UpdateSkills = $('#updateskillsTitle').val();
-  $("#CheckUpdateSkills").html("").css('color', 'red');
-  $("#updateskillsTitle").css('border-color', '');
-  if(UpdateSkills.length<3){
-    $("#CheckUpdateSkills").html("Please input atleast 3 character").css('color', 'red');
-    $("#updateskillsTitle").css('border-color', 'red');
-  }else{
-    var formData = new FormData(frmSkillsUpdate);
-    $.ajax({
-      url:"skillsUpdate.php",
-              method:"POST",
-              dataType: "json",
-              data:formData,
-              success:function(data){
-                $('#updateSkills').modal('hide');
-                const msg = data.msg;
-                const stat = data.status;
-                if(stat == "success"){
-                    $('#modalNotif-header').text('Great! Success.');
-                    $('#modalNotif-message').text(msg);
-                     $('#modalNotif').modal('show');
-                      }
-                else{
-                    $('#alertMessage').text(msg);
-                    $('#modalAlert').modal('show'); 
-                }
-              },
-              processData: false,
-              contentType: false
-  
-    });
-  }
-});
-$('#frmReferencesUpdate').on("submit",function(event){
-  event.preventDefault();
-  $('#CheckUpdateReferencesName').html("");
-  $('#updateReferencesName').css('border-color','');
-  $('#CheckUpdateReferencesAddress').html("");
-  $('#updateReferencesAddress').css('border-color','');
-  $('#CheckUpdateReferencesMobile').html("");
-  $('#updateReferencesMobile').css('border-color','');
-  const UpdateRefTelNo = $('#updateReferencesMobile').val();
-  const UpdateRefName = $('#updateReferencesName').val();
-  const UpdateRefAddress = $('#updateReferencesAddress').val();
-  if(UpdateRefName.length<3){
-    $('#CheckUpdateReferencesName').html("Please input atleast 3 character").css('color', 'red');
-    $('#updateReferencesName').css('border-color','red');
-  }else if(UpdateRefAddress.length<3){
-    $('#CheckUpdateReferencesAddress').html("Please input atleast 3 character").css('color', 'red');;
-    $('#updateReferencesAddress').css('border-color','red');
-  }else if((UpdateRefTelNo.length != 11) || ((UpdateRefTelNo.slice(0, 2)) !== "09")){
-    $('#CheckUpdateReferencesMobile').html("The mobile number should adhere to the format starting with '09' and must consist of precisely 11 digits.").css('color', 'red');
-    $('#updateReferencesMobile').css('border-color','red');
-  }else{
-    $.ajax({ //check Ref Number if existed 
-      url:"checkExist.php",
-      method:"POST",
-      data: {RefMobNumber:UpdateRefTelNo},
-      dataType: 'json',
-      success:function(data){
-        const countRefMobile = data.countRefMobile;
-        if (countRefMobile){
-          $('#CheckUpdateReferencesMobile').html("Oops! It looks like this mobile number has already been assigned to another person. Please double-check and update if necessary.").css('color', 'red');
-          $('#updateReferencesMobile').css('border-color','red');
-        }else{
-        var formData = new FormData(frmReferencesUpdate);
-            $.ajax({
-              url:"referencesUpdate.php",
-              method:"POST",
-              dataType: "json",
-              data:formData,
-              success:function(data){
-                $('#updateReferences').modal('hide');
-                const msg = data.msg;
-                const stat = data.status;
-                if(stat == "success"){
-                    $('#modalNotif-header').text('Great! Success.');
-                    $('#modalNotif-message').text(msg);
-                    $('#modalNotif').modal('show');
-                      }
-                else{
-                    $('#alertMessage').text(msg);
-                    $('#modalAlert').modal('show'); 
-                }
-              },
-              processData: false,
-              contentType: false
-            });
-        }
-      }
-    });
-  }
-});
-$('#frmNonAcademicUpdate').on("submit",function(event){
-  event.preventDefault();
-  const UpdatenonAcademic = $('#updateNonAcademicTitle').val();
-  $("#CheckUpdateNonAcademic").html("").css('color', 'red');
-  $("#updateNonAcademicTitle").css('border-color', '');
-  if(UpdatenonAcademic.length<3){
-    $("#CheckUpdateNonAcademic").html("Please input atleast 3 character").css('color', 'red');
-    $("#updateNonAcademicTitle").css('border-color', 'red');
-  }else{
-    var formData = new FormData(frmNonAcademicUpdate);
-    $.ajax({
-      url:"non-academicUpdate.php",
-              method:"POST",
-              dataType: "json",
-              data:formData,
-              success:function(data){
-                $('#updateNonAcademic').modal('hide');
-                const msg = data.msg;
-                const stat = data.status;
-                if(stat == "success"){
-                    $('#modalNotif-header').text('Great! Success.');
-                    $('#modalNotif-message').text(msg);
-                     $('#modalNotif').modal('show');
-                      }
-                else{
-                    $('#alertMessage').text(msg);
-                    $('#modalAlert').modal('show'); 
-                }
-              },
-              processData: false,
-              contentType: false
-    });
-  }
-});
+
+
+
 
 
 
