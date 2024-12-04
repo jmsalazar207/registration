@@ -3562,7 +3562,7 @@
                                                 for="updateReferencesMobile" 
                                                 class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
-                                                Address
+                                                Telephone Number
                                             </label>
                                             <div class="col-sm-12">
                                                 <input 
@@ -3711,7 +3711,7 @@
                         </button>
                         <h4 class="modal-title">Change Password</h4>
                     </div>
-                    <form id="frmProfileChangePass" name="frmProfileChangePass" autocomplete="off" >
+                    <form id="frmUserProfileChangePass" name="frmUserProfileChangePass" autocomplete="off" >
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-12">
@@ -3743,13 +3743,15 @@
                                                 placeholder="Old Password" 
                                                 required="true" 
                                                 tabindex="1">
-                                                <span class="input-group-addon">
+                                                <span 
+                                                class="input-group-addon">
                                                     <i 
-                                                        class="fa fa-eye-slash toggle-OldPassword " 
-                                                        toggle = "#OldPassword"  
-                                                        id="toggleOldPassword">
+                                                    class="fa fa-eye-slash toggle-password" 
+                                                    data-target="#OldPassword" 
+                                                    role="button" 
+                                                    aria-label="Toggle password visibility">
                                                     </i>
-                                            </span>
+                                                </span>
                                         </div>
                                         <small id="checkOldPassword"></small>
                                     </div>
@@ -3769,24 +3771,23 @@
                                         <div class="input-group has-feedback col-sm-12">
                                             <input 
                                                 type="password" 
-                                                class="form-control col-sm-10" 
+                                                class="form-control col-sm-10 password-field" 
                                                 id="NewPassword" 
                                                 name="NewPassword" 
                                                 placeholder="New Password" 
                                                 required="true" 
                                                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
                                                 title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" 
-                                                tabindex="1"
-                                                onkeyup="StrongPassword()"
-                                                onfocus="showMessage()"
-                                                onblur="hideMessage()">
-                                                <span class="input-group-addon">
+                                                tabindex="1">
+                                                <span 
+                                                class="input-group-addon">
                                                     <i 
-                                                        class="fa fa-eye-slash toggle-NewPassword " 
-                                                        toggle = "#NewPassword"  
-                                                        id="toggleNewPassword">
+                                                    class="fa fa-eye-slash toggle-password" 
+                                                    data-target="#NewPassword" 
+                                                    role="button" 
+                                                    aria-label="Toggle password visibility">
                                                     </i>
-                                            </span>
+                                                </span>
                                         </div>
                                         <small id="checkNewPassword"></small>
                                     </div>
@@ -3815,22 +3816,23 @@
                                         <div class="input-group has-feedback col-sm-12">
                                             <input 
                                                 type="password" 
-                                                class="form-control col-sm-10" 
+                                                class="form-control col-sm-10 confirm-password-field" 
                                                 id="ConfirmPassword" 
                                                 name="ConfirmPassword" 
                                                 placeholder="Confirm Password" 
                                                 required="true" 
                                                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
                                                 title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" 
-                                                tabindex="2"
-                                                onkeyup="checkPasswordMatch()">
-                                                <span class="input-group-addon">
+                                                tabindex="2">
+                                                <span 
+                                                class="input-group-addon">
                                                     <i 
-                                                        class="fa fa-eye-slash toggle-NewPassword " 
-                                                        toggle = "#ConfirmPassword"  
-                                                        id="toggleConfirmPassword">
+                                                    class="fa fa-eye-slash toggle-password" 
+                                                    data-target="#ConfirmPassword" 
+                                                    role="button" 
+                                                    aria-label="Toggle password visibility">
                                                     </i>
-                                            </span>
+                                                </span>
                                         </div>
                                         <small id='checkmessage'></small>
                                     </div>
@@ -3840,8 +3842,8 @@
                         <div class="modal-footer">
                                 <button 
                                     type="submit"
-                                    id="btnChangePassword" 
-                                    name="btnChangePassword"
+                                    id="btnSubmit" 
+                                    name="btnSubmit"
                                     class="btn btn-primary btn-md pull-right">
                                     Change Password
                                 </button>

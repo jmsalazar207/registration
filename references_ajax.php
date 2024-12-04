@@ -56,8 +56,8 @@ if($empRecords){
                </button>
             </td>
             <td>
-               <button class='btn btn-danger btn-sm' id = 'btnUserReferencesDelete' name ='btnUserReferencesDelete' >
-                  Remove Info
+               <button class='btn btn-danger btn-sm' id = 'btnUserReferencesDelete' name ='btnUserReferencesDelete' data-valueID = '$id' data-valueURL = '$url'>
+                  Remove
                </button>
             </td>
             "; 

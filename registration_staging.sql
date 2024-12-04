@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 01, 2024 at 08:27 PM
+-- Generation Time: Dec 04, 2024 at 09:09 AM
 -- Server version: 10.4.28-MariaDB
--- PHP Version: 8.1.17
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -56,7 +56,8 @@ INSERT INTO `lib_academic` (`id`, `empno`, `acad_level`, `acad_school`, `acad_de
 (3, '03-10961', 2, 36345, 1, 2011, 2015, 1, 'GRADUATED', 2015, '', '', 4, '', '', NULL),
 (4, '03-10961', 1, 28836, 1, 2005, 2011, 1, 'GRADUATED', 2011, '', '', 4, '', '', NULL),
 (5, '03-10961', 1, 28836, 1, 2005, 2011, 1, 'GRADUATED', 2011, '', '', 4, '', '', NULL),
-(6, '03-10961', 2, 36345, 1, 2011, 2015, 1, 'GRADUATED', 2015, '', '', 4, '', '', NULL);
+(6, '03-10961', 2, 36345, 1, 2011, 2015, 1, 'GRADUATED', 2015, '', '', 4, '', '', NULL),
+(7, '03-10961', 1, 28836, 1, 2005, 2011, 1, 'GRADUATED', 2011, '', '', 5, '', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -46554,7 +46555,7 @@ INSERT INTO `lib_fund_source` (`fund_source_code`, `fund_source_name`, `fund_sou
 
 CREATE TABLE `lib_govern_id` (
   `id` int(11) NOT NULL,
-  `empno` int(11) NOT NULL,
+  `empno` varchar(25) NOT NULL,
   `govern_id_title` varchar(50) NOT NULL,
   `govern_id_no` varchar(50) NOT NULL,
   `govern_id_date` date DEFAULT NULL,
@@ -46568,7 +46569,8 @@ CREATE TABLE `lib_govern_id` (
 --
 
 INSERT INTO `lib_govern_id` (`id`, `empno`, `govern_id_title`, `govern_id_no`, `govern_id_date`, `govern_id_place`, `updated_by`, `datetime_updated`) VALUES
-(1, 3, 'TEST ID', '10000', '2024-01-01', 31405000, '03-12456', '2024-11-12');
+(1, '3', 'TEST ID', '10000', '2024-01-01', 31405000, '03-12456', '2024-11-12'),
+(2, '03-10961', 'DSWD ID', '03-10961', '2024-03-30', 13314000, '03-10961', '2024-12-04');
 
 -- --------------------------------------------------------
 
@@ -46826,7 +46828,9 @@ CREATE TABLE `lib_non_academic` (
 
 INSERT INTO `lib_non_academic` (`id`, `empno`, `non_academic_title`, `updated_by`, `datetime_updated`, `non_academic_status`) VALUES
 (1, '03-12456', 'THIS IS TEST', '', NULL, 0),
-(2, '03-12456', 'BEST SLEEPING EMPLOYEE XD', '', NULL, 0);
+(2, '03-12456', 'BEST SLEEPING EMPLOYEE XD', '', NULL, 0),
+(3, '03-10961', 'CHARACTER AWARDEE', '03-10961', '2024-12-03', 4),
+(4, '03-10961', 'QQQQQQQQQQQQQQQQQ', '03-10961', '2024-12-03', 4);
 
 -- --------------------------------------------------------
 
@@ -105197,23 +105201,10 @@ CREATE TABLE `lib_references` (
 --
 
 INSERT INTO `lib_references` (`id`, `empno`, `ref_name`, `ref_address`, `ref_mobile`, `updated_by`, `datetime_updated`, `ref_status`) VALUES
-(1, '03-10961', 'RONIE C. FRANCISCO', 'JULIANA SAN FERNANDO PAMPANGA', '2147483647', '', NULL, 4),
-(2, '03-10961', 'A34', 'L43', '2147483647', '', NULL, 4),
-(3, '03-10961', 'ASD', 'ASD', '2147483647', '', NULL, 4),
-(4, '03-10961', 'RONIE C. FRANCISCO', 'JULIANA SAN FERNANDO PAMPANGA', '09758424488', '', NULL, 4),
-(5, '03-10961', 'RONIE C. FRANCISCO', 'JULIANA CITY OF SAN FERNANDO', '09497528844', '03-10961', '2024-08-26', 4),
-(6, '03-10961', 'FG32', 'HFDGH', '09485254199', '', NULL, 4),
-(7, '03-10961', 'SDFGSDFG', '12312', '09578165544', '', NULL, 4),
-(8, '03-10961', 'DSFG', '231432', '09652485533', '', NULL, 4),
-(9, '03-10961', 'ASDAS', 'SADASD', '09754825544', '', NULL, 4),
-(10, '03-10961', '123123', '123123', '09525698855', '', NULL, 4),
-(11, '03-10961', 'SDFS', 'SDF', '09852487755', '', NULL, 4),
-(12, '03-10961', 'SDFSDF', 'SDFSDF', '09854615588', '', NULL, 4),
-(13, '03-10961', 'KING L. QUITO', 'SINDALAN CITY OF SAN FERNANDO PAMPANGA', '09754825588', '', NULL, 0),
-(14, '03-10961', 'BUTCH G. GACUSAN', 'LA PAZ TARLAC', '09854265588', '', NULL, 4),
-(15, '03-10961', 'BUTCH G. GACUSAN', 'LA PAZ TARLAC', '09497524422', '', NULL, 0),
-(16, '03-12456', 'DUMMY DOE', 'DUMMY ADDRESS', '09181829291', '', NULL, 0),
-(17, '03-12456', 'DUMMY', 'DUMMY ', '09231234501', '', NULL, 0);
+(1, '03-10961', 'KING QUITO', 'SINDALAN CSFP', '09684521177', '03-10961', '2024-12-04', 0),
+(2, '03-10961', 'RONIE FRANCISCO', 'JULIANA CSFP', '09854618822', '03-10961', '2024-12-04', 4),
+(3, '03-10961', 'BUTCH G. GACUSAN', 'LAPAZ TARLAC', '09852496622', '', NULL, 4),
+(4, '03-10961', 'RONIE FRANCISCO', 'JULIANA CSFP', '09645248866', '', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -105672,10 +105663,8 @@ CREATE TABLE `lib_skills` (
 --
 
 INSERT INTO `lib_skills` (`id`, `empno`, `skills_title`, `updated_by`, `datetime_updated`, `skills_status`) VALUES
-(1, '03-12456', 'QUALITY ASSURANCE', '', NULL, 4),
-(2, '03-12456', 'MATULOG', '', NULL, 0),
-(3, '03-12456', 'PROGRAMMING', '', NULL, 0),
-(4, '03-12456', 'QA TESTING', '', NULL, 0);
+(1, '03-10961', 'DANCER', '03-10961', '2024-12-03', 4),
+(2, '03-10961', 'DSFGSDFG', '', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -105704,7 +105693,8 @@ CREATE TABLE `lib_training` (
 --
 
 INSERT INTO `lib_training` (`id`, `empno`, `training_title`, `training_date_from`, `training_date_to`, `training_hours`, `training_type`, `training_conducted_by`, `training_status`, `training_uploaded_mov`, `training_remarks`, `updated_by`, `datetime_updated`) VALUES
-(1, '03-12456', 'TRAINING DUMMY', '2024-11-11', '2024-11-12', '16', 1, 'AKO', 0, '03-12456_Training_0.pdf', '', '', NULL);
+(1, '03-12456', 'TRAINING DUMMY', '2024-11-11', '2024-11-12', '16', 1, 'AKO', 0, '03-12456_Training_0.pdf', '', '', NULL),
+(2, '03-10961', 'DSWD-GOOGLE HACKATHON: GOOGLE APPSHEET AND MEET APPLICATION PROGRAMMING INTERFACE, AND GOOGLE TECHNOLOGIES', '2023-11-08', '2023-11-09', '16', 3, 'GOOGLE PHILIPPINES', 4, '03-10961_Training_0.pdf', '', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -106187,9 +106177,9 @@ CREATE TABLE `lib_voluntary` (
 
 INSERT INTO `lib_voluntary` (`id`, `empno`, `vw_name_address`, `vw_date_from`, `vw_date_to`, `vw_no_hrs`, `vw_position`, `vw_status`) VALUES
 (1, '03-12456', 'SAPILITANG ORGANISASYON', '2024-11-10', '2024-11-11', 1000, 'ABCD', 0),
-(2, '03-10961', 'ASDASDASD', '2024-12-02', '2024-12-02', 8, 'SDFSDFSDF', 0),
-(3, '03-10961', 'ASDASD', '2024-12-11', '2024-12-12', 8, 'ASDASDSA', 0),
-(4, '03-10961', 'ASDASD', '2024-12-16', '2024-12-16', 8, 'ASDFASDFASDF', 0);
+(2, '03-10961', 'DOLE', '2024-11-04', '2024-11-05', 16, 'TECHNICAL SKILLS', 4),
+(3, '03-10961', 'ASDASD', '2024-12-11', '2024-12-12', 8, 'ASDASDSA', 4),
+(4, '03-10961', 'ASDASD', '2024-12-16', '2024-12-16', 8, 'ASDFASDFASDF', 4);
 
 -- --------------------------------------------------------
 
@@ -106583,7 +106573,7 @@ INSERT INTO `userprofile` (`empno`, `password`, `position_id`, `date_filled`, `f
 ('03-10751', '46bab4c3ac73049fbf15c5b6bde382ac', '325', '2024-08-01', 'BUTCH', 'GAJUNIA', 'GACUSAN', '', '09991809074', '', 0, '1988-01-11', 'bggacusan@dswd.gov.ph', 'BLOCK 3', '', '030000000', '128', '036907014', '036907000', '036900000', 0, 36, 4, 24, '2024-03-05 13:39:48', '03-10961', '2024-03-24 09:06:47', '_03-10751.jpg', 1, 0, 2, 0, '2024-08-02 13:21:19', '0000-00-00 00:00:00', '', NULL, '', '0000-00-00 00:00:00', '', '', 1, '', 0),
 ('03-1393', '161ebd7d45089b3446ee4e0d86dbcf92', '327', '2024-11-27', 'RONIE', 'CASTRO', 'FRANCISCO', '', '09555566387', '', 0, '1981-05-04', 'rcfrancisco@dswd.gov.ph', '', '', '030000000', '', '035416011', '035416000', '035400000', 0, 24, 4, 24, '2024-03-05 14:20:52', '03-9862', '2024-04-24 10:21:11', '001.jpg', 0, 0, 2, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, '', '0000-00-00 00:00:00', '', '', 0, '', 0),
 ('03-11282', '9c272337a8b0f716276d03825b990b22', '', NULL, 'JOHN PAUL', 'DE LEON', 'CARREON', '', '09168474344', '', 0, '1998-11-07', 'jpdlcarreon@dswd.gov.ph', 'PUROK 2', '', '030000000', '35', '035416031', '035416000', '035400000', 0, 24, 4, 24, '2024-03-08 11:08:52', '03-9862', '2024-04-24 08:47:51', '_03-11282.jpg', 0, 0, 2, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, '', '0000-00-00 00:00:00', '', '', 0, '', 0),
-('03-10961', '161ebd7d45089b3446ee4e0d86dbcf92', '', '0000-00-00', 'JEFFREY', 'MELQUIADES', 'SALAZAR', '', '09497524488', '', 0, '1998-07-21', 'jmsalazar@dswd.gov.ph', 'M.H DEL PILAR', '', '030000000', '320', '035416015', '035416000', '035400000', 2000, 101, 4, 24, '2024-02-20 14:30:10', '', '2024-02-20 14:33:10', '_03-10961.jpg', 1, 1, 2, 0, '2024-11-28 14:31:21', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', NULL, '', '', 0, 'd35293e4b23cc6f8652cd3958ae8ecad', 0),
+('03-10961', '161ebd7d45089b3446ee4e0d86dbcf92', '', '0000-00-00', 'JEFFREY', 'MELQUIADES', 'SALAZAR', '', '09497524488', '', 0, '1998-07-21', 'jmsalazar@dswd.gov.ph', 'M.H DEL PILAR', '', '030000000', '320', '035416015', '035416000', '035400000', 2000, 101, 4, 24, '2024-02-20 14:30:10', '', '2024-02-20 14:33:10', '_03-10961.jpg', 1, 1, 2, 0, '2024-12-02 15:10:07', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', NULL, '', '', 0, 'd35293e4b23cc6f8652cd3958ae8ecad', 0),
 ('03-8277', '161ebd7d45089b3446ee4e0d86dbcf92', '', NULL, 'JOSELITO', 'VIQUERRA', 'ULEP', '', '09926837721', '', 0, '1971-12-21', 'jvulep@dswd.gov.ph', '', '', '030000000', '', '035416015', '035416000', '035400000', 0, 3, 4, 24, '2024-03-05 13:39:26', '03-9862', '2024-04-24 10:22:22', '_03-8277.jpg', 0, 0, 2, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, '', '0000-00-00 00:00:00', '', '', 0, '', 0),
 ('03-11553', '161ebd7d45089b3446ee4e0d86dbcf92', '', NULL, 'CLARIZA', 'SICAT', 'MENDOZA', '', '09165242079', '', 1, '1981-10-30', 'csmendoza@dswd.gov.ph', 'DAISY ST.', '', '030000000', '1344', '035404018', '035404000', '035400000', 0, 3, 4, 24, '2024-03-05 15:00:39', '03-9862', '2024-04-24 09:05:57', '_03-11553.jpeg', 0, 0, 2, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, '', '0000-00-00 00:00:00', '', '', 0, '', 0),
 ('03-0165', '161ebd7d45089b3446ee4e0d86dbcf92', '', NULL, 'VILMA', 'REBOREDO', 'SERRANO', '', '09209632006', '', 1, '1971-12-28', 'vrserrano@dswd.gov.ph', '', '', '030000000', '', '035416004', '035416000', '035400000', 0, 75, 4, 21, '2024-03-13 16:39:39', '03-9862', '2024-04-24 04:17:55', '_03-0165.jpg', 0, 0, 2, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, '', '0000-00-00 00:00:00', '', '', 0, '', 0),
@@ -109168,7 +109158,7 @@ ALTER TABLE `userprofile`
 -- AUTO_INCREMENT for table `lib_academic`
 --
 ALTER TABLE `lib_academic`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `lib_account_status`
@@ -109252,7 +109242,7 @@ ALTER TABLE `lib_fund_source`
 -- AUTO_INCREMENT for table `lib_govern_id`
 --
 ALTER TABLE `lib_govern_id`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `lib_graduate_studies`
@@ -109276,7 +109266,7 @@ ALTER TABLE `lib_mode_seperation`
 -- AUTO_INCREMENT for table `lib_non_academic`
 --
 ALTER TABLE `lib_non_academic`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `lib_official_station`
@@ -109324,7 +109314,7 @@ ALTER TABLE `lib_primary_school`
 -- AUTO_INCREMENT for table `lib_references`
 --
 ALTER TABLE `lib_references`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `lib_salary`
@@ -109348,13 +109338,13 @@ ALTER TABLE `lib_secondary_school`
 -- AUTO_INCREMENT for table `lib_skills`
 --
 ALTER TABLE `lib_skills`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `lib_training`
 --
 ALTER TABLE `lib_training`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `lib_training_course`

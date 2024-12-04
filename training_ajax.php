@@ -83,7 +83,7 @@ if($empRecords){
       $training_status = "<span class='badge bg-green'>VERIFIED</span>";
       $action ="
       <td>
-          <button class='btn btn-info btn-sm' id = 'btnTrainingViewUploaded' name ='btnTrainingViewUploaded' onclick ='btnTrainingViewUploaded(this.value)' value = '$uploadedTrainingMOV'  title='View Uploaded' >
+          <button class='btn btn-info btn-sm' id = 'btnUserTrainingViewUploaded' name ='btnUserTrainingViewUploaded' value = '$uploadedTrainingMOV'  title='View Uploaded' >
             View
          </button>
        </td>

@@ -358,3 +358,12 @@ $(document).on('submit','#contentform',function(event){
     });
   } 
 });
+$(document).on('keyup','#DesiredPassword',function(){
+  StrongPassword('DesiredPassword');
+});
+$(document).on('focus','#DesiredPassword',function(){
+  showMessage('message');
+});
+$(document).on('blur','#DesiredPassword',function(){
+  hideMessage('message');
+});

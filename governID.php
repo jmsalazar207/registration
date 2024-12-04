@@ -1,6 +1,6 @@
 <div class="tab-pane" id="GovernID">
     <div class="user-block">
-        <form id="frmGovernID" name="frmGovernID" autocomplete="off" >
+        <form id="frmUserGovernID" name="frmUserGovernID" autocomplete="off" >
             <div class="box" style="border:0cm" >
                 <div class="box-body row">
                     <div class="card col-md-12">
@@ -8,7 +8,7 @@
                             <div class="col-md-12">
                                 <label 
                                     for="GovernIDTitle" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Government Issued ID
                                 </label>
@@ -36,7 +36,7 @@
                             <div class="col-md-12">
                                 <label 
                                     for="GovernIDNo" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     ID/License/Passport No.
                                 </label>
@@ -56,7 +56,7 @@
                             <div class="col-md-12">
                                 <label 
                                     for="GovernIDDateIssue" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Date of Issuance:
                                 </label>
@@ -78,7 +78,7 @@
                             <div class="col-md-12">
                                 <label 
                                     for="GovernIDPlaceIssue" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Place of Issuance:
                                 </label>
@@ -104,7 +104,7 @@
                         <button 
                             type="submit" 
                             class="btn btn-primary btn-md pull-right">
-                            Submit
+                            Save
                         </button>
                     </div>
             </div>

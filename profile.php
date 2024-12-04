@@ -157,7 +157,8 @@ $today = date('Y-m-d');
                         <div class = "col-md-12">
                           <button
                           class="btn btn-info btn-sm btn-block" 
-                          onclick="openChangePassword()"
+                          id="openChangePassword"
+                          name="openChangePassword"
                           >
                             Change Password
                           </button>

@@ -191,9 +191,7 @@ require_once('includes/init.php');
                                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
                                 title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" 
                                 tabindex="1"
-                                onkeyup="StrongPassword('DesiredPassword');"
-                                onfocus="showMessage('message');"
-                                onblur="hideMessage('message');">
+                                >
                                 <span class="input-group-addon">
                                 <i 
                                 class="fa fa-eye-slash toggle-password" 

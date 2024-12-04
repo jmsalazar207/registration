@@ -165,14 +165,27 @@ if(isset($_POST['PositionName'])){ //Check exist add
     echo json_encode($count);
  }
  if(isset($_POST['RefMobNumber'])){
-    $RefMobile = $_POST['RefMobNumber'];
-    $ID = $_SESSION['userID'];
-    $sql_refMobile = "SELECT * FROM lib_references WHERE empno = '$ID' AND ref_mobile = '$RefMobile' AND ref_status != 4";
+   $type = $_POST['type']; //1 for add, 2 for update
+   if($type ==1){
+      $RefMobile = $_POST['RefMobNumber'];
+      $ID = $_SESSION['userID'];
+      $sql_refMobile = "SELECT * FROM lib_references WHERE empno = '$ID' AND ref_mobile = '$RefMobile' AND ref_status != 4";
+  
+      $dbConn->findFirstQuery($sql_refMobile);
+      $count['countRefMobile'] = $dbConn->count();
+  
+      echo json_encode($count);
+   }else{
+      $RefID = $_POST['RefID'];
+      $RefMobile = $_POST['RefMobNumber'];
+      $ID = $_SESSION['userID'];
+      $sql_refMobile = "SELECT * FROM lib_references WHERE empno = '$ID' AND ref_mobile = '$RefMobile' AND id != '$RefID' AND ref_status != 4";
+      $dbConn->findFirstQuery($sql_refMobile);
+      $count['countRefMobile'] = $dbConn->count();
+  
+      echo json_encode($count);
+   }
 
-    $dbConn->findFirstQuery($sql_refMobile);
-    $count['countRefMobile'] = $dbConn->count();
-
-    echo json_encode($count);
  }
  if(isset($_POST['BasicInfo'])){
     $ID = $_SESSION['userID'];

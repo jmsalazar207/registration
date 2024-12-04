@@ -172,43 +172,7 @@ $(function(){
   $("#UpdateacadPeriodTo").html(YearOption);
   $("#UpdateacadYearGraduated").html(YearOption);
 
-$(".loader-div").show();
-$.ajax({ //set 3 entry in person references
-  url:"checkExist.php",
-  method:"POST",
-  data:{countReference:1},
-  dataType: 'json',
-  success:function(data){
-    $(".loader-div").hide(); 
-    const countReference = data.countRef;
-    if(countReference==3){
-      $('#frmReferencesAdd').hide(); //hide insert form
-      $('#refLimitInfo').show(); //show info
-    }
-  },error: function(xhr, status, error) {
-    modalErrorShow("The system encountered an error. Please contact support.");
-    $(".loader-div").hide();
-  }
-});
 
-$(".loader-div").show();
-$.ajax({ //work experience present checkbox hide when already encoded present work
-  url:"checkExist.php",
-  method:"POST",
-  data:{countPresent:1},
-  dataType: 'json',
-  success:function(data){
-    $(".loader-div").hide(); 
-    const countPresent = data.countPresent;
-    if(countPresent){
-      $('#labelCareerPresent').hide();
-      $('#careerPresent').hide();
-    }
-  },error: function(xhr, status, error) {
-    modalErrorShow("The system encountered an error. Please contact support.");
-    $(".loader-div").hide();
-  }
-});
 
   getInfo();
   checkAlreadyEncode(); //check all already recorded  
@@ -615,6 +579,46 @@ $.ajax({ //work experience present checkbox hide when already encoded present wo
                 $(".loader-div").hide();
               }
             });
+            $(".loader-div").show();
+            $.ajax({ //set 3 entry in person references
+              url:"checkExist.php",
+              method:"POST",
+              data:{countReference:1},
+              dataType: 'json',
+              success:function(data){
+                $(".loader-div").hide(); 
+                const countReference = data.countRef;
+                if(countReference==3){
+                  $('#frmUserReferencesAdd').hide(); //hide insert form
+                  $('#refLimitInfo').show(); //show info
+                }else{
+                  $('#frmUserReferencesAdd').show(); //hide insert form
+                  $('#refLimitInfo').hide(); //show info
+                }
+              },error: function(xhr, status, error) {
+                modalErrorShow("The system encountered an error. Please contact support.");
+                $(".loader-div").hide();
+              }
+            });
+
+            $(".loader-div").show();
+            $.ajax({ //work experience present checkbox hide when already encoded present work
+              url:"checkExist.php",
+              method:"POST",
+              data:{countPresent:1},
+              dataType: 'json',
+              success:function(data){
+                $(".loader-div").hide(); 
+                const countPresent = data.countPresent;
+                if(countPresent){
+                  $('#labelCareerPresent').hide();
+                  $('#careerPresent').hide();
+                }
+              },error: function(xhr, status, error) {
+                modalErrorShow("The system encountered an error. Please contact support.");
+                $(".loader-div").hide();
+              }
+            });
 
       },error: function(xhr, status, error) {
         modalErrorShow("The system encountered an error. Please contact support.");
@@ -961,6 +965,9 @@ function resetFormBasicInfo(){
             $(".loader-div").hide();
           }
       });
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
       }
   });
 }
@@ -2346,7 +2353,7 @@ function UserReferencesAdd(formData){
     $.ajax({ //check Ref Number if existed 
       url:"checkExist.php",
       method:"POST",
-      data: {RefMobNumber:RefMobNumber},
+      data: {type:1,RefMobNumber:RefMobNumber},
       dataType: 'json',
       success:function(data){
         $(".loader-div").hide(); 
@@ -2368,6 +2375,7 @@ function UserReferencesAdd(formData){
               if(stat === "success"){
                 modalSuccessShow(msg,triggerTableReload,'tblReferences');
                 $('#frmUserReferencesAdd')[0].reset();
+                getInfo();
               } else {
                 modalErrorShow(msg);
               }
@@ -2406,6 +2414,158 @@ function btnReferencesUpdate(getRef){
         $(".loader-div").hide();
       }
 });
+}
+
+function UserReferencesUpdate(formData){
+  
+  $('#CheckUpdateReferencesName').html("");
+  $('#updateReferencesName').css('border-color','');
+  $('#CheckUpdateReferencesAddress').html("");
+  $('#updateReferencesAddress').css('border-color','');
+  $('#CheckUpdateReferencesMobile').html("");
+  $('#updateReferencesMobile').css('border-color','');
+  const UpdateRefTelNo = $('#updateReferencesMobile').val();
+  const UpdateRefName = $('#updateReferencesName').val();
+  const UpdateRefAddress = $('#updateReferencesAddress').val();
+  const RefID = $('#ReferencesID').val();
+  if(UpdateRefName.length<3){
+    $('#CheckUpdateReferencesName').html("Please input atleast 3 character").css('color', 'red');
+    $('#updateReferencesName').css('border-color','red');
+  }else if(UpdateRefAddress.length<3){
+    $('#CheckUpdateReferencesAddress').html("Please input atleast 3 character").css('color', 'red');;
+    $('#updateReferencesAddress').css('border-color','red');
+  }else if((UpdateRefTelNo.length != 11) || ((UpdateRefTelNo.slice(0, 2)) !== "09")){
+    $('#CheckUpdateReferencesMobile').html("The mobile number should adhere to the format starting with '09' and must consist of precisely 11 digits.").css('color', 'red');
+    $('#updateReferencesMobile').css('border-color','red');
+  }else{
+		$(".loader-div").show();
+    $.ajax({ //check Ref Number if existed 
+      url:"checkExist.php",
+      method:"POST",
+      data: {type:2,RefMobNumber:UpdateRefTelNo,RefID:RefID},
+      dataType: 'json',
+      success:function(data){
+        $(".loader-div").hide(); 
+        const countRefMobile = data.countRefMobile;
+        if (countRefMobile){
+          $('#CheckUpdateReferencesMobile').html("Oops! It looks like this mobile number has already been assigned to another person. Please double-check and update if necessary.").css('color', 'red');
+          $('#updateReferencesMobile').css('border-color','red');
+        }else{
+          $(".loader-div").show();
+            $.ajax({
+            url:"referencesUpdate.php",
+            method:"POST",
+            dataType: "json",
+            data:formData,
+            success:function(data){
+              $(".loader-div").hide(); 
+              $('#updateReferences').modal('hide');
+              const msg = data.msg;
+              const stat = data.status;
+                if(stat === "success"){
+                  modalSuccessShow(msg,triggerTableReload,'tblReferences');
+                  $('#frmUserReferencesAdd')[0].reset();
+                  getInfo();
+                } else {
+                  modalErrorShow(msg);
+                }
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            },
+            processData: false,
+            contentType: false
+            });
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
+    });
+  }
+
+}
+
+function btnTrainingViewUploaded(uploadedTrainingMOV){
+  $('#downloadDocs').attr('href','uploadedMOV/'+uploadedTrainingMOV)
+  $('#ViewVerifiedMOV').attr('src','uploadedMOV/'+uploadedTrainingMOV);
+  $('#ViewUploadedMOV').modal('show');
+}
+
+function UserGovernID(formData){
+  $(".loader-div").show();
+  $.ajax({ 
+    url:"checkExist.php",
+    method:"POST",
+    data:{governID:1},
+    dataType: 'json',
+    success:function(data){
+      $(".loader-div").hide(); 
+      const GovernID = data.Govern_ID;
+      if(GovernID){
+        $(".loader-div").show();
+        $.ajax({
+          url:"governIDUpdate.php",
+          method:"POST",
+          dataType: "json",
+          data:formData,
+          success:function(data){
+            $(".loader-div").hide();
+            const msg = data.msg;
+            const stat = data.status;
+            if(stat === "success"){ 
+              modalSuccessShow(msg,clearForm);
+              getInfo();
+            } else {
+              modalErrorShow(msg);
+            }
+          },error: function(xhr, status, error) {
+            modalErrorShow("The system encountered an error. Please contact support.");
+            $(".loader-div").hide();
+          },
+          processData: false,
+          contentType: false
+        });
+      }else{
+        $(".loader-div").show();
+        $.ajax({
+          url:"governIDAdd.php",
+          method:"POST",
+          dataType: "json",
+          data:formData,
+          success:function(data){
+            $(".loader-div").hide(); 
+            const msg = data.msg;
+            const stat = data.status;
+            if(stat === "success"){ 
+              modalSuccessShow(msg,clearForm);
+              getInfo();
+            } else {
+              modalErrorShow(msg);
+            }
+          },error: function(xhr, status, error) {
+            modalErrorShow("The system encountered an error. Please contact support.");
+            $(".loader-div").hide();
+          },
+          processData: false,
+          contentType: false
+        });
+      }
+    },error: function(xhr, status, error) {
+      modalErrorShow("The system encountered an error. Please contact support.");
+      $(".loader-div").hide();
+    }
+  });
+}
+
+function careerPresentCheck(){
+  var careerPresent = document.getElementById("careerPresent");
+  if (careerPresent.checked ==true){
+    $("#careerDateTo").val('');
+    $("#careerDateTo").attr('required', false);
+  }else{
+    $("#careerDateTo").attr('required', 'required');
+  }
 }
 
 $(document).on('change','#UpdateifGraduated', function(){
@@ -3000,69 +3160,129 @@ $(document).on('submit','#frmUserReferencesUpdate',function(event){
   modalConfirmShow('Would you like to confirm and save the changes now?',UserReferencesUpdate,PassData);
 });
 
-function UserReferencesUpdate(formData){
-  $('#CheckUpdateReferencesName').html("");
-  $('#updateReferencesName').css('border-color','');
-  $('#CheckUpdateReferencesAddress').html("");
-  $('#updateReferencesAddress').css('border-color','');
-  $('#CheckUpdateReferencesMobile').html("");
-  $('#updateReferencesMobile').css('border-color','');
-  const UpdateRefTelNo = $('#updateReferencesMobile').val();
-  const UpdateRefName = $('#updateReferencesName').val();
-  const UpdateRefAddress = $('#updateReferencesAddress').val();
-  if(UpdateRefName.length<3){
-    $('#CheckUpdateReferencesName').html("Please input atleast 3 character").css('color', 'red');
-    $('#updateReferencesName').css('border-color','red');
-  }else if(UpdateRefAddress.length<3){
-    $('#CheckUpdateReferencesAddress').html("Please input atleast 3 character").css('color', 'red');;
-    $('#updateReferencesAddress').css('border-color','red');
-  }else if((UpdateRefTelNo.length != 11) || ((UpdateRefTelNo.slice(0, 2)) !== "09")){
-    $('#CheckUpdateReferencesMobile').html("The mobile number should adhere to the format starting with '09' and must consist of precisely 11 digits.").css('color', 'red');
-    $('#updateReferencesMobile').css('border-color','red');
-  }else{
-		$(".loader-div").show();
-    $.ajax({ //check Ref Number if existed 
-      url:"checkExist.php",
-      method:"POST",
-      data: {RefMobNumber:UpdateRefTelNo},
-      dataType: 'json',
-      success:function(data){
-        $(".loader-div").hide(); 
-        const countRefMobile = data.countRefMobile;
-        if (countRefMobile){
-          $('#CheckUpdateReferencesMobile').html("Oops! It looks like this mobile number has already been assigned to another person. Please double-check and update if necessary.").css('color', 'red');
-          $('#updateReferencesMobile').css('border-color','red');
-        }else{
-          $(".loader-div").show();
-            $.ajax({
-            url:"referencesUpdate.php",
+$(document).on('click', '#btnUserReferencesDelete', function(){
+  const valueID = $(this).attr('data-valueID');
+  const valueURL = $(this).attr('data-valueURL');
+  var TableID = 'tblReferences';
+  var PassData = {
+    valueID:valueID,
+    valueURL:valueURL,
+    TableID:TableID,
+    ActionAfter1: getInfo,
+    ActionAfter2: ''
+  };
+  modalConfirmShow('Would you like to permanently delete this information? This action cannot be undone.',deleteData,PassData);
+});
+
+$(document).on('click','#btnUserTrainingViewUploaded',function(){
+  var uploadedTrainingMOV = $(this).attr('value');
+  btnTrainingViewUploaded(uploadedTrainingMOV)
+});
+
+$(document).on('submit','#frmUserGovernID',function(event){
+  event.preventDefault();
+  var PassData = new FormData(frmUserGovernID);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserGovernID,PassData);
+});
+
+$(document).on('click','#openChangePassword', function(){
+  $('#changePassword').modal('show');
+});
+
+$(document).on('keyup','#NewPassword',function(){
+  StrongPassword('NewPassword');
+});
+
+$(document).on('focus','#NewPassword',function(){
+  showMessage('message');
+});
+
+$(document).on('blur','#NewPassword',function(){
+  hideMessage('message');
+});
+
+$(document).on('submit','#frmUserProfileChangePass',function(event){
+  event.preventDefault();
+  var PassData = new FormData(frmUserProfileChangePass);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserProfileChangePass,PassData);
+});
+
+function UserProfileChangePass(formData){
+  const id = $('#sessionID').val().split("03-");
+  const username = id[1];
+  const password = $('#OldPassword').val();
+  const newPassword = $('#NewPassword').val();
+  const confirmPassword = $('#ConfirmPassword').val();
+
+  $("#checkNewPassword").html("").css('color', 'red');
+  $("#NewPassword").css('border-color', '');
+  $("#checkOldPassword").html("").css('color', 'red');
+  $("#OldPassword").css('border-color', '');
+  $("#checkmessage").html("").css('color', 'red');
+  $("#ConfirmPassword").css('border-color', '');
+
+  $(".loader-div").show();
+  $.ajax({
+    url:"checkpassword.php",
+    method:"POST",
+    data: {username:username,password:password},
+    dataType: 'json',
+    success:function(data){
+      $(".loader-div").hide(); 
+      const Pass = data.credentialsMatch; //2 is passed and 5 is wrong password
+      if(Pass == 2){
+        if(password == newPassword){
+          $("#checkNewPassword").html("Opps! You cannot use your previous password as the new password. Please choose a different password to ensure account security.").css('color', 'red');
+          $("#NewPassword").css('border-color', 'red');
+        }else if(confirmPassword != newPassword){
+          $("#checkmessage").html("Error: The confirmed password does not match the new password. Please re-enter both fields.").css('color', 'red');
+          $("#ConfirmPassword").css('border-color', '');
+        } else {
+		      $(".loader-div").show();
+          $.ajax({
+            url:"profileChangePassword.php",
             method:"POST",
             dataType: "json",
             data:formData,
             success:function(data){
               $(".loader-div").hide(); 
-              $('#updateReferences').modal('hide');
               const msg = data.msg;
               const stat = data.status;
-                if(stat === "success"){
-                  modalSuccessShow(msg,triggerTableReload,'tblReferences');
-                  $('#frmUserReferencesAdd')[0].reset();
-                } else {
-                  modalErrorShow(msg);
-                }
-              },
-              processData: false,
-              contentType: false
-            });
+              if(stat == "success"){
+                  $('#modalNotif-header').text('Great! Success.');
+                  $('#modalNotif-message').text(msg);
+                  $('#modalNotif').modal('show');
+              }else{
+                  $('#alertMessage').text(msg);
+                  $('#modalAlert').modal('show'); 
+              }
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            },
+            processData: false,
+            contentType: false
+          }); 
         }
-      },error: function(xhr, status, error) {
-        modalErrorShow("The system encountered an error. Please contact support.");
-        $(".loader-div").hide();
+      }else{
+        $("#checkOldPassword").html("The current password you entered does not match our records. Please verify and try again.").css('color', 'red');
+        $("#OldPassword").css('border-color', 'red');
       }
-    });
-  }
-
+    },error: function(xhr, status, error) {
+      modalErrorShow("The system encountered an error. Please contact support.");
+      $(".loader-div").hide();
+    }
+  });
 }
+
+
+
+
+
+
+
+
+
   
 
 
@@ -3178,94 +3398,6 @@ $("#form_other_info").on("submit",function(event){
 
 
 
-$("#frmProfileChangePass").on("submit", function(event){ //confirm the old password first
-  event.preventDefault();
-  const id = $('#sessionID').val().split("03-");
-  const username = id[1];
-  const password = $('#OldPassword').val();
-  const newPassword = $('#NewPassword').val();
-  const confirmPassword = $('#ConfirmPassword').val();
-  $("#checkNewPassword").html("").css('color', 'red');
-  $("#NewPassword").css('border-color', '');
-  $("#checkOldPassword").html("").css('color', 'red');
-  $("#OldPassword").css('border-color', '');
-  $("#checkmessage").html("").css('color', 'red');
-  $("#ConfirmPassword").css('border-color', '');
-  $.ajax({
-    url:"checkpassword.php",
-    method:"POST",
-    data: {username:username,password:password},
-    dataType: 'json',
-    success:function(data){
-      const Pass = data.credentialsMatch; //2 is passed and 5 is wrong password
-      if(Pass == 2){
-        if(password == newPassword){
-          $("#checkNewPassword").html("Opps! You cannot use your previous password as the new password. Please choose a different password to ensure account security.").css('color', 'red');
-          $("#NewPassword").css('border-color', 'red');
-        }else if(confirmPassword != newPassword){
-          $("#checkmessage").html("Error: The confirmed password does not match the new password. Please re-enter both fields.").css('color', 'red');
-          $("#ConfirmPassword").css('border-color', '');
-        }else{
-        var formData = new FormData(frmProfileChangePass);
-          $.ajax({
-            url:"profileChangePassword.php",
-            method:"POST",
-            dataType: "json",
-            data:formData,
-            success:function(data){
-              const msg = data.msg;
-              const stat = data.status;
-              if(stat == "success"){
-                  $('#modalNotif-header').text('Great! Success.');
-                  $('#modalNotif-message').text(msg);
-                  $('#modalNotif').modal('show');
-              }else{
-                  $('#alertMessage').text(msg);
-                  $('#modalAlert').modal('show'); 
-              }
-            },
-            processData: false,
-            contentType: false
-          }); 
-        }
-      }else{
-        $("#checkOldPassword").html("The current password you entered does not match our records. Please verify and try again.").css('color', 'red');
-        $("#OldPassword").css('border-color', 'red');
-      }
-    }
-  });
-});
-
-function careerPresentCheck(){
-  var careerPresent = document.getElementById("careerPresent");
-  if (careerPresent.checked ==true){
-    $("#careerDateTo").val('');
-    $("#careerDateTo").attr('required', false);
-  }else{
-    $("#careerDateTo").attr('required', 'required');
-  }
-}
-
-
-
-
-
-
-
-function btnTrainingViewUploaded(uploadedTrainingMOV){
-  $('#downloadDocs').attr('href','uploadedMOV/'+uploadedTrainingMOV)
-  $('#ViewVerifiedMOV').attr('src','uploadedMOV/'+uploadedTrainingMOV);
-  $('#ViewUploadedMOV').modal('show');
-}
-
-
-
-
-
-
-function openChangePassword(){
-  $('#changePassword').modal('show');
-}
 
 
 
@@ -3281,62 +3413,18 @@ function openChangePassword(){
 
 
 
-$("#frmGovernID").on("submit",function(event){
-  event.preventDefault();
-  $.ajax({ 
-    url:"checkExist.php",
-    method:"POST",
-    data:{governID:1},
-    dataType: 'json',
-    success:function(data){
-      const GovernID = data.Govern_ID;
-      if(GovernID){
-        var formData = new FormData(frmGovernID);
-        $.ajax({
-          url:"governIDUpdate.php",
-                  method:"POST",
-                  dataType: "json",
-                  data:formData,
-                  success:function(data){
-                    const msg = data.msg;
-                    const stat = data.status;
-                    if(stat == "success"){
-                        $('#modalNotif-header').text('Great! Success.');
-                        $('#modalNotif-message').text(msg);
-                         $('#modalNotif').modal('show');
-                          }
-                    else{
-                        $('#alertMessage').text(msg);
-                        $('#modalAlert').modal('show'); 
-                    }
-                  },
-                  processData: false,
-                  contentType: false
-        });
-      }else{
-        var formData = new FormData(frmGovernID);
-        $.ajax({
-          url:"governIDAdd.php",
-          method:"POST",
-          dataType: "json",
-          data:formData,
-          success:function(data){
-            const msg = data.msg;
-            const stat = data.status;
-            if(stat == "success"){
-                $('#modalNotif-header').text('Great! Success.');
-                $('#modalNotif-message').text(msg);
-                $('#modalNotif').modal('show');
-            }else{
-                $('#modalNotif-header').text('Oppss!');
-                $('#modalNotif-message').text(msg);
-                $('#modalNotif').modal('show'); 
-            }
-          },
-          processData: false,
-          contentType: false
-        });
-      }
-    }
-  });
-});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
