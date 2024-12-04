@@ -89,10 +89,12 @@ require_once('../includes/init.php');
                 required 
                 tabindex="2">
                 <span class="input-group-addon">
-                    <i class="fa fa-eye-slash toggle-password " 
-                    toggle = "#resetPassword"  
-                    id="CurrentTogglepassword">
-                    </i>
+                  <i 
+                  class="fa fa-eye-slash toggle-password" 
+                  data-target="#resetPassword" 
+                  role="button" 
+                  aria-label="Toggle password visibility">
+                  </i>
                 </span>
               </div>
               <small id='checkResetTempPassword'></small>
@@ -100,7 +102,7 @@ require_once('../includes/init.php');
               <div class="input-group has-feedback">
                 <input 
                 type="password" 
-                class="form-control" 
+                class="form-control password-field" 
                 name="resetNewPassword" 
                 id = "resetNewPassword" 
                 placeholder="New Password" 
@@ -108,15 +110,14 @@ require_once('../includes/init.php');
                 tabindex="2"
                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
                 title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" 
-                onkeyup="StrongPassword('resetNewPassword');"
-                onfocus="showMessage('message');"
-                onblur="hideMessage('message');"
                 >
                 <span class="input-group-addon">
-                    <i class="fa fa-eye-slash toggle-password " 
-                    toggle = "#resetNewPassword"  
-                    id="CurrentTogglepassword">
-                    </i>
+                  <i 
+                  class="fa fa-eye-slash toggle-password" 
+                  data-target="#resetNewPassword" 
+                  role="button" 
+                  aria-label="Toggle password visibility">
+                  </i>
                 </span>
               </div>
               <!--start dropdown message for strong password -->
@@ -135,22 +136,23 @@ require_once('../includes/init.php');
               <div class="input-group has-feedback">
                 <input 
                 type="password" 
-                class="form-control" 
+                class="form-control confirm-password-field" 
                 name="resetConfirmPassword" 
                 id = "resetConfirmPassword" 
                 placeholder="Confirm Password" 
                 required 
                 tabindex="2"
-                onkeyup="checkPasswordMatch()"
                 >
                 <span class="input-group-addon">
-                    <i class="fa fa-eye-slash toggle-password " 
-                    toggle = "#resetConfirmPassword"  
-                    id="CurrentTogglepassword">
-                    </i>
+                  <i 
+                  class="fa fa-eye-slash toggle-password" 
+                  data-target="#resetConfirmPassword" 
+                  role="button" 
+                  aria-label="Toggle password visibility">
+                  </i>
                 </span>
               </div>
-              <small id='CheckResetConfirmPassword'></small>
+              <small id='checkmessage'></small>
               <br>
               <div class="row">
                 <div class="col-xs-12">
@@ -167,19 +169,24 @@ require_once('../includes/init.php');
                   <div class="col-xs-12">
                         <button 
                         type="submit"
-                        id="btnReset" 
+                        id="btnSubmit" 
                         class="btn btn-primary  btn-block btn-flat" >
                             Update Password
                         </button>
                   </div>
               </div><br>
             </form>
-              <div class="row">
+            <div class="row">
                   <div class="col-12 text-center"> <!-- Updated column class and added center alignment -->
                     <label>
-                      <a href="../index.php" style="text-align:justify; display: inline-block;">
-                        Back to Login
-                      </a>
+                        <button 
+                            type="button" 
+                            name="btn_backLogin" 
+                            id="btn_backLogin" 
+                            class="btn btn-info btn-block btn-sm"
+                            onclick="window.location.href='../index.php'">
+                              Back to Login
+                        </button>
                     </label>
                   </div>
               </div>
@@ -195,22 +202,12 @@ require_once('../includes/init.php');
 <script src="../plugins/iCheck/icheck.min.js"></script>
 <script src="../genFunction.js?test=<?php echo time()?>"></script>
 <script src="resetScript.js?test=<?php echo time()?>"></script>
+<script src="../modalNotif.js?test=<?php echo time()?>"></script>
 <?php
 //include '../modal/registermodal.php';
 include '../modal/formModal.php';
+include '../modal/modalNotif.php';
 ?>
-<script>
-  sessionStorage.clear();
-  $(".toggle-password").click(function() {
-  $(this).toggleClass("fa-eye fa-eye-slash");
-  var input = $($(this).attr("toggle"));
-  if (input.attr("type") == "password") {
-    input.attr("type", "text");
-  } else {
-    input.attr("type", "password");
-  }
-});
 
-</script>
 </body>
 </html>

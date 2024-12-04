@@ -73,3 +73,32 @@ function modalErrorShow(msg){
       });
     $('#modalDynamicConfirm').modal('show');
   }
+  
+  function modalConfirmLogoutShow(msg,StayLoggedIn,Relogin){
+    $('#modalDynamicConfirmContent').attr('class','modal-contentsuccess');
+    $('#modalDynamicConfirmHeader').attr('class','modal-headersuccess');
+    $('#modalDynamicConfirmTitle').text("Great! Confirmation");
+    $('#modalDynamicConfirmMessage').text(msg);
+    $('#modalDynamicConfirmBody').attr('class','modal-bodysuccess');
+    $('#modalDynamicConfirmIcon').attr('class','glyphicon glyphicon-question-sign s_icon');
+    $('#modalDynamicConfirmFooter').attr('class','modal-footersuccess');
+    $('#modalDynamicConfirmButtonYes').attr('class','btn btn-modalsuccess btn-sm');
+    $('#modalDynamicConfirmButtonNo').attr('class','btn btn-modalNo btn-sm');
+    $('#modalDynamicConfirmButtonYes').text('Stay logged in');
+    $('#modalDynamicConfirmButtonNo').text('Re-login account');
+    staticConfirmModal();
+      // Remove previous event listeners (to prevent stacking)
+      $('#modalDynamicConfirmButtonYes').off('click');
+      $('#modalDynamicConfirmButtonNo').off('click');
+  
+      // Attach new event listeners
+      $('#modalDynamicConfirmButtonYes').on('click', function () {
+        StayLoggedIn(); // Call the Refresh function
+          $('#modalDynamicConfirm').modal('hide'); // Close the modal
+      });
+      $('#modalDynamicConfirmButtonNo').on('click', function () {
+        Relogin(); // Call the Logout function
+          $('#modalDynamicConfirm').modal('hide'); // Close the modal
+      });
+    $('#modalDynamicConfirm').modal('show');
+  }

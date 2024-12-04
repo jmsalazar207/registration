@@ -3733,7 +3733,6 @@
                                         <input type="hidden"
                                         name="sessionID"
                                         id="sessionID"
-                                        value="<?=$_SESSION['userID']?>";
                                         >
                                             <input 
                                                 type="password" 

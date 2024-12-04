@@ -159,6 +159,11 @@ function refreshPage() {
   location.reload(); // Reloads the current page
 }
 
+function logout() {
+  window.location.href = "includes/logout.php"; 
+}
+
+
 function deleteData(PassData){ //dynamic delete details
   var DeleteURL = PassData.valueURL;
   var DeleteID = PassData.valueID;

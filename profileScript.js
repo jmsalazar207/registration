@@ -192,6 +192,8 @@ $(function(){
           const mname = data.mname;
           const extname = data.ename;
           var sex = data.sex;
+          var splitID = empno.split("03-");
+          $('#sessionID').val(splitID[1]);
           if(sex > 0){
             sex = 'FEMALE'
           }else{
@@ -2568,6 +2570,101 @@ function careerPresentCheck(){
   }
 }
 
+function UserProfileChangePass(formData){
+  const username = $('#sessionID').val();
+  const password = $('#OldPassword').val(); 
+  const newPassword = $('#NewPassword').val();
+  const confirmPassword = $('#ConfirmPassword').val();
+
+  $("#checkNewPassword").html("").css('color', 'red');
+  $("#NewPassword").css('border-color', '');
+  $("#checkOldPassword").html("").css('color', 'red');
+  $("#OldPassword").css('border-color', '');
+  $("#checkmessage").html("").css('color', 'red');
+  $("#ConfirmPassword").css('border-color', '');
+
+  $(".loader-div").show();
+  $.ajax({
+    url:"checkpassword.php",
+    method:"POST",
+    data: {username:username,password:password},
+    dataType: 'json',
+    success:function(data){
+      $(".loader-div").hide(); 
+      const Pass = data.credentialsMatch; //2 is passed and 5 is wrong password
+      if(Pass == 2){
+        if(password == newPassword){
+          $("#checkNewPassword").html("Opps! You cannot use your previous password as the new password. Please choose a different password to ensure account security.").css('color', 'red');
+          $("#NewPassword").css('border-color', 'red');
+        }else if(confirmPassword != newPassword){
+          $("#checkmessage").html("Error: The confirmed password does not match the new password. Please re-enter both fields.").css('color', 'red');
+          $("#ConfirmPassword").css('border-color', '');
+        } else {
+		      $(".loader-div").show();
+          $.ajax({
+            url:"profileChangePassword.php",
+            method:"POST",
+            dataType: "json",
+            data:formData,
+            success:function(data){
+              $(".loader-div").hide(); 
+              const msg = data.msg;
+              const stat = data.status;
+              if(stat === "success"){ 
+                modalConfirmLogoutShow(msg,refreshPage,logout)
+              } else {
+                modalErrorShow(msg);
+              }
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            },
+            processData: false,
+            contentType: false
+          }); 
+        }
+      }else{
+        $("#checkOldPassword").html("The current password you entered does not match our records. Please verify and try again.").css('color', 'red');
+        $("#OldPassword").css('border-color', 'red');
+      }
+    },error: function(xhr, status, error) {
+      modalErrorShow("The system encountered an error. Please contact support.");
+      $(".loader-div").hide();
+    }
+  });
+}
+
+function form_other_info(formData){
+  $(".loader-div").show();
+  $.ajax({
+    url:"otherInfo2_action.php",
+            method:"POST",
+            dataType: "json",
+            data:formData,
+            success:function(data){
+              $(".loader-div").hide(); 
+              const msg = data.msg;
+              const stat = data.status;
+              if(stat === "success"){
+                modalSuccessShow(msg,resetFormOtherInfo2,'');
+              } else {
+                modalErrorShow(msg);
+              }
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            },
+            processData: false,
+            contentType: false
+
+  });
+}
+
+function resetFormOtherInfo2(){
+  $('#User_form_other_info')[0].reset();
+  getInfo();
+}
+
 $(document).on('change','#UpdateifGraduated', function(){
   if ($(this).is(':checked')) {
     $("#lblUpdateacadYearGraduated").attr('class','col-sm-12 requiredField');
@@ -3207,224 +3304,224 @@ $(document).on('submit','#frmUserProfileChangePass',function(event){
   modalConfirmShow('Would you like to confirm and save the changes now?',UserProfileChangePass,PassData);
 });
 
-function UserProfileChangePass(formData){
-  const id = $('#sessionID').val().split("03-");
-  const username = id[1];
-  const password = $('#OldPassword').val();
-  const newPassword = $('#NewPassword').val();
-  const confirmPassword = $('#ConfirmPassword').val();
+$(document).on('change', 'input[name="q1b"]', function() {
+  // Get the selected radio button's value using jQuery
+  var selectedValue = $('input[name="q1b"]:checked').val();
 
-  $("#checkNewPassword").html("").css('color', 'red');
-  $("#NewPassword").css('border-color', '');
-  $("#checkOldPassword").html("").css('color', 'red');
-  $("#OldPassword").css('border-color', '');
-  $("#checkmessage").html("").css('color', 'red');
-  $("#ConfirmPassword").css('border-color', '');
-
-  $(".loader-div").show();
-  $.ajax({
-    url:"checkpassword.php",
-    method:"POST",
-    data: {username:username,password:password},
-    dataType: 'json',
-    success:function(data){
-      $(".loader-div").hide(); 
-      const Pass = data.credentialsMatch; //2 is passed and 5 is wrong password
-      if(Pass == 2){
-        if(password == newPassword){
-          $("#checkNewPassword").html("Opps! You cannot use your previous password as the new password. Please choose a different password to ensure account security.").css('color', 'red');
-          $("#NewPassword").css('border-color', 'red');
-        }else if(confirmPassword != newPassword){
-          $("#checkmessage").html("Error: The confirmed password does not match the new password. Please re-enter both fields.").css('color', 'red');
-          $("#ConfirmPassword").css('border-color', '');
-        } else {
-		      $(".loader-div").show();
-          $.ajax({
-            url:"profileChangePassword.php",
-            method:"POST",
-            dataType: "json",
-            data:formData,
-            success:function(data){
-              $(".loader-div").hide(); 
-              const msg = data.msg;
-              const stat = data.status;
-              if(stat == "success"){
-                  $('#modalNotif-header').text('Great! Success.');
-                  $('#modalNotif-message').text(msg);
-                  $('#modalNotif').modal('show');
-              }else{
-                  $('#alertMessage').text(msg);
-                  $('#modalAlert').modal('show'); 
-              }
-            },error: function(xhr, status, error) {
-              modalErrorShow("The system encountered an error. Please contact support.");
-              $(".loader-div").hide();
-            },
-            processData: false,
-            contentType: false
-          }); 
-        }
-      }else{
-        $("#checkOldPassword").html("The current password you entered does not match our records. Please verify and try again.").css('color', 'red');
-        $("#OldPassword").css('border-color', 'red');
+  // Check if a radio button is selected
+  if (selectedValue) {
+    $('#q1b_details').val('');
+      // Enable or disable the #q1b_details field based on selected value
+      if (selectedValue === 'yes') {
+        $('#q1b_details').prop('readonly', false);  // Remove readonly
+        $('#q1b_details').prop('required', true);   // Make required
+      } else {
+        $('#q1b_details').prop('readonly', true);   // Set readonly
+        $('#q1b_details').prop('required', false);  // Remove required
       }
-    },error: function(xhr, status, error) {
-      modalErrorShow("The system encountered an error. Please contact support.");
-      $(".loader-div").hide();
-    }
-  });
-}
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// event.preventDefault();
-// var PassData = new FormData(frmOtherInfoUpdate);
-// modalConfirmShow('Would you like to confirm and save the changes now?',UserOtherBasicInfoUpdate,PassData);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-$("#form_other_info").on("submit",function(event){
-  event.preventDefault();
-  var formData = new FormData(form_other_info);
-  $.ajax({
-    url:"otherInfo2_action.php",
-            method:"POST",
-            dataType: "json",
-            data:formData,
-            success:function(data){
-              const msg = data.msg;
-              const stat = data.status;
-              if(stat == "success"){
-                  $('#modalNotif-header').text('Great! Success.');
-                  $('#modalNotif-message').text(msg);
-                   $('#modalNotif').modal('show');
-                    }
-              else{
-                  $('#alertMessage').text(msg);
-                  $('#modalAlert').modal('show'); 
-              }
-            },
-            processData: false,
-            contentType: false
-
-  });
+  } else {
+      alert("No option selected");
+  }
 });
 
+$(document).on('change', 'input[name="q2a"]', function() {
+  // Get the selected radio button's value using jQuery
+  var selectedValue = $('input[name="q2a"]:checked').val();
 
+  // Check if a radio button is selected
+  if (selectedValue) {
+    $('#q2a_details').val('');
+      // Enable or disable the #q1b_details field based on selected value
+      if (selectedValue === 'yes') {
+        $('#q2a_details').prop('readonly', false);  // Remove readonly
+        $('#q2a_details').prop('required', true);   // Make required
+      } else {
+        $('#q2a_details').prop('readonly', true);   // Set readonly
+        $('#q2a_details').prop('required', false);  // Remove required
+      }
+  } else {
+      alert("No option selected");
+  }
+});
 
+$(document).on('change', 'input[name="q2b"]', function() {
+  // Get the selected radio button's value using jQuery
+  var selectedValue = $('input[name="q2b"]:checked').val();
+  $('#q2b_datefiled').val('');
+  $('#q2_status').val('');
+  // Check if a radio button is selected
+  if (selectedValue) {
+      // Enable or disable the #q1b_details field based on selected value
+      if (selectedValue === 'yes') {
+        $('#q2b_datefiled').prop('readonly', false);  // Remove readonly
+        $('#q2b_datefiled').prop('required', true);   // Make required
+        $('#q2_status').prop('readonly', false);  // Remove readonly
+        $('#q2_status').prop('required', true);   // Make required
+      } else {
+        $('#q2b_datefiled').prop('readonly', true);   // Set readonly
+        $('#q2b_datefiled').prop('required', false);  // Remove required
+        $('#q2_status').prop('readonly', true);   // Set readonly
+        $('#q2_status').prop('required', false);  // Remove required
+      }
+  } else {
+      alert("No option selected");
+  }
+});
 
+$(document).on('change', 'input[name="q3"]', function() {
+  // Get the selected radio button's value using jQuery
+  var selectedValue = $('input[name="q3"]:checked').val(); 
+  $('#q3_details').val('');
+  // Check if a radio button is selected
+  if (selectedValue) {
+      // Enable or disable the #q1b_details field based on selected value
+      if (selectedValue === 'yes') {
+        $('#q3_details').prop('readonly', false);  // Remove readonly
+        $('#q3_details').prop('required', true);   // Make required
+      } else {
+        $('#q3_details').prop('readonly', true);   // Set readonly
+        $('#q3_details').prop('required', false);  // Remove required
+      }
+  } else {
+      alert("No option selected");
+  }
+});
 
+$(document).on('change', 'input[name="q4"]', function() {
+  // Get the selected radio button's value using jQuery
+  var selectedValue = $('input[name="q4"]:checked').val(); 
+  $('#q4_details').val('');
+  // Check if a radio button is selected
+  if (selectedValue) {
+      // Enable or disable the #q1b_details field based on selected value
+      if (selectedValue === 'yes') {
+        $('#q4_details').prop('readonly', false);  // Remove readonly
+        $('#q4_details').prop('required', true);   // Make required
+      } else {
+        $('#q4_details').prop('readonly', true);   // Set readonly
+        $('#q4_details').prop('required', false);  // Remove required
+      }
+  } else {
+      alert("No option selected");
+  }
+});
 
+$(document).on('change', 'input[name="q5a"]', function() {
+  // Get the selected radio button's value using jQuery
+  var selectedValue = $('input[name="q5a"]:checked').val(); 
+  $('#q5a_details').val('');
+  // Check if a radio button is selected
+  if (selectedValue) {
+      // Enable or disable the #q1b_details field based on selected value
+      if (selectedValue === 'yes') {
+        $('#q5a_details').prop('readonly', false);  // Remove readonly
+        $('#q5a_details').prop('required', true);   // Make required
+      } else {
+        $('#q5a_details').prop('readonly', true);   // Set readonly
+        $('#q5a_details').prop('required', false);  // Remove required
+      }
+  } else {
+      alert("No option selected");
+  }
+});
 
+$(document).on('change', 'input[name="q5b"]', function() {
+  // Get the selected radio button's value using jQuery
+  var selectedValue = $('input[name="q5b"]:checked').val(); 
+  $('#q5b_details').val('');
+  // Check if a radio button is selected
+  if (selectedValue) {
+      // Enable or disable the #q1b_details field based on selected value
+      if (selectedValue === 'yes') {
+        $('#q5b_details').prop('readonly', false);  // Remove readonly
+        $('#q5b_details').prop('required', true);   // Make required
+      } else {
+        $('#q5b_details').prop('readonly', true);   // Set readonly
+        $('#q5b_details').prop('required', false);  // Remove required
+      }
+  } else {
+      alert("No option selected");
+  }
+});
 
+$(document).on('change', 'input[name="q6"]', function() {
+  // Get the selected radio button's value using jQuery
+  var selectedValue = $('input[name="q6"]:checked').val(); 
+  $('#q6_details').val('');
+  // Check if a radio button is selected
+  if (selectedValue) {
+      // Enable or disable the #q1b_details field based on selected value
+      if (selectedValue === 'yes') {
+        $('#q6_details').prop('readonly', false);  // Remove readonly
+        $('#q6_details').prop('required', true);   // Make required
+      } else {
+        $('#q6_details').prop('readonly', true);   // Set readonly
+        $('#q6_details').prop('required', false);  // Remove required
+      }
+  } else {
+      alert("No option selected");
+  }
+});
 
+$(document).on('change', 'input[name="q7a"]', function() {
+  // Get the selected radio button's value using jQuery
+  var selectedValue = $('input[name="q7a"]:checked').val(); 
+  $('#q7a_details').val('');
+  // Check if a radio button is selected
+  if (selectedValue) {
+      // Enable or disable the #q1b_details field based on selected value
+      if (selectedValue === 'yes') {
+        $('#q7a_details').prop('readonly', false);  // Remove readonly
+        $('#q7a_details').prop('required', true);   // Make required
+      } else {
+        $('#q7a_details').prop('readonly', true);   // Set readonly
+        $('#q7a_details').prop('required', false);  // Remove required
+      }
+  } else {
+      alert("No option selected");
+  }
+});
 
+$(document).on('change', 'input[name="q7b"]', function() {
+  // Get the selected radio button's value using jQuery
+  var selectedValue = $('input[name="q7b"]:checked').val(); 
+  $('#q7b_details').val('');
+  // Check if a radio button is selected
+  if (selectedValue) {
+      // Enable or disable the #q1b_details field based on selected value
+      if (selectedValue === 'yes') {
+        $('#q7b_details').prop('readonly', false);  // Remove readonly
+        $('#q7b_details').prop('required', true);   // Make required
+      } else {
+        $('#q7b_details').prop('readonly', true);   // Set readonly
+        $('#q7b_details').prop('required', false);  // Remove required
+      }
+  } else {
+      alert("No option selected");
+  }
+});
 
+$(document).on('change', 'input[name="q7c"]', function() {
+  // Get the selected radio button's value using jQuery
+  var selectedValue = $('input[name="q7c"]:checked').val(); 
+  $('#q7c_details').val('');
+  // Check if a radio button is selected
+  if (selectedValue) {
+      // Enable or disable the #q1b_details field based on selected value
+      if (selectedValue === 'yes') {
+        $('#q7c_details').prop('readonly', false);  // Remove readonly
+        $('#q7c_details').prop('required', true);   // Make required
+      } else {
+        $('#q7c_details').prop('readonly', true);   // Set readonly
+        $('#q7c_details').prop('required', false);  // Remove required
+      }
+  } else {
+      alert("No option selected");
+  }
+});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+$(document).on('submit','#User_form_other_info',function(event){
+  event.preventDefault();
+  var PassData = new FormData(User_form_other_info);
+  modalConfirmShow('Would you like to confirm and save the changes now?',form_other_info,PassData);
+});

@@ -118,7 +118,7 @@ require_once('includes/init.php');
               <div class="input-group has-feedback">
                 <input 
                 type="password" 
-                class="form-control" 
+                class="form-control password-field" 
                 name="resetNewPassword" 
                 id = "resetNewPassword" 
                 placeholder="New Password" 
@@ -126,15 +126,14 @@ require_once('includes/init.php');
                 tabindex="2"
                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
                 title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" 
-                onkeyup="StrongPassword()"
-                onfocus="showMessage()"
-                onblur="hideMessage()"
                 >
                 <span class="input-group-addon">
-                    <i class="fa fa-eye-slash toggle-password " 
-                    toggle = "#resetNewPassword"  
-                    id="CurrentTogglepassword">
-                    </i>
+                <i 
+                class="fa fa-eye-slash toggle-password" 
+                data-target="#resetNewPassword" 
+                role="button" 
+                aria-label="Toggle password visibility">
+                </i>
                 </span>
               </div>
               <!--start dropdown message for strong password -->
@@ -153,19 +152,20 @@ require_once('includes/init.php');
               <div class="input-group has-feedback">
                 <input 
                 type="password" 
-                class="form-control" 
+                class="form-control confirm-password-field" 
                 name="resetConfirmPassword" 
                 id = "resetConfirmPassword" 
                 placeholder="Confirm Password" 
                 required 
                 tabindex="2"
-                onkeyup="checkPasswordMatch()"
                 >
                 <span class="input-group-addon">
-                    <i class="fa fa-eye-slash toggle-password " 
-                    toggle = "#resetConfirmPassword"  
-                    id="CurrentTogglepassword">
-                    </i>
+                <i 
+                class="fa fa-eye-slash toggle-password" 
+                data-target="#resetConfirmPassword" 
+                role="button" 
+                aria-label="Toggle password visibility">
+                </i>
                 </span>
               </div>
               <small id='CheckResetConfirmPassword'></small>

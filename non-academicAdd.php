@@ -11,19 +11,19 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
     $dataReturn['msg'] = "Session has expired. Please relogin your account.";
     echo json_encode($dataReturn);
 }else{ 
-    
-                    $id = $_SESSION['userID'];
-                    $nonAcademicAdd['empno'] = $id;
-                    $nonAcademicAdd['non_academic_title'] =sanitize(strtoupper($_POST['nonAcademicTitle']));
-                    $AddNonAcademicQuery = $dbConn->insert('lib_non_academic',$nonAcademicAdd);
 
-                    if($AddNonAcademicQuery){
-                        $dataReturn['status'] = "success";
-                        $dataReturn['msg'] = "Special Skills Details successfully added";
-                        echo json_encode($dataReturn);
-                    }else {
-                        $dataReturn['status'] = "failed";
-                        $dataReturn['msg'] = "Oops! Something went wrong. Please try again later.";
-                        echo json_encode($dataReturn);
-                    }
+    $id = $_SESSION['userID'];
+    $nonAcademicAdd['empno'] = $id;
+    $nonAcademicAdd['non_academic_title'] =sanitize(strtoupper($_POST['nonAcademicTitle']));
+    $AddNonAcademicQuery = $dbConn->insert('lib_non_academic',$nonAcademicAdd);
+
+    if($AddNonAcademicQuery){
+        $dataReturn['status'] = "success";
+        $dataReturn['msg'] = "Non-Academic Distinctions Details successfully added";
+        echo json_encode($dataReturn);
+    }else {
+        $dataReturn['status'] = "failed";
+        $dataReturn['msg'] = "Oops! Something went wrong. Please try again later.";
+        echo json_encode($dataReturn);
+    }
 }

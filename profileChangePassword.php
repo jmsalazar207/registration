@@ -10,20 +10,20 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
     $dataReturn['status'] = "failed";
     $dataReturn['msg'] = "Session has expired. Please relogin your account.";
     echo json_encode($dataReturn);
-}else{              $id = $_SESSION['userID'];
-                    $profileUpdatePassword['password'] = md5($_POST['ConfirmPassword']);
-                    $profileUpdatePassword['last_update'] = $today;
-    
-                    $profileUpdatePasswordQuery = $dbConn->update('userprofile', 'empno', $id, $profileUpdatePassword);
-                    // echo $adminUpdateQuery;
+}else{              
+    $id = $_SESSION['userID'];
+    $profileUpdatePassword['password'] = md5($_POST['ConfirmPassword']);
+    $profileUpdatePassword['last_update'] = $today;
 
-                    if($profileUpdatePasswordQuery){
-                        $dataReturn['status'] = "success";
-                        $dataReturn['msg'] = "Password Changed!";
-                        echo json_encode($dataReturn);
-                    }else {
-                        $dataReturn['status'] = "failed";
-                        $dataReturn['msg'] = "Oops! Something went wrong. Please try again later.";
-                        echo json_encode($dataReturn);
-                    }
+    $profileUpdatePasswordQuery = $dbConn->update('userprofile', 'empno', $id, $profileUpdatePassword);
+
+    if($profileUpdatePasswordQuery){
+        $dataReturn['status'] = "success";
+        $dataReturn['msg'] = "Your password has been successfully updated. Would you like to stay logged in or log out and sign in again with your new password?";
+        echo json_encode($dataReturn);
+    }else {
+        $dataReturn['status'] = "failed";
+        $dataReturn['msg'] = "Oops! Something went wrong. Please try again later.";
+        echo json_encode($dataReturn);
+    }
 }

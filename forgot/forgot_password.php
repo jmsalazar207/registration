@@ -91,16 +91,27 @@ require_once('../includes/init.php');
                   <div class="row">
                       <div class="col-xs-12">
                       <!-- <button type="submit" class="form-control btn btn-info" id="btn_search" name="btn_search"> -->
-                            <button type="submit" name="btn_submit" id="btn_submit" class="btn btn-primary  btn-block btn-sm" >SUBMIT</button>
+                            <button 
+                            type="submit" 
+                            name="btn_submit" 
+                            id="btn_submit" 
+                            class="btn btn-primary  btn-block btn-sm" >
+                              SUBMIT
+                            </button>
                       </div>
                   </div><br>
               </form>
                 <div class="row">
                   <div class="col-12 text-center"> <!-- Updated column class and added center alignment -->
                     <label>
-                      <a href="../index.php" style="text-align:justify; display: inline-block;">
-                        Back to Login
-                      </a>
+                        <button 
+                            type="button" 
+                            name="btn_backLogin" 
+                            id="btn_backLogin" 
+                            class="btn btn-info btn-block btn-sm"
+                            onclick="window.location.href='../index.php'">
+                              Back to Login
+                        </button>
                     </label>
                   </div>
               </div>
@@ -116,10 +127,18 @@ require_once('../includes/init.php');
 <!-- iCheck -->
 <script src="../plugins/iCheck/icheck.min.js"></script>
 <script src="../genFunction.js?test=<?php echo time()?>"></script>
+<script src="../modalNotif.js?test=<?php echo time()?>"></script>
 <script src="resetScript.js?test=<?php echo time()?>"></script>
 <?php
 //include '../modal/registermodal.php';
 include '../modal/formModal.php';
+include '../modal/modalNotif.php';
 ?>
 </body>
 </html>
+<script src="genFunction.js?test=<?php echo time()?>"></script>
+<script src="pluginscript.js?test=<?php echo time()?>"></script>
+<script src="modalNotif.js?test=<?php echo time()?>"></script>
+<?php
+
+?>
