@@ -35,11 +35,8 @@ require_once('includes/init.php');
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
-
-       
   <!-- Google Font -->
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <link rel="stylesheet" href="includes/add.css?test=<?php echo time()?>">
 </head>
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
     <div class="wrapper">

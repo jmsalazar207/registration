@@ -749,7 +749,9 @@ $(function(){
     const FBSname = $("#updateFBSname").val();
     const FBFname = $("#updateFBFname").val();
     const FBMname = $("#updateFBMname").val();
+    const FBExtname = $("#updateFBExtName").val();
     const FBbirthday = $("#updateFBDOB").val();
+    const FBUpdateID = $("#FBid").val();
     var selectRelation = $("#updaterelation").val();
     var age = computeBday(FBbirthday);
   
@@ -760,55 +762,72 @@ $(function(){
     $("#CheckupdateFBMname").html("");
     $("#updateFBMname").css('border-color', '');
     $("#updateCheckFBDOB").html("");
-  
-    if(selectRelation !=2 && age < 18){
-      $("#updateCheckFBDOB").html("Please furnish a valid date of birth ensuring the individual is aged 18 years or older.").css('color', 'red');
-      validatePass = 0;
-      // $("#updateFB").modal({"backdrop": "static"});
-    }else if(FBSname.length<2){
-      $("#CheckupdateFBSname").html("Please enter first name atleast 2 characters.").css('color', 'red');
-      $("#updateFBSname").css('border-color', 'red');
-      $("#updateFBSname").focus();
-      // $("#updateFB").modal({"backdrop": "static"});
-    }else if(FBFname.length <2){
-      $("#CheckupdateFBFname").html("Please enter last name atleast 2 characters.").css('color', 'red');
-      $("#updateFBFname").css('border-color', 'red');
-      $("#updateFBFname").focus();
-      // $("#updateFB").modal({"backdrop": "static"});
-    }else if(FBMname.length !='' && FBMname.length <2 ){
-      $("#CheckupdateFBMname").html("Please enter middle name atleast 2 characters.").css('color', 'red');
-      $("#updateFBMname").css('border-color', 'red');
-      $("#updateFBMname").focus();
-      // $("#updateFB").modal({"backdrop": "static"});
-    } else {
-      $(".loader-div").show();
-      $.ajax({
-        url:"familyBackgroundUpdate.php",
-        method:"POST",
-        dataType: "json",
-        data:formData,
-        success:function(data){
-          $(".loader-div").hide(); 
-          $('#updateFB').modal('hide');
-          const msg = data.msg;
-          const stat = data.status;
-          if(stat === "success"){ 
-            // /$('#updateFB').modal('hide');
-            modalSuccessShow(msg,triggerTableReload,'tblFBMember');
-            resetFormFamilyBackground();
-            checkAlreadyEncode();
+    $.ajax({ //check Ref Number if existed 
+      url:"checkExist.php",
+      method:"POST",
+      data: {checkFamilyBackground:2,FBSname:FBSname,FBFname:FBFname,FBMname:FBMname,FBExtname:FBExtname,FBUpdateID:FBUpdateID},
+      dataType: 'json',
+      success:function(data){
+        $(".loader-div").hide(); 
+        const countEntry = data.FamilyBackground;
+        if (countEntry==1){
+        modalErrorShow('Entry already exists! Ensure the details are unique before proceeding.');
+        } else {
+          if(selectRelation !=2 && age < 18){
+            $("#updateCheckFBDOB").html("Please furnish a valid date of birth ensuring the individual is aged 18 years or older.").css('color', 'red');
+            validatePass = 0;
+            // $("#updateFB").modal({"backdrop": "static"});
+          }else if(FBSname.length<2){
+            $("#CheckupdateFBSname").html("Please enter first name atleast 2 characters.").css('color', 'red');
+            $("#updateFBSname").css('border-color', 'red');
+            $("#updateFBSname").focus();
+            // $("#updateFB").modal({"backdrop": "static"});
+          }else if(FBFname.length <2){
+            $("#CheckupdateFBFname").html("Please enter last name atleast 2 characters.").css('color', 'red');
+            $("#updateFBFname").css('border-color', 'red');
+            $("#updateFBFname").focus();
+            // $("#updateFB").modal({"backdrop": "static"});
+          }else if(FBMname.length !='' && FBMname.length <2 ){
+            $("#CheckupdateFBMname").html("Please enter middle name atleast 2 characters.").css('color', 'red');
+            $("#updateFBMname").css('border-color', 'red');
+            $("#updateFBMname").focus();
+            // $("#updateFB").modal({"backdrop": "static"});
           } else {
-            modalErrorShow(msg);
+            $(".loader-div").show();
+            $.ajax({
+              url:"familyBackgroundUpdate.php",
+              method:"POST",
+              dataType: "json",
+              data:formData,
+              success:function(data){
+                $(".loader-div").hide(); 
+                $('#updateFB').modal('hide');
+                const msg = data.msg;
+                const stat = data.status;
+                if(stat === "success"){ 
+                  // /$('#updateFB').modal('hide');
+                  modalSuccessShow(msg,triggerTableReload,'tblFBMember');
+                  resetFormFamilyBackground();
+                  checkAlreadyEncode();
+                } else {
+                  modalErrorShow(msg);
+                }
+              },error: function(xhr, status, error) {
+                modalErrorShow("The system encountered an error. Please contact support.");
+                $(".loader-div").hide();
+              },
+              processData: false,
+              contentType: false
+        
+            });
           }
-        },error: function(xhr, status, error) {
-          modalErrorShow("The system encountered an error. Please contact support.");
-          $(".loader-div").hide();
-        },
-        processData: false,
-        contentType: false
-  
-      });
-    }
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
+    });
+
   }
 
 function checkAlreadyEncode(){
@@ -1262,6 +1281,7 @@ function UserFamilyBackgroundAdd(formData){
   const FBSname = $("#FBSname").val();
   const FBFname = $("#FBFname").val();
   const FBMname = $("#FBMname").val();
+  const FBExtname = $("#FBExtName").val();
   const FBbirthday = $("#FBDOB").val();
   var selectRelation = $("#relation").val();
   var age = computeBday(FBbirthday);
@@ -1273,49 +1293,65 @@ function UserFamilyBackgroundAdd(formData){
   $("#CheckFBMname").html("");
   $("#FBMname").css('border-color', '');
   $("#CheckFBDOB").html("");
-
-  if(selectRelation !=2 && age <18){
-    $("#CheckFBDOB").html("Please furnish a valid date of birth ensuring the individual is aged 18 years or older.").css('color', 'red');
-    validatePass = 0;
-  }else if(FBSname.length<2){
-    $("#CheckFBSname").html("Please enter last name atleast 2 characters.").css('color', 'red');
-    $("#FBSname").css('border-color', 'red');
-    $("#FBSname").focus();
-  }else if(FBFname.length <2){
-    $("#CheckFBFname").html("Please enter first name atleast 2 characters.").css('color', 'red');
-    $("#FBFname").css('border-color', 'red');
-    $("#FBFname").focus();
-  }else if(FBMname.length !='' && FBMname.length <2 ){
-    $("#CheckFBMname").html("Please enter middle name atleast 2 characters.").css('color', 'red');
-    $("#FBMname").css('border-color', 'red');
-    $("#FBMname").focus();
-  } else {
-    $(".loader-div").show();
-    $.ajax({
-      url:"familyBackgroundAdd.php",
-      method:"POST",
-      dataType: "json",
-      data:formData,
-      success:function(data){
-        $(".loader-div").hide(); 
-        const msg = data.msg;
-        const stat = data.status;
-        if(stat === "success"){ 
-          modalSuccessShow(msg,triggerTableReload,'tblFBMember');
-          resetFormFamilyBackground();
-          checkAlreadyEncode();
+  $.ajax({ //check Ref Number if existed 
+    url:"checkExist.php",
+    method:"POST",
+    data: {checkFamilyBackground:1,FBSname:FBSname,FBFname:FBFname,FBMname:FBMname,FBExtname:FBExtname,},
+    dataType: 'json',
+    success:function(data){
+      $(".loader-div").hide(); 
+      const countEntry = data.FamilyBackground;
+      if (countEntry==1){
+      modalErrorShow('Entry already exists! Ensure the details are unique before proceeding.');
+      } else {
+        if(selectRelation !=2 && age <18){
+          $("#CheckFBDOB").html("Please furnish a valid date of birth ensuring the individual is aged 18 years or older.").css('color', 'red');
+          validatePass = 0;
+        }else if(FBSname.length<2){
+          $("#CheckFBSname").html("Please enter last name atleast 2 characters.").css('color', 'red');
+          $("#FBSname").css('border-color', 'red');
+          $("#FBSname").focus();
+        }else if(FBFname.length <2){
+          $("#CheckFBFname").html("Please enter first name atleast 2 characters.").css('color', 'red');
+          $("#FBFname").css('border-color', 'red');
+          $("#FBFname").focus();
+        }else if(FBMname.length !='' && FBMname.length <2 ){
+          $("#CheckFBMname").html("Please enter middle name atleast 2 characters.").css('color', 'red');
+          $("#FBMname").css('border-color', 'red');
+          $("#FBMname").focus();
         } else {
-          modalErrorShow(msg);
+          $(".loader-div").show();
+          $.ajax({
+            url:"familyBackgroundAdd.php",
+            method:"POST",
+            dataType: "json",
+            data:formData,
+            success:function(data){
+              $(".loader-div").hide(); 
+              const msg = data.msg;
+              const stat = data.status;
+              if(stat === "success"){ 
+                modalSuccessShow(msg,triggerTableReload,'tblFBMember');
+                resetFormFamilyBackground();
+                checkAlreadyEncode();
+              } else {
+                modalErrorShow(msg);
+              }
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            },
+            processData: false,
+            contentType: false
+      
+          });
         }
-      },error: function(xhr, status, error) {
-        modalErrorShow("The system encountered an error. Please contact support.");
-        $(".loader-div").hide();
-      },
-      processData: false,
-      contentType: false
-
-    });
-  }
+      }
+    },error: function(xhr, status, error) {
+      modalErrorShow("The system encountered an error. Please contact support.");
+      $(".loader-div").hide();
+    }
+  });
 }
 
 function btnFBUpdate(getFBid){ //open modal family update
@@ -1602,7 +1638,7 @@ function btnAcadUpdate(getAcads){
           $("#UpdateacadNameSchool").prop('disabled',true);
           $("#UpdateacadNameSchool").attr('required',false);
           $("#txtUpdateFilter").show();
-          $("#txtUpdateID").val(AcadsPrimarySchoolID); 
+          $("#txtUpdateID").val(AcadsSchool); 
           $("#txtUpdateFilter").val(AcadsPrimarySchoolName);
           $("#txtUpdateFilter").attr('required','required');
            $('#divReuploadMOV').hide();
@@ -1619,7 +1655,7 @@ function btnAcadUpdate(getAcads){
           $("#UpdateacadNameSchool").prop('disabled',true);
           $("#UpdateacadNameSchool").attr('required',false);
           $("#txtUpdateFilter").show();
-          $("#txtUpdateID").val(AcadsPrimarySchoolID); 
+          $("#txtUpdateID").val(AcadsSchool); 
           $("#txtUpdateFilter").val(AcadsPrimarySchoolName);
           $("#txtUpdateFilter").attr('required','required');
           $('#divReuploadMOV').hide();

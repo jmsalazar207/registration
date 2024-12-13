@@ -217,8 +217,6 @@ if(isset($_POST['PositionName'])){ //Check exist add
 
    echo json_encode($count);
 }
-
-
 if(isset($_POST['resetUsername'])){
 
    $ID = $_POST['resetUsername'];
@@ -233,6 +231,62 @@ if(isset($_POST['attemptEmpNO'])){
    $sql_count_attempt = "SELECT password_attempt FROM userprofile WHERE empno = '$attemptEmpNO'";
    $count_attempt = $dbConn->findFirstQuery($sql_count_attempt);
    echo json_encode($count_attempt);
+}
+if(isset($_POST['checkFamilyBackground'])){
+   $type = $_POST['checkFamilyBackground'];
+   if($type==1){  //insert
+      $ID = $_SESSION['userID'];
+      $FBSname = $_POST['FBSname'];
+      $FBFname = $_POST['FBFname'];
+      $FBMname = $_POST['FBMname'];
+      $FBExtname = $_POST['FBExtname'];
+   
+      $sql = "SELECT * FROM lib_family_background WHERE surname = '$FBSname' AND firstname = '$FBFname' AND middlename = '$FBMname' AND extname = '$FBExtname' AND empno = '$ID' AND status != '4'";
+      $dbConn->findFirstQuery($sql);
+      $count['FamilyBackground'] = $dbConn->count();
+      echo json_encode($count);
+   }else{
+      $ID = $_SESSION['userID'];
+      $UpdateID = $_POST['FBUpdateID'];
+      $FBSname = $_POST['FBSname'];
+      $FBFname = $_POST['FBFname'];
+      $FBMname = $_POST['FBMname'];
+      $FBExtname = $_POST['FBExtname'];
+   
+      $sql = "SELECT * FROM lib_family_background WHERE surname = '$FBSname' AND firstname = '$FBFname' AND middlename = '$FBMname' AND extname = '$FBExtname' AND empno = '$ID' AND id != '$UpdateID' AND status != '4'";
+      $dbConn->findFirstQuery($sql);
+      $count['FamilyBackground'] = $dbConn->count();
+      echo json_encode($count);
+   }
+
+}
+if(isset($_POST['checkAcademic'])){
+   $type = $_POST['checkAcademic'];
+   if($type==1){  //insert
+      $ID = $_SESSION['userID'];
+      $FBSname = $_POST['FBSname'];
+      $FBFname = $_POST['FBFname'];
+      $FBMname = $_POST['FBMname'];
+      $FBExtname = $_POST['FBExtname'];
+   
+      $sql = "SELECT * FROM lib_family_background WHERE surname = '$FBSname' AND firstname = '$FBFname' AND middlename = '$FBMname' AND extname = '$FBExtname' AND empno = '$ID' AND status != '4'";
+      $dbConn->findFirstQuery($sql);
+      $count['Academic'] = $dbConn->count();
+      echo json_encode($count);
+   }else{   //update
+      $ID = $_SESSION['userID'];
+      $UpdateID = $_POST['FBUpdateID'];
+      $FBSname = $_POST['FBSname'];
+      $FBFname = $_POST['FBFname'];
+      $FBMname = $_POST['FBMname'];
+      $FBExtname = $_POST['FBExtname'];
+   
+      $sql = "SELECT * FROM lib_family_background WHERE surname = '$FBSname' AND firstname = '$FBFname' AND middlename = '$FBMname' AND extname = '$FBExtname' AND empno = '$ID' AND id != '$UpdateID' AND status != '4'";
+      $dbConn->findFirstQuery($sql);
+      $count['Academic'] = $dbConn->count();
+      echo json_encode($count);
+   }
+
 }
  
  
