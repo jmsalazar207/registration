@@ -254,3 +254,64 @@ url:"getInfo.php",
 
  var TableID = 'userManage';
  triggerTableReload,TableID
+
+
+   $.ajax({ //check Family Background if existed 
+    url:"checkExist.php",
+    method:"POST",
+    data: {checkFamilyBackground:1,FBSname:FBSname,FBFname:FBFname,FBMname:FBMname,FBExtname:FBExtname,},
+    dataType: 'json',
+    success:function(data){
+      $(".loader-div").hide(); 
+      const countEntry = data.FamilyBackground;
+      if (countEntry==1){
+      modalErrorShow('Entry already exists! Ensure the details are unique before proceeding.');
+      } else {
+        if(selectRelation !=2 && age <18){
+          $("#CheckFBDOB").html("Please furnish a valid date of birth ensuring the individual is aged 18 years or older.").css('color', 'red');
+          validatePass = 0;
+        }else if(FBSname.length<2){
+          $("#CheckFBSname").html("Please enter last name atleast 2 characters.").css('color', 'red');
+          $("#FBSname").css('border-color', 'red');
+          $("#FBSname").focus();
+        }else if(FBFname.length <2){
+          $("#CheckFBFname").html("Please enter first name atleast 2 characters.").css('color', 'red');
+          $("#FBFname").css('border-color', 'red');
+          $("#FBFname").focus();
+        }else if(FBMname.length !='' && FBMname.length <2 ){
+          $("#CheckFBMname").html("Please enter middle name atleast 2 characters.").css('color', 'red');
+          $("#FBMname").css('border-color', 'red');
+          $("#FBMname").focus();
+        } else {
+          $(".loader-div").show();
+          $.ajax({
+            url:"familyBackgroundAdd.php",
+            method:"POST",
+            dataType: "json",
+            data:formData,
+            success:function(data){
+              $(".loader-div").hide(); 
+              const msg = data.msg;
+              const stat = data.status;
+              if(stat === "success"){ 
+                modalSuccessShow(msg,triggerTableReload,'tblFBMember');
+                resetFormFamilyBackground();
+                checkAlreadyEncode();
+              } else {
+                modalErrorShow(msg);
+              }
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            },
+            processData: false,
+            contentType: false
+      
+          });
+        }
+      }
+    },error: function(xhr, status, error) {
+      modalErrorShow("The system encountered an error. Please contact support.");
+      $(".loader-div").hide();
+    }
+  });

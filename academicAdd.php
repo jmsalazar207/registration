@@ -11,7 +11,7 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
     $dataReturn['msg'] = "Session has expired. Please relogin your account.";
     echo json_encode($dataReturn);
 }else{ 
-    if(empty($_FILES['acadMOV']['tmp_name'])){ 
+    if(empty($_FILES['acadMOV']['tmp_name'])){ //Elementary and High School
         $id = $_SESSION['userID'];  
         $acads['empno'] = $id;
         $acads['ifGraduated'] = $_POST['ifGraduated'];
@@ -35,7 +35,7 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
                 $dataReturn['msg'] = "Oops! Something went wrong. Please try again later.";
                 echo json_encode($dataReturn);
             }
-    }else{  
+    }else{  //College and other
         $id = $_SESSION['userID'];  
         $target_dir = "uploadedMOV/";
         $fileExt = pathinfo($_FILES['acadMOV']['name'], PATHINFO_EXTENSION);

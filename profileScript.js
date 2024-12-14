@@ -1296,7 +1296,7 @@ function UserFamilyBackgroundAdd(formData){
   $.ajax({ //check Ref Number if existed 
     url:"checkExist.php",
     method:"POST",
-    data: {checkFamilyBackground:1,FBSname:FBSname,FBFname:FBFname,FBMname:FBMname,FBExtname:FBExtname,},
+    data: {checkFamilyBackground:1,FBSname:FBSname,FBFname:FBFname,FBMname:FBMname,FBExtname:FBExtname},
     dataType: 'json',
     success:function(data){
       $(".loader-div").hide(); 
@@ -1536,54 +1536,74 @@ function UserAcadacemicAdd(formData){
   const acadLevel = $("#acadEducLevel").val();
   const totalYear = (acadPeriodTo-acadPeriodFrom);
   const acadYearGraduated = $("#acadYearGraduated").val();
-
+  const acadEducLevel = $("#acadEducLevel").val();
+  const acadCollege = $("#acadNameSchool").val();
+  const acadSchool = $("#txtID").val();
   $("#CheckacadPeriodTo").html("");
   $("#CheckacadYearGraduated").html("");
   $("#acadPeriodTo").css('border-color', '');
   $("#acadPeriodFrom").css('border-color', '');
   $("#acadYearGraduated").css('border-color', '');
 
-  if(acadPeriodFrom > acadPeriodTo){
-    $("#CheckacadPeriodTo").html("Date error: Please verify the encoded year").css('color', 'red');
-    $("#acadPeriodTo").css('border-color', 'red');
-    $("#acadPeriodFrom").css('border-color', 'red');
-    $("#acadPeriodTo").focus();
-  }else if(acadLevel ==1 && totalYear<6){
-    $("#CheckacadPeriodTo").html("Date error: Please note that the encoded year of attendance is not equivalent to 6 years.").css('color', 'red');
-    $("#acadPeriodTo").css('border-color', 'red');
-    $("#acadPeriodFrom").css('border-color', 'red');
-  }else if($('#ifGraduated').prop('checked') && acadYearGraduated != acadPeriodTo){
-    $("#CheckacadYearGraduated").html("Date error: Please verify the encoded year").css('color', 'red');
-    $("#acadPeriodTo").css('border-color', 'red');
-    $("#acadYearGraduated").css('border-color', 'red');
-    $("#acadYearGraduated").focus();
-  }else{
-    $(".loader-div").show();
-    $.ajax({
-      url:"academicAdd.php",
-      method:"POST",
-      dataType: "json",
-      data:formData,
-      success:function(data){
-        $(".loader-div").hide(); 
-        const msg = data.msg;
-        const stat = data.status;
-        if(stat === "success"){
-          modalSuccessShow(msg,triggerTableReload,'tblAcads');
-          resetFrmEducBackground();
-          checkAlreadyEncode();
-          $('#acadEducLevel').val('').trigger('change');
-        } else {
-          modalErrorShow(msg);
+  $.ajax({ //check Academic if existed 
+    url:"checkExist.php",
+    method:"POST",
+    data: {checkAcademic:1,acadEducLevel:acadEducLevel,acadPeriodFrom:acadPeriodFrom,acadPeriodTo:acadPeriodTo},
+    dataType: 'json',
+    success:function(data){
+      $(".loader-div").hide(); 
+      const countEntry = data.Academic;
+      if (countEntry > 0){
+      modalErrorShow('Entry already exists! Ensure the details are unique before proceeding.');
+      } else {
+        if(acadPeriodFrom > acadPeriodTo){
+          $("#CheckacadPeriodTo").html("Date error: Please verify the encoded year").css('color', 'red');
+          $("#acadPeriodTo").css('border-color', 'red');
+          $("#acadPeriodFrom").css('border-color', 'red');
+          $("#acadPeriodTo").focus();
+        }else if(acadLevel ==1 && totalYear<6){
+          $("#CheckacadPeriodTo").html("Date error: Please note that the encoded year of attendance is not equivalent to 6 years.").css('color', 'red');
+          $("#acadPeriodTo").css('border-color', 'red');
+          $("#acadPeriodFrom").css('border-color', 'red');
+        }else if($('#ifGraduated').prop('checked') && acadYearGraduated != acadPeriodTo){
+          $("#CheckacadYearGraduated").html("Date error: Please verify the encoded year").css('color', 'red');
+          $("#acadPeriodTo").css('border-color', 'red');
+          $("#acadYearGraduated").css('border-color', 'red');
+          $("#acadYearGraduated").focus();
+        }else{
+          $(".loader-div").show();
+          $.ajax({
+            url:"academicAdd.php",
+            method:"POST",
+            dataType: "json",
+            data:formData,
+            success:function(data){
+              $(".loader-div").hide(); 
+              const msg = data.msg;
+              const stat = data.status;
+              if(stat === "success"){
+                modalSuccessShow(msg,triggerTableReload,'tblAcads');
+                resetFrmEducBackground();
+                checkAlreadyEncode();
+                $('#acadEducLevel').val('').trigger('change');
+              } else {
+                modalErrorShow(msg);
+              }
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            },
+            processData: false,
+            contentType: false
+          });
         }
-      },error: function(xhr, status, error) {
-        modalErrorShow("The system encountered an error. Please contact support.");
-        $(".loader-div").hide();
-      },
-      processData: false,
-      contentType: false
-    });
-  }
+      }
+    },error: function(xhr, status, error) {
+      modalErrorShow("The system encountered an error. Please contact support.");
+      $(".loader-div").hide();
+    }
+  });
+
 }
 
 function btnAcadUpdate(getAcads){
@@ -1767,6 +1787,7 @@ function UserAcadsUpdate(formData){
   const acadPeriodFrom = $("#UpdateacadPeriodFrom").val();
   const acadPeriodTo = $("#UpdateacadPeriodTo").val();
   const acadLevel = $("#UpdateacadEducLevel").val();
+  const AcademicID = $("#acadsId").val();
   const totalYear = (acadPeriodTo-acadPeriodFrom);
   const acadYearGraduated = $("#UpdateacadYearGraduated").val();
 
@@ -1775,43 +1796,59 @@ function UserAcadsUpdate(formData){
   $("#UpdateacadPeriodTo").css('border-color', '');
   $("#UpdateacadPeriodFrom").css('border-color', '');
   $("#UpdateacadYearGraduated").css('border-color', '');
-
-  if(acadPeriodFrom >= acadPeriodTo){
-    $("#CheckUpdateacadPeriodTo").html("Date error: Please verify the encoded year").css('color', 'red');
-    $("#UpdateacadPeriodTo").focus();
-  }else if(acadLevel ==1 && totalYear<6){
-    $("#CheckUpdateacadPeriodTo").html("Date error: Please note that the encoded year of attendance is not equivalent to 6 years.").css('color', 'red');
-    $("#UpdateacadPeriodTo").focus();
-  }else if($('#UpdateifGraduated').prop('checked') && acadYearGraduated != acadPeriodTo){
-    $("#CheckUpdateacadYearGraduated").html("Date error: Please verify the encoded year").css('color', 'red');
-    $("#UpdateacadYearGraduated").focus();
-  }else{
-    $(".loader-div").show();
-    $.ajax({
-      url:"academicUpdate.php",
-      method:"POST",
-      dataType: "json",
-      data:formData,
-      success:function(data){
-        $(".loader-div").hide();
-        $('#updateAcads').modal('hide');
-        const msg = data.msg;
-        const stat = data.status;
-        if(stat === "success"){ 
-          modalSuccessShow(msg,triggerTableReload,'tblAcads');
-          checkAlreadyEncode();
-        } else {
-          modalErrorShow(msg);
-        }
-      },error: function(xhr, status, error) {
-        modalErrorShow("The system encountered an error. Please contact support.");
-        $(".loader-div").hide();
-      },
-      processData: false,
-      contentType: false
-
-    });
-   }
+  $.ajax({ //check Academic if existed 
+    url:"checkExist.php",
+    method:"POST",
+    data: {checkAcademic:2,acadEducLevel:acadLevel,acadPeriodFrom:acadPeriodFrom,acadPeriodTo:acadPeriodTo,AcademicID:AcademicID},
+    dataType: 'json',
+    success:function(data){
+      $(".loader-div").hide(); 
+      const countEntry = data.Academic;
+      if (countEntry > 0){
+      modalErrorShow('Entry already exists! Ensure the details are unique before proceeding.');
+      } else {
+        if(acadPeriodFrom >= acadPeriodTo){
+          $("#CheckUpdateacadPeriodTo").html("Date error: Please verify the encoded year").css('color', 'red');
+          $("#UpdateacadPeriodTo").focus();
+        }else if(acadLevel ==1 && totalYear<6){
+          $("#CheckUpdateacadPeriodTo").html("Date error: Please note that the encoded year of attendance is not equivalent to 6 years.").css('color', 'red');
+          $("#UpdateacadPeriodTo").focus();
+        }else if($('#UpdateifGraduated').prop('checked') && acadYearGraduated != acadPeriodTo){
+          $("#CheckUpdateacadYearGraduated").html("Date error: Please verify the encoded year").css('color', 'red');
+          $("#UpdateacadYearGraduated").focus();
+        }else{
+          $(".loader-div").show();
+          $.ajax({
+            url:"academicUpdate.php",
+            method:"POST",
+            dataType: "json",
+            data:formData,
+            success:function(data){
+              $(".loader-div").hide();
+              $('#updateAcads').modal('hide');
+              const msg = data.msg;
+              const stat = data.status;
+              if(stat === "success"){ 
+                modalSuccessShow(msg,triggerTableReload,'tblAcads');
+                checkAlreadyEncode();
+              } else {
+                modalErrorShow(msg);
+              }
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            },
+            processData: false,
+            contentType: false
+      
+          });
+         }
+      }
+    },error: function(xhr, status, error) {
+      modalErrorShow("The system encountered an error. Please contact support.");
+      $(".loader-div").hide();
+    }
+  });
 }
 
 function UserEligibilitydAdd(formData){
@@ -1942,7 +1979,8 @@ function UserEligibilitydUpdate(formData){
   });
 }
 
-function UserCareerdAdd(formData){
+function UserCareerAdd(formData){
+  
   $(".loader-div").show();
   $.ajax({
     url:"careerAdd.php",
@@ -3116,10 +3154,10 @@ $(document).on('submit','#frmUserEligibilitydUpdate',function(event){
   modalConfirmShow('Would you like to confirm and save the changes now?',UserEligibilitydUpdate,PassData);
 });
 
-$(document).on('submit','#frmUserCareerdAdd',function(event){
+$(document).on('submit','#frmUserCareerAdd',function(event){
   event.preventDefault();
-  var PassData  = new FormData(frmUserCareerdAdd);
-  modalConfirmShow('Would you like to confirm and save the changes now?',UserCareerdAdd,PassData);
+  var PassData  = new FormData(frmUserCareerAdd);
+  modalConfirmShow('Would you like to confirm and save the changes now?',UserCareerAdd,PassData);
 });
 
 $(document).on('click','#btnUserCareerUpdate',function(event){
