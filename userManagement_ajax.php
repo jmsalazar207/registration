@@ -30,6 +30,7 @@ if($searchValue != ''){
             pn.position_name LIKE '%".$searchValue."%' OR
             d.division_name LIKE '%".$searchValue."%' OR
             os.station_name LIKE '%".$searchValue."%' OR
+            pos.item_code LIKE '%".$searchValue."%' OR
             un.unit_name LIKE '%".$searchValue."%' )";
 }
 

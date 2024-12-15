@@ -1993,8 +1993,10 @@ function UserCareerAdd(formData){
       const stat = data.status;
       if(stat === "success"){
         modalSuccessShow(msg,triggerTableReload,'tblcareer');
-        $('#frmUserCareerdAdd')[0].reset();
+        $('#frmUserCareerAdd')[0].reset();
         $('#careerGovt').val('').trigger('change');
+        getInfo();
+        careerPresentCheck();
       } else {
         modalErrorShow(msg);
       }
@@ -2022,10 +2024,24 @@ function btnCareerUpdate(getCareer){
       success:function(data){
         $(".loader-div").hide(); 
         const CareerData = JSON.parse(data);
+        const updatePresent = CareerData['career_present'];
+        if(updatePresent =='on'){
+          $('#UpdatecareerPresent').attr('checked',true);
+          $('#UpdatecareerDateTo').attr('readonly',true);
+          $('#UpdatecareerPresent').attr('hidden',false);
+          $('#UpdatelabelCareerPresent').attr('hidden',false);
+        }else{
+          $('#UpdatecareerPresent').attr('hidden',true);
+          $('#UpdatecareerPresent').attr('checked',false);
+          $('#UpdatecareerDateTo').attr('readonly',false);
+          $('#UpdatelabelCareerPresent').attr('hidden',true);
+        }
         $('#careerID').val(CareerData['id']);
         $('#UpdatecareerDateFrom').val(CareerData['career_date_from']);
         $('#UpdatecareerGovtService').val(CareerData['career_govt_service']).trigger('change');
         $('#UpdatecareerDateTo').val(CareerData['career_date_to']);
+        
+        $('#UpdatecareerDateFrom').val(CareerData['career_date_from']);
         $('#UpdatecareerPosition').val(CareerData['career_position_title']);      
         $('#UpdatecareerOrganization').val(CareerData['career_organization']);
         $('#UpdatecareerSalary').val(CareerData['career_salary']);
@@ -2639,8 +2655,22 @@ function careerPresentCheck(){
   if (careerPresent.checked ==true){
     $("#careerDateTo").val('');
     $("#careerDateTo").attr('required', false);
+    $("#careerDateTo").attr('readonly', true);
   }else{
-    $("#careerDateTo").attr('required', 'required');
+    $("#careerDateTo").attr('required', true);
+    $("#careerDateTo").attr('readonly', false);
+  }
+}
+
+function UpdatecareerPresentCheck(){
+  var careerPresent = document.getElementById("UpdatecareerPresent");
+  if (careerPresent.checked ==true){
+    $("#UpdatecareerDateTo").val('');
+    $("#UpdatecareerDateTo").attr('required', false);
+    $("#UpdatecareerDateTo").attr('readonly', true);
+  }else{
+    $("#UpdatecareerDateTo").attr('required', true);
+    $("#UpdatecareerDateTo").attr('readonly', false);
   }
 }
 
@@ -3170,9 +3200,9 @@ $(document).on('submit','#btnUserCareerViewUploaded',function(){
   btnCareerViewUploaded(uploadedCareerMOV);
 });
 
-$(document).on('submit','#frmUserCareerdUpdate',function(event){
+$(document).on('submit','#frmUserCareerUpdate',function(event){
   event.preventDefault();
-  var PassData = new FormData(frmUserCareerdUpdate);
+  var PassData = new FormData(frmUserCareerUpdate);
   modalConfirmShow('Would you like to confirm and save the changes now?',UserCareerUpdate,PassData);
 });
 
@@ -3598,4 +3628,12 @@ $(document).on('submit','#User_form_other_info',function(event){
   event.preventDefault();
   var PassData = new FormData(User_form_other_info);
   modalConfirmShow('Would you like to confirm and save the changes now?',form_other_info,PassData);
+});
+
+$(document).on('click','#careerPresent',function(){
+  careerPresentCheck();
+});
+
+$(document).on('click','#UpdatecareerPresent',function(){
+  UpdatecareerPresentCheck();
 });

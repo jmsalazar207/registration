@@ -1322,7 +1322,7 @@
                         </button>
                         <h4 class="modal-title">Update Career Details</h4>
                     </div>
-                    <form id="frmUserCareerdUpdate" name="frmUserCareerdUpdate" autocomplete="off" >
+                    <form id="frmUserCareerUpdate" name="frmUserCareerUpdate" autocomplete="off" >
                         <div class="box" style="border:0cm" >
                             <div class="box-body row">
                                 <div class="card col-md-6" style="width:750px; height:auto">
@@ -1363,6 +1363,18 @@
                                                 class="col-sm-12 requiredField" 
                                                 style="font-size: 15px;">
                                                 Date To
+                                            </label>
+                                            <label for=""
+                                            id="UpdatelabelCareerPresent"
+                                            name = "UpdatelabelCareerPresent"
+                                            class="col-sm-3" 
+                                            style="font-size: 15px;">
+                                            <input 
+                                            type="checkbox"
+                                            name="UpdatecareerPresent" 
+                                            id="UpdatecareerPresent"
+                                            >
+                                                PRESENT
                                             </label>
                                             <div class="col-sm-12">
                                                 <input 
@@ -1575,7 +1587,7 @@
                                     &times;
                                 </span>
                         </button>
-                        <h4 class="modal-title">Update Career Details</h4>
+                        <h4 class="modal-title">Update Voluntary Work Details</h4>
                     </div>
                     <form id="frmUserVoluntaryUpdate" name="frmUserVoluntaryUpdate" autocomplete="off" >
                         <div class="box" style="border:0cm" >

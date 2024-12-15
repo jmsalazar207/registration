@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2024 at 07:45 PM
+-- Generation Time: Dec 15, 2024 at 04:36 PM
 -- Server version: 10.4.28-MariaDB
--- PHP Version: 8.0.28
+-- PHP Version: 8.1.17
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -42243,7 +42243,11 @@ CREATE TABLE `lib_career` (
 --
 
 INSERT INTO `lib_career` (`id`, `empno`, `career_date_from`, `career_date_to`, `career_position_title`, `career_organization`, `career_salary`, `career_compensention_level`, `career_status_appointment`, `career_govt_service`, `career_uploaded_mov`, `career_status`, `career_remarks`, `updated_by`, `datetime_updated`, `career_present`) VALUES
-(1, '03-10961', '2019-11-04', '2024-07-18', 'CP2', 'DSWD', '35000', '', 'MOA', 1, '03-10961_Career_0.pdf', 4, '', '03-10961', '2024-12-02', '');
+(1, '03-10961', '2019-11-04', '2024-07-18', 'CP2', 'DSWD', '35000', '', 'MOA', 1, '03-10961_Career_0.pdf', 4, '', '03-10961', '2024-12-02', ''),
+(2, '03-10961', '2024-07-22', '0000-00-00', 'INFORMATION TECHNOLOGY OFFICER I', 'DSWD FIELD OFFICE III', '51000', 'SG 11', 'MOA', 2, '03-10961_Career_1.pdf', 4, '', '', '0000-00-00', 'on'),
+(3, '03-10961', '2024-07-22', '0000-00-00', 'INFORMATION TECHNOLOGY OFFICER I', 'DSWD FIELD OFFICE III', '51000', 'SG 19', 'MOA', 2, '03-10961_Career_2.pdf', 4, '', '', '0000-00-00', 'on'),
+(4, '03-10961', '2024-07-22', '2024-12-13', 'INFORMATION TECHNOLOGY OFFICER I', 'DSWD FO 3', '51000', 'SG 19', 'MOA', 2, '03-10961_Career_3.pdf', 0, '', '03-10961', '2024-12-15', ''),
+(5, '03-10961', '2019-11-04', '2022-07-17', 'COMPUTER MAINTENANCE TECHNOLOGISTS I', 'DSWD FO 3', '22000', 'SG11', 'MOA', 2, '03-10961_Career_4.pdf', 0, '', '', '0000-00-00', '');
 
 -- --------------------------------------------------------
 
@@ -105695,7 +105699,8 @@ CREATE TABLE `lib_training` (
 
 INSERT INTO `lib_training` (`id`, `empno`, `training_title`, `training_date_from`, `training_date_to`, `training_hours`, `training_type`, `training_conducted_by`, `training_status`, `training_uploaded_mov`, `training_remarks`, `updated_by`, `datetime_updated`) VALUES
 (1, '03-12456', 'TRAINING DUMMY', '2024-11-11', '2024-11-12', '16', 1, 'AKO', 0, '03-12456_Training_0.pdf', '', '', NULL),
-(2, '03-10961', 'DSWD-GOOGLE HACKATHON: GOOGLE APPSHEET AND MEET APPLICATION PROGRAMMING INTERFACE, AND GOOGLE TECHNOLOGIES', '2023-11-08', '2023-11-09', '16', 3, 'GOOGLE PHILIPPINES', 4, '03-10961_Training_0.pdf', '', '', NULL);
+(2, '03-10961', 'DSWD-GOOGLE HACKATHON: GOOGLE APPSHEET AND MEET APPLICATION PROGRAMMING INTERFACE, AND GOOGLE TECHNOLOGIES', '2023-11-08', '2023-11-09', '16', 3, 'GOOGLE PHILIPPINES', 4, '03-10961_Training_0.pdf', '', '', NULL),
+(3, '03-10961', 'DSWD-GOOGLE HACKATHON: GOOGLE APPSHEET AND MEET APPLICATION PROGRAMMING INTERFACE, AND GOOGLE TECHNOLOGIES', '2023-11-08', '2023-11-09', '16', 2, 'DSWD', 0, '03-10961_Training_1.pdf', '', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -106180,7 +106185,8 @@ INSERT INTO `lib_voluntary` (`id`, `empno`, `vw_name_address`, `vw_date_from`, `
 (1, '03-12456', 'SAPILITANG ORGANISASYON', '2024-11-10', '2024-11-11', 1000, 'ABCD', 0),
 (2, '03-10961', 'DOLE', '2024-11-04', '2024-11-05', 16, 'TECHNICAL SKILLS', 4),
 (3, '03-10961', 'ASDASD', '2024-12-11', '2024-12-12', 8, 'ASDASDSA', 4),
-(4, '03-10961', 'ASDASD', '2024-12-16', '2024-12-16', 8, 'ASDFASDFASDF', 4);
+(4, '03-10961', 'ASDASD', '2024-12-16', '2024-12-16', 8, 'ASDFASDFASDF', 4),
+(5, '03-10961', 'SADFSADFSADF', '2024-12-09', '2024-12-09', 8, 'ASDASDSAD', 0);
 
 -- --------------------------------------------------------
 
@@ -106575,7 +106581,7 @@ INSERT INTO `userprofile` (`empno`, `password`, `position_id`, `date_filled`, `f
 ('03-10751', '46bab4c3ac73049fbf15c5b6bde382ac', '325', '2024-08-01', 'BUTCH', 'GAJUNIA', 'GACUSAN', '', '09991809074', '', 0, '1988-01-11', 'bggacusan@dswd.gov.ph', 'BLOCK 3', '', '030000000', '128', '036907014', '036907000', '036900000', 0, 36, 4, 24, '2024-03-05 13:39:48', '03-10961', '2024-03-24 09:06:47', '_03-10751.jpg', 1, 0, 2, 0, '2024-08-02 13:21:19', '0000-00-00 00:00:00', '', NULL, '', '0000-00-00 00:00:00', '', '', 1, '', 0),
 ('03-1393', '161ebd7d45089b3446ee4e0d86dbcf92', '327', '2024-11-27', 'RONIE', 'CASTRO', 'FRANCISCO', '', '09555566387', '', 0, '1981-05-04', 'rcfrancisco@dswd.gov.ph', '', '', '030000000', '', '035416011', '035416000', '035400000', 0, 24, 4, 24, '2024-03-05 14:20:52', '03-9862', '2024-04-24 10:21:11', '001.jpg', 0, 0, 2, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, '', '0000-00-00 00:00:00', '', '', 0, '', 0),
 ('03-11282', '9c272337a8b0f716276d03825b990b22', '', NULL, 'JOHN PAUL', 'DE LEON', 'CARREON', '', '09168474344', '', 0, '1998-11-07', 'jpdlcarreon@dswd.gov.ph', 'PUROK 2', '', '030000000', '35', '035416031', '035416000', '035400000', 0, 24, 4, 24, '2024-03-08 11:08:52', '03-9862', '2024-04-24 08:47:51', '_03-11282.jpg', 0, 0, 2, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, '', '0000-00-00 00:00:00', '', '', 0, '', 0),
-('03-10961', '161ebd7d45089b3446ee4e0d86dbcf92', '', '0000-00-00', 'JEFFREY', 'MELQUIADES', 'SALAZAR', '', '09497524488', '', 0, '1998-07-21', 'jmsalazar@dswd.gov.ph', 'M.H DEL PILAR', '', '030000000', '320', '035416015', '035416000', '035400000', 2000, 101, 4, 24, '2024-02-20 14:30:10', '', '2024-02-20 14:33:10', '_03-10961.jpg', 1, 1, 2, 0, '2024-12-05 02:44:49', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', NULL, '', '', 0, '', 0),
+('03-10961', '46bab4c3ac73049fbf15c5b6bde382ac', '', '0000-00-00', 'JEFFREY', 'MELQUIADES', 'SALAZAR', '', '09497524488', '', 0, '1998-07-21', 'jmsalazar@dswd.gov.ph', 'M.H DEL PILAR', '', '030000000', '320', '035416015', '035416000', '035400000', 2000, 101, 4, 24, '2024-02-20 14:30:10', '', '2024-02-20 14:33:10', '_03-10961.jpg', 1, 1, 2, 0, '2024-12-15 19:06:24', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', NULL, '', '', 0, '', 0),
 ('03-8277', '161ebd7d45089b3446ee4e0d86dbcf92', '', NULL, 'JOSELITO', 'VIQUERRA', 'ULEP', '', '09926837721', '', 0, '1971-12-21', 'jvulep@dswd.gov.ph', '', '', '030000000', '', '035416015', '035416000', '035400000', 0, 3, 4, 24, '2024-03-05 13:39:26', '03-9862', '2024-04-24 10:22:22', '_03-8277.jpg', 0, 0, 2, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, '', '0000-00-00 00:00:00', '', '', 0, '', 0),
 ('03-11553', '161ebd7d45089b3446ee4e0d86dbcf92', '', NULL, 'CLARIZA', 'SICAT', 'MENDOZA', '', '09165242079', '', 1, '1981-10-30', 'csmendoza@dswd.gov.ph', 'DAISY ST.', '', '030000000', '1344', '035404018', '035404000', '035400000', 0, 3, 4, 24, '2024-03-05 15:00:39', '03-9862', '2024-04-24 09:05:57', '_03-11553.jpeg', 0, 0, 2, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, '', '0000-00-00 00:00:00', '', '', 0, '', 0),
 ('03-0165', '161ebd7d45089b3446ee4e0d86dbcf92', '', NULL, 'VILMA', 'REBOREDO', 'SERRANO', '', '09209632006', '', 1, '1971-12-28', 'vrserrano@dswd.gov.ph', '', '', '030000000', '', '035416004', '035416000', '035400000', 0, 75, 4, 21, '2024-03-13 16:39:39', '03-9862', '2024-04-24 04:17:55', '_03-0165.jpg', 0, 0, 2, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, '', '0000-00-00 00:00:00', '', '', 0, '', 0),
@@ -109178,7 +109184,7 @@ ALTER TABLE `lib_blood_types`
 -- AUTO_INCREMENT for table `lib_career`
 --
 ALTER TABLE `lib_career`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `lib_classification_employment`
@@ -109346,7 +109352,7 @@ ALTER TABLE `lib_skills`
 -- AUTO_INCREMENT for table `lib_training`
 --
 ALTER TABLE `lib_training`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `lib_training_course`
@@ -109364,7 +109370,7 @@ ALTER TABLE `lib_unit`
 -- AUTO_INCREMENT for table `lib_voluntary`
 --
 ALTER TABLE `lib_voluntary`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_employee_appointment_history`

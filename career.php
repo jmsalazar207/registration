@@ -35,7 +35,8 @@
                                 <label 
                                     for="careerDateTo" 
                                     class="col-sm-3 requiredField" 
-                                    style="font-size: 15px;">
+                                    style="font-size: 15px;"
+                                    id="lblcareerPresent">
                                     Date To
                                 </label>
                                 <label for=""
@@ -47,7 +48,6 @@
                                     type="checkbox"
                                     name="careerPresent" 
                                     id="careerPresent"
-                                    onclick="careerPresentCheck()"
                                     >
                                     PRESENT
                                 </label>

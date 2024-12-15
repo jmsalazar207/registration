@@ -71,7 +71,7 @@
               </a>
             </li>
             <li >
-              <a href="divisionManagement.php">
+              <a href="underconstruction.php">
                 <i class="glyphicon glyphicon-folder-open"></i> 
                  List of Division
               </a>

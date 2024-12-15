@@ -23,7 +23,7 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
 
                     if($UpdatevoluntaryQuery){
                         $dataReturn['status'] = "success";
-                        $dataReturn['msg'] = "Academic Details successfully added";
+                        $dataReturn['msg'] = "Voluntary Work Details successfully updated";
                         echo json_encode($dataReturn);
                     }else {
                         $dataReturn['status'] = "failed";

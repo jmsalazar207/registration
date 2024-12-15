@@ -22,6 +22,7 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
                         $Updatecareer['career_compensention_level'] = sanitize(strtoupper($_POST['UpdatecareerCompensention']));
                         $Updatecareer['career_status_appointment'] = sanitize(strtoupper($_POST['UpdatecareerStatusAppointment']));
                         $Updatecareer['career_govt_service'] = $_POST['UpdatecareerGovtService'];
+                        $Updatecareer['career_present'] = isset($_POST['UpdatecareerPresent']) ? $_POST['UpdatecareerPresent']:'';
                         $Updatecareer['career_status'] = 0;
                         $Updatecareer['updated_by'] = $sessionID;
                         $Updatecareer['datetime_updated'] = $today;

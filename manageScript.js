@@ -770,18 +770,18 @@ jQuery("#txtDivision").on('change',function(){
 
   $("#txtAddFName").css('border-color', '');
   $("#checkTxtAddFName").html("");
-    if(addLName.length <2){
-      $("#checkTxtAddLName").html("Please enter a Last Name with at least 2 characters.").css('color', 'red');
-      $("#txtAddLName").css('border-color', 'red');
-      $("#txtAddLName").focus();
+    if(addFName.length <2){
+      $("#checkTxtAddFName").html("Please enter a First Name with at least 2 characters.").css('color', 'red');
+      $("#txtAddFName").css('border-color', 'red');
+      $("#checkTxtAddFName").focus();
     }else if((addMname !='') && (addMname.length <2)){
       $("#checkTxtAddMName").html("Please enter a Middle Name with at least 2 characters.").css('color', 'red');
       $("#txtAddMName").css('border-color', 'red');
       $("#txtAddMName").focus();
-    }else if(addFName.length <2){
-      $("#checkTxtAddFName").html("Please enter a First Name with at least 2 characters.").css('color', 'red');
-      $("#txtAddFName").css('border-color', 'red');
-      $("#checkTxtAddFName").focus();
+    }else if(addLName.length <2){
+      $("#checkTxtAddLName").html("Please enter a Last Name with at least 2 characters.").css('color', 'red');
+      $("#txtAddLName").css('border-color', 'red');
+      $("#txtAddLName").focus();
     }else if(addSelectMode==2){ //Manual entry of employee number
       if ((addEmpNo.length>5) || (addEmpNo.length<4)){
         $("#checkTxtAddEmpno").html("Invalid Employee number. Please enter a number with a minimum of 4 digits and a maximum of 5 digits.").css('color', 'red');
