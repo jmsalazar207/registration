@@ -27,7 +27,7 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
     $career['career_compensention_level'] = sanitize(strtoupper($_POST['careerCompensention']));
     $career['career_status_appointment'] = sanitize(strtoupper($_POST['careerStatusAppointment']));
     $career['career_govt_service'] = $_POST['careerGovt'];
-    $career['career_present'] = isset($_POST['UpdatecareerPresent']) ? $_POST['UpdatecareerPresent']:'';
+    $career['career_present'] = isset($_POST['careerPresent']) ? $_POST['careerPresent']:'';
     $career['career_uploaded_mov'] = $UploadFile;
     $career['career_status'] = 0;
     if (move_uploaded_file($_FILES["careerMOV"]["tmp_name"], $target_file))
