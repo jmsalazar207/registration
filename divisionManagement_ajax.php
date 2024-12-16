@@ -19,7 +19,7 @@ $searchValue = $_POST['search']['value']; // Search value
 
 
 ## Search 
-$searchQuery = " WHERE 1 ";
+$searchQuery = " WHERE division_status != 3 ";
 if($searchValue != ''){
    $searchQuery .= "AND (d.division_name LIKE '%".$searchValue."%' OR
             d.division_name_code LIKE '%".$searchValue."%' OR
@@ -61,12 +61,16 @@ $divRecords = $dbConn->findQuery($sql);
 if($divRecords){
    foreach($divRecords as $row){
 	$divCode = $row['division_code'];
-   
+   $url = 'adminDeleteDivision.php';
     $action = "<td>
-                  <button class='' onclick ='divisionViewInfo(this.value)' value = '$divCode'  title='View' >
-                     View Info
+                  <button class='btn btn-primary btn-sm' id='btnAdminDivisionUpdate' name='btnAdminDivisionUpdate' value = '$divCode'  title='View' >
+                     Update
                   </button>
-                 
+               </td>
+               <td>
+                  <button class='btn btn-danger btn-sm' id='btnAdminDivisionDelete' name='btnAdminDivisionDelete' data-valueID = '$divCode' data-valueURL = '$url'  title='Remove' >
+                     Remove
+                  </button>
                </td>";  
    
    $data[] = array(

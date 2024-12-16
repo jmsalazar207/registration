@@ -785,7 +785,7 @@
             <div class="modal-content">
                 <form 
                     method="POST" 
-                    id="contentDivision" 
+                    id="frmAdminDivisionAdd" 
                     autocomplete="off">
                     <div class="modal-header">
                         <button 
@@ -805,7 +805,7 @@
                                 <div class="col-md-12">
                                     <label 
                                         for="txtDivName" 
-                                        class="col-sm-12">
+                                        class="col-sm-12 requiredField">
                                         Division Name
                                     </label>
                                     <div class="col-sm-12">
@@ -830,7 +830,7 @@
                                 <div class="col-md-12">
                                     <label 
                                         for="txtFName" 
-                                        class="col-sm-12">
+                                        class="col-sm-12 requiredField">
                                         Division Name Code
                                     </label>
                                     <div class="col-sm-12">
@@ -851,7 +851,7 @@
                                 <div class="col-md-12">
                                     <label 
                                         for="txtCluster" 
-                                        class="col-sm-12">
+                                        class="col-sm-12 requiredField">
                                         Cluster
                                     </label>
                                     <div class="col-sm-12">
@@ -882,7 +882,7 @@
                         <button 
                             type="submit" 
                             class="btn btn-primary">
-                            Submit
+                            Add
                         </button>
                     </div>
                 </form>
@@ -892,7 +892,119 @@
           <!-- /.modal-dialog -->
         </div>
         <!-- /.modalDivision -->
-        
+        <div class="modal fade" id="UpdateDivision">
+          <div class="modal-dialog">
+            <div class="modal-content">
+                <form 
+                    method="POST" 
+                    id="formAdminDivisionUpdate" 
+                    autocomplete="off">
+                    <div class="modal-header">
+                        <button 
+                            type="button" 
+                            class="close" 
+                            data-dismiss="modal" 
+                            aria-label="Close">
+                                <span aria-hidden="true">
+                                    &times;
+                                </span>
+                        </button>
+                        <h4 class="modal-title">Update Division Information</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="card col-md-12">
+                                <div class="col-md-12">
+                                    <label 
+                                        for="txtUpdateDivName" 
+                                        class="col-sm-12 requiredField">
+                                        Division Name
+                                    </label>
+                                    <div class="col-sm-12">
+                                        <input 
+                                            type="hidden" 
+                                            name="token" 
+                                            value="<?=$_SESSION["token"]?>"> 
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            name="txtUpdateDivName" 
+                                            id="txtUpdateDivName" 
+                                            placeholder="Division Name" 
+                                            value="" 
+                                            style="text-transform: uppercase;" 
+                                            required="true" 
+                                            tabindex="1">
+                                            <input 
+                                            type="hidden"
+                                            name="txtUpdateDivID"
+                                            id="txtUpdateDivID"
+                                            >
+                                    </div>
+                                    <small id='checktxtUpdateDivName'></small>
+                                </div>
+                                <br>
+                                <div class="col-md-12">
+                                    <label 
+                                        for="txtFName" 
+                                        class="col-sm-12 requiredField">
+                                        Division Name Code
+                                    </label>
+                                    <div class="col-sm-12">
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            name="txtUpdateDivNameCode" 
+                                            id="txtUpdateDivNameCode" 
+                                            placeholder="Division Name Code" 
+                                            value="" 
+                                            style="text-transform: uppercase;" 
+                                            required="true" 
+                                            tabindex="2">
+                                    </div>
+                                    <small id='checktxUpdatetDivNameCode'></small>
+                                </div>
+                                <br>
+                                <div class="col-md-12">
+                                    <label 
+                                        for="txtCluster" 
+                                        class="col-sm-12 requiredField">
+                                        Cluster
+                                    </label>
+                                    <div class="col-sm-12">
+                                        <select 
+                                            class="form-control select2"
+                                            style="width: 100%;"  
+                                            id="txtUpdateCluster" 
+                                            name="txtUpdateCluster" 
+                                            tabindex="6"
+                                            required = "true">
+                                        </select>
+                                    </div>
+                                    <small id='checktxtUpdateCluster'></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button 
+                            type="button" 
+                            class="btn btn-default pull-left" 
+                            data-dismiss="modal">
+                            Close
+                        </button>
+                        <button 
+                            type="submit" 
+                            class="btn btn-primary">
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
         <!-- modal Notif -->
         <div class="modal fade" id="modalNotif">
           <div class="modal-dialog modal-sm">

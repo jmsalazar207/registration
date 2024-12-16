@@ -20,11 +20,22 @@ if (isset($_POST["updateEmpNo"])) {
     echo json_encode($count);
 }
 if (isset($_POST["adminDivision"])) {
-    $divName = $_POST['adminDivision'];
-    $param['conditions'] = array('division_name' => $divName);
-    $dbConn->findFirst('lib_division', $param);
-    $count['divName'] = $dbConn->count();
-    echo json_encode($count);
+   $type = $_POST['type']; 
+   if($type ==1){ //insert
+      $divName = $_POST['adminDivision'];
+      $sql_division = "SELECT * FROM lib_division WHERE division_name = '$divName' AND division_status != 3";
+      $dbConn->findFirstQuery($sql_division);
+      $count['divName'] = $dbConn->count();
+      echo json_encode($count);
+   }else{
+      $divisionCode = $_POST['DivisionID'];
+      $divName = $_POST['adminDivision'];
+      $sql_division = "SELECT * FROM lib_division WHERE division_name = '$divName' AND division_code != '$divisionCode' AND division_status != 3";
+      $dbConn->findFirstQuery($sql_division);
+      $count['divName'] = $dbConn->count();
+      echo json_encode($count);
+   }
+
 }
 if(isset($_POST['gsis'])){
     $empno = $_SESSION['userID'];
@@ -311,6 +322,18 @@ if(isset($_POST['checkAcademic'])){
    }
 
 }
+if(isset($_POST["inUsedDivision"])){ //retrieved skills details from lib_skill
+   $inUsedDivision = $_POST["inUsedDivision"];
+   $sql = "SELECT pos.position_id
+           FROM lib_position pos
+           JOIN lib_unit u ON  pos.unit_code = u.unit_code
+           JOIN lib_division d ON u.division_code = d.division_code
+           WHERE d.division_code = '$inUsedDivision' 
+           AND pos.position_status != 3;";
+        $dbConn->findFirstQuery($sql);
+        $count['inUsedDivision'] = $dbConn->count();
+        echo json_encode($count);
+ }
  
  
  

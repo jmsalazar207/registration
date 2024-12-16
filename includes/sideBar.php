@@ -71,7 +71,7 @@
               </a>
             </li>
             <li >
-              <a href="underconstruction.php">
+              <a href="divisionManagement.php">
                 <i class="glyphicon glyphicon-folder-open"></i> 
                  List of Division
               </a>
@@ -91,7 +91,7 @@
             <li>
               <a href="positionName.php">
                 <i class="glyphicon glyphicon-folder-open"></i> 
-                 Manage Position Name
+                 Position Name
               </a>
             </li>
           </ul>
@@ -133,7 +133,7 @@
             <li>
               <a href="positionName.php">
                 <i class="glyphicon glyphicon-folder-open"></i> 
-                 Manage Position Name
+                 Position Name
               </a>
             </li>
           </ul>
@@ -152,7 +152,7 @@
             <li>
               <a href="VerifyEducMOV.php">
                 <i class="glyphicon glyphicon-book"></i> 
-                 Educational Background
+                 Education
               </a>
             </li>
             <li>

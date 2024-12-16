@@ -685,7 +685,6 @@ if(isset($_POST["eligibility"])){
   }
   echo $eligibility_output;
 }
-
 if(isset($_POST["GenerateEmpID"])){ 
   $output = [];
 
@@ -694,5 +693,24 @@ if(isset($_POST["GenerateEmpID"])){
   $output['last_emp_no'] = $result['last_emp_no'];
 
   echo json_encode($output); 
+}
+if(isset($_POST["btnAdminDivisionUpdate"])){ //retrieved skills details from lib_skill
+  $AdminDivisionId = $_POST["btnAdminDivisionUpdate"];
+  $sql = "SELECT * FROM lib_division WHERE division_code  = '$AdminDivisionId'";
+  $AdminDivisionInfo=$dbConn->findFirstQuery($sql);
+  echo json_encode($AdminDivisionInfo); 
+}
+if(isset($_POST["clusterID"])){ 
+  $clusterID = $_POST["clusterID"];
+  $params['fields'] = "cluster_code, cluster_name";
+  $update_clusters=$dbConn->find('lib_cluster',$params);
+  $update_clusters_output = '<option value="">SELECT DIVISION</option>';
+  if($update_clusters){
+    foreach($update_clusters as $update_cluster){
+      $update_clusters_output .= '<option value='.$update_cluster['cluster_code']. ($clusterID==$update_cluster['cluster_code']?" selected":"") . ' >' .$update_cluster['cluster_name'].'</option>';
+      
+    }
+  }
+  echo $update_clusters_output; 
 }
 ?>

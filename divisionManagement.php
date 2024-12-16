@@ -34,12 +34,20 @@ require_once('includes/init.php');
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="includes/add.css?test=<?php echo time()?>">
+  <link rel="stylesheet" href="includes/loader.css?test=<?php echo time()?>">
 
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
+  <div class="loader-div">
+    <img 
+    class="loader-img" 
+    src="images/ajax-loader.gif" 
+    style="height: 50px;width: auto;" />
+  </div>
     <div class="wrapper">
     <?php 
             include "includes/session.php";
@@ -69,7 +77,7 @@ require_once('includes/init.php');
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                <table id="userManage" class="table table-bordered table-striped table-responsive" style="text-align:center; width:100%">
+                <table id="tblDivision" class="table table-bordered table-striped table-responsive" style="text-align:center; width:100%">
                     <thead class="bg-primary">
                         <tr>
                           <th> Action </th>
@@ -122,12 +130,15 @@ require_once('includes/init.php');
 <!-- page script -->
 <?php
   include "modal/formModal.php";
+  include "modal/modalNotif.php";
 ?>
 <script src="panelScript.js?test=<?php echo time()?>"></script>
+<script src="genFunction.js?test=<?php echo time()?>"></script>
+<script src="modalNotif.js?test=<?php echo time()?>"></script>
 <script src="manageScript.js?test=<?php echo time()?>"></script>
 <script>
   $(function () {
-    $('#userManage').DataTable({
+    tables['tblDivision'] = $('#tblDivision').DataTable({
       ajax: {
           url: 'divisionManagement_ajax.php',
           type: 'POST',
