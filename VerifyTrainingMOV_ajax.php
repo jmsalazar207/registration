@@ -19,7 +19,7 @@ $searchValue = $_POST['search']['value']; // Search value
 
 
 ## Search 
-$searchQuery = " WHERE t.training_status != 4";
+$searchQuery = " WHERE t.training_status != 4 ";
 if($searchValue != ''){
    $searchQuery .= "AND (t.empno LIKE '%".$searchValue."%' OR
             t.training_title LIKE '%".$searchValue."%' OR
@@ -31,8 +31,7 @@ if($searchValue != ''){
             u.fname LIKE '%".$searchValue."%' OR
             u.mname LIKE '%".$searchValue."%' OR
             u.sname LIKE '%".$searchValue."%' OR
-            u.ename LIKE '%".$searchValue."%'
-            )";
+            u.ename LIKE '%".$searchValue."%')";
 }
 
 

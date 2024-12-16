@@ -1676,6 +1676,13 @@
                             </div>
                                 <div class="box-footer" style="border:0cm;">
                                     <button 
+                                        type="button" 
+                                        class="btn btn-default pull-left" 
+                                        data-dismiss="modal"
+                                        tabindex="11">
+                                        Close
+                                    </button>
+                                    <button 
                                         type="submit" 
                                         class="btn btn-primary btn-md pull-right">
                                         Save
@@ -1811,6 +1818,13 @@
                                 </div>
                             </div>
                                 <div class="box-footer" style="border:0cm;">
+                                <button 
+                                    type="button" 
+                                    class="btn btn-default pull-left" 
+                                    data-dismiss="modal"
+                                    tabindex="11">
+                                    Close
+                                </button>
                                     <button 
                                         type="submit" 
                                         class="btn btn-primary btn-md pull-right">
@@ -3062,6 +3076,13 @@
                             </div>
                                 <div class="box-footer" style="border:0cm;">
                                     <button 
+                                        type="button" 
+                                        class="btn btn-default pull-left" 
+                                        data-dismiss="modal"
+                                        tabindex="11">
+                                        Close
+                                    </button>
+                                    <button 
                                         type="submit" 
                                         class="btn btn-primary btn-md pull-right">
                                         Save
@@ -3523,6 +3544,13 @@
                             </div>
                         </div>
                         <div class="box-footer" style="border:0cm;">
+                        <button 
+                            type="button" 
+                            class="btn btn-default pull-left" 
+                            data-dismiss="modal"
+                            tabindex="11">
+                            Close
+                        </button>
                             <button 
                                 type="submit" 
                                 class="btn btn-primary btn-md pull-right">
@@ -3602,6 +3630,13 @@
                                 </div>
                             </div>
                                 <div class="box-footer" style="border:0cm;">
+                                    <button 
+                                        type="button" 
+                                        class="btn btn-default pull-left" 
+                                        data-dismiss="modal"
+                                        tabindex="11">
+                                        Close
+                                    </button>
                                     <button 
                                         type="submit" 
                                         class="btn btn-primary btn-md pull-right">
@@ -3705,6 +3740,13 @@
                             </div>
                                 <div class="box-footer" style="border:0cm;">
                                     <button 
+                                    type="button" 
+                                    class="btn btn-default pull-left" 
+                                    data-dismiss="modal"
+                                    tabindex="11">
+                                        Close
+                                    </button>
+                                    <button 
                                         type="submit" 
                                         class="btn btn-primary btn-md pull-right">
                                         Save
@@ -3766,6 +3808,13 @@
                                 </div>
                             </div>
                                 <div class="box-footer" style="border:0cm;">
+                                    <button 
+                                        type="button" 
+                                        class="btn btn-default pull-left" 
+                                        data-dismiss="modal"
+                                        tabindex="11">
+                                        Close
+                                    </button>
                                     <button 
                                         type="submit" 
                                         class="btn btn-primary btn-md pull-right">
