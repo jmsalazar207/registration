@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 16, 2024 at 07:57 AM
+-- Generation Time: Dec 17, 2024 at 10:20 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -42246,8 +42246,10 @@ INSERT INTO `lib_career` (`id`, `empno`, `career_date_from`, `career_date_to`, `
 (1, '03-10961', '2019-11-04', '2024-07-18', 'CP2', 'DSWD', '35000', '', 'MOA', 1, '03-10961_Career_0.pdf', 4, '', '03-10961', '2024-12-02', ''),
 (2, '03-10961', '2024-07-22', '0000-00-00', 'INFORMATION TECHNOLOGY OFFICER I', 'DSWD FIELD OFFICE III', '51000', 'SG 11', 'MOA', 2, '03-10961_Career_1.pdf', 4, '', '', '0000-00-00', 'on'),
 (3, '03-10961', '2024-07-22', '0000-00-00', 'INFORMATION TECHNOLOGY OFFICER I', 'DSWD FIELD OFFICE III', '51000', 'SG 19', 'MOA', 2, '03-10961_Career_2.pdf', 4, '', '', '0000-00-00', 'on'),
-(4, '03-10961', '2024-07-22', '2024-12-13', 'INFORMATION TECHNOLOGY OFFICER I', 'DSWD FO 3', '51000', 'SG 19', 'MOA', 2, '03-10961_Career_3.pdf', 0, '', '03-10961', '2024-12-15', ''),
-(5, '03-10961', '2019-11-04', '2022-07-17', 'COMPUTER MAINTENANCE TECHNOLOGISTS I', 'DSWD FO 3', '22000', 'SG11', 'MOA', 2, '03-10961_Career_4.pdf', 0, '', '', '0000-00-00', '');
+(4, '03-10961', '2024-07-22', '2024-12-13', 'INFORMATION TECHNOLOGY OFFICER I', 'DSWD FO 3', '51000', 'SG 19', 'MOA', 2, '03-10961_Career_3.pdf', 4, '', '03-10961', '2024-12-15', ''),
+(5, '03-10961', '2019-11-04', '2022-07-17', 'COMPUTER MAINTENANCE TECHNOLOGISTS I', 'DSWD FO 3', '22000', 'SG11', 'MOA', 2, '03-10961_Career_4.pdf', 4, '', '', '0000-00-00', ''),
+(6, '03-10961', '2019-11-04', '2022-07-17', 'CMT I', 'DSWD FO 3', '22000', 'SG 11', 'MOA', 2, '03-10961_Career_5.pdf', 0, '', '', '0000-00-00', ''),
+(7, '03-10961', '2022-07-18', '2024-07-21', 'CP 2', 'DSWD FO3', '36000', 'SG 15', 'MOA', 2, '03-10961_Career_5.pdf', 0, '', '', '0000-00-00', '');
 
 -- --------------------------------------------------------
 
@@ -46408,7 +46410,8 @@ INSERT INTO `lib_division` (`division_code`, `division_name`, `division_name_cod
 (32, 'INFORMATION TECHNOLOGY DIVISION', 'ITD', 1, '03-10961', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 3),
 (33, 'INFORMATION TECHNOLOGY DIVISION', 'ITD', 1, '03-10961', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 3),
 (34, 'INFORMATION TECHNOLOGY DIVISION', 'ITD', 1, '03-10961', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 3),
-(35, 'INFORMATION TECHNOLOGY DIVISION', 'ITD', 1, '03-10961', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 3);
+(35, 'INFORMATION TECHNOLOGY DIVISION', 'ITD', 1, '03-10961', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 3),
+(36, 'INFORMATION TECHNOLOGY DIVISION', 'ITD', 1, '03-10961', '2024-12-17 15:27:48', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -106195,7 +106198,9 @@ INSERT INTO `lib_voluntary` (`id`, `empno`, `vw_name_address`, `vw_date_from`, `
 (2, '03-10961', 'DOLE', '2024-11-04', '2024-11-05', 16, 'TECHNICAL SKILLS', 4),
 (3, '03-10961', 'ASDASD', '2024-12-11', '2024-12-12', 8, 'ASDASDSA', 4),
 (4, '03-10961', 'ASDASD', '2024-12-16', '2024-12-16', 8, 'ASDFASDFASDF', 4),
-(5, '03-10961', 'SADFSADFSADF', '2024-12-09', '2024-12-09', 8, 'ASDASDSAD', 0);
+(5, '03-10961', 'SADFSADFSADF', '2024-12-09', '2024-12-09', 8, 'ASDASDSAD', 4),
+(6, '03-10961', 'YT ORGANIZATION', '2024-12-02', '2024-12-02', 8, 'TECHNICAL MC', 0),
+(7, '03-10961', 'DOLE', '2024-12-03', '2024-12-03', 8, 'MC', 0);
 
 -- --------------------------------------------------------
 
@@ -109191,7 +109196,7 @@ ALTER TABLE `lib_blood_types`
 -- AUTO_INCREMENT for table `lib_career`
 --
 ALTER TABLE `lib_career`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `lib_classification_employment`
@@ -109227,7 +109232,7 @@ ALTER TABLE `lib_country`
 -- AUTO_INCREMENT for table `lib_division`
 --
 ALTER TABLE `lib_division`
-  MODIFY `division_code` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `division_code` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `lib_eligibility`
@@ -109377,7 +109382,7 @@ ALTER TABLE `lib_unit`
 -- AUTO_INCREMENT for table `lib_voluntary`
 --
 ALTER TABLE `lib_voluntary`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tbl_employee_appointment_history`
