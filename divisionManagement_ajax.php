@@ -23,6 +23,10 @@ $searchQuery = " WHERE division_status != 3 ";
 if($searchValue != ''){
    $searchQuery .= "AND (d.division_name LIKE '%".$searchValue."%' OR
             d.division_name_code LIKE '%".$searchValue."%' OR
+            added.sname LIKE '%".$searchValue."%' OR
+            added.fname LIKE '%".$searchValue."%' OR
+            added.mname LIKE '%".$searchValue."%' OR
+            d.datetime_added LIKE '%".$searchValue."%' OR
             c.cluster_name LIKE '%".$searchValue."%')";
 }
 
@@ -81,9 +85,10 @@ if($divRecords){
       "added_by"=> $row["added_by"],
       "datetime_added"=> $row["datetime_added"],
       "updated_by"=> $row["updated_by"],
-      "datetime_updated"=> $row["datetime_updated"],
-      "deleted_by"=> $row["deleted_by"],
-      "datetime_deleted"=> $row["datetime_deleted"]
+      "datetime_updated"=> $row["datetime_updated"]
+      // ,
+      // "deleted_by"=> $row["deleted_by"],
+      // "datetime_deleted"=> $row["datetime_deleted"]
    );
    }
 }

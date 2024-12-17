@@ -1979,34 +1979,67 @@ function UserEligibilitydUpdate(formData){
   });
 }
 
+function validateCareer(){
+
+}
+
 function UserCareerAdd(formData){
-  
-  $(".loader-div").show();
-  $.ajax({
-    url:"careerAdd.php",
-    method:"POST",
-    dataType: "json",
-    data:formData,
-    success:function(data){
-      $(".loader-div").hide();
-      const msg = data.msg;
-      const stat = data.status;
-      if(stat === "success"){
-        modalSuccessShow(msg,triggerTableReload,'tblcareer');
-        $('#frmUserCareerAdd')[0].reset();
-        $('#careerGovt').val('').trigger('change');
-        getInfo();
-        careerPresentCheck();
-      } else {
-        modalErrorShow(msg);
+  var dateTo = '';
+  const dateFrom = $('#careerDateFrom').val();
+  dateTo = ($('#careerPresent').prop('checked'))?getTodayDate():$('#careerDateTo').val();
+  $('#careerDateFrom').css('border-color','');
+  $('#careerDateTo').css('border-color','');
+  if(dateFrom > dateTo){
+    modalErrorShow('Invalid date range! Please check the start and end dates and try again.');
+    $('#careerDateFrom').css('border-color','red');
+    $('#careerDateTo').css('border-color','red');
+  } else {
+    $.ajax({ //check Ref Number if existed 
+      url:"checkExist.php",
+      method:"POST",
+      data: {checkOverlapCareer:1,dateFrom:dateFrom,dateTo:dateTo},
+      dataType: 'json',
+      success:function(data){
+        $(".loader-div").hide(); 
+        const countOverlapCareer = data.checkOverlapCareer;
+        if (countOverlapCareer){
+          modalErrorShow('Invalid date range! Please verify that the start date is before the end date and that there are no conflicts with existing date periods.');
+          $('#careerDateFrom').css('border-color','red');
+          $('#careerDateTo').css('border-color','red');
+        }else{
+          $(".loader-div").show();
+          $.ajax({
+            url:"careerAdd.php",
+            method:"POST",
+            dataType: "json",
+            data:formData,
+            success:function(data){
+              $(".loader-div").hide();
+              const msg = data.msg;
+              const stat = data.status;
+              if(stat === "success"){
+                modalSuccessShow(msg,triggerTableReload,'tblcareer');
+                $('#frmUserCareerAdd')[0].reset();
+                $('#careerGovt').val('').trigger('change');
+                getInfo();
+                careerPresentCheck();
+              } else {
+                modalErrorShow(msg);
+              }
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            },
+            processData: false,
+            contentType: false
+          });
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
       }
-    },error: function(xhr, status, error) {
-      modalErrorShow("The system encountered an error. Please contact support.");
-      $(".loader-div").hide();
-    },
-    processData: false,
-    contentType: false
-  });
+    });
+  }
 }
 
 function btnCareerViewUploaded(uploadedCareerMOV){
@@ -2062,56 +2095,117 @@ function btnCareerUpdate(getCareer){
 }
 
 function UserCareerUpdate(formData){
-  $(".loader-div").show();
-  $.ajax({
-    url:"careerUpdate.php",
-    method:"POST",
-    dataType: "json",
-    data:formData,
-    success:function(data){
-      $(".loader-div").hide(); 
-      $('#updateCareer').modal('hide');
-      const msg = data.msg;
-      const stat = data.status;
-      if(stat === "success"){
-      modalSuccessShow(msg,triggerTableReload,'tblcareer');
-    } else {
-      modalErrorShow(msg);
-    }
-    },error: function(xhr, status, error) {
-      modalErrorShow("The system encountered an error. Please contact support.");
-      $(".loader-div").hide();
-    },
-    processData: false,
-    contentType: false
-
-  });
+  var dateTo = '';
+  const careerID = $('#careerID').val();
+  const dateFrom = $('#UpdatecareerDateFrom').val();
+  dateTo = ($('#UpdatecareerPresent').prop('checked'))?getTodayDate():$('#UpdatecareerDateTo').val();
+  $('#UpdatecareerDateFrom').css('border-color','');
+  $('#UpdatecareerDateTo').css('border-color','');
+  if(dateFrom > dateTo){
+    modalErrorShow('Invalid date range! Please check the start and end dates and try again.');
+    $('#UpdatecareerDateFrom').css('border-color','red');
+    $('#UpdatecareerDateTo').css('border-color','red');
+  } else {
+    $.ajax({ //check Ref Number if existed 
+      url:"checkExist.php",
+      method:"POST",
+      data: {checkOverlapCareer:2,dateFrom:dateFrom,dateTo:dateTo,careerID:careerID},
+      dataType: 'json',
+      success:function(data){
+        $(".loader-div").hide(); 
+        const countOverlapCareer = data.checkOverlapCareer;
+        if (countOverlapCareer){
+          modalErrorShow('Invalid date range! Please verify that the start date is before the end date and that there are no conflicts with existing date periods.');
+          $('#UpdatecareerDateFrom').css('border-color','red');
+          $('#UpdatecareerDateTo').css('border-color','red');
+        }else{
+          $(".loader-div").show();
+          $.ajax({
+            url:"careerUpdate.php",
+            method:"POST",
+            dataType: "json",
+            data:formData,
+            success:function(data){
+              $(".loader-div").hide(); 
+              $('#updateCareer').modal('hide');
+              const msg = data.msg;
+              const stat = data.status;
+              if(stat === "success"){
+              modalSuccessShow(msg,triggerTableReload,'tblcareer');
+            } else {
+              modalErrorShow(msg);
+            }
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            },
+            processData: false,
+            contentType: false
+        
+          });
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
+    });
+  }
 }
 
 function UserVoluntaryAdd(formData){
-  $(".loader-div").show();
-  $.ajax({
-    url:"voluntaryWorkAdd.php",
-    method:"POST",
-    dataType: "json",
-    data:formData,
-    success:function(data){
-      $(".loader-div").hide();
-      const msg = data.msg;
-      const stat = data.status;
-      if(stat === "success"){
-        modalSuccessShow(msg,triggerTableReload,'tblVoluntary');
-        $('#frmUserVoluntaryAdd')[0].reset();
-      } else {
-        modalErrorShow(msg);
+  var dateTo = $('#voluntaryDateTo').val();
+  const dateFrom = $('#voluntaryDateFrom').val();
+  $('#voluntaryDateFrom').css('border-color','');
+  $('#voluntaryDateTo').css('border-color','');
+  if(dateFrom > dateTo){
+    modalErrorShow('Invalid date range! Please check the start and end dates and try again.');
+    $('#voluntaryDateFrom').css('border-color','red');
+    $('#voluntaryDateTo').css('border-color','red');
+  } else {
+    $.ajax({ //check Ref Number if existed 
+      url:"checkExist.php",
+      method:"POST",
+      data: {checkOverlapVoluntary:1,dateFrom:dateFrom,dateTo:dateTo},
+      dataType: 'json',
+      success:function(data){
+        $(".loader-div").hide(); 
+        const countOverlapVoluntary = data.checkOverlapVoluntary;
+        if (countOverlapVoluntary){
+          modalErrorShow('Invalid date range! Please verify that the start date is before the end date and that there are no conflicts with existing date periods.');
+          $('#voluntaryDateFrom').css('border-color','red');
+          $('#voluntaryDateTo').css('border-color','red');
+        }else{
+        $(".loader-div").show();
+          $.ajax({
+            url:"voluntaryWorkAdd.php",
+            method:"POST",
+            dataType: "json",
+            data:formData,
+            success:function(data){
+              $(".loader-div").hide();
+              const msg = data.msg;
+              const stat = data.status;
+              if(stat === "success"){
+                modalSuccessShow(msg,triggerTableReload,'tblVoluntary');
+                $('#frmUserVoluntaryAdd')[0].reset();
+              } else {
+                modalErrorShow(msg);
+              }
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            },
+            processData: false,
+            contentType: false
+          });
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
       }
-    },error: function(xhr, status, error) {
-      modalErrorShow("The system encountered an error. Please contact support.");
-      $(".loader-div").hide();
-    },
-    processData: false,
-    contentType: false
-  });
+    });
+  }
+  
 }
 
 function btnVoluntaryUpdate(getVoluntary){
@@ -2138,31 +2232,64 @@ function btnVoluntaryUpdate(getVoluntary){
 }
  
 function UserVoluntaryUpdate(formData){
-  $(".loader-div").show();
-    $.ajax({
-      url:"voluntaryWorkUpdate.php",
+  var dateTo = $('#UpdatevoluntaryDateTo').val();
+  const dateFrom = $('#UpdatevoluntaryDateFrom').val();
+  const vwID = $('#voluntaryID').val();
+  $('#UpdatevoluntaryDateFrom').css('border-color','');
+  $('#UpdatevoluntaryDateTo').css('border-color','');
+  if(dateFrom > dateTo){
+    modalErrorShow('Invalid date range! Please check the start and end dates and try again.');
+    $('#UpdatevoluntaryDateFrom').css('border-color','red');
+    $('#UpdatevoluntaryDateTo').css('border-color','red');
+  } else {
+    $.ajax({ //check Ref Number if existed 
+      url:"checkExist.php",
       method:"POST",
-      dataType: "json",
-      data:formData,
+      data: {checkOverlapVoluntary:2,dateFrom:dateFrom,dateTo:dateTo,vwID:vwID},
+      dataType: 'json',
       success:function(data){
         $(".loader-div").hide(); 
-        $('#updateVoluntary').modal('hide');
-        const msg = data.msg;
-        const stat = data.status;
-        if(stat === "success"){
-          modalSuccessShow(msg,triggerTableReload,'tblVoluntary');
-          $('#frmUserVoluntaryAdd')[0].reset();
-        } else {
-          modalErrorShow(msg);
+        const countOverlapVoluntary = data.checkOverlapVoluntary;
+        if (countOverlapVoluntary){
+          modalErrorShow('Invalid date range! Please verify that the start date is before the end date and that there are no conflicts with existing date periods.');
+          $('#UpdatevoluntaryDateFrom').css('border-color','red');
+          $('#UpdatevoluntaryDateTo').css('border-color','red');
+        }else{
+          $(".loader-div").show();
+          $.ajax({
+            url:"voluntaryWorkUpdate.php",
+            method:"POST",
+            dataType: "json",
+            data:formData,
+            success:function(data){
+              $(".loader-div").hide(); 
+              $('#updateVoluntary').modal('hide');
+              const msg = data.msg;
+              const stat = data.status;
+              if(stat === "success"){
+                modalSuccessShow(msg,triggerTableReload,'tblVoluntary');
+                $('#frmUserVoluntaryAdd')[0].reset();
+              } else {
+                modalErrorShow(msg);
+              }
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            },
+            processData: false,
+            contentType: false
+        
+          });
         }
       },error: function(xhr, status, error) {
         modalErrorShow("The system encountered an error. Please contact support.");
         $(".loader-div").hide();
-      },
-      processData: false,
-      contentType: false
-  
+      }
     });
+  }
+  
+  
+
 
 }
 

@@ -16,7 +16,7 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
     $user['division_name_code'] = sanitize(strtoupper($_POST['txtDivNameCode']));
     $user['cluster_code'] = sanitize(strtoupper($_POST['txtCluster']));
     $user['added_by'] = $_SESSION['userID'];
-    $user['datetime_added'] = '';
+    $user['datetime_added'] = $today;
     $user['updated_by'] = '';
     $user['datetime_updated'] = '';
     $user['deleted_by'] = '';

@@ -88,8 +88,7 @@ require_once('includes/init.php');
                           <th> Date and Time Added </th>
                           <th> Updated By </th>
                           <th> Date and Time Updated </th>
-                          <th> Deleted </th>
-                          <th> Date and Time Deleted </th>
+                        
                         </tr>
                     </thead>
                 </table>
@@ -156,9 +155,10 @@ require_once('includes/init.php');
         { data: "added_by"},
         { data: "datetime_added"},
         { data: "updated_by"},
-        { data: "datetime_updated"},
-        { data: "deleted_by"},
-        { data: "datetime_deleted"}
+        { data: "datetime_updated"}
+        // ,
+        // { data: "deleted_by"},
+        // { data: "datetime_deleted"}
       ],
       'columnDefs': [ 
         { "bSortable": false, "aTargets": [0] }

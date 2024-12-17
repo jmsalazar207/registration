@@ -163,6 +163,11 @@ function logout() {
   window.location.href = "includes/logout.php"; 
 }
 
+function dateToday() {
+  date_default_timezone_set('Asia/Manila'); 
+  $today = date("d/m,Y");
+  return $today; // Return the formatted date
+}
 
 function deleteData(PassData){ //dynamic delete details
   var DeleteURL = PassData.valueURL;

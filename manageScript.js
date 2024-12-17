@@ -830,6 +830,72 @@ jQuery("#txtDivision").on('change',function(){
   }
   }
 
+  function AdminDivisionUpdate(formData){
+    const DivisionName = $('#txtUpdateDivName').val();
+    const DivisionNameCode = $('#txtUpdateDivNameCode').val();
+    const DivisionID = $('#txtUpdateDivID').val();
+
+    $("#txtUpdateDivName").css('border-color', '');
+    $("#checktxtUpdateDivName").html("");
+
+    $("#txtUpdateDivNameCode").css('border-color', '');
+    $("#checktxUpdatetDivNameCode").html("");
+
+    if(DivisionName.length <2){
+      $("#checktxtUpdateDivName").html("Please enter a Division Name with at least 2 characters.").css('color', 'red');
+      $("#txtUpdateDivName").css('border-color', 'red');
+      $("#txtUpdateDivName").focus();
+    }else if(DivisionNameCode.length <2){
+      $("#checktxUpdatetDivNameCode").html("Please enter a Division Name Code with at least 2 characters.").css('color', 'red');
+      $("#txtUpdateDivNameCode").css('border-color', 'red');
+      $("#txtUpdateDivNameCode").focus();
+    }else{
+      $(".loader-div").show();
+      $.ajax({ //check empno
+        url:"checkExist.php",
+        method:"POST",
+        data: {type:2,adminDivision:DivisionName,DivisionID:DivisionID},
+        dataType: 'json',
+        success:function(data){
+          $(".loader-div").hide(); 
+            const uniqueDivName = data.divName;
+            if(uniqueDivName){
+                $("#checktxtUpdateDivName").html("Apologies for the inconvenience. It appears that the division name you provided already exists. Please verify the information and try again, or reach out to support for further assistance.").css('color', 'red');
+                $("#txtUpdateDivName").css('border-color', 'red');
+                $("#txtUpdateDivName").focus();
+            } else {
+              $(".loader-div").show();
+                $.ajax({
+                  url:"adminUpdateDivision.php",
+                  method:"POST",
+                  dataType: "json",
+                  data:formData,
+                  success:function(data){
+                    $(".loader-div").hide(); 
+                    const msg = data.msg;
+                    const stat = data.status;
+                    if(stat === "success"){ 
+                      modalSuccessShow(msg,refreshPage)
+                    } else {
+                      modalErrorShow(msg);
+                    }
+                  },error: function(xhr, status, error) {
+                    modalErrorShow("The system encountered an error. Please contact support.");
+                    $(".loader-div").hide();
+                  },
+                  processData: false,
+                  contentType: false
+                }); 
+            }
+        },error: function(xhr, status, error) {
+          modalErrorShow("The system encountered an error. Please contact support.");
+          $(".loader-div").hide();
+        },
+        });
+    }
+
+  }
+  
   $(document).on('change','#UpdateNewItemCode', function(){ //onchange ning New Item Code
     ValidatePositionDateCreated();
   });
@@ -1004,72 +1070,6 @@ jQuery("#txtDivision").on('change',function(){
     var PassData = new FormData(formAdminDivisionUpdate);
     modalConfirmShow('Would you like to confirm and save the changes now?',AdminDivisionUpdate,PassData);
   });
-
-  function AdminDivisionUpdate(formData){
-    const DivisionName = $('#txtUpdateDivName').val();
-    const DivisionNameCode = $('#txtUpdateDivNameCode').val();
-    const DivisionID = $('#txtUpdateDivID').val();
-
-    $("#txtUpdateDivName").css('border-color', '');
-    $("#checktxtUpdateDivName").html("");
-
-    $("#txtUpdateDivNameCode").css('border-color', '');
-    $("#checktxUpdatetDivNameCode").html("");
-
-    if(DivisionName.length <2){
-      $("#checktxtUpdateDivName").html("Please enter a Division Name with at least 2 characters.").css('color', 'red');
-      $("#txtUpdateDivName").css('border-color', 'red');
-      $("#txtUpdateDivName").focus();
-    }else if(DivisionNameCode.length <2){
-      $("#checktxUpdatetDivNameCode").html("Please enter a Division Name Code with at least 2 characters.").css('color', 'red');
-      $("#txtUpdateDivNameCode").css('border-color', 'red');
-      $("#txtUpdateDivNameCode").focus();
-    }else{
-      $(".loader-div").show();
-      $.ajax({ //check empno
-        url:"checkExist.php",
-        method:"POST",
-        data: {type:2,adminDivision:DivisionName,DivisionID:DivisionID},
-        dataType: 'json',
-        success:function(data){
-          $(".loader-div").hide(); 
-            const uniqueDivName = data.divName;
-            if(uniqueDivName){
-                $("#checktxtUpdateDivName").html("Apologies for the inconvenience. It appears that the division name you provided already exists. Please verify the information and try again, or reach out to support for further assistance.").css('color', 'red');
-                $("#txtUpdateDivName").css('border-color', 'red');
-                $("#txtUpdateDivName").focus();
-            } else {
-              $(".loader-div").show();
-                $.ajax({
-                  url:"adminUpdateDivision.php",
-                  method:"POST",
-                  dataType: "json",
-                  data:formData,
-                  success:function(data){
-                    $(".loader-div").hide(); 
-                    const msg = data.msg;
-                    const stat = data.status;
-                    if(stat === "success"){ 
-                      modalSuccessShow(msg,refreshPage)
-                    } else {
-                      modalErrorShow(msg);
-                    }
-                  },error: function(xhr, status, error) {
-                    modalErrorShow("The system encountered an error. Please contact support.");
-                    $(".loader-div").hide();
-                  },
-                  processData: false,
-                  contentType: false
-                }); 
-            }
-        },error: function(xhr, status, error) {
-          modalErrorShow("The system encountered an error. Please contact support.");
-          $(".loader-div").hide();
-        },
-        });
-    }
-
-  }
 
   $(document).on('click', '#btnAdminDivisionDelete', function() {    //delete user acount action
     const valueID = $(this).attr('data-valueID');

@@ -17,11 +17,23 @@ $columnName = $_POST['columns'][$columnIndex]['data']; // Column name
 $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
 $searchValue = $_POST['search']['value']; // Search value
 
-
+$trainingTypeMap = [
+    'MANAGERIAL' => 1,
+    'SUPERVISORY' => 2,
+    'TECHNICAL' => 3,
+ ];
 ## Search 
 $searchQuery = " WHERE t.training_status != 4 ";
-if($searchValue != ''){
-   $searchQuery .= "AND (t.empno LIKE '%".$searchValue."%' OR
+if ($searchValue != '') {
+    // Map the search value to a training type if applicable
+    $trainingTypeCondition = '';
+    $mappedTrainingType = array_search(strtoupper($searchValue), array_keys($trainingTypeMap));
+    if ($mappedTrainingType !== false) {
+        $trainingTypeCondition = " OR training_type = " . $trainingTypeMap[array_keys($trainingTypeMap)[$mappedTrainingType]];
+    }
+
+    // Build the search query
+    $searchQuery .= "AND (t.empno LIKE '%".$searchValue."%' OR
             t.training_title LIKE '%".$searchValue."%' OR
             t.training_date_from LIKE '%".$searchValue."%' OR
             t.training_date_to LIKE '%".$searchValue."%' OR
@@ -31,8 +43,11 @@ if($searchValue != ''){
             u.fname LIKE '%".$searchValue."%' OR
             u.mname LIKE '%".$searchValue."%' OR
             u.sname LIKE '%".$searchValue."%' OR
-            u.ename LIKE '%".$searchValue."%')";
+            u.ename LIKE '%".$searchValue."%'
+            $trainingTypeCondition)";
 }
+
+
 
 
 ## Total number of records without filtering

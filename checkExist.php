@@ -334,6 +334,91 @@ if(isset($_POST["inUsedDivision"])){ //retrieved skills details from lib_skill
         $count['inUsedDivision'] = $dbConn->count();
         echo json_encode($count);
  }
+ if(isset($_POST['checkOverlapCareer'])){
+   $type = $_POST['checkOverlapCareer'];
+   if($type==1){  //insert
+      $ID = $_SESSION['userID'];
+      $dateFrom = $_POST['dateFrom'];
+      $dateTo = $_POST['dateTo'];
+
+      $sql = "SELECT * FROM lib_career
+         WHERE empno = '$ID' 
+         AND career_status != '4'
+         AND (
+        (career_date_from <= '$dateTo' AND career_date_to >= '$dateFrom') 
+        OR
+        (career_date_from <= '$dateTo' AND career_date_to >= '$dateFrom')
+         );";
+      $dbConn->findFirstQuery($sql);
+      $count['checkOverlapCareer'] = $dbConn->count();
+      echo json_encode($count);
+
+   }else{   //update
+      $ID = $_SESSION['userID'];
+      $CareerID = $_POST['careerID'];
+      $dateFrom = $_POST['dateFrom'];
+      $dateTo = $_POST['dateTo'];
+
+      $sql = "SELECT * FROM lib_career
+         WHERE empno = '$ID' 
+         AND career_status != '4'
+         AND id != '$CareerID'
+         AND (
+        (career_date_from <= '$dateTo' AND career_date_to >= '$dateFrom') 
+        OR
+        (career_date_from <= '$dateTo' AND career_date_to >= '$dateFrom')
+         );";
+      $dbConn->findFirstQuery($sql);
+      $count['checkOverlapCareer'] = $dbConn->count();
+      echo json_encode($count);
+
+   }
+
+}
+
+if(isset($_POST['checkOverlapVoluntary'])){
+   $type = $_POST['checkOverlapVoluntary'];
+   if($type==1){  //insert
+      $ID = $_SESSION['userID'];
+      $dateFrom = $_POST['dateFrom'];
+      $dateTo = $_POST['dateTo'];
+
+      $sql = "SELECT * FROM lib_voluntary
+         WHERE empno = '$ID' 
+         AND vw_status != '4'
+         AND (
+        (vw_date_from <= '$dateTo' AND vw_date_to >= '$dateFrom') 
+        OR
+        (vw_date_from <= '$dateTo' AND vw_date_to >= '$dateFrom')
+         );";
+      $dbConn->findFirstQuery($sql);
+      $count['checkOverlapVoluntary'] = $dbConn->count();
+      echo json_encode($count);
+
+   } else {   //update
+      $ID = $_SESSION['userID'];
+      $vwID = $_POST['vwID'];
+      $ID = $_SESSION['userID'];
+      $dateFrom = $_POST['dateFrom'];
+      $dateTo = $_POST['dateTo'];
+
+      $sql = "SELECT * FROM lib_voluntary
+         WHERE empno = '$ID'
+         AND id != '$vwID' 
+         AND vw_status != '4'
+         AND (
+        (vw_date_from <= '$dateTo' AND vw_date_to >= '$dateFrom') 
+        OR
+        (vw_date_from <= '$dateTo' AND vw_date_to >= '$dateFrom')
+         );";
+      $dbConn->findFirstQuery($sql);
+      $count['checkOverlapVoluntary'] = $dbConn->count();
+      echo json_encode($count);
+
+   }
+
+}
+ 
  
  
  

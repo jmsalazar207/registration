@@ -75,3 +75,14 @@ resetIdleTimer(); // Start the timer immediately
 document.addEventListener('modalActionTaken', () => {
     clearTimeout(autoLogoutTimer); // Stop auto-logout if user interacts with the modal
 });
+function getTodayDate() {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0'); // Ensure day is 2 digits
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Month is 0-based, so add 1
+    const year = today.getFullYear();
+    return `${year}/${month}/${day}`; // Format: YYYY/MM/DD
+}
+
+// Example usage:
+console.log(getTodayDate());
+
