@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 17, 2024 at 10:20 AM
+-- Generation Time: Dec 18, 2024 at 10:56 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -105712,7 +105712,8 @@ CREATE TABLE `lib_training` (
 INSERT INTO `lib_training` (`id`, `empno`, `training_title`, `training_date_from`, `training_date_to`, `training_hours`, `training_type`, `training_conducted_by`, `training_status`, `training_uploaded_mov`, `training_remarks`, `updated_by`, `datetime_updated`) VALUES
 (1, '03-12456', 'TRAINING DUMMY', '2024-11-11', '2024-11-12', '16', 1, 'AKO', 0, '03-12456_Training_0.pdf', '', '', NULL),
 (2, '03-10961', 'DSWD-GOOGLE HACKATHON: GOOGLE APPSHEET AND MEET APPLICATION PROGRAMMING INTERFACE, AND GOOGLE TECHNOLOGIES', '2023-11-08', '2023-11-09', '16', 3, 'GOOGLE PHILIPPINES', 4, '03-10961_Training_0.pdf', '', '', NULL),
-(3, '03-10961', 'DSWD-GOOGLE HACKATHON: GOOGLE APPSHEET AND MEET APPLICATION PROGRAMMING INTERFACE, AND GOOGLE TECHNOLOGIES', '2023-11-08', '2023-11-09', '16', 2, 'DSWD', 0, '03-10961_Training_1.pdf', '', '', NULL);
+(3, '03-10961', 'DSWD-GOOGLE HACKATHON: GOOGLE APPSHEET AND MEET APPLICATION PROGRAMMING INTERFACE, AND GOOGLE TECHNOLOGIES', '2023-11-08', '2023-11-09', '16', 2, 'DSWD', 0, '03-10961_Training_1.pdf', '', '', NULL),
+(4, '03-10961', 'DATA CENTER WORKSHOP', '2024-11-04', '2024-11-07', '32', 3, 'DSWD', 0, '03-10961_Training_2.pdf', '', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -109364,7 +109365,7 @@ ALTER TABLE `lib_skills`
 -- AUTO_INCREMENT for table `lib_training`
 --
 ALTER TABLE `lib_training`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `lib_training_course`

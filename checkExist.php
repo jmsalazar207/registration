@@ -418,6 +418,43 @@ if(isset($_POST['checkOverlapVoluntary'])){
    }
 
 }
+
+if(isset($_POST['checkOverlapTraining'])){
+   $type = $_POST['checkOverlapTraining'];
+   if($type==1){  //insert
+      $ID = $_SESSION['userID'];
+      $title = $_POST['title'];
+      $dateFrom = $_POST['dateFrom'];
+      $dateTo = $_POST['dateTo'];
+
+      $sql = "SELECT * FROM lib_training
+         WHERE empno = '$ID' 
+         AND training_status != '4'
+         AND training_date_from = '$dateFrom'
+         AND training_date_to = '$dateTo'";
+      $dbConn->findFirstQuery($sql);
+      $count['checkOverlapTraining'] = $dbConn->count();
+      echo json_encode($count);
+
+   } else {   //update
+      $ID = $_SESSION['userID'];
+      $title = $_POST['title'];
+      $dateFrom = $_POST['dateFrom'];
+      $dateTo = $_POST['dateTo'];
+      $TrainingID = $_POST['TrainingID'];
+
+      $sql = "SELECT * FROM lib_training
+         WHERE empno = '$ID' 
+         AND training_status != '4'
+         AND training_date_from = '$dateFrom'
+         AND training_date_to = '$dateTo'
+         AND id !='$TrainingID'";
+      $dbConn->findFirstQuery($sql);
+      $count['checkOverlapTraining'] = $dbConn->count();
+      echo json_encode($count);
+   }
+
+}
  
  
  

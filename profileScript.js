@@ -2294,30 +2294,63 @@ function UserVoluntaryUpdate(formData){
 }
 
 function UserTrainingAdd(formData){
-  $(".loader-div").show();
-  $.ajax({
-    url:"trainingAdd.php",
-    method:"POST",
-    dataType: "json",
-    data:formData,
-    success:function(data){
-      $(".loader-div").hide();
-      const msg = data.msg;
-      const stat = data.status;
-      if(stat === "success"){
-        modalSuccessShow(msg,triggerTableReload,'tbltraining');
-        $('#frmUserTrainingAdd')[0].reset();
-        $('#trainingType').val('').trigger('change');
-      } else {
-        modalErrorShow(msg);
+  const title = $('#trainingTitle').val();
+  const dateTo = $('#trainingDateTo').val();
+  const dateFrom = $('#trainingDateFrom').val();
+  $('#trainingTitle').css('border-color','');
+  $('#trainingDateFrom').css('border-color','');
+  $('#trainingDateTo').css('border-color','');
+  if(dateFrom > dateTo){
+    modalErrorShow('Invalid date range! Please check the start and end dates and try again.');
+    $('#trainingDateFrom').css('border-color','red');
+    $('#trainingDateTo').css('border-color','red');
+  } else {
+    $.ajax({ //check Ref Number if existed 
+      url:"checkExist.php",
+      method:"POST",
+      data: {checkOverlapTraining:1,dateFrom:dateFrom,dateTo:dateTo,title:title},
+      dataType: 'json',
+      success:function(data){
+        $(".loader-div").hide(); 
+        const countOverlapTraining = data.checkOverlapTraining;
+        if (countOverlapTraining){
+          modalErrorShow('Invalid input detected! Please check the entered training details, as this record already exists.');
+          $('#trainingTitle').css('border-color','red');
+          $('#trainingDateFrom').css('border-color','red');
+          $('#trainingDateTo').css('border-color','red');
+        }else{
+          $(".loader-div").show();
+          $.ajax({
+            url:"trainingAdd.php",
+            method:"POST",
+            dataType: "json",
+            data:formData,
+            success:function(data){
+              $(".loader-div").hide();
+              const msg = data.msg;
+              const stat = data.status;
+              if(stat === "success"){
+                modalSuccessShow(msg,triggerTableReload,'tbltraining');
+                $('#frmUserTrainingAdd')[0].reset();
+                $('#trainingType').val('').trigger('change');
+              } else {
+                modalErrorShow(msg);
+              }
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            },
+            processData: false,
+            contentType: false
+          });
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
       }
-    },error: function(xhr, status, error) {
-      modalErrorShow("The system encountered an error. Please contact support.");
-      $(".loader-div").hide();
-    },
-    processData: false,
-    contentType: false
-  });
+    });
+  }
+
 }
 
 function btnTrainingUpdate(getTraining){
@@ -2350,31 +2383,64 @@ function btnTrainingUpdate(getTraining){
 } 
 
 function UserTrainingdUpdate(formData){
-  $(".loader-div").show();
-  $.ajax({
-    url:"trainingUpdate.php",
-    method:"POST",
-    dataType: "json",
-    data:formData,
-    success:function(data){
-      $(".loader-div").hide(); 
-      $('#updateTraining').modal('hide');
-      const msg = data.msg;
-      const stat = data.status;
-      if(stat === "success"){
-        modalSuccessShow(msg,triggerTableReload,'tbltraining');
-        $('#frmUserTrainingdUpdate')[0].reset();
-      } else {
-        modalErrorShow(msg);
+  const title = $('#updatetrainingTitle').val();
+  const dateTo = $('#updatetrainingDateTo').val();
+  const dateFrom = $('#updatetrainingDateFrom').val();
+  const TrainingID = $('#TrainingID').val();
+  $('#updatetrainingTitle').css('border-color','');
+  $('#updatetrainingDateTo').css('border-color','');
+  $('#updatetrainingDateFrom').css('border-color','');
+  if(dateFrom > dateTo){
+    modalErrorShow('Invalid date range! Please check the start and end dates and try again.');
+    $('#updatetrainingDateFrom').css('border-color','red');
+    $('#updatetrainingDateTo').css('border-color','red');
+  } else {
+    $.ajax({ //check Ref Number if existed 
+      url:"checkExist.php",
+      method:"POST",
+      data: {checkOverlapTraining:2,dateFrom:dateFrom,dateTo:dateTo,title:title,TrainingID:TrainingID},
+      dataType: 'json',
+      success:function(data){
+        $(".loader-div").hide(); 
+        const countOverlapTraining = data.checkOverlapTraining;
+        if (countOverlapTraining){
+          modalErrorShow('Invalid input detected! Please check the entered training details, as this record already exists.');
+          $('#updatetrainingTitle').css('border-color','red');
+          $('#updatetrainingDateFrom').css('border-color','red');
+          $('#updatetrainingDateTo').css('border-color','red');
+        }else{
+          $(".loader-div").show();
+          $.ajax({
+            url:"trainingUpdate.php",
+            method:"POST",
+            dataType: "json",
+            data:formData,
+            success:function(data){
+              $(".loader-div").hide(); 
+              $('#updateTraining').modal('hide');
+              const msg = data.msg;
+              const stat = data.status;
+              if(stat === "success"){
+                modalSuccessShow(msg,triggerTableReload,'tbltraining');
+                $('#frmUserTrainingdUpdate')[0].reset();
+              } else {
+                modalErrorShow(msg);
+              }
+            } ,error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            },
+            processData: false,
+            contentType: false
+        
+          });
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
       }
-    } ,error: function(xhr, status, error) {
-      modalErrorShow("The system encountered an error. Please contact support.");
-      $(".loader-div").hide();
-    },
-    processData: false,
-    contentType: false
-
-  });
+    });
+  }
 }
 
 function UserSkillsAdd(formData){
