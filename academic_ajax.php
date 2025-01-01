@@ -19,20 +19,39 @@ $searchValue = $_POST['search']['value']; // Search value
 
 
 ## Search 
+## Search Mapping
+$AcadsLevelMap = [
+   'ELEMENTARY' => 1,
+   'SECONDARY' => 2,
+   'COLLEGE' => 3,
+   'VOCATIONAL / TRADE COURSE' => 4,
+   'GRADUATE STUDIES' => 5,
+];
 $session_empno = $_SESSION['userID'];
 $searchQuery = " WHERE empno = '$session_empno' AND acad_status !=4 ";
-if($searchValue != ''){
-   $searchQuery .= "AND (empno LIKE '%".$searchValue."%' OR
-               acad_level LIKE '%".$searchValue."%' OR
-               acad_school LIKE '%".$searchValue."%' OR
-               acad_degree LIKE '%".$searchValue."%' OR
-               acad_from LIKE '%".$searchValue."%' OR
-               acad_to LIKE '%".$searchValue."%' OR
-               acad_highest_level LIKE '%".$searchValue."%' OR
-               acad_year_graduated LIKE '%".$searchValue."%' OR
-               acad_remarks LIKE '%".$searchValue."%' OR
-               acad_honors LIKE '%".$searchValue."%')";
+
+if ($searchValue != '') {
+    // Map the search value to a academic type if applicable
+    $AcadsLevelCondition = '';
+    $mappedAcadsLevel = array_search(strtoupper($searchValue), array_keys($AcadsLevelMap));
+    if ($mappedAcadsLevel !== false) {
+        $AcadsLevelCondition = " OR acad_level = " . $AcadsLevelMap[array_keys($AcadsLevelMap)[$mappedAcadsLevel]];
+    }
+
+    // Build the search query
+    $searchQuery .= "AND (empno LIKE '%".$searchValue."%' OR
+                    acad_level LIKE '%".$searchValue."%' OR
+                    acad_school LIKE '%".$searchValue."%' OR
+                    acad_degree LIKE '%".$searchValue."%' OR
+                    acad_from LIKE '%".$searchValue."%' OR
+                    acad_to LIKE '%".$searchValue."%' OR
+                    acad_highest_level LIKE '%".$searchValue."%' OR
+                    acad_year_graduated LIKE '%".$searchValue."%' OR
+                    acad_remarks LIKE '%".$searchValue."%' OR
+                    acad_honors LIKE '%".$searchValue."%'
+                     $AcadsLevelCondition)";
 }
+
 ## Total number of records without filtering
 $records = $dbConn->findFirstQuery("SELECT COUNT(a.empno) as allcount FROM lib_academic a");
 $totalRecords = $records['allcount'];

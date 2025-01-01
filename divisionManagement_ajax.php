@@ -27,6 +27,10 @@ if($searchValue != ''){
             added.fname LIKE '%".$searchValue."%' OR
             added.mname LIKE '%".$searchValue."%' OR
             d.datetime_added LIKE '%".$searchValue."%' OR
+            d.datetime_updated LIKE '%".$searchValue."%' OR
+            updated.sname LIKE '%".$searchValue."%' OR
+            updated.fname LIKE '%".$searchValue."%' OR
+            updated.mname LIKE '%".$searchValue."%' OR
             c.cluster_name LIKE '%".$searchValue."%')";
 }
 

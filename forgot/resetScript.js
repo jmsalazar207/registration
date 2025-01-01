@@ -111,14 +111,14 @@ function Reset(formData){
         }else{
           $(".loader-div").show();
           $.ajax({
-            url:"../checkExist.php",
+            url:"checkTempPassword.php",
             method:"POST",
-            data: {resetUsername:ResetEmpID,resetTempPassword:ResetTempPassword},
-            dataType: 'json',
+            data: {resetUsername:ResetEmpID,ResetTempPassword:ResetTempPassword},
+            dataType: 'json', 
             success:function(data){
               $(".loader-div").hide(); // hide loader
-              const Pass = data.EmpID;
-              if(Pass){
+              const Pass = data.credentialsResult;
+              if(Pass =='1'){ // correct password
                 if(ResetNewPassword != ResetConfirmPassword){
                   $("#CheckResetConfirmPassword").html("Error: The confirmed password does not match the new password. Please re-enter both fields.").css('color', 'red');
                   $("#resetConfirmPassword").css('border-color','red');
@@ -150,6 +150,9 @@ function Reset(formData){
               }else{
                 modalErrorShow('Oops! Invalid input detected. Please verify your entry and try again. For assistance, contact support.');
               }
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
             }
           });
         }

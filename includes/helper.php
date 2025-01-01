@@ -2,6 +2,5 @@
 
 
 function sanitize($value) {
-    return htmlspecialchars(strip_tags($value),ENT_QUOTES);
+    return htmlspecialchars(strip_tags($value),ENT_NOQUOTES);
 }  
-

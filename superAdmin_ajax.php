@@ -34,6 +34,7 @@ if($searchValue != ''){
             ul.description LIKE '%".$searchValue."%' OR
             pn.position_name LIKE '%".$searchValue."%' OR
             d.division_name LIKE '%".$searchValue."%' OR
+            u.date_registered LIKE '%".$searchValue."%' OR
             un.unit_name LIKE '%".$searchValue."%' )";
 }
 

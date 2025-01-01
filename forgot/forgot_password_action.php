@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Generate temporary password
             $temp_password = bin2hex(random_bytes(4)); // Generates an 8-character temporary password
-            $hashed_password = md5($temp_password);
+            $hashed_password = password_hash($temp_password, PASSWORD_DEFAULT);
 
             // Update user password
             $update_result = $dbConn->update('userprofile', 'empno', $user['empno'], ['temp_password' => $hashed_password]);

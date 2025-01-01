@@ -74,30 +74,41 @@ function modalErrorShow(msg){
     $('#modalDynamicConfirm').modal('show');
   }
   
-  function modalConfirmLogoutShow(msg,StayLoggedIn,Relogin){
+  function modalConfirmLogoutShow(msg){
+    $('#modalDynamicConfirmContent').attr('class','');
     $('#modalDynamicConfirmContent').attr('class','modal-contentsuccess');
+    $('#modalDynamicConfirmHeader').attr('class','');
     $('#modalDynamicConfirmHeader').attr('class','modal-headersuccess');
+    $('#modalDynamicConfirmTitle').text("");
     $('#modalDynamicConfirmTitle').text("Great! Confirmation");
+    $('#modalDynamicConfirmMessage').text('');
     $('#modalDynamicConfirmMessage').text(msg);
+    $('#modalDynamicConfirmBody').attr('class','');
     $('#modalDynamicConfirmBody').attr('class','modal-bodysuccess');
+    $('#modalDynamicConfirmIcon').attr('class','');
     $('#modalDynamicConfirmIcon').attr('class','glyphicon glyphicon-question-sign s_icon');
+    $('#modalDynamicConfirmFooter').attr('class','');
     $('#modalDynamicConfirmFooter').attr('class','modal-footersuccess');
+    $('#modalDynamicConfirmButtonYes').attr('class','');
     $('#modalDynamicConfirmButtonYes').attr('class','btn btn-modalsuccess btn-sm');
+    $('#modalDynamicConfirmButtonNo').attr('class','');
     $('#modalDynamicConfirmButtonNo').attr('class','btn btn-modalNo btn-sm');
+    $('#modalDynamicConfirmButtonYes').text('');
+    $('#modalDynamicConfirmButtonNo').text('');
     $('#modalDynamicConfirmButtonYes').text('Stay logged in');
     $('#modalDynamicConfirmButtonNo').text('Re-login account');
     staticConfirmModal();
-      // Remove previous event listeners (to prevent stacking)
-      $('#modalDynamicConfirmButtonYes').off('click');
-      $('#modalDynamicConfirmButtonNo').off('click');
+    //   // Remove previous event listeners (to prevent stacking)
+    //   $('#modalDynamicConfirmButtonYes').off('click');
+    //   $('#modalDynamicConfirmButtonNo').off('click');
   
       // Attach new event listeners
       $('#modalDynamicConfirmButtonYes').on('click', function () {
-        StayLoggedIn(); // Call the Refresh function
+        refreshPage(); // Call the Refresh function
           $('#modalDynamicConfirm').modal('hide'); // Close the modal
       });
       $('#modalDynamicConfirmButtonNo').on('click', function () {
-        Relogin(); // Call the Logout function
+        logout(); // Call the Logout function
           $('#modalDynamicConfirm').modal('hide'); // Close the modal
       });
     $('#modalDynamicConfirm').modal('show');

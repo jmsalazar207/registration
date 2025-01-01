@@ -16,7 +16,7 @@ require_once("includes/helper.php");
     }else{
         $userName = $_SESSION['userID'];
     }
-    $password = md5($_POST['password']);
+    $password = $_POST['password'];
     $param['conditions'] = array('empno' => $userName);
     $credentials = $dbConn->findFirst('userprofile',$param);
     if($credentials) {
@@ -26,7 +26,7 @@ require_once("includes/helper.php");
         }else if($isApproved == 1) {
             $data['credentialsMatch'] = 1; //Pending Approval
         }else if($isApproved== 2) {
-            if(($credentials['password'] != '') && $credentials['password'] ==$password) {
+            if(($credentials['password'] != '') && password_verify($password,$credentials['password'] )){
                 $data['credentialsMatch'] = 2; //Approved and passed
                 $data['AccountUserLevel'] = $credentials['user_level'];
                 $data['empno'] = $credentials['empno'];

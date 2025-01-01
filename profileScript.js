@@ -1293,7 +1293,7 @@ function UserFamilyBackgroundAdd(formData){
   $("#CheckFBMname").html("");
   $("#FBMname").css('border-color', '');
   $("#CheckFBDOB").html("");
-  $.ajax({ //check Ref Number if existed 
+  $.ajax({
     url:"checkExist.php",
     method:"POST",
     data: {checkFamilyBackground:1,FBSname:FBSname,FBFname:FBFname,FBMname:FBMname,FBExtname:FBExtname},
@@ -1506,6 +1506,7 @@ function resetFrmEducBackground(){
   $("#txtFilter").hide();
   $("#txtFilter").attr('required',false);
   $("#acadHighestLevel").val('');
+  $("#acadHonors").val('');
   $("#acadHighestLevel").attr('readonly',false);
   $("#acadMOV").attr('required','required');
   $("#acadYearGraduated").attr('required',false);
@@ -2451,28 +2452,46 @@ function UserSkillsAdd(formData){
     $('#checkSkillsTitle').html("Please input atleast 3 character").css('color', 'red');
     $('#skillsTitle').css('border-color', 'red');
   }else{
-    $(".loader-div").show();
+    $(".loader-div").show(); 
     $.ajax({
-      url:"skillsAdd.php",
+      url:"checkExist.php",
       method:"POST",
-      dataType: "json",
-      data:formData,
+      data: {checkSkills:1,skillsTitle:skillsTitle},
+      dataType: 'json',
       success:function(data){
         $(".loader-div").hide(); 
-        const msg = data.msg;
-        const stat = data.status;
-        if(stat === "success"){
-          modalSuccessShow(msg,triggerTableReload,'tblSkills');
-          $('#frmUserSkillsAdd')[0].reset();
-        } else {
-          modalErrorShow(msg);
+        const countEntry = data.Skills;
+        if (countEntry==1){
+        modalErrorShow('Entry already exists! Ensure the details are unique before proceeding.');
+        } else {    
+          $(".loader-div").show();
+          $.ajax({
+            url:"skillsAdd.php",
+            method:"POST",
+            dataType: "json",
+            data:formData,
+            success:function(data){
+              $(".loader-div").hide(); 
+              const msg = data.msg;
+              const stat = data.status;
+              if(stat === "success"){
+                modalSuccessShow(msg,triggerTableReload,'tblSkills');
+                $('#frmUserSkillsAdd')[0].reset();
+              } else {
+                modalErrorShow(msg);
+              }
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            },
+            processData: false,
+            contentType: false
+          });
         }
       },error: function(xhr, status, error) {
         modalErrorShow("The system encountered an error. Please contact support.");
         $(".loader-div").hide();
-      },
-      processData: false,
-      contentType: false
+      }
     });
   }
 }
@@ -2498,33 +2517,53 @@ function btnSkillsUpdate(getSkills){
 
 function UserSkillsUpdate(formData){
   const UpdateSkills = $('#updateskillsTitle').val();
+  const skillsID = $('#SkillsID').val();
   $("#CheckUpdateSkills").html("").css('color', 'red');
   $("#updateskillsTitle").css('border-color', '');
   if(UpdateSkills.length<3){
     $("#CheckUpdateSkills").html("Please input atleast 3 character").css('color', 'red');
     $("#updateskillsTitle").css('border-color', 'red');
   }else{
-		$(".loader-div").show();
+    $(".loader-div").show(); 
     $.ajax({
-      url:"skillsUpdate.php",
+      url:"checkExist.php",
       method:"POST",
-      dataType: "json",
-      data:formData,
+      data: {checkSkills:2,UpdateSkills:UpdateSkills,skillsID:skillsID},
+      dataType: 'json',
       success:function(data){
         $(".loader-div").hide(); 
-        $('#updateSkills').modal('hide');
-        const msg = data.msg;
-        const stat = data.status;
-        if(stat === "success"){
-          modalSuccessShow(msg,triggerTableReload,'tblSkills');
-          $('#frmUserSkillsAdd')[0].reset();
-        } else {
-          modalErrorShow(msg);
+        const countEntry = data.Skills;
+        if (countEntry==1){
+        modalErrorShow('Entry already exists! Ensure the details are unique before proceeding.');
+        } else {    
+          $(".loader-div").show();
+          $.ajax({
+            url:"skillsUpdate.php",
+            method:"POST",
+            dataType: "json",
+            data:formData,
+            success:function(data){
+              $(".loader-div").hide(); 
+              $('#updateSkills').modal('hide');
+              const msg = data.msg;
+              const stat = data.status;
+              if(stat === "success"){
+                modalSuccessShow(msg,triggerTableReload,'tblSkills');
+                $('#frmUserSkillsAdd')[0].reset();
+              } else {
+                modalErrorShow(msg);
+              }
+            },
+            processData: false,
+            contentType: false
+          });
         }
-      },
-      processData: false,
-      contentType: false
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
     });
+
   }
 }
 
@@ -2536,28 +2575,63 @@ function UsernonAcademicAdd(formData){
     $("#CheckNonAcademic").html("Please input atleast 3 character").css('color', 'red');
     $("#nonAcademicTitle").css('border-color', 'red');
   }else{
-		$(".loader-div").show();
     $.ajax({
-      url:"non-AcademicAdd.php",
+      url:"checkExist.php",
       method:"POST",
-      dataType: "json",
-      data:formData,
-      success:function(data){ 
+      data: {checknonAcademic:1,nonAcademicTitle:nonAcademic},
+      dataType: 'json',
+      success:function(data){
         $(".loader-div").hide(); 
-        const msg = data.msg;
-        const stat = data.status;
-        if(stat === "success"){
-          modalSuccessShow(msg,triggerTableReload,'tblnonAcademic');
-          $('#frmUsernonAcademicAdd')[0].reset();
-        } else {
-          modalErrorShow(msg);
+        const countEntry = data.nonAcademic;
+        if (countEntry==1){
+        modalErrorShow('Entry already exists! Ensure the details are unique before proceeding.');
+        } else {    
+    $(".loader-div").show(); 
+    $.ajax({
+      url:"checkExist.php",
+      method:"POST",
+      data: {checknonAcademic:1,nonAcademicTitle:nonAcademic},
+      dataType: 'json',
+      success:function(data){
+        $(".loader-div").hide(); 
+        const countEntry = data.nonAcademic;
+        if (countEntry==1){
+        modalErrorShow('Entry already exists! Ensure the details are unique before proceeding.');
+        } else {    
+          $(".loader-div").show();
+          $.ajax({
+            url:"non-AcademicAdd.php",
+            method:"POST",
+            dataType: "json",
+            data:formData,
+            success:function(data){ 
+              $(".loader-div").hide(); 
+              const msg = data.msg;
+              const stat = data.status;
+              if(stat === "success"){
+                modalSuccessShow(msg,triggerTableReload,'tblnonAcademic');
+                $('#frmUsernonAcademicAdd')[0].reset();
+              } else {
+                modalErrorShow(msg);
+              }
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            },
+            processData: false,
+            contentType: false
+          });
         }
       },error: function(xhr, status, error) {
         modalErrorShow("The system encountered an error. Please contact support.");
         $(".loader-div").hide();
-      },
-      processData: false,
-      contentType: false
+      }
+    });
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
     });
   }
 }
@@ -2583,32 +2657,51 @@ function btnNonAcademicUpdate(getNonAcademic){
 
 function UserNonAcademicUpdate(formData){
   const UpdatenonAcademic = $('#updateNonAcademicTitle').val();
+  const NonAcademicID = $('#NonAcademicID').val();
   $("#CheckUpdateNonAcademic").html("").css('color', 'red');
   $("#updateNonAcademicTitle").css('border-color', '');
   if(UpdatenonAcademic.length<3){
     $("#CheckUpdateNonAcademic").html("Please input atleast 3 character").css('color', 'red');
     $("#updateNonAcademicTitle").css('border-color', 'red');
   }else{
-		$(".loader-div").show();
+    $(".loader-div").show(); 
     $.ajax({
-      url:"non-academicUpdate.php",
+      url:"checkExist.php",
       method:"POST",
-      dataType: "json",
-      data:formData,
+      data: {checknonAcademic:2,UpdatenonAcademic:UpdatenonAcademic,NonAcademicID:NonAcademicID},
+      dataType: 'json',
       success:function(data){
         $(".loader-div").hide(); 
-        $('#updateNonAcademic').modal('hide');
-        const msg = data.msg;
-        const stat = data.status;
-        if(stat === "success"){
-          modalSuccessShow(msg,triggerTableReload,'tblnonAcademic');
-          $('#frmUsernonAcademicAdd')[0].reset();
-        } else {
-          modalErrorShow(msg);
+        const countEntry = data.nonAcademic;
+        if (countEntry==1){
+        modalErrorShow('Entry already exists! Ensure the details are unique before proceeding.');
+        } else {    
+          $(".loader-div").show();
+          $.ajax({
+            url:"non-academicUpdate.php",
+            method:"POST",
+            dataType: "json",
+            data:formData,
+            success:function(data){
+              $(".loader-div").hide(); 
+              $('#updateNonAcademic').modal('hide');
+              const msg = data.msg;
+              const stat = data.status;
+              if(stat === "success"){
+                modalSuccessShow(msg,triggerTableReload,'tblnonAcademic');
+                $('#frmUsernonAcademicAdd')[0].reset();
+              } else {
+                modalErrorShow(msg);
+              }
+            },
+            processData: false,
+            contentType: false
+          });
         }
-      },
-      processData: false,
-      contentType: false
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
     });
   }
 }
@@ -2649,27 +2742,45 @@ function UserReferencesAdd(formData){
         }else{
           $(".loader-div").show();
           $.ajax({
-            url:"referencesAdd.php",
+            url:"checkExist.php",
             method:"POST",
-            dataType: "json",
-            data:formData,
+            data: {checkReferences:1,RefName:RefName},
+            dataType: 'json',
             success:function(data){
-              $(".loader-div").hide();
-              const msg = data.msg;
-              const stat = data.status;
-              if(stat === "success"){
-                modalSuccessShow(msg,triggerTableReload,'tblReferences');
-                $('#frmUserReferencesAdd')[0].reset();
-                getInfo();
-              } else {
-                modalErrorShow(msg);
+              $(".loader-div").hide(); 
+              const countEntry = data.References;
+              if (countEntry==1){
+              modalErrorShow('Entry already exists! Ensure the details are unique before proceeding.');
+              } else {    
+                $(".loader-div").show();
+                $.ajax({
+                  url:"referencesAdd.php",
+                  method:"POST",
+                  dataType: "json",
+                  data:formData,
+                  success:function(data){
+                    $(".loader-div").hide();
+                    const msg = data.msg;
+                    const stat = data.status;
+                    if(stat === "success"){
+                      modalSuccessShow(msg,triggerTableReload,'tblReferences');
+                      $('#frmUserReferencesAdd')[0].reset();
+                      getInfo();
+                    } else {
+                      modalErrorShow(msg);
+                    }
+                  },error: function(xhr, status, error) {
+                    modalErrorShow("The system encountered an error. Please contact support.");
+                    $(".loader-div").hide();
+                  },
+                  processData: false,
+                  contentType: false
+                });
               }
             },error: function(xhr, status, error) {
               modalErrorShow("The system encountered an error. Please contact support.");
               $(".loader-div").hide();
-            },
-            processData: false,
-            contentType: false
+            }
           });
         }
       },error: function(xhr, status, error) {
@@ -2737,30 +2848,48 @@ function UserReferencesUpdate(formData){
           $('#updateReferencesMobile').css('border-color','red');
         }else{
           $(".loader-div").show();
-            $.ajax({
-            url:"referencesUpdate.php",
+          $.ajax({
+            url:"checkExist.php",
             method:"POST",
-            dataType: "json",
-            data:formData,
+            data: {checkReferences:2,RefName:UpdateRefName,RefID:RefID},
+            dataType: 'json',
             success:function(data){
               $(".loader-div").hide(); 
-              $('#updateReferences').modal('hide');
-              const msg = data.msg;
-              const stat = data.status;
-                if(stat === "success"){
-                  modalSuccessShow(msg,triggerTableReload,'tblReferences');
-                  $('#frmUserReferencesAdd')[0].reset();
-                  getInfo();
-                } else {
-                  modalErrorShow(msg);
-                }
+              const countEntry = data.References;
+              if (countEntry==1){
+              modalErrorShow('Entry already exists! Ensure the details are unique before proceeding.');
+              } else {  
+                $(".loader-div").show();
+                $.ajax({
+                url:"referencesUpdate.php",
+                method:"POST",
+                dataType: "json",
+                data:formData,
+                success:function(data){
+                  $(".loader-div").hide(); 
+                  $('#updateReferences').modal('hide');
+                  const msg = data.msg;
+                  const stat = data.status;
+                    if(stat === "success"){
+                      modalSuccessShow(msg,triggerTableReload,'tblReferences');
+                      $('#frmUserReferencesAdd')[0].reset();
+                      getInfo();
+                    } else {
+                      modalErrorShow(msg);
+                    }
+                },error: function(xhr, status, error) {
+                  modalErrorShow("The system encountered an error. Please contact support.");
+                  $(".loader-div").hide();
+                },
+                processData: false,
+                contentType: false
+                });
+              }
             },error: function(xhr, status, error) {
               modalErrorShow("The system encountered an error. Please contact support.");
               $(".loader-div").hide();
-            },
-            processData: false,
-            contentType: false
-            });
+            }
+          });
         }
       },error: function(xhr, status, error) {
         modalErrorShow("The system encountered an error. Please contact support.");
@@ -2907,8 +3036,9 @@ function UserProfileChangePass(formData){
               $(".loader-div").hide(); 
               const msg = data.msg;
               const stat = data.status;
-              if(stat === "success"){ 
-                modalConfirmLogoutShow(msg,refreshPage,logout)
+              if(stat === "1"){ 
+                // modalErrorShow(msg);
+                 modalConfirmLogoutShow(msg);
               } else {
                 modalErrorShow(msg);
               }

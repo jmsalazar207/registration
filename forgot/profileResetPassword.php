@@ -10,7 +10,7 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
     $dataReturn['msg'] = "Session has expired. Please relogin your account.";
 }else{              
     $id = '03-'.$_POST['resetUsername'];
-    $profileResetPassword['password'] = md5($_POST['resetConfirmPassword']);
+    $profileResetPassword['password'] = password_hash($_POST['resetConfirmPassword'], PASSWORD_DEFAULT);
     $profileResetPassword['last_update'] = $today;
     $profileResetPassword['temp_password'] = '';
     $profileResetPassword['is_reset'] = '0';

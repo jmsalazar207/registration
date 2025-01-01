@@ -315,3 +315,49 @@ url:"getInfo.php",
       $(".loader-div").hide();
     }
   });
+
+  password_verify($password,$credentials['password'] ))
+
+      $.ajax({
+      url: "checkpassword.php",
+      method: "POST",
+      data: { username: username, password: password },
+      dataType: 'json',
+      success: function(data) {
+        $(".loader-div").hide(); // Hide loader
+        const credentialsMatch = data.credentialsMatch;
+        const employeeNo = data.empno;
+  
+        // Handle various cases based on `credentialsMatch`
+        if (credentialsMatch == 2) {
+          resetPasswordAttempt(employeeNo);
+          
+        } else if (credentialsMatch == 3) {
+          modalErrorShow("Your registration has been disapproved by the administrator. Please contact the Personnel Section.");
+          resetCaptcha();
+        } else if (credentialsMatch == 4) {
+          modalErrorShow("Your account has been locked. Please contact the Personnel Section.");
+          resetCaptcha();
+          sessionStorage.clear();
+        } else if (credentialsMatch == 5) {
+          handleWrongPassword(employeeNo);
+        } else if (credentialsMatch == 0) {
+          $('#regRoute').css("display", "inline-flex");
+          modalAlertShow("Oops! Invalid Credentials. Please contact Personnel Section for assistance.",CloseDynamicModal);
+          resetCaptcha();
+        } else if (credentialsMatch == 1) {
+          modalAlertShow("Your account is pending approval. Please contact the Personnel Section.",CloseDynamicModal);
+          resetCaptcha();
+          sessionStorage.clear();
+        } else {
+          modalAlertShow("Oops! Invalid Credentials. Please contact Personnel Section.",CloseDynamicModal);
+          resetCaptcha();
+          sessionStorage.clear();
+        }
+      },
+      error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+        resetCaptcha();
+      }
+    });

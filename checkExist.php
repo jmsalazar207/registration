@@ -228,20 +228,21 @@ if(isset($_POST['PositionName'])){ //Check exist add
 
    echo json_encode($count);
 }
-if(isset($_POST['resetUsername'])){
+//  if(isset($_POST['resetUsername'])){
 
-   $ID = $_POST['resetUsername'];
-   $TempPassword = md5($_POST['resetTempPassword']);
-   $sql_validate = "SELECT * FROM userprofile WHERE empno = '$ID' AND temp_password = '$TempPassword' AND emp_status <= 1";
-   $dbConn->findFirstQuery($sql_validate);
-   $count['EmpID'] = $dbConn->count();
-   echo json_encode($count);
-}
+//    $ID = $_POST['resetUsername'];
+//    $TempPassword = password_hash($_POST['resetTempPassword'], PASSWORD_DEFAULT);
+//    $sql_validate = "SELECT * FROM userprofile WHERE empno = '$ID' AND temp_password = '$TempPassword' AND emp_status <= 1";
+//    $dbConn->findFirstQuery($sql_validate);
+//    $count['EmpID'] = $dbConn->count();
+//    echo json_encode($count);
+// }
+
 if(isset($_POST['attemptEmpNO'])){
-   $attemptEmpNO = $_POST['attemptEmpNO'];
-   $sql_count_attempt = "SELECT password_attempt FROM userprofile WHERE empno = '$attemptEmpNO'";
-   $count_attempt = $dbConn->findFirstQuery($sql_count_attempt);
-   echo json_encode($count_attempt);
+    $attemptEmpNO = $_POST['attemptEmpNO'];
+    $sql_count_attempt = "SELECT password_attempt FROM userprofile WHERE empno = '$attemptEmpNO'";
+    $count_attempt = $dbConn->findFirstQuery($sql_count_attempt);
+    echo json_encode($count_attempt);
 }
 if(isset($_POST['checkFamilyBackground'])){
    $type = $_POST['checkFamilyBackground'];
@@ -451,6 +452,74 @@ if(isset($_POST['checkOverlapTraining'])){
          AND id !='$TrainingID'";
       $dbConn->findFirstQuery($sql);
       $count['checkOverlapTraining'] = $dbConn->count();
+      echo json_encode($count);
+   }
+
+}
+
+if(isset($_POST['checkSkills'])){
+   $type = $_POST['checkSkills'];
+   if($type==1){  //insert
+      $ID = $_SESSION['userID'];
+      $skillsTitle = $_POST['skillsTitle'];
+   
+      $sql = "SELECT * FROM lib_skills WHERE skills_title = '$skillsTitle' AND empno = '$ID' AND skills_status != '4'";
+      $dbConn->findFirstQuery($sql);
+      $count['Skills'] = $dbConn->count();
+      echo json_encode($count);
+   }else{
+      $ID = $_SESSION['userID'];
+      $skillsID = $_POST['skillsID'];
+      $skillsTitle = $_POST['UpdateSkills'];
+
+      $sql = "SELECT * FROM lib_skills WHERE skills_title = '$skillsTitle' AND empno = '$ID' AND id != '$skillsID' AND skills_status != '4'";
+      $dbConn->findFirstQuery($sql);
+      $count['Skills'] = $dbConn->count();
+      echo json_encode($count);
+   }
+
+}
+
+if(isset($_POST['checknonAcademic'])){
+   $type = $_POST['checknonAcademic'];
+   if($type==1){  //insert
+      $ID = $_SESSION['userID'];
+      $nonAcademicTitle = $_POST['nonAcademicTitle'];
+   
+      $sql = "SELECT * FROM lib_non_academic WHERE non_academic_title = '$nonAcademicTitle' AND empno = '$ID' AND non_academic_status != '4'";
+      $dbConn->findFirstQuery($sql);
+      $count['nonAcademic'] = $dbConn->count();
+      echo json_encode($count);
+   }else{
+      $ID = $_SESSION['userID'];
+      $nonAcademicID = $_POST['NonAcademicID'];
+      $nonAcademicTitle = $_POST['UpdatenonAcademic'];
+
+      $sql = "SELECT * FROM lib_non_academic WHERE non_academic_title = '$nonAcademicTitle' AND empno = '$ID' AND id != '$nonAcademicID' AND non_academic_status != '4'";
+      $dbConn->findFirstQuery($sql);
+      $count['nonAcademic'] = $dbConn->count();
+      echo json_encode($count);
+   }
+
+}
+if(isset($_POST['checkReferences'])){
+   $type = $_POST['checkReferences'];
+   if($type==1){  //insert
+      $ID = $_SESSION['userID'];
+      $RefName = $_POST['RefName'];
+   
+      $sql = "SELECT * FROM lib_references WHERE ref_name = '$RefName' AND empno = '$ID' AND ref_status != '4'";
+      $dbConn->findFirstQuery($sql);
+      $count['References'] = $dbConn->count();
+      echo json_encode($count);
+   }else{
+      $ID = $_SESSION['userID'];
+      $RefID = $_POST['RefID'];
+      $RefName = $_POST['RefName'];
+
+      $sql = "SELECT * FROM lib_references WHERE ref_name = '$RefName' AND empno = '$ID' AND id != '$RefID' AND ref_status != '4'";
+      $dbConn->findFirstQuery($sql);
+      $count['References'] = $dbConn->count();
       echo json_encode($count);
    }
 

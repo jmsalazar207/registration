@@ -12,17 +12,17 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
     echo json_encode($dataReturn);
 }else{              
     $id = $_SESSION['userID'];
-    $profileUpdatePassword['password'] = md5($_POST['ConfirmPassword']);
+    $profileUpdatePassword['password'] = password_hash($_POST['ConfirmPassword'], PASSWORD_DEFAULT);
     $profileUpdatePassword['last_update'] = $today;
 
     $profileUpdatePasswordQuery = $dbConn->update('userprofile', 'empno', $id, $profileUpdatePassword);
 
     if($profileUpdatePasswordQuery){
-        $dataReturn['status'] = "success";
+        $dataReturn['status'] = "1";
         $dataReturn['msg'] = "Your password has been successfully updated. Would you like to stay logged in or log out and sign in again with your new password?";
         echo json_encode($dataReturn);
     }else {
-        $dataReturn['status'] = "failed";
+        $dataReturn['status'] = "0";
         $dataReturn['msg'] = "Oops! Something went wrong. Please try again later.";
         echo json_encode($dataReturn);
     }

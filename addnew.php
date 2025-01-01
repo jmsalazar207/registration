@@ -51,7 +51,7 @@ if(empty($_POST['g-recaptcha-response']))
                     $user['province'] = sanitize($_POST['AddProvince']);
                     $user['city'] = sanitize($_POST['AddCity']);
                     $user['barangay'] = sanitize($_POST['AddBarangay']);
-                    $user['password'] = md5($_POST['ConfirmPassword']);
+                    $user['password'] = password_hash($_POST['ConfirmPassword'], PASSWORD_DEFAULT);
                     $id = $user['empno'] = sanitize($_POST['EmployeeNumber']);
                     $user['uploaded_id'] = sanitize('Hehe');
                     $user['date_registered'] = $today;

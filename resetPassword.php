@@ -5,7 +5,7 @@ $today = date('Y-m-d H:i:s');
 $dataReturn = [];
 if (isset($_POST['btnResetPassword'])) {
   $empno = $_POST['btnResetPassword'];
-  $resetPassword['password'] = md5("P@ssw0rd");
+  $resetPassword['password'] = password_hash("P@ssw0rd", PASSWORD_DEFAULT);
 
   $sqlResetPassword = $dbConn->update('userprofile', 'empno', $empno, $resetPassword);
   if($sqlResetPassword){
