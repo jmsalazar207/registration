@@ -3037,7 +3037,6 @@ function UserProfileChangePass(formData){
               const msg = data.msg;
               const stat = data.status;
               if(stat === "1"){ 
-                // modalErrorShow(msg);
                  modalConfirmLogoutShow(msg);
               } else {
                 modalErrorShow(msg);

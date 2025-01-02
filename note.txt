@@ -361,3 +361,10 @@ url:"getInfo.php",
         resetCaptcha();
       }
     });
+
+    SELECT u.unit_code, u.unit_name, u.unit_name_code, d.division_name, os.station_name, added.fname
+FROM lib_unit u
+JOIN lib_division d ON d.division_code = u.division_code
+JOIN lib_official_station os ON os.station_code = u.station_code  
+LEFT JOIN userprofile added ON added.empno = u.added_by
+ORDER BY `os`.`station_name` ASC;

@@ -59,7 +59,7 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="underConstruction.php" class="btn btn-default btn-flat">Profile</a>
+                  <a href="profile.php" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
                   <a href="includes/logout.php" class="btn btn-default btn-flat">Sign out</a>
