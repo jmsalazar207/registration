@@ -368,3 +368,9 @@ JOIN lib_division d ON d.division_code = u.division_code
 JOIN lib_official_station os ON os.station_code = u.station_code  
 LEFT JOIN userprofile added ON added.empno = u.added_by
 ORDER BY `os`.`station_name` ASC;
+
+
+SELECT up.empno, up.fname, up.mname, up.sname, pos.salary_history_id, posName.position_name
+FROM userprofile up
+LEFT JOIN lib_position pos ON up.position_id = pos.position_id
+LEFT JOIN lib_position_name posName ON pos.position_name_id = posName.position_name_id
