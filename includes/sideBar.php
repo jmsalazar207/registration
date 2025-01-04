@@ -21,7 +21,7 @@
               </span>
           </a>
         </li>
-        <li class="treeview" id="Services">
+        <li class="treeview" id="Services" hidden>
           <a href="#">
             <i class="glyphicon glyphicon-th"></i> 
               <span>

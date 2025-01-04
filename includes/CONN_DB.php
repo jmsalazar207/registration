@@ -97,6 +97,19 @@
 			}
 		} //conditions
 		
+		//added another logic specifying condition
+		if(isset($params['multipleconditions'])){
+			foreach($params['multipleconditions'] as $field => $value){
+				$conditionString .=  ' ' . $field . ' '.$value[0].' ? AND';
+				$bind[] = $value[1];
+			}
+			$conditionString = trim($conditionString);
+			$conditionString = rtrim($conditionString, ' AND');
+			if($conditionString != ''){
+				$conditionString = ' WHERE ' . $conditionString;
+			}
+		} //conditions
+		
 		//group
 		if(array_key_exists('group',$params)){
 			$group = ' GROUP BY ' . $params['group'];

@@ -23,16 +23,38 @@ if (isset($_POST["adminDivision"])) {
    $type = $_POST['type']; 
    if($type ==1){ //insert
       $divName = $_POST['adminDivision'];
-      $sql_division = "SELECT * FROM lib_division WHERE division_name = '$divName' AND division_status != 3";
+      $divNameCode = $_POST['DivisionNameCode'];
+      $sql_division = "SELECT * FROM lib_division WHERE (division_name = '$divName' OR division_name_code = '$divNameCode') AND division_status != 3";
       $dbConn->findFirstQuery($sql_division);
       $count['divName'] = $dbConn->count();
       echo json_encode($count);
    }else{
       $divisionCode = $_POST['DivisionID'];
       $divName = $_POST['adminDivision'];
-      $sql_division = "SELECT * FROM lib_division WHERE division_name = '$divName' AND division_code != '$divisionCode' AND division_status != 3";
+      $divNameCode = $_POST['DivisionNameCode'];
+      $sql_division = "SELECT * FROM lib_division WHERE (division_name = '$divName' OR division_name_code = '$divNameCode') AND division_code != '$divisionCode' AND division_status != 3";
       $dbConn->findFirstQuery($sql_division);
       $count['divName'] = $dbConn->count();
+      echo json_encode($count);
+   }
+
+}
+if (isset($_POST["adminUnitName"])) {
+   $type = $_POST['type']; 
+   if($type ==1){ //insert
+      $UnitName = $_POST['adminUnitName'];
+      $UnitNameCode = $_POST['adminUnitNameCode'];
+      $sql_unit = "SELECT * FROM lib_unit WHERE (unit_name = '$UnitName' OR unit_name_code = '$UnitNameCode') AND unit_status != 3";
+      $dbConn->findFirstQuery($sql_unit);
+      $count['UnitDetails'] = $dbConn->count();
+      echo json_encode($count);
+   }else{
+      $UnitCode = $_POST['UnitID'];
+      $UnitName = $_POST['adminUnitName'];
+      $UnitNameCode = $_POST['adminUnitNameCode'];
+      $sql_unit = "SELECT * FROM lib_unit WHERE (unit_name = '$UnitName' OR unit_name_code = '$UnitNameCode') AND unit_code != '$UnitCode' AND unit_status != 3";
+      $dbConn->findFirstQuery($sql_unit);
+      $count['UnitDetails'] = $dbConn->count();
       echo json_encode($count);
    }
 
@@ -524,6 +546,16 @@ if(isset($_POST['checkReferences'])){
    }
 
 }
+if(isset($_POST["inUsedUnit"])){ //retrieved skills details from lib_skill
+   $inUsedUnit = $_POST["inUsedUnit"];
+   $sql = "SELECT pos.position_id
+           FROM lib_position pos
+           WHERE pos.unit_code = '$inUsedUnit' 
+           AND pos.position_status != 3;";
+        $dbConn->findFirstQuery($sql);
+        $count['inUsedUnit'] = $dbConn->count();
+        echo json_encode($count);
+ }
  
  
  

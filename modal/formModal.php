@@ -1005,6 +1005,275 @@
           </div>
           <!-- /.modal-dialog -->
         </div>
+
+        <div class="modal fade" id="addUnit">
+          <div class="modal-dialog">
+            <div class="modal-content">
+                <form 
+                    method="POST" 
+                    id="frmAdminUnitAdd" 
+                    autocomplete="off">
+                    <div class="modal-header">
+                        <button 
+                            type="button" 
+                            class="close" 
+                            data-dismiss="modal" 
+                            aria-label="Close">
+                                <span aria-hidden="true">
+                                    &times;
+                                </span>
+                        </button>
+                        <h4 class="modal-title">Unit Information</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="card col-md-12">
+                                <div class="col-md-12">
+                                    <label 
+                                        for="txtUnitName" 
+                                        class="col-sm-12 requiredField">
+                                        Unit Name
+                                    </label>
+                                    <div class="col-sm-12">
+                                        <input 
+                                            type="hidden" 
+                                            name="token" 
+                                            value="<?=$_SESSION["token"]?>"> 
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            name="txtUnitName" 
+                                            id="txtUnitName" 
+                                            placeholder="Unit Name" 
+                                            value="" 
+                                            style="text-transform: uppercase;" 
+                                            required="true" 
+                                            tabindex="1">
+                                    </div>
+                                    <small id='checktxtUnitName'></small>
+                                </div>
+                                <br>
+                                <div class="col-md-12">
+                                    <label 
+                                        for="txtUnitNameCode" 
+                                        class="col-sm-12 requiredField">
+                                        Unit Name Code
+                                    </label>
+                                    <div class="col-sm-12">
+                                        <input 
+                                            type="hidden" 
+                                            name="token" 
+                                            value="<?=$_SESSION["token"]?>"> 
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            name="txtUnitNameCode" 
+                                            id="txtUnitNameCode" 
+                                            placeholder="Unit Name Code" 
+                                            value="" 
+                                            style="text-transform: uppercase;" 
+                                            required="true" 
+                                            tabindex="2">
+                                    </div>
+                                    <small id='checktxtUnitNameCode'></small>
+                                </div>
+                                <br>
+                                <div class="col-md-12">
+                                    <label 
+                                        for="txtUnitDiv" 
+                                        class="col-sm-12 requiredField">
+                                        Division
+                                    </label>
+                                    <div class="col-sm-12">
+                                        <select 
+                                            class="form-control select2"
+                                            style="width: 100%;"  
+                                            id="txtUnitDiv" 
+                                            name="txtUnitDiv" 
+                                            tabindex="3"
+                                            required = "true">
+                                                
+                                        </select>
+                                    </div>
+                                    <small id='checktxtUnitDiv'></small>
+                                </div>
+                                <br>
+                                <div class="col-md-12">
+                                    <label 
+                                        for="txtUnitOfficialStation" 
+                                        class="col-sm-12 requiredField">
+                                        Official Station
+                                    </label>
+                                    <div class="col-sm-12">
+                                        <select 
+                                            class="form-control select2"
+                                            style="width: 100%;"  
+                                            id="txtUnitOfficialStation" 
+                                            name="txtUnitOfficialStation" 
+                                            tabindex="4"
+                                            required = "true">
+                                                
+                                        </select>
+                                    </div>
+                                    <small id='checktxtUnitOfficialStation'></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button 
+                            type="button" 
+                            class="btn btn-default pull-left" 
+                            data-dismiss="modal">
+                            Close
+                        </button>
+                        <button 
+                            type="submit" 
+                            class="btn btn-primary">
+                            Add
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="UpdateUnit">
+          <div class="modal-dialog">
+            <div class="modal-content">
+                <form 
+                    method="POST" 
+                    id="formAdminUnitUpdate" 
+                    autocomplete="off">
+                    <div class="modal-header">
+                        <button 
+                            type="button" 
+                            class="close" 
+                            data-dismiss="modal" 
+                            aria-label="Close">
+                                <span aria-hidden="true">
+                                    &times;
+                                </span>
+                        </button>
+                        <h4 class="modal-title">Unit Information</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="card col-md-12">
+                                <div class="col-md-12">
+                                    <label 
+                                        for="txtUpdateUnitName" 
+                                        class="col-sm-12 requiredField">
+                                        Unit Name
+                                    </label>
+                                    <div class="col-sm-12">
+                                        <input 
+                                            type="hidden" 
+                                            name="token" 
+                                            value="<?=$_SESSION["token"]?>"> 
+                                        <input 
+                                        type="hidden"
+                                        name="txtUpdateUnitID"
+                                        id="txtUpdateUnitID"
+                                        >
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            name="txtUpdateUnitName" 
+                                            id="txtUpdateUnitName" 
+                                            placeholder="Unit Name" 
+                                            value="" 
+                                            style="text-transform: uppercase;" 
+                                            required="true" 
+                                            tabindex="1">
+                                    </div>
+                                    <small id='checktxtUpdateUnitName'></small>
+                                </div>
+                                <br>
+                                <div class="col-md-12">
+                                    <label 
+                                        for="txtUpdateUnitNameCode" 
+                                        class="col-sm-12 requiredField">
+                                        Unit Name Code
+                                    </label>
+                                    <div class="col-sm-12">
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            name="txtUpdateUnitNameCode" 
+                                            id="txtUpdateUnitNameCode" 
+                                            placeholder="Unit Name Code" 
+                                            value="" 
+                                            style="text-transform: uppercase;" 
+                                            required="true" 
+                                            tabindex="2">
+                                    </div>
+                                    <small id='checktxtUpdateUnitNameCode'></small>
+                                </div>
+                                <br>
+                                <div class="col-md-12">
+                                    <label 
+                                        for="txtUpdateUnitDiv" 
+                                        class="col-sm-12 requiredField">
+                                        Division
+                                    </label>
+                                    <div class="col-sm-12">
+                                        <select 
+                                            class="form-control select2"
+                                            style="width: 100%;"  
+                                            id="txtUpdateUnitDiv" 
+                                            name="txtUpdateUnitDiv" 
+                                            tabindex="3"
+                                            required = "true">
+                                                
+                                        </select>
+                                    </div>
+                                    <small id='checktxtUpdateUnitDiv'></small>
+                                </div>
+                                <br>
+                                <div class="col-md-12">
+                                    <label 
+                                        for="txtUpdateUnitOfficialStation" 
+                                        class="col-sm-12 requiredField">
+                                        Official Station
+                                    </label>
+                                    <div class="col-sm-12">
+                                        <select 
+                                            class="form-control select2"
+                                            style="width: 100%;"  
+                                            id="txtUpdateUnitOfficialStation" 
+                                            name="txtUpdateUnitOfficialStation" 
+                                            tabindex="4"
+                                            required = "true">
+                                                
+                                        </select>
+                                    </div>
+                                    <small id='checktxtUpdateUnitOfficialStation'></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button 
+                            type="button" 
+                            class="btn btn-default pull-left" 
+                            data-dismiss="modal">
+                            Close
+                        </button>
+                        <button 
+                            type="submit" 
+                            class="btn btn-primary">
+                            Update
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+
         <!-- modal Notif -->
         <div class="modal fade" id="modalNotif">
           <div class="modal-dialog modal-sm">

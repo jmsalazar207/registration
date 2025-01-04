@@ -94,7 +94,6 @@ if(isset($_POST["divisionAction"])){ //ONCHANGE Drop down menu for UNIT
   echo $units_output; 
 }
 function fill_position_name($dbConn,$position_name_id=0){ //dropdown for position
-  // $region_sql="SELECT region_code, region_name, region_nick FROM lib_regions";
   $params['fields'] = "position_name_id, position_name, position_initial";
   $params['group'] = "position_name_id, position_name, position_initial";
   $params['order'] = "position_name";
@@ -302,6 +301,7 @@ if(isset($_POST["update_barangay_id"])&& isset($_POST['Where_city_ID'])){ //retr
   }
   echo $update_brgys_output; 
 }
+// LIST OF POSITIONS
 if(isset($_POST["update_position_id"])){ //retrieve data of selected position from lib_position
   $update_position_id = $_POST["update_position_id"];
   $params['fields'] = "position_code, position_name";
@@ -315,10 +315,12 @@ if(isset($_POST["update_position_id"])){ //retrieve data of selected position fr
   }
   echo $update_positions_output; 
 }
+// LIST OF DIVISION
 if(isset($_POST["update_division_id"])){ //retrieve data of selected divisions from lib_division
   $update_division_id = $_POST["update_division_id"];
   $params['fields'] = "division_code, division_name";
   $params["order"] = "division_name";
+  $params['multipleconditions']["division_status"] =  ['!=',3];
   $update_divisions=$dbConn->find('lib_division',$params);
   $update_divisions_output = '<option value="">SELECT DIVISION</option>';
   if($update_divisions){
@@ -328,11 +330,13 @@ if(isset($_POST["update_division_id"])){ //retrieve data of selected divisions f
   }
   echo $update_divisions_output; 
 }
+// LIST OF UNIT
 if(isset($_POST["update_unit_id"])&& isset($_POST['Where_division_ID'])){ //retrieve data of unit with division id, auto populated unit
   $update_unit_id = $_POST["update_unit_id"];
   $Where_division_ID = $_POST["Where_division_ID"];
   $params['fields'] = "unit_code, unit_name";
-  $params['conditions'] = array("division_code" => $Where_division_ID);
+  $params['multipleconditions']["unit_status"] =  ['!=',3];
+  $params['multipleconditions']["division_code"] =  ['=',$Where_division_ID];
   $params['order'] = 'unit_name';
   $update_units=$dbConn->find('lib_unit',$params);
   $update_units_output = '<option value="">SELECT UNIT</option>';
@@ -342,6 +346,21 @@ if(isset($_POST["update_unit_id"])&& isset($_POST['Where_division_ID'])){ //retr
     }
   }
   echo $update_units_output; 
+}
+// LIST OF OFFICIAL STATION
+if(isset($_POST["update_official_station_id"])){ //retrieve data of selected divisions from lib_division
+  $update_official_station_id = $_POST["update_official_station_id"];
+  $params['fields'] = "station_code, station_name";
+  $params["order"] = "station_name";
+  $params['multipleconditions']["official_station_status"] =  ['!=',3];
+  $update_official_stations=$dbConn->find('lib_official_station',$params);
+  $update_official_stations_output = '<option value="">SELECT OFFICIAL STATION</option>';
+  if($update_official_stations){
+    foreach($update_official_stations as $update_official_station){
+      $update_official_stations_output .= '<option value='.$update_official_station['station_code']. ($update_official_station_id==$update_official_station['station_code']?" selected":"") . ' >' .$update_official_station['station_name'].'</option>';
+    }
+  }
+  echo $update_official_stations_output; 
 }
 if(isset($_POST["UserLevel"])){ //retrieve data of user level from lib_user_level
   $UserLevel = $_POST["UserLevel"];
@@ -712,5 +731,11 @@ if(isset($_POST["clusterID"])){
     }
   }
   echo $update_clusters_output; 
+}
+if(isset($_POST["btnAdminUnitUpdate"])){ //retrieved skills details from lib_skill
+  $AdminUnitUpdate = $_POST["btnAdminUnitUpdate"];
+  $sql = "SELECT * FROM lib_unit WHERE unit_code  = '$AdminUnitUpdate'";
+  $AdminUnitInfo=$dbConn->findFirstQuery($sql);
+  echo json_encode($AdminUnitInfo); 
 }
 ?>

@@ -84,6 +84,7 @@ require_once('includes/init.php');
                           <th> Unit Name </th>
                           <th> Unit Code Name </th>
                           <th> Division Name </th>
+                          <th> Station Name </th>
                           <th> Added By </th>
                           <th> Date and Time Added </th>
                           <th> Updated By </th>
@@ -137,9 +138,9 @@ require_once('includes/init.php');
 <script src="manageScript.js?test=<?php echo time()?>"></script>
 <script>
   $(function () {
-    tables['tblDivision'] = $('#tblDivision').DataTable({
+    tables['tblUnit'] = $('#tblUnit').DataTable({
       ajax: {
-          url: 'divisionManagement_ajax.php',
+          url: 'unitManagement_ajax.php',
           type: 'POST',
           'data': function(data){
           }
@@ -149,16 +150,14 @@ require_once('includes/init.php');
       "order": [[ 1, "desc" ]],
       columns: [
         { data: "Action"},
+        { data: "unit_name"},
+        { data: "unit_name_code"},
         { data: "division_name"},
-        { data: "division_name_code"},
-        { data: "cluster_name"},
+        { data: "station_name"},
         { data: "added_by"},
         { data: "datetime_added"},
         { data: "updated_by"},
         { data: "datetime_updated"}
-        // ,
-        // { data: "deleted_by"},
-        // { data: "datetime_deleted"}
       ],
       'columnDefs': [ 
         { "bSortable": false, "aTargets": [0] }

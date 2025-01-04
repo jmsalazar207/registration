@@ -27,7 +27,7 @@ $.ajax({
         const HistoryItemCode = PositionData['item_code'];
         $("#tblPosOverview").dataTable().fnDestroy()
         $('#position_id').val(PositionData['position_id']);
-        $('#addHistoryItemCode').val(PositionData['item_code']);
+        $('#addHistoryItemCode').val(PositionData['item_code']); 
         $('#addHistoryPositionName').val(PositionData['position_name']);
         $('#UpdatePositionItemCode').val(PositionData['item_code']);
         const DateCreated = PositionData['date_creation_position'];
