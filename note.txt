@@ -374,3 +374,24 @@ SELECT up.empno, up.fname, up.mname, up.sname, pos.salary_history_id, posName.po
 FROM userprofile up
 LEFT JOIN lib_position pos ON up.position_id = pos.position_id
 LEFT JOIN lib_position_name posName ON pos.position_name_id = posName.position_name_id
+
+
+
+Things to do
+Position Management 
+Adjust area of assignment
+salary grade
+dropdown for rsw
+eligibility
+
+QA Comments
+
+SELECT u.empno, u.fname, u.mname, u.sname, u.ename, CONCAT(u.fname,' ',u.mname,' ',u.sname,' ',u.ename) AS fullname, pn.position_name, pos.salary_history_id, fs.fund_source_name, d.division_name, un.unit_name, pi.tin_no
+FROM userprofile u
+LEFT JOIN lib_position pos ON pos.position_id = u.position_id
+LEFT JOIN lib_position_name pn ON pos.position_name_id = pn.position_name_id
+LEFT JOIN lib_fund_source fs ON pos.fund_source_code = fs.fund_source_code
+LEFT JOIN lib_unit un ON pos.area_assignment = un.unit_code
+LEFT JOIN lib_division d ON un.division_code = d.division_code
+LEFT JOIN lib_personal_info pi ON u.empno = pi.empno
+GROUP BY u.empno, u.fname, u.mname, u.sname, u.ename, pn.position_name, pos.salary_history_id, fs.fund_source_name, d.division_name, un.unit_name,pi.tin_no;

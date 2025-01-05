@@ -79,10 +79,12 @@ if(isset($_POST["cityAction"])){ //Kapag Onchange ning city
   }
   echo $brgy_output; 
 }
+
 if(isset($_POST["divisionAction"])){ //ONCHANGE Drop down menu for UNIT
   $division_code = $_POST["division_ids"];
   $params['fields'] = "unit_code, unit_name";
-  $params['conditions'] = array("division_code" => $division_code);
+  $params['multipleconditions']["unit_status"] =  ['!=',3];
+  $params['multipleconditions']["division_code"] =  ['=',$division_code];
   $params["order"] = "unit_name";
   $units=$dbConn->find('lib_unit',$params);
   $units_output = '<option value="">SELECT UNIT</option>';
@@ -111,7 +113,7 @@ function fill_item_code($dbConn,$item_id=0){ //dropdown for position
   $sql = "SELECT pos.position_id, pos.item_code, pn.position_name
           FROM lib_position pos
           LEFT JOIN lib_position_name pn ON pos.position_name_id = pn.position_name_id
-          WHERE pos.position_status = '2'
+          WHERE pos.position_status = '0'
           ORDER BY pos.item_code
   ";
   $item_codes=$dbConn->findQuery($sql);
@@ -176,6 +178,21 @@ function fill_division($dbConn,$division_id=0){ //dropdown for division
   }
  return $output;
 }
+function fill_unit($dbConn,$unit_id=0){ //dropdown for division
+  // $region_sql="SELECT region_code, region_name, region_nick FROM lib_regions";
+  $params['fields'] = "unit_code, unit_name";
+  $params['group'] = "unit_code, unit_name";
+  $params["order"] = "unit_name";
+  $params['multipleconditions']["unit_status"] =  ['!=',3];
+  $units=$dbConn->find('lib_unit',$params);
+  $output = '<option value="">SELECT AREA OF ASSIGNMENT</option>';
+  if($units){
+    foreach($units as $unit){
+      $output .= '<option value='.$unit['unit_code']. ($unit_id==$unit['unit_code']?" selected":"") . ' >' .$unit['unit_name'].'</option>';
+    }
+  }
+ return $output;
+}
 function fill_employment($dbConn,$employment_id=0){ //dropdown for classification of employment
   $params['fields'] = "position_classification_id, classification_employment_name";
   $params['group'] = "position_classification_id, classification_employment_name";
@@ -207,7 +224,7 @@ function fill_fund_source($dbConn,$fs_id=0){ //dropdown for classification of em
   $params['fields'] = "fund_source_code, fund_source_name";
   $params['group'] = "fund_source_code, fund_source_name";
   $params["order"] = "fund_source_name";
-  $params["conditions"] = array('status' => '1');
+  $params["conditions"] = array('status' => '0');
   $fund_sources=$dbConn->find('lib_fund_source',$params);
   $output = '<option value="">SELECT FUND SOURCE</option>';
   if($fund_sources){
@@ -431,11 +448,11 @@ if(isset($_POST["getAcads"])){ //retrieve academic information from lib_academic
 }
 if(isset($_POST["getPositionHistoryDetails"])){ //retrieve position details from lib_position and lib_position_name for history from tbl_employee_appointment_history
   $position_id = $_POST["getPositionHistoryDetails"];
-  $sql = "SELECT pos.position_id, pos.item_code, pos.date_creation_position, pos.unit_code, d.division_code, pn.position_name, CONCAT(up.fname,' ',up.mname,' ',up.sname,' ',up.ename) as filled_by, up.date_filled
+  $sql = "SELECT pos.position_id, pos.item_code, pos.date_creation_position, pos.area_assignment, d.division_code, pn.position_name, CONCAT(up.fname,' ',up.mname,' ',up.sname,' ',up.ename) as filled_by, up.date_filled
           FROM lib_position pos
           LEFT JOIN userprofile up ON up.position_id = pos.position_id
           LEFT JOIN lib_position_name pn ON pn.position_name_id = pos.position_name_id
-          LEFT JOIN lib_unit u ON pos.unit_code = u.unit_code
+          LEFT JOIN lib_unit u ON pos.area_assignment = u.unit_code
           LEFT JOIN lib_division d ON u.division_code = d.division_code
           WHERE pos.position_id = '$position_id'";
   $PosDetailsInfo=$dbConn->findFirstQuery($sql);

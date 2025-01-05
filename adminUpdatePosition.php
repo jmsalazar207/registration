@@ -12,7 +12,7 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
     echo json_encode($dataReturn);
 }else{  
                     $id = $_POST['position_id'];
-                    $positionUpdate['unit_code'] =$_POST['UpdatePositionUnit'];
+                    $positionUpdate['area_assignment'] =$_POST['UpdatePositionUnit'];
                     $positionUpdate['updated_by'] = $_SESSION['userID'];
                     $positionUpdate['datetime_updated']= $today;
                     $UpdatePositionQuery = $dbConn->update('lib_position','position_id',$id,$positionUpdate);

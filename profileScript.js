@@ -1083,7 +1083,7 @@ function UserBasicInfoUpdate(formData){ //add/update basic information
                   const msg = data.msg;
                   const stat = data.status;
                   if(stat === "success"){ 
-                    modalSuccessShow(msg,reloadFormBasicInfo,'');
+                    modalSuccessShow(msg,resetFormBasicInfo,'');
                   } else {
                     modalErrorShow(msg);
                   }
@@ -1906,7 +1906,7 @@ function checkUpdateEligibility(eligibilityValue){
     $('#UpdateeligibilityRating').attr('readonly',false);
     $('#UpdateeligibilityRating').attr('required',true);
     $('#lblUpdateeligibilityRating').attr('class','col-sm-12 requiredField');
-  }else if(eligibilityValue==10){
+  }else if(eligibilityValue>10){
     $('#UpdateeligibilityRating').attr('readonly',false);
     $('#UpdateeligibilityRating').attr('required',true);
     $('#lblUpdateeligibilityRating').attr('class','col-sm-12 requiredField');    
@@ -3452,7 +3452,7 @@ $(document).on('change','#eligibilityCredentials', function(){
     $('#eligibilityRating').attr('readonly',false);
     $('#eligibilityRating').attr('required',true);
     $('#lbleligibilityRating').attr('class','col-sm-12 requiredField');
-  }else if(eligibilityValue==10){
+  }else if(eligibilityValue>10){
     $('#eligibilityRating').attr('readonly',false);
     $('#eligibilityRating').attr('required',true);
     $('#lbleligibilityRating').attr('class','col-sm-12 requiredField');    
@@ -3517,7 +3517,7 @@ $(document).on('click','#btnUserCareerUpdate',function(event){
   btnCareerUpdate(getCareer);
 });
 
-$(document).on('submit','#btnUserCareerViewUploaded',function(){
+$(document).on('click','#btnUserCareerViewUploaded',function(){
   var uploadedCareerMOV = $(this).attr('value');
   btnCareerViewUploaded(uploadedCareerMOV);
 });

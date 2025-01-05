@@ -151,9 +151,7 @@
                                             name="addPositionDivision"
                                             required
                                             tabindex="6">
-                                                <?php
-                                                    echo fill_division($dbConn, null);
-                                                ?>
+                                            
                                             </select>
                                         </div>
                                     </div>
@@ -176,6 +174,29 @@
                                             required
                                             tabindex="7">
                                                 <option>SELECT DIVISION FIRST</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <label 
+                                            for="addPositionAreaAssignment" 
+                                            class="col-sm-12" 
+                                            style="font-size: 15px;">
+                                            Area Of Assignment
+                                        </label>
+                                        <div class="col-sm-12">
+                                            <select
+                                            type="select" 
+                                            class="form-control select2"
+                                            style="width: 100%;" 
+                                            id="addPositionAreaAssignment" 
+                                            name="addPositionAreaAssignment"
+                                            required
+                                            tabindex="8"><?php
+                                                    echo fill_unit($dbConn,null);
+                                                ?>
                                             </select>
                                         </div>
                                     </div>

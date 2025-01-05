@@ -19,7 +19,7 @@ $searchValue = $_POST['search']['value']; // Search value
 
 
 ## Search 
-$searchQuery = " WHERE 1 ";
+$searchQuery = " WHERE u.emp_status =0 ";
 if($searchValue != ''){
    $searchQuery .= "AND (u.empno LIKE '%".$searchValue."%' OR
             u.sname LIKE '%".$searchValue."%' OR
@@ -42,26 +42,25 @@ $totalRecords = $records['allcount'];
 
 ## Total number of records with filtering
 $records = $dbConn->findFirstQuery("SELECT COUNT(empno) as allcount
-                                    FROM userprofile u
-                                    LEFT JOIN lib_position pos ON pos.position_id = u.position_id
-                                    LEFT JOIN lib_position_name pn ON pos.position_name_id = pn.position_name_id
-                                    LEFT JOIN lib_unit un ON un.unit_code = pos.unit_code
-                                    LEFT JOIN lib_division d ON un.division_code = d.division_code
-                                    LEFT JOIN lib_official_station os ON un.station_code = os.station_code
+                                    FROM userprofile u 
+                                    LEFT JOIN lib_position pos ON pos.position_id = u.position_id 
+                                    LEFT JOIN lib_position_name pn ON pos.position_name_id = pn.position_name_id 
+                                    LEFT JOIN lib_unit un ON un.unit_code = pos.area_assignment 
+                                    LEFT JOIN lib_division d ON un.division_code = d.division_code 
+                                    LEFT JOIN lib_official_station os ON un.station_code = os.station_code 
                                     JOIN lib_account_status ac ON u.account_status = ac.account_status_code"
                                     .$searchQuery);
 $totalRecordwithFilter = $records['allcount'];
 
 ## Fetch records
-$sql_emp = "SELECT u.empno, u.sname, u.fname, u.mname, u.ename, u.position_id, pos.item_code, pn.position_name, d.division_name, 
-            un.unit_name, u.account_status ,os.station_name, ac.account_status_name
-            FROM userprofile u
-            LEFT JOIN lib_position pos ON pos.position_id = u.position_id
-            LEFT JOIN lib_position_name pn ON pos.position_name_id = pn.position_name_id
-            LEFT JOIN lib_unit un ON un.unit_code = pos.unit_code
-            LEFT JOIN lib_division d ON un.division_code = d.division_code
-            LEFT JOIN lib_official_station os ON un.station_code = os.station_code
-            JOIN lib_account_status ac ON u.account_status = ac.account_status_code  
+$sql_emp = "SELECT u.empno, u.sname, u.fname, u.mname, u.ename, u.position_id, u.emp_status, pos.item_code, pn.position_name, d.division_name, un.unit_name, u.account_status ,os.station_name, ac.account_status_name 
+            FROM userprofile u 
+            LEFT JOIN lib_position pos ON pos.position_id = u.position_id 
+            LEFT JOIN lib_position_name pn ON pos.position_name_id = pn.position_name_id 
+            LEFT JOIN lib_unit un ON un.unit_code = pos.area_assignment 
+            LEFT JOIN lib_division d ON un.division_code = d.division_code 
+            LEFT JOIN lib_official_station os ON un.station_code = os.station_code 
+            JOIN lib_account_status ac ON u.account_status = ac.account_status_code
             $searchQuery ORDER BY $columnName $columnSortOrder limit $row, $rowperpage";
 
 $empRecords = $dbConn->findQuery($sql_emp);
@@ -81,6 +80,9 @@ if($empRecords){
                   <button class = 'btn btn-default btn-sm' type = 'button' id = 'btnResetPassword' name = 'btnResetPassword'  class = '' value = '$empno'  title='Reset Password'>
                      Reset
                   </button>
+                  <button class = 'btn btn-warning btn-sm' type = 'button' id = 'btnInactive' name = 'btnInactive'  class = '' value = '$empno'  title='Inactive'>
+                     Inactive
+                  </button>
                </td>
                "; 
    
@@ -95,6 +97,9 @@ if($empRecords){
                   <button class = 'btn btn-default btn-sm' type = 'button' id = 'btnResetPassword' name = 'btnResetPassword' class = '' value = '$empno'  title='Reset Password'>
                      Reset
                   </button>
+                  <button class = 'btn btn-warning btn-sm' type = 'button' id = 'btnInactive' name = 'btnInactive'  class = '' value = '$empno'  title='Inactive'>
+                     Inactive
+                  </button>
                </td>";
    }else if($acc_status == 4){
       $action = "<td>
@@ -107,6 +112,9 @@ if($empRecords){
                   <button class = 'btn btn-default btn-sm' type = 'button' id = 'btnResetPassword' name = 'btnResetPassword'  class = '' value = '$empno'  title='Reset Password'>
                      Reset
                   </button>
+                  <button class = 'btn btn-warning btn-sm' type = 'button' id = 'btnInactive' name = 'btnInactive'  class = '' value = '$empno'  title='Inactive'>
+                     Inactive
+                  </button>
                 </td>";
    }else{
       $action =   "<td>
@@ -118,6 +126,9 @@ if($empRecords){
                <button class='btn btn-danger btn-sm' id = 'btnAdminDelete' name ='btnAdminDelete' data-valueID = '$empno' data-valueURL = '$url'  title='Remove Information' >
                   Remove
                </button>
+               <button class = 'btn btn-warning btn-sm' type = 'button' id = 'btnInactive' name = 'btnInactive'  class = '' value = '$empno'  title='Inactive'>
+                     Inactive
+                  </button>
             </td>
 
                   ";

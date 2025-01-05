@@ -43,13 +43,13 @@ $totalRecords = $records['allcount'];
 
 ## Total number of records with filtering
 $records = $dbConn->findFirstQuery("SELECT COUNT(pos.position_id) as allcount 
-                                    FROM lib_position pos
+                                   FROM lib_position pos
                                     JOIN lib_position_name pn ON pn.position_name_id = pos.position_name_id
                                     JOIN lib_classification_employment cs ON cs.position_classification_id = pos.position_classification_id
                                     JOIN lib_fund_source fs ON fs.fund_source_code = pos.fund_source_code
-                                    JOIN lib_unit u ON u.unit_code = pos.unit_code
+                                    JOIN lib_unit u ON u.unit_code = pos.area_assignment
                                     JOIN lib_division d ON u.division_code = d.division_code
-                                    LEFT JOIN lib_official_station os ON os.station_code = u.station_code
+                                    JOIN lib_official_station os ON os.station_code = u.station_code
                                     JOIN lib_position_status pstat ON pstat.position_status = pos.position_status
                                     JOIN lib_salary_history sh ON sh.salary_history_id = pos.salary_history_id"
                                     .$searchQuery);
@@ -62,9 +62,9 @@ FROM lib_position pos
 JOIN lib_position_name pn ON pn.position_name_id = pos.position_name_id
 JOIN lib_classification_employment cs ON cs.position_classification_id = pos.position_classification_id
 JOIN lib_fund_source fs ON fs.fund_source_code = pos.fund_source_code
-JOIN lib_unit u ON u.unit_code = pos.unit_code
+JOIN lib_unit u ON u.unit_code = pos.area_assignment
 JOIN lib_division d ON u.division_code = d.division_code
-LEFT JOIN lib_official_station os ON os.station_code = u.station_code
+JOIN lib_official_station os ON os.station_code = u.station_code
 JOIN lib_position_status pstat ON pstat.position_status = pos.position_status
 JOIN lib_salary_history sh ON sh.salary_history_id = pos.salary_history_id
         $searchQuery ORDER BY $columnName $columnSortOrder limit $row, $rowperpage";
@@ -82,8 +82,8 @@ if($Records){
     $action =
             "
                <td>
-                  <button class='' id = 'btnPositionHistory' name ='btnPositionHistory' onclick ='btnPositionHistory(this.value)' value = '$id'  title='View' >
-                     View
+                  <button class='btn btn-primary btn-sm' id = 'btnPositionHistory' name ='btnPositionHistory' onclick ='btnPositionHistory(this.value)' value = '$id'  title='Update' >
+                     Update
                   </button>
                </td>
             "; 
@@ -95,7 +95,7 @@ if($Records){
       "classification_employment_name" => $row['classification_employment_name'],
       "fund_source_name" => $row['fund_source_name'],
       "date_creation_position" => $row['date_creation_position'],
-      "step_1" => $row['step_1'],
+      "salary_history_id" => $row['salary_history_id'],
       "division_name" => $row['division_name'],
       "unit_name" => $row['unit_name'],
       "station_name" => $row['station_name'],

@@ -1,6 +1,7 @@
 $(function(){
     $('.select2').select2()
     jQuery("#UpdatePositionDivision").on('change',function(){
+		$(".loader-div").show();
         var divisionAction = jQuery(this).attr("id");
         var division_ids = jQuery(this).val();
         if(division_ids){
@@ -9,20 +10,40 @@ $(function(){
             method:"POST",
             data:{divisionAction:divisionAction, division_ids:division_ids},
             success:function(data){
+                $(".loader-div").show();
                 jQuery('#UpdatePositionUnit').html(data);
-            }
+            },error: function(xhr, status, error) {
+                modalErrorShow("The system encountered an error. Please contact support.");
+                $(".loader-div").hide();
+              }
         });
         }else{
             jQuery('#UpdatePositionUnit').html('<option value="">SELECT DIVISION FIRST</option>');
         }
       });
+      $(".loader-div").show();
+      $.ajax({
+        url:"includes/functions.php",
+        method:"POST",
+        data:{update_division_id:0},
+        success:function(data){
+            $(".loader-div").hide(); 
+            $('#addPositionDivision').html(data);
+        },error: function(xhr, status, error) {
+            modalErrorShow("The system encountered an error. Please contact support.");
+            $(".loader-div").hide();
+          }
+    });
+    
   });
 function btnPositionHistory(getPositionHistoryDetails){ //retrieve information from lib_position and lib_position_name for modal history
-$.ajax({
+    $(".loader-div").show();
+    $.ajax({
     url:"includes/functions.php",
     method:"POST",
     data:{getPositionHistoryDetails:getPositionHistoryDetails},
     success:function(data){
+		$(".loader-div").hide();
         const PositionData = JSON.parse(data);
         const HistoryItemCode = PositionData['item_code'];
         $("#tblPosOverview").dataTable().fnDestroy()
@@ -42,7 +63,7 @@ $.ajax({
               $('#UpdatePositionDivision').html(data);
           }
       });
-        var update_unit_id = PositionData["unit_code"];
+        var update_unit_id = PositionData["area_assignment"];
         $.ajax({
           url:"includes/functions.php",
           method:"POST",
@@ -76,20 +97,25 @@ $.ajax({
             ]
 
         });
-    }
-});
+    },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
+    });
 };
 function btnCheckDeletePosition(){ // function trigger to delete position DONE
+    $(".loader-div").show();
     const checkPositionID = $('#position_id').val();
     $.ajax({
         url:"includes/functions.php",
         method:"POST",
         data:{checkInUsedPosition:checkPositionID},
         success:function(data){
+            $(".loader-div").hide(); 
             const CheckPosition = JSON.parse(data);
             const inUsedPosition = CheckPosition['position_id'];
             if(inUsedPosition > 0){
-                alert("The position is currently occupied and cannot be deleted.");
+                modalAlertShow("The position is currently occupied and cannot be deleted.",CloseDynamicModal);
             }else{
                 var formData = new FormData(frmUpdatePosition);
                 $.ajax({
@@ -102,23 +128,24 @@ function btnCheckDeletePosition(){ // function trigger to delete position DONE
                             const msg = data.msg;
                             const stat = data.status;
                             if(stat == "success"){
-                                $('#modalNotif-header').text('Great! Success.');
-                                $('#modalNotif-message').text(msg);
-                                $('#modalNotif').modal('show');
+                                modalSuccessShow(msg,refreshPage);
                             }
                             else{
-                                $('#alertMessage').text(msg);
-                                $('#modalAlert').modal('show'); 
+                                modalErrorShow(msg);
                             }
                         },
                         processData: false,
                         contentType: false
                 });
             }
-        }
+        },error: function(xhr, status, error) {
+            modalErrorShow("The system encountered an error. Please contact support.");
+            $(".loader-div").hide();
+          }
     });
 };
 $("#addPositionDivision").on('change',function(){ //function trigger if division selected unit will be auto populated
+    $(".loader-div").show();
     var divisionAction = $(this).attr("id");
     var division_ids = $(this).val();
     if(division_ids){
@@ -127,8 +154,12 @@ $("#addPositionDivision").on('change',function(){ //function trigger if division
         method:"POST",
         data:{divisionAction:divisionAction, division_ids:division_ids},
         success:function(data){
+            $(".loader-div").hide(); 
             $('#addPositionUnit').html(data);
-        }
+        },error: function(xhr, status, error) {
+            modalErrorShow("The system encountered an error. Please contact support.");
+            $(".loader-div").hide();
+          }
     });
     }else{
         $('#addPositionUnit').html('<option value="">SELECT DIVISION FIRST</option>');
@@ -157,41 +188,49 @@ $("#positionContentAdd").on("submit",function(event){ //button submit for adding
         $("#addHistoryDateEnd").css('border-color', 'red');
         $("#CheckaddHistoryDateEnd").html("The encoded date encountered an issue. Please verify it first.").css('color', 'red');
     }
+    
+		$(".loader-div").show();
     $.ajax({
         url:"includes/functions.php",
         method:"POST",
         data:{checkExistStartDate:HistoryDateStart,checkExistEndDate:HistoryDateEnd,HistoryItemCode:HistoryItemCode},
         success:function(data){
+            $(".loader-div").hide(); 
             const CheckDate = JSON.parse(data);
             const DateExisted = CheckDate['employee_assignment_id'];
             if(DateExisted > 0){
-                alert("Date Existed")
+                modalAlertShow("Date Existed",CloseDynamicModal);
             }else{
+                $(".loader-div").show();
                 var formData = new FormData(frmAddHistory);
                 $.ajax({
                     url:"positionHistoryAdd.php",
-                            method:"POST",
-                            dataType: "json",
-                            data:formData,
-                            success:function(data){
-                                $("#formAddHistory").hide();
-                                const msg = data.msg;
-                                const stat = data.status;
-                                if(stat == "success"){
-                                    $('#modalNotif-header').text('Great! Success.');
-                                    $('#modalNotif-message').text(msg);
-                                    $('#modalNotif').modal('show');
-                                }
-                                else{
-                                    $('#alertMessage').text(msg);
-                                    $('#modalAlert').modal('show'); 
-                                }
-                            },
-                            processData: false,
-                            contentType: false
+                    method:"POST",
+                    dataType: "json",
+                    data:formData,
+                    success:function(data){
+                        $(".loader-div").hide(); 
+                        $("#formAddHistory").hide();
+                        const msg = data.msg;
+                        const stat = data.status;
+                        if(stat == "success"){
+                            modalSuccessShow(msg,refreshPage);
+                        }
+                        else{
+                            modalErrorShow(msg);
+                        }
+                    },error: function(xhr, status, error) {
+                        modalErrorShow("The system encountered an error. Please contact support.");
+                        $(".loader-div").hide();
+                      },
+                    processData: false,
+                    contentType: false
                     });  
             }
-        }
+        },error: function(xhr, status, error) {
+            modalErrorShow("The system encountered an error. Please contact support.");
+            $(".loader-div").hide();
+          }
         })
     
  });
@@ -203,12 +242,14 @@ $("#positionContentAdd").on("submit",function(event){ //button submit for adding
     $("#addLPNPositionName").css('border-color', '');
     $("#CheckaddLPNPositionInitial").html("");
     $("#addLPNPositionInitial").css('border-color', '');
+    $(".loader-div").show();
     $.ajax({ //getInfo session
         url:"checkExist.php",
         method:"POST",
         data:{PositionName:PositionName,PositionInitial:PositionInitial},
         dataType: 'json',
         success:function(data){
+            $(".loader-div").hide(); 
             const PositionName = data.PositionName;
             const PositionInitial = data.PositionInitial;
             if(PositionName>0){
@@ -224,6 +265,7 @@ $("#positionContentAdd").on("submit",function(event){ //button submit for adding
                 $("#addNewPositionName").modal({"backdrop": "static"});
             }
             if(PositionInitial <1 && PositionName <1){
+                $(".loader-div").show();
                 var formData = new FormData(positionNameAdd);
                 $.ajax({
                 url:"positionNameAdd.php",
@@ -231,26 +273,31 @@ $("#positionContentAdd").on("submit",function(event){ //button submit for adding
                         dataType: "json",
                         data:formData,
                         success:function(data){
-                            const msg = data.msg;
-                            const stat = data.status;
-                            if(stat == "success"){
-                                $('#modalNotif-header').text('Great! Success.');
-                                $('#modalNotif-message').text(msg);
-                                $('#modalNotif').modal('show');
-                            }
-                            else{
-                                $('#alertMessage').text(msg);
-                                $('#modalAlert').modal('show'); 
-                            }
-                        },
+                            $(".loader-div").hide(); 
+                        const msg = data.msg;
+                        const stat = data.status;
+                        if(stat == "success"){
+                            modalSuccessShow(msg,refreshPage);
+                        }
+                        else{
+                            modalErrorShow(msg);
+                        }
+                        },error: function(xhr, status, error) {
+                            modalErrorShow("The system encountered an error. Please contact support.");
+                            $(".loader-div").hide();
+                          },
                         processData: false,
                         contentType: false
                 });
             }
-        }
+        },error: function(xhr, status, error) {
+            modalErrorShow("The system encountered an error. Please contact support.");
+            $(".loader-div").hide();
+          }
     });
 });
-$("#frmUpdatePosition").on("submit",function(event){ //trigger update 
+$("#frmUpdatePosition").on("submit",function(event){ //trigger update
+    $(".loader-div").show(); 
     event.preventDefault();
     var formData = new FormData(frmUpdatePosition);
     $.ajax({
@@ -259,62 +306,74 @@ $("#frmUpdatePosition").on("submit",function(event){ //trigger update
       dataType: "json",
       data:formData,
       success:function(data){
+		$(".loader-div").hide(); 
         const msg = data.msg;
         const stat = data.status;
-        if(stat === "success"){ 
-            $('#formAddHistory').modal('hide');
-          $('#modalNotif-header').text('Great! Success.');
-          $('#modalNotif-message').text(msg);
-          $('#modalNotif').modal('show');
+        if(stat == "success"){
+            modalSuccessShow(msg,refreshPage);
         }
         else{
-          $('#alertMessage').text(msg);
-          $('#modalAlert').modal('show'); 
+            modalErrorShow(msg);
         }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
       },
       processData: false,
       contentType: false
     }); 
 })
 function btnPositionInfo(getPositionInfo){ //function trigger to retrieved position information from lib_position
+    $(".loader-div").show();
     $.ajax({
         url:"includes/functions.php",
         method:"POST",
         data:{getPositionInfo:getPositionInfo},
         success:function(data){
+            $(".loader-div").hide(); 
             const PositionNameData = JSON.parse(data);
             $("#posNameID").val(PositionNameData['position_name_id']);
             $("#updateLPNPositionName").val(PositionNameData['position_name']);
             $("#updateLPNPositionInitial").val(PositionNameData['position_initial']);
             $("#UpdatePositionName").modal('show');
-        }
+        },error: function(xhr, status, error) {
+            modalErrorShow("The system encountered an error. Please contact support.");
+            $(".loader-div").hide();
+          }
     });
 };
 function btnUpdatePositionName(getPositionNameDetails){ //function trigger to retrieved position name from lib_position_name
+    $(".loader-div").show();
     $.ajax({
         url:"includes/functions.php",
         method:"POST",
         data:{getPositionNameDetails:getPositionNameDetails},
         success:function(data){
+            $(".loader-div").hide();
             const PositionNameData = JSON.parse(data);
             $("#posNameID").val(PositionNameData['position_name_id']);
             $("#updateLPNPositionName").val(PositionNameData['position_name']);
             $("#updateLPNPositionInitial").val(PositionNameData['position_initial']);
             $("#UpdatePositionName").modal('show');
-        }
+        },error: function(xhr, status, error) {
+            modalErrorShow("The system encountered an error. Please contact support.");
+            $(".loader-div").hide();
+          }
     });
 };
 function btnCheckDeletePositionName(){ // function trigger to delete position name
+    $(".loader-div").show();
     const checkPositionNameID = $('#posNameID').val();
     $.ajax({
         url:"includes/functions.php",
         method:"POST",
         data:{checkInUsedPositionName:checkPositionNameID},
         success:function(data){
+            $(".loader-div").hide(); 
             const CheckPositionName = JSON.parse(data);
             const inUsedPosName = CheckPositionName['position_name_id'];
             if(inUsedPosName>0){
-                alert("Position is currently in use and cannot be deleted.");
+                modalAlertShow("Position Name is currently in use and cannot be deleted.",CloseDynamicModal);
             }else{
                 var formData = new FormData(positionNameUpdate);
                 $.ajax({
@@ -326,20 +385,20 @@ function btnCheckDeletePositionName(){ // function trigger to delete position na
                             const msg = data.msg;
                             const stat = data.status;
                             if(stat == "success"){
-                                $('#modalNotif-header').text('Great! Success.');
-                                $('#modalNotif-message').text(msg);
-                                $('#modalNotif').modal('show');
+                                modalSuccessShow(msg,refreshPage);
                             }
                             else{
-                                $('#alertMessage').text(msg);
-                                $('#modalAlert').modal('show'); 
+                                modalErrorShow(msg);
                             }
                         },
                         processData: false,
                         contentType: false
                 });
             }
-        }
+        },error: function(xhr, status, error) {
+            modalErrorShow("The system encountered an error. Please contact support.");
+            $(".loader-div").hide();
+          }
     });
 };
 $("#positionNameUpdate").on("submit",function(event){ //button submit on the updating of position name
@@ -347,12 +406,14 @@ $("#positionNameUpdate").on("submit",function(event){ //button submit on the upd
     const UpdatePositionNameID = $("#posNameID").val();
     const UpdatePositionName = $("#updateLPNPositionName").val();
     const UpdatePositionInitial = $("#updateLPNPositionInitial").val();
+    $(".loader-div").show();
     $.ajax({ //getInfo session
         url:"checkExist.php",
         method:"POST",
         data:{UpdatePositionName:UpdatePositionName,UpdatePositionInitial:UpdatePositionInitial,UpdatePositionNameID:UpdatePositionNameID},
         dataType: 'json',
         success:function(data){
+            $(".loader-div").hide(); 
             const UpdatePositionName = data.UpdatePositionName;
             const UpdatePositionInitial = data.UpdatePositionInitial;
             if(UpdatePositionName>0){
@@ -378,30 +439,33 @@ $("#positionNameUpdate").on("submit",function(event){ //button submit on the upd
                             const msg = data.msg;
                             const stat = data.status;
                             if(stat == "success"){
-                                $('#modalNotif-header').text('Great! Success.');
-                                $('#modalNotif-message').text(msg);
-                                $('#modalNotif').modal('show');
+                                modalSuccessShow(msg,refreshPage);
                             }
                             else{
-                                $('#alertMessage').text(msg);
-                                $('#modalAlert').modal('show'); 
+                                modalErrorShow(msg);
                             }
                         },
                         processData: false,
                         contentType: false
                 });
             }
-        }
+        },error: function(xhr, status, error) {
+            modalErrorShow("The system encountered an error. Please contact support.");
+            $(".loader-div").hide();
+          }
     });
 });
 function insertNewPosition(){
+    $(".loader-div").show();
     const ItemNumber = $("#addPositionItemCode").val();
+    $(".loader-div").show();
     $.ajax({ //getInfo session
         url:"checkExist.php",
         method:"POST",
         data:{ItemNumber:ItemNumber},
         dataType: 'json',
         success:function(data){
+            $(".loader-div").hide(); 
             const ItemCode = data.ItemCode;
             if(ItemCode>0){
                 $("#CheckPositionItemCode").html("The item code entered has already been utilized.").css('color', 'red');
@@ -420,20 +484,20 @@ function insertNewPosition(){
                             const msg = data.msg;
                             const stat = data.status;
                             if(stat == "success"){
-                                $('#modalNotif-header').text('Great! Success.');
-                                $('#modalNotif-message').text(msg);
-                                $('#modalNotif').modal('show');
+                                modalSuccessShow(msg,refreshPage);
                             }
                             else{
-                                $('#alertMessage').text(msg);
-                                $('#modalAlert').modal('show'); 
+                                modalErrorShow(msg);
                             }
                         },
                         processData: false,
                         contentType: false
                 });
             }
-        }
+        },error: function(xhr, status, error) {
+            modalErrorShow("The system encountered an error. Please contact support.");
+            $(".loader-div").hide();
+          }
     });
 };
 function btnGenerateItemNumber(){ //generate item number based on position, office and employment status
@@ -441,12 +505,14 @@ function btnGenerateItemNumber(){ //generate item number based on position, offi
     const ClassificationID = $("#addPositionClassification").val();
     const UnitID = $("#addPositionUnit").val();
     //item code = FO3-Unit Initial-Classi  fication initial-position initial-series xxx
+		$(".loader-div").show();
     $.ajax({
         url:"includes/functions.php",
         method:"POST",
         data:{GenerateItemNumber:1,positionNameID:positionNameID,ClassificationID:ClassificationID,UnitID:UnitID},
         dataType:"json",
         success:function(data){
+            $(".loader-div").hide(); 
             const outputPosInitial = data.position_initial;
             const outputClassificationInitial = data.classification_employment_initial;
             const outputUnitInitial = data.unit_name_code;
@@ -457,6 +523,7 @@ function btnGenerateItemNumber(){ //generate item number based on position, offi
                 data:{checkItemCodeIncrement:format},
                 dataType:"json",
                 success:function(data){
+                    $(".loader-div").hide(); 
                     const ItemCodeIncrement = data.item_code_format;
                     var Position_Item_Code = ItemCodeIncrement;
                     Position_Item_Code++;
@@ -471,11 +538,17 @@ function btnGenerateItemNumber(){ //generate item number based on position, offi
                     if($("#addPositionItemCode").val()!=''){
                         insertNewPosition(); 
                     }else{
-                        alert("Error! Please try again.");
+                        modalErrorShow("Error! Please try again.");
                     }
-                }
+                },error: function(xhr, status, error) {
+                    modalErrorShow("The system encountered an error. Please contact support.");
+                    $(".loader-div").hide();
+                  }
             })
-        }
+        },error: function(xhr, status, error) {
+            modalErrorShow("The system encountered an error. Please contact support.");
+            $(".loader-div").hide();
+          }
     });
     return true;
 };

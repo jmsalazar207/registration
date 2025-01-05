@@ -38,8 +38,15 @@ require_once('includes/init.php');
 
   <!-- Google Font -->
   <link rel="stylesheet" href="includes/add.css?test=<?php echo time()?>">
+  <link rel="stylesheet" href="includes/loader.css?test=<?php echo time()?>">
 </head>
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
+<div class="loader-div">
+    <img 
+    class="loader-img" 
+    src="images/ajax-loader.gif" 
+    style="height: 50px;width: auto;" />
+  </div>
     <div class="wrapper">
     <?php 
             include "includes/session.php";
@@ -126,9 +133,12 @@ require_once('includes/init.php');
 <!-- page script -->
 <?php
   include "modal/formModal.php";
+  include "modal/modalNotif.php";
 ?>
 <script src="panelScript.js?test=<?php echo time()?>"></script>
 <script src="position.js?test=<?php echo time()?>"></script>
+<script src="genFunction.js?test=<?php echo time()?>"></script>
+<script src="modalNotif.js?test=<?php echo time()?>"></script>
 <script>
   $(function () {
     $('#userManage').DataTable({ //retrieve data position
@@ -149,7 +159,7 @@ require_once('includes/init.php');
         { data: "classification_employment_name"},
         { data: "fund_source_name"},
         { data: "date_creation_position"},
-        { data: "step_1"},
+        { data: "salary_history_id"},
         { data: "division_name"},
         { data: "unit_name"},
         { data: "station_name"},

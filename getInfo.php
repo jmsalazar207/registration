@@ -19,7 +19,7 @@ require_once("includes/helper.php");
     LEFT JOIN lib_cities muni on muni.city_code = up.city
     LEFT JOIN lib_brgy brgy on brgy.brgy_code = up.barangay
     LEFT JOIN lib_position pos ON up.position_id = pos.position_id
-    LEFT JOIN lib_unit u ON pos.unit_code = u.unit_code
+    LEFT JOIN lib_unit u ON pos.area_assignment = u.unit_code
     LEFT JOIN lib_division d ON u.division_code = d.division_code
     LEFT JOIN lib_position_name pn ON pos.position_name_id = pn.position_name_id
     LEFT JOIN lib_perm_address pa on pa.empno = up.empno

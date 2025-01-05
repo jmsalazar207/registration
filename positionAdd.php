@@ -25,7 +25,8 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
                     $positionAdd['item_code'] =sanitize(strtoupper($_POST['addPositionItemCode']));
                     $positionAdd['salary_history_id'] = $_POST['addPositionSalaryGrade'];
                     $positionAdd['unit_code'] = $_POST['addPositionUnit'];
-                    $positionAdd['position_status'] = 2;
+                    $positionAdd['area_assignment'] = $_POST['addPositionAreaAssignment'];
+                    $positionAdd['position_status'] = 0;
                     $positionAdd['position_classification_id'] = $_POST['addPositionClassification'];
                     $positionAdd['date_creation_position'] = $_POST['addPositionDateCreated'];
                     $positionAdd['fund_source_code'] = $_POST['addPositionFundSource'];

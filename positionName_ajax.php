@@ -66,8 +66,8 @@ if($Records){
     $action =
             "
                 <td>
-                <button class='' id = 'btnUpdatePositionName' name ='btnUpdatePositionName' onclick ='btnUpdatePositionName(this.value)' value = '$id'  title='View' >
-                    View
+                <button class='btn btn-primary btn-sm' id = 'btnUpdatePositionName' name ='btnUpdatePositionName' onclick ='btnUpdatePositionName(this.value)' value = '$id'  title='View' >
+                    Update
                 </button>
                 </td>
             "; 

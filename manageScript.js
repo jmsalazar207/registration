@@ -347,6 +347,30 @@ $.ajax({
     });
   }
 
+  function adminTagInactive(btnAdminTagInactiveEmpno){
+    $(".loader-div").show();
+    var TableID ='userManage';
+    $.ajax({
+      url:"adminTagInactiveUser.php",
+      method:"POST",
+      data:{btnAdminTagInactiveEmpno:btnAdminTagInactiveEmpno},
+      dataType: 'json',
+      success:function(data){
+        $(".loader-div").hide();
+        const msg = data.msg;
+        const stat = data.status;  
+        if(stat === "success"){ 
+          modalSuccessShow(msg,triggerTableReload,TableID);
+        } else {
+         modalErrorShow(msg);
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();s
+      }
+    });
+  }
+
   function resetPassword(btnResetPassword){
     $(".loader-div").show();
     var TableID = 'userManage';
@@ -1051,6 +1075,12 @@ $.ajax({
     modalConfirmShow('Would you like to proceed with resetting this password?',resetPassword,PassData);
   });
 
+  $(document).on('click', '#btnInactive', function() {   //reset password to default action
+    PassData = $(this).attr('value');
+    modalConfirmShow('Do you want to proceed with deactivating this account?',adminTagInactive,PassData);
+  });
+  
+
   $(document).on('click', '#btnAdminDelete', function() {    //delete user acount action
     const valueID = $(this).attr('data-valueID');
     const valueURL = $(this).attr('data-valueURL');
@@ -1302,7 +1332,7 @@ $.ajax({
                     const msg = data.msg;
                     const stat = data.status;
                     if(stat === "success"){ 
-                      modalSuccessShow(msg,refreshPage)
+                      modalSuccessShow(msg,refreshPage);
                     } else {
                       modalErrorShow(msg);
                     }

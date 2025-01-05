@@ -57,8 +57,11 @@ require_once('includes/init.php');
                     </div>
                     &nbsp;
                     <div class="col-md-12">
-                        <a class="btn btn-info" href="generateReport.php">
-                          Download List
+                        <a class="btn btn-info btn-sm" href="generateReport.php">
+                          Download Registered
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="generateListPayroll.php">
+                          For Payroll Template
                         </a>
                     </div>
                   </div>
