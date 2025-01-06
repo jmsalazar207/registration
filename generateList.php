@@ -63,6 +63,9 @@ require_once('includes/init.php');
                         <a class="btn btn-primary btn-sm" href="generateListPayroll.php">
                           For Payroll Template
                         </a>
+                        <a class="btn btn-primary btn-sm" href="generateListNoItem.php">
+                          Discrepancy
+                        </a>
                     </div>
                   </div>
                 </div>

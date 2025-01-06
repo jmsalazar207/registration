@@ -37,7 +37,7 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
                     $AddPositionQuery = $dbConn->insert('lib_position',$positionAdd);
                     if($AddPositionQuery){
                         $dataReturn['status'] = "success";
-                        $dataReturn['msg'] = "Position details successfully added";
+                        $dataReturn['msg'] = sanitize($_POST['addPositionItemCode']) . " Successfully added";
                         echo json_encode($dataReturn);
                     }else {
                         $dataReturn['status'] = "failed";

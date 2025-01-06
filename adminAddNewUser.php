@@ -45,8 +45,9 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
 
         if($insertNewUser && $UpdateLastIDNumber){
             $dataReturn['status'] = "success";
-            $dataReturn['msg'] = "New user successfully added.";
+            $dataReturn['msg'] = "03-" . sanitize($_POST['txtAddEmpno']) . " Successfully added";
             echo json_encode($dataReturn);
+
         } else {
             $dataReturn['status'] = "failed";
             $dataReturn['msg'] = "Oops! Something went wrong. Please try again later.";
@@ -82,7 +83,7 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
         $insertNewUser = $dbConn->insert('userprofile',$user);
         if($insertNewUser){
             $dataReturn['status'] = "success";
-            $dataReturn['msg'] = "New user successfully added.";
+            $dataReturn['msg'] = "03-" . sanitize($_POST['txtAddEmpno']) . " Successfully added";
             echo json_encode($dataReturn);
         } else {
             $dataReturn['status'] = "failed";

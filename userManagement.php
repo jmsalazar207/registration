@@ -97,6 +97,7 @@ require_once('includes/init.php');
                           <th> Division </th>
                           <th> Unit </th>
                           <th> Official Station </th>
+                          <th> Date Registered </th>
                           <th> Account Status </th>
                         </tr>
                     </thead>
@@ -170,6 +171,7 @@ require_once('includes/init.php');
         { data: "division_name"},
         { data: "unit_name"},
         { data: "station_name"},
+        { data: "date_registered"},
         { data: "account_status_name"}
       ],
       'columnDefs': [ 

@@ -137,7 +137,7 @@ require_once('includes/init.php');
               style="color:black; font-weight:500; font-size:large;" 
               id="FullName">
               </i>.
-              If you encounter any issues with the provided number, please contact the Personnel Section for verification.
+              If you encounter any issues with the provided number, please contact the HUMAN RESOURCE PLANNING AND PERFORMANCE MANAGEMENT SECTION clarification.
             </p>
           </div>
            <!-- End Tip box -->

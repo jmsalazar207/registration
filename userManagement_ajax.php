@@ -26,6 +26,7 @@ if($searchValue != ''){
             u.fname LIKE '%".$searchValue."%' OR
             u.mname LIKE '%".$searchValue."%' OR
             u.ename LIKE '%".$searchValue."%' OR
+            u.date_registered LIKE '%".$searchValue."%' OR
             ac.account_status_name LIKE '%".$searchValue."%' OR
             pn.position_name LIKE '%".$searchValue."%' OR
             d.division_name LIKE '%".$searchValue."%' OR
@@ -53,7 +54,7 @@ $records = $dbConn->findFirstQuery("SELECT COUNT(empno) as allcount
 $totalRecordwithFilter = $records['allcount'];
 
 ## Fetch records
-$sql_emp = "SELECT u.empno, u.sname, u.fname, u.mname, u.ename, u.position_id, u.emp_status, pos.item_code, pn.position_name, d.division_name, un.unit_name, u.account_status ,os.station_name, ac.account_status_name 
+$sql_emp = "SELECT u.empno, u.sname, u.fname, u.mname, u.ename, u.position_id,u.date_registered, u.emp_status, pos.item_code, pn.position_name, d.division_name, un.unit_name, u.account_status ,os.station_name, ac.account_status_name 
             FROM userprofile u 
             LEFT JOIN lib_position pos ON pos.position_id = u.position_id 
             LEFT JOIN lib_position_name pn ON pos.position_name_id = pn.position_name_id 
@@ -147,6 +148,7 @@ if($empRecords){
       "division_name" => $row['division_name'],
       "unit_name" => $row['unit_name'],
       "station_name" => $row['station_name'],
+      "date_registered" => $row['date_registered'],
       "account_status_name" => $row['account_status_name']);
       
    }
