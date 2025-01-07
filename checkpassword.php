@@ -26,23 +26,26 @@ require_once("includes/helper.php");
         }else if($isApproved == 1) {
             $data['credentialsMatch'] = 1; //Pending Approval
         }else if($isApproved== 2) {
-            if(($credentials['password'] != '') && password_verify($password,$credentials['password'] )){
-                $data['credentialsMatch'] = 2; //Approved and passed
-                $data['AccountUserLevel'] = $credentials['user_level'];
-                $data['empno'] = $credentials['empno'];
-                $data['password'] = $credentials['password'];
-                $data['date_registered'] = $credentials['date_registered'];
-                $_SESSION['userID'] = $credentials['empno'];
-                $_SESSION['userLevel'] = $credentials['user_level'];
+            if($credentials['isLog'] == 0){ //Goods
+                if(($credentials['password'] != '') && password_verify($password,$credentials['password'] )){
+                    $data['credentialsMatch'] = 2; //Approved and passed
+                    $data['AccountUserLevel'] = $credentials['user_level'];
+                    $data['empno'] = $credentials['empno'];
+                    $data['password'] = $credentials['password'];
+                    $data['date_registered'] = $credentials['date_registered'];
+                    $_SESSION['userID'] = $credentials['empno'];
+                    $_SESSION['userLevel'] = $credentials['user_level'];
+                }else{
+                    $data['credentialsMatch'] = 5; //wrong password
+                    $data['empno'] = $credentials['empno'];
+                }
             }else{
-                $data['credentialsMatch'] = 5; //wrong password
-                $data['empno'] = $credentials['empno'];
+                $data['credentialsMatch'] = 7; // Password must be change
             }
         }else if ($isApproved==3) {
             $data['credentialsMatch'] = 3; //Disapproved
         }else if ($isApproved==4) {
             $data['credentialsMatch'] = 4; //Account Locked
-
         }
         echo json_encode($data);
     }else{

@@ -25,9 +25,9 @@ function Forgot(){
           $(".loader-div").hide(); // hide loader
           const countEmpID = data.EmpID;
           const countEmailAdd = data.EmailAdd;
-          if (countEmpID <1){
+          if (countEmpID >1){
             modalErrorShow('Oops! Invalid input detected. Please verify your entry and try again. For assistance, contact support.');
-          }else if(countEmailAdd <1){
+          }else if(countEmailAdd >1){
             modalErrorShow('Oops! Invalid input detected. Please verify your entry and try again. For assistance, contact support.');
           } else {
             $(".loader-div").show(); // show loader
@@ -65,6 +65,7 @@ function resetResetPage(){
   $('#frmReset')[0].reset();
   window.location.href = "../index.php"; 
 }
+
 
 $(document).on('submit', '#frmForgot', function(event){
   event.preventDefault();
@@ -106,7 +107,7 @@ function Reset(formData){
       success:function(data){
         $(".loader-div").hide(); // hide loader
         const countEmpID = data.EmpID;
-        if (countEmpID <1){
+        if (countEmpID >1){
           modalErrorShow('Oops! Invalid input detected. Please verify your entry and try again. For assistance, contact support.');
         }else{
           $(".loader-div").show();

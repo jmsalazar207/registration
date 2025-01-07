@@ -239,12 +239,12 @@ if(isset($_POST['PositionName'])){ //Check exist add
  if(isset($_POST['SearchEmpID'])){
 
    $ID = $_POST['SearchEmpID'];
-   $sql_Emp_ID = "SELECT empno FROM userprofile WHERE empno = '$ID' AND emp_status <= 1";
+   $sql_Emp_ID = "SELECT empno FROM userprofile WHERE empno = '$ID' AND emp_status >=1";
    $dbConn->findFirstQuery($sql_Emp_ID);
    $count['EmpID'] = $dbConn->count();
 
    $Email_Add = $_POST['checkEmailMatch'];
-   $sql_Email_Add = "SELECT empno FROM userprofile WHERE empno = '$ID' AND eaddress = '$Email_Add' AND emp_status <= 1";
+   $sql_Email_Add = "SELECT empno FROM userprofile WHERE empno = '$ID' AND eaddress = '$Email_Add' AND emp_status >= 1";
    $dbConn->findFirstQuery($sql_Email_Add);
    $count['EmailAdd'] = $dbConn->count();
 

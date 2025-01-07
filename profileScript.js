@@ -219,6 +219,28 @@ $(function(){
           const subd = data.subd;
           const zip_code = data.zip_code;
 
+          //bank details
+          $("#addBankAccount").val(data.bank_account_number);
+          if (data.bank_account_status !== 0) {
+            $("#btnSaveAccountNumber")
+              .prop('disabled', true)
+              .attr('title', 'Bank details already verified');
+              $("#addBankAccount")
+              .prop('disabled', true)
+              .attr('title', 'Bank details already verified');
+              $("#addBankAccountMOV")
+              .prop('disabled', true)
+              .attr('title', 'Bank details already verified');
+          } else {
+            $("#btnSaveAccountNumber")
+              .prop('disabled', false)
+              .attr('title', 'Save');
+              $("#addBankAccount")
+              .prop('disabled', false)
+              $("#addBankAccountMOV")
+              .prop('disabled', false)
+          }
+          
           //profileCard
           $("#profileFullName").text(fname+" "+sname);
           $("#profilePosition").text(position);
@@ -417,7 +439,8 @@ $(function(){
       $("#pagibigNo").val(PAGIBIG);
       $("#philhealthNo").val(PHILHEALTH);
       $("#sssNo").val(SSS);
-      $("#tinNo").val(TIN);
+      populateTinNumber(TIN);
+      
       $("#Weight").val(weight);
       $("#Height").val(height);
       $("#OthersCivilStatus").val(civilStatus_other);
@@ -627,6 +650,10 @@ $(function(){
         $(".loader-div").hide();
       }
   });
+  }
+
+  function populateTinNumber(TIN) {
+    $("#tinNo").val(TIN).trigger('input'); // Set the value and trigger the input event
   }
 
   function validateFileTypeCareer() { //check file type
@@ -3091,6 +3118,45 @@ function resetFormOtherInfo2(){
   getInfo();
 }
 
+function BankDetails(formData){
+  $(".loader-div").show();
+  $.ajax({
+    url:"bankinfoAdd.php",
+    method:"POST",
+    dataType: "json",
+    data:formData,
+    success:function(data){
+      $(".loader-div").hide(); 
+      const msg = data.msg;
+      const stat = data.status;
+      if(stat === "success"){
+        modalSuccessShow(msg,refreshPage,'');
+      } else {
+        modalErrorShow(msg);
+      }
+    },error: function(xhr, status, error) {
+      modalErrorShow("The system encountered an error. Please contact support.");
+      $(".loader-div").hide();
+    },
+    processData: false,
+    contentType: false
+
+  });
+}
+
+function validateFileTypeBank() { //check file type
+  var selectedFile = document.getElementById('addBankAccountMOV').files[0];
+  var allowedTypes = ['image/jpeg', 'image/png'];
+
+  if (!allowedTypes.includes(selectedFile.type)) {
+    modalErrorShow("Invalid file type. Please upload a JPEG, PNG or any image file.");
+     document.getElementById('addBankAccountMOV').value = '';
+  }else{
+    
+  }
+
+}
+
 $(document).on('change','#UpdateifGraduated', function(){
   if ($(this).is(':checked')) {
     $("#lblUpdateacadYearGraduated").attr('class','col-sm-12 requiredField');
@@ -3305,30 +3371,45 @@ $(document).on('input', '#pagibigNo', function () { //PAGIBIG FORMAT XXXX-XXXX-X
   $(this).val(value);
 });
 
-$(document).on('input', '#tinNo', function () { //tin number format XXX-XXX-XXX
-  let value = $(this).val() || ""; // Get the current input value (or fallback to empty)
-
+// Auto-formatting logic for TIN number
+function formatTinNumber(value) {
   // Remove all non-numeric characters
   value = value.replace(/\D/g, "");
 
   // Add dash after the 2nd digit
   if (value.length > 3) {
-      value = value.substring(0, 3) + "-" + value.substring(3);
+    value = value.substring(0, 3) + "-" + value.substring(3);
   }
 
   // Add dash after the 9th digit
   if (value.length > 7) {
-      value = value.substring(0, 7) + "-" + value.substring(7);
+    value = value.substring(0, 7) + "-" + value.substring(7);
   }
 
   // Limit the input to a maximum of 12 characters (XX-XXXXXXX-X)
   if (value.length > 11) {
-      value = value.substring(0, 11);
+    value = value.substring(0, 11);
   }
 
-  // Update the input field with the formatted value
-  $(this).val(value);
+  // Automatically append `-000` if the formatted value reaches 12 characters
+  if (value.length === 11) {
+    value += "-000";
+  }
+
+  return value;
+}
+
+// Handle user input formatting
+$(document).on('input', '#tinNo', function () {
+  const formattedValue = formatTinNumber($(this).val());
+  $(this).val(formattedValue);
 });
+
+// Populate TIN number from database and apply formatting
+function populateTinNumber(TIN) {
+  const formattedValue = formatTinNumber(TIN); // Format the TIN value
+  $("#tinNo").val(formattedValue); // Set the formatted value in the input field
+}
 
 $(document).on('input', '#gsisNo', function () { //tin number format XXX-XXX-XXX
   let value = $(this).val() || ""; // Get the current input value (or fallback to empty)
@@ -3966,7 +4047,9 @@ $(document).on('submit','#frmBankDetails',function(event){
   modalConfirmShow('Would you like to confirm and save the changes now?',BankDetails,PassData);
 });
 
-function BankDetails(){
-  alert("wiii");
-}
+$(document).on('change','#addBankAccountMOV',function(){
+  validateFileTypeBank();
+});
+
+
 

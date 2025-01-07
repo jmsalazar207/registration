@@ -30,9 +30,6 @@ if(empty($_POST['g-recaptcha-response']))
                     $fileExt = pathinfo($_FILES['AddFile']['name'], PATHINFO_EXTENSION);
                     $UploadFile = '_'.$_POST['EmployeeNumber'].'.'.$fileExt;
                     $target_file = $target_dir.$UploadFile;
-                    // $target_file = $target_dir ."_". basename($_FILES["AddFile"]["name"]);
-                    // $UploadFile = basename($_FILES["AddFile"]["name"]);
-                    // $UploadFile = $_POST['EmployeeNumber'];
                     $uploadOk = 1;
                     
 
@@ -53,7 +50,6 @@ if(empty($_POST['g-recaptcha-response']))
                     $user['barangay'] = sanitize($_POST['AddBarangay']);
                     $user['password'] = password_hash($_POST['ConfirmPassword'], PASSWORD_DEFAULT);
                     $id = $user['empno'] = sanitize($_POST['EmployeeNumber']);
-                    $user['uploaded_id'] = sanitize('Hehe');
                     $user['date_registered'] = $today;
                     $user['date_approved'] = '';
                     $user['uploaded_id'] = $UploadFile;

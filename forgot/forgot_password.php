@@ -136,9 +136,6 @@ include '../modal/modalNotif.php';
 ?>
 </body>
 </html>
-<script src="genFunction.js?test=<?php echo time()?>"></script>
-<script src="pluginscript.js?test=<?php echo time()?>"></script>
-<script src="modalNotif.js?test=<?php echo time()?>"></script>
 <?php
 
 ?>

@@ -168,72 +168,81 @@ $today = date('Y-m-d');
                 </div>
             <!-- /.box -->
              <!-- Profile Image -->
-             <div class="box">
-  <div class="box-body box-profile">
-    <form id="frmBankDetails" name="frmBankDetails">
-      <div class="form-group">
-        <div class="col-md-12">
-          <label 
-            for="addBanckAccount" 
-            class="col-sm-12 requiredField" 
-            style="font-size: 15px;">
-            Bank Account
-          </label>
-          <div class="input-group has-feedback col-sm-12" style="margin-bottom: 10px;">
-            <input 
-              type="password"
-              class="form-control" 
-              id="addBanckAccount" 
-              name="addBanckAccount"
-              required
-              tabindex="1"
-              onkeypress="return NumberOnly(event)">
-            <span class="input-group-addon">
-              <i 
-                class="fa fa-eye-slash toggle-password" 
-                data-target="#addBanckAccount" 
-                role="button" 
-                aria-label="Toggle password visibility">
-              </i>
-            </span>
-          </div>
-        </div>  
-      </div>
-      <div class="form-group">
-        <div class="col-md-12">
-          <label 
-            for="addBanckAccountMOV" 
-            class="col-sm-12 requiredField" 
-            style="font-size: 15px;">
-            Upload MOV
-          </label>
-          <div class="input-group has-feedback col-sm-12" style="margin-bottom: 15px;">
-            <input 
-              type="file"
-              class="form-control" 
-              id="addBanckAccountMOV" 
-              name="addBanckAccountMOV"
-              value="" 
-              required
-              tabindex="2"
-              accept="image/jpeg, image/png">
-          </div>
-        </div>  
-      </div>
-      <div class="form-group mt-3">
-        <button
-          type="submit"
-          class="btn btn-primary btn-sm btn-block" 
-          id="btnSaveAccountNumber"
-          name="btnSaveAccountNumber"
-        >
-          Add
-        </button>
-      </div>
-    </form>
-  </div>
-  <!-- /.box-body -->
-</div>
+              <div class="box">
+              <div class="box-header" style="background-color:rgb(255, 255, 255); padding: 10px; border: 1px solid #ddd; border-radius: 5px; text-align: center;">
+                <h4 style="margin: 0; font-size: 18px; color: #333; font-weight: bold;">
+                  Bank Account
+                </h4>
+              </div>
+                <div class="box-body box-profile">
+                  <form id="frmBankDetails" name="frmBankDetails">
+                    <div class="form-group">
+                      <div class="col-md-12">
+                        <label 
+                          for="addBankAccount" 
+                          class="col-sm-12 requiredField" 
+                          style="font-size: 15px;">
+                          Bank Account
+                        </label>
+                        <div class="input-group has-feedback col-sm-12" style="margin-bottom: 10px;">
+                        <input 
+                        type="hidden" 
+                        name="token" 
+                        value="<?=$_SESSION["token"]?>"> 
+                          <input 
+                            type="password"
+                            class="form-control" 
+                            id="addBankAccount" 
+                            name="addBankAccount"
+                            required
+                            tabindex="1"
+                            onkeypress="return NumberOnly(event)">
+                          <span class="input-group-addon">
+                            <i 
+                              class="fa fa-eye-slash toggle-password" 
+                              data-target="#addBankAccount" 
+                              role="button" 
+                              aria-label="Toggle password visibility">
+                            </i>
+                          </span>
+                        </div>
+                      </div>  
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md-12">
+                        <label 
+                          for="addBankAccountMOV" 
+                          class="col-sm-12 requiredField" 
+                          style="font-size: 15px;">
+                          Upload MOV
+                        </label>
+                        <div class="input-group has-feedback col-sm-12" style="margin-bottom: 15px;">
+                          <input 
+                            type="file"
+                            class="form-control" 
+                            id="addBankAccountMOV" 
+                            name="addBankAccountMOV"
+                            value="" 
+                            required
+                            tabindex="2"
+                            accept="image/jpeg, image/png">
+                        </div>
+                      </div>  
+                    </div>
+                    <div class="form-group mt-3">
+                      <button
+                        type="submit"
+                        class="btn btn-primary btn-sm btn-block" 
+                        id="btnSaveAccountNumber"
+                        name="btnSaveAccountNumber"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              <!-- /.box-body -->
+              </div>
 
             <!-- /.box -->
             </div>
