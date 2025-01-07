@@ -44,14 +44,14 @@ $totalRecords = $records['allcount'];
 ## Total number of records with filtering
 $records = $dbConn->findFirstQuery("SELECT COUNT(pos.position_id) as allcount 
                                    FROM lib_position pos
-                                    JOIN lib_position_name pn ON pn.position_name_id = pos.position_name_id
-                                    JOIN lib_classification_employment cs ON cs.position_classification_id = pos.position_classification_id
-                                    JOIN lib_fund_source fs ON fs.fund_source_code = pos.fund_source_code
-                                    JOIN lib_unit u ON u.unit_code = pos.area_assignment
-                                    JOIN lib_division d ON u.division_code = d.division_code
-                                    JOIN lib_official_station os ON os.station_code = u.station_code
-                                    JOIN lib_position_status pstat ON pstat.position_status = pos.position_status
-                                    JOIN lib_salary_history sh ON sh.salary_history_id = pos.salary_history_id"
+JOIN lib_position_name pn ON pn.position_name_id = pos.position_name_id
+JOIN lib_classification_employment cs ON cs.position_classification_id = pos.position_classification_id
+JOIN lib_fund_source fs ON fs.fund_source_code = pos.fund_source_code
+JOIN lib_unit u ON u.unit_code = pos.area_assignment
+JOIN lib_division d ON u.division_code = d.division_code
+JOIN lib_official_station os ON os.station_code = pos.station_code
+JOIN lib_position_status pstat ON pstat.position_status = pos.position_status
+JOIN lib_salary_history sh ON sh.salary_history_id = pos.salary_history_id"
                                     .$searchQuery);
 $totalRecordwithFilter = $records['allcount'];
 
@@ -64,7 +64,7 @@ JOIN lib_classification_employment cs ON cs.position_classification_id = pos.pos
 JOIN lib_fund_source fs ON fs.fund_source_code = pos.fund_source_code
 JOIN lib_unit u ON u.unit_code = pos.area_assignment
 JOIN lib_division d ON u.division_code = d.division_code
-JOIN lib_official_station os ON os.station_code = u.station_code
+JOIN lib_official_station os ON os.station_code = pos.station_code
 JOIN lib_position_status pstat ON pstat.position_status = pos.position_status
 JOIN lib_salary_history sh ON sh.salary_history_id = pos.salary_history_id
         $searchQuery ORDER BY $columnName $columnSortOrder limit $row, $rowperpage";

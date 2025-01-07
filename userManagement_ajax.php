@@ -43,12 +43,12 @@ $totalRecords = $records['allcount'];
 
 ## Total number of records with filtering
 $records = $dbConn->findFirstQuery("SELECT COUNT(empno) as allcount
-                                    FROM userprofile u 
+                                   FROM userprofile u 
                                     LEFT JOIN lib_position pos ON pos.position_id = u.position_id 
                                     LEFT JOIN lib_position_name pn ON pos.position_name_id = pn.position_name_id 
                                     LEFT JOIN lib_unit un ON un.unit_code = pos.area_assignment 
                                     LEFT JOIN lib_division d ON un.division_code = d.division_code 
-                                    LEFT JOIN lib_official_station os ON un.station_code = os.station_code 
+                                    LEFT JOIN lib_official_station os ON os.station_code = pos.station_code 
                                     JOIN lib_account_status ac ON u.account_status = ac.account_status_code"
                                     .$searchQuery);
 $totalRecordwithFilter = $records['allcount'];
@@ -60,7 +60,7 @@ $sql_emp = "SELECT u.empno, u.sname, u.fname, u.mname, u.ename, u.position_id,u.
             LEFT JOIN lib_position_name pn ON pos.position_name_id = pn.position_name_id 
             LEFT JOIN lib_unit un ON un.unit_code = pos.area_assignment 
             LEFT JOIN lib_division d ON un.division_code = d.division_code 
-            LEFT JOIN lib_official_station os ON un.station_code = os.station_code 
+            LEFT JOIN lib_official_station os ON os.station_code = pos.station_code 
             JOIN lib_account_status ac ON u.account_status = ac.account_status_code
             $searchQuery ORDER BY $columnName $columnSortOrder limit $row, $rowperpage";
 

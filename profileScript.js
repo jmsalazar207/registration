@@ -3959,3 +3959,14 @@ $(document).on('click','#careerPresent',function(){
 $(document).on('click','#UpdatecareerPresent',function(){
   UpdatecareerPresentCheck();
 });
+
+$(document).on('submit','#frmBankDetails',function(event){
+  event.preventDefault();
+  var PassData = new FormData(frmBankDetails);
+  modalConfirmShow('Would you like to confirm and save the changes now?',BankDetails,PassData);
+});
+
+function BankDetails(){
+  alert("wiii");
+}
+
