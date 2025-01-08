@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 07, 2025 at 07:11 PM
+-- Generation Time: Jan 08, 2025 at 12:10 PM
 -- Server version: 10.4.28-MariaDB
--- PHP Version: 8.1.17
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -3329,6 +3329,14 @@ CREATE TABLE `lib_academic` (
   `datetime_updated` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `lib_academic`
+--
+
+INSERT INTO `lib_academic` (`id`, `empno`, `acad_level`, `acad_school`, `acad_degree`, `acad_from`, `acad_to`, `ifGraduated`, `acad_highest_level`, `acad_year_graduated`, `acad_honors`, `acad_uploaded_mov`, `acad_status`, `acad_remarks`, `updated_by`, `datetime_updated`) VALUES
+(1, '03-10961', 2, 36345, 1, 2011, 2015, 1, 'GRADUATED', 2015, '', '', 5, '', '03-10961', '2025-01-08'),
+(2, '03-10961', 3, 209, 32, 2015, 2019, 1, 'GRADUATED', 2019, '', '03-10961_Acad_1.pdf', 0, '', '03-10961', '2025-01-08');
+
 -- --------------------------------------------------------
 
 --
@@ -3364,6 +3372,13 @@ CREATE TABLE `lib_bank_details` (
   `bank_account_mov` varchar(50) NOT NULL,
   `bank_account_status` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `lib_bank_details`
+--
+
+INSERT INTO `lib_bank_details` (`id`, `empno`, `bank_account_number`, `bank_account_mov`, `bank_account_status`) VALUES
+(1, '03-10961', '123123123', '03-10961.png', 0);
 
 -- --------------------------------------------------------
 
@@ -112095,7 +112110,8 @@ INSERT INTO `lib_unit` (`unit_code`, `unit_name`, `unit_name_code`, `division_co
 (130, 'SWAD ZAMBALES - PANTAWID ENCODER', 'ENCODER', 16, 0, '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 (131, 'SWAD ZAMBALES - SLP', 'SLP', 16, 0, '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 (132, 'SWAD ZAMBALES - SOCIAL PENSION', 'SOCPEN', 16, 0, '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(133, 'TARA, BASA TUTORING PROGRAM', 'TBTP', 37, 0, '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+(133, 'TARA, BASA TUTORING PROGRAM', 'TBTP', 37, 0, '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(145, 'BUSINESS SOLUTIONS GROUP', 'BSG', 4, 0, '03-10961', '2025-01-08 11:15:38', '03-10961', '2025-01-08 11:15:52', '', '0000-00-00 00:00:00', 3);
 
 -- --------------------------------------------------------
 
@@ -112683,10 +112699,10 @@ INSERT INTO `userprofile` (`empno`, `password`, `password_md5`, `position_id`, `
 ('03-8991', '', '161ebd7d45089b3446ee4e0d86dbcf92', '105', '0000-00-00', 'JAN MICHAEL', 'PONGCO', 'GOPEZ', '', '09993214568', '', 0, '1986-10-27', 'jmpgopez@dswd.gov.ph', 'PUROK CENTRO', '', '030000000', '', '035416004', '035416000', '035400000', 0, NULL, NULL, NULL, '2024-03-05 14:20:46', '03-9079', '2024-04-23 05:17:14', '_03-8991.jpg', 1, 1, 2, 0, '2024-04-25 09:27:06', '0000-00-00 00:00:00', '', NULL, '', '0000-00-00 00:00:00', '', '', 0, '', 0),
 ('03-10409', '', 'b08f388f7f31bdb27e2df540008e2b72', '107', '0000-00-00', 'KING', 'LACANLALE', 'QUITO', '', '09173044420', '', 0, '1990-07-18', 'klquito@dswd.gov.ph', '', '', '030000000', '', '035416036', '035416000', '035400000', 0, NULL, NULL, NULL, '2024-03-05 13:48:14', '03-9862', '2024-04-24 05:33:37', '_03-10409.jpg', 0, 1, 2, 0, '2024-11-04 09:41:38', '0000-00-00 00:00:00', '', NULL, '', '0000-00-00 00:00:00', '', '', 0, '', 0),
 ('03-10518', '', '161ebd7d45089b3446ee4e0d86dbcf92', '106', '0000-00-00', 'ROMALLIE', 'MIRANDA', 'OCAMPO', '', '09277034656', '', 1, '1981-02-14', 'rmocampo@dswd.gov.ph', 'BLK 2, CALI ST, MIRUS RESIDENCES', '', '030000000', '6', '035409012', '035409000', '035400000', 0, NULL, NULL, NULL, '2024-03-05 13:46:01', '03-10961', '2024-03-24 09:06:56', '_03-10518.jpeg', 1, 1, 2, 0, '2025-01-02 08:17:01', '0000-00-00 00:00:00', '', NULL, '', '0000-00-00 00:00:00', '', '', 0, '', 0),
-('03-10751', '', '46bab4c3ac73049fbf15c5b6bde382ac', '110', '0000-00-00', 'BUTCH', 'GAJUNIA', 'GACUSAN', '', '09991809074', '', 0, '1988-01-11', 'bggacusan@dswd.gov.ph', 'BLOCK 3', '', '030000000', '128', '036907014', '036907000', '036900000', 0, NULL, NULL, NULL, '2024-03-05 13:39:48', '03-10961', '2024-03-24 09:06:47', '_03-10751.jpg', 1, 1, 2, 0, '2024-08-02 13:21:19', '0000-00-00 00:00:00', '', NULL, '', '0000-00-00 00:00:00', '', '', 0, '083dbca140af2fefde2be80410af0f91', 1),
+('03-10751', '$2y$10$ET2vCONvu9h52MQb0EVZR.qmCcJ8f22ot90H4rNo/Aq.FJp1UTDPW', '46bab4c3ac73049fbf15c5b6bde382ac', '110', '0000-00-00', 'BUTCH', 'GAJUNIA', 'GACUSAN', '', '09991809074', '', 0, '1988-01-11', 'bggacusan@dswd.gov.ph', 'BLOCK 3', '', '030000000', '128', '036907014', '036907000', '036900000', 0, NULL, NULL, NULL, '2024-03-05 13:39:48', '03-10961', '2024-03-24 09:06:47', '_03-10751.jpg', 1, 0, 2, 0, '2024-08-02 13:21:19', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', '', 0, '083dbca140af2fefde2be80410af0f91', 1),
 ('03-1393', '', '161ebd7d45089b3446ee4e0d86dbcf92', '120', '0000-00-00', 'RONIE', 'CASTRO', 'FRANCISCO', '', '09555566387', '', 0, '1981-05-04', 'rcfrancisco@dswd.gov.ph', '', '', '030000000', '', '035416011', '035416000', '035400000', 0, NULL, NULL, NULL, '2024-03-05 14:20:52', '03-9862', '2024-04-24 10:21:11', '001.jpg', 0, 1, 2, 0, '2025-01-02 08:18:07', '0000-00-00 00:00:00', '', NULL, '', '0000-00-00 00:00:00', '', '', 0, '33a69fc480f3727eeda928529c9d3553', 1),
 ('03-11282', '', '9c272337a8b0f716276d03825b990b22', '119', '0000-00-00', 'JOHN PAUL', 'DE LEON', 'CARREON', '', '09168474344', '', 0, '1998-11-07', 'jpdlcarreon@dswd.gov.ph', 'PUROK 2', '', '030000000', '35', '035416031', '035416000', '035400000', 0, NULL, NULL, NULL, '2024-03-08 11:08:52', '03-9862', '2024-04-24 08:47:51', '_03-11282.jpg', 0, 1, 2, 0, '2025-01-02 08:17:47', '0000-00-00 00:00:00', '', NULL, '', '0000-00-00 00:00:00', '', '', 0, '', 0),
-('03-10961', '$2y$10$u4dp6JE3qs0grP5CCq.Pc.ZYuasyMUd60RebpYS6JSEUYv5kJ98pG', '', '112', '0000-00-00', 'JEFFREY', 'MELQUIADES', 'SALAZAR', '', '09497524488', '', 0, '1998-07-21', 'salazarjeffrey207@gmail.com', 'M.H DEL PILAR', '', '030000000', '320', '035416015', '035416000', '035400000', 0, NULL, NULL, NULL, '2024-02-20 14:30:10', '', '2024-02-20 14:33:10', '_03-10961.jpg', 1, 0, 2, 0, '2025-01-08 02:06:21', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', NULL, '', '', 0, '', 0),
+('03-10961', '$2y$10$ET2vCONvu9h52MQb0EVZR.qmCcJ8f22ot90H4rNo/Aq.FJp1UTDPW', '', '112', '0000-00-00', 'JEFFREY', 'MELQUIADES', 'SALAZAR', '', '09497524488', '', 0, '1998-07-21', 'salazarjeffrey207@gmail.com', 'M.H DEL PILAR', '', '030000000', '320', '035416015', '035416000', '035400000', 0, NULL, NULL, NULL, '2024-02-20 14:30:10', '', '2024-02-20 14:33:10', '_03-10961.jpg', 1, 0, 2, 0, '2025-01-08 14:01:33', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', NULL, '', '', 0, '', 0),
 ('03-8277', '', '161ebd7d45089b3446ee4e0d86dbcf92', '132', '0000-00-00', 'JOSELITO', 'VIQUERRA', 'ULEP', '', '09926837721', '', 0, '1971-12-21', 'jvulep@dswd.gov.ph', '', '', '030000000', '', '035416015', '035416000', '035400000', 0, NULL, NULL, NULL, '2024-03-05 13:39:26', '03-9862', '2024-04-24 10:22:22', '_03-8277.jpg', 0, 1, 2, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, '', '0000-00-00 00:00:00', '', '', 0, '', 0),
 ('03-11553', '', '161ebd7d45089b3446ee4e0d86dbcf92', '90', '0000-00-00', 'CLARIZA', 'SICAT', 'MENDOZA', '', '09165242079', '', 1, '1981-10-30', 'csmendoza@dswd.gov.ph', 'DAISY ST.', '', '030000000', '1344', '035404018', '035404000', '035400000', 0, NULL, NULL, NULL, '2024-03-05 15:00:39', '03-9862', '2024-04-24 09:05:57', '_03-11553.jpeg', 0, 1, 2, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, '', '0000-00-00 00:00:00', '', '', 0, '', 0),
 ('03-0165', '', '161ebd7d45089b3446ee4e0d86dbcf92', '80', '0000-00-00', 'VILMA', 'REBOREDO', 'SERRANO', '', '09209632006', '', 1, '1971-12-28', 'vrserrano@dswd.gov.ph', '', '', '030000000', '', '035416004', '035416000', '035400000', 0, NULL, NULL, NULL, '2024-03-13 16:39:39', '03-9862', '2024-04-24 04:17:55', '_03-0165.jpg', 0, 1, 2, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, '', '0000-00-00 00:00:00', '', '', 0, '', 0),
@@ -115643,7 +115659,7 @@ ALTER TABLE `inactive`
 -- AUTO_INCREMENT for table `lib_academic`
 --
 ALTER TABLE `lib_academic`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `lib_account_status`
@@ -115655,7 +115671,7 @@ ALTER TABLE `lib_account_status`
 -- AUTO_INCREMENT for table `lib_bank_details`
 --
 ALTER TABLE `lib_bank_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `lib_blood_types`
@@ -115847,7 +115863,7 @@ ALTER TABLE `lib_training_course`
 -- AUTO_INCREMENT for table `lib_unit`
 --
 ALTER TABLE `lib_unit`
-  MODIFY `unit_code` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
+  MODIFY `unit_code` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
 
 --
 -- AUTO_INCREMENT for table `lib_voluntary`
