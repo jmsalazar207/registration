@@ -220,26 +220,29 @@ $(function(){
           const zip_code = data.zip_code;
 
           //bank details
-          $("#addBankAccount").val(data.bank_account_number);
-          if (data.bank_account_status !== 0) {
-            $("#btnSaveAccountNumber")
-              .prop('disabled', true)
-              .attr('title', 'Bank details already verified');
-              $("#addBankAccount")
-              .prop('disabled', true)
-              .attr('title', 'Bank details already verified');
-              $("#addBankAccountMOV")
-              .prop('disabled', true)
-              .attr('title', 'Bank details already verified');
-          } else {
-            $("#btnSaveAccountNumber")
-              .prop('disabled', false)
-              .attr('title', 'Save');
-              $("#addBankAccount")
-              .prop('disabled', false)
-              $("#addBankAccountMOV")
-              .prop('disabled', false)
+          if(data.bank_account_number){
+            $("#addBankAccount").val(data.bank_account_number);
+            if (data.bank_account_status !== 0) {
+              $("#btnSaveAccountNumber")
+                .prop('disabled', true)
+                .attr('title', 'Bank details already verified');
+                $("#addBankAccount")
+                .prop('disabled', true)
+                .attr('title', 'Bank details already verified');
+                $("#addBankAccountMOV")
+                .prop('disabled', true)
+                .attr('title', 'Bank details already verified');
+            } else {
+              $("#btnSaveAccountNumber")
+                .prop('disabled', false)
+                .attr('title', 'Save');
+                $("#addBankAccount")
+                .prop('disabled', false)
+                $("#addBankAccountMOV")
+                .prop('disabled', false)
+            }
           }
+          
           
           //profileCard
           $("#profileFullName").text(fname+" "+sname);
