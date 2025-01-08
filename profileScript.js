@@ -442,7 +442,10 @@ $(function(){
       $("#pagibigNo").val(PAGIBIG);
       $("#philhealthNo").val(PHILHEALTH);
       $("#sssNo").val(SSS);
-      populateTinNumber(TIN);
+      if(TIN){
+        populateTinNumber(TIN);
+      }
+     
       
       $("#Weight").val(weight);
       $("#Height").val(height);
@@ -1686,6 +1689,7 @@ function btnAcadUpdate(getAcads){
           $("#UpdateacadDegree").html('<option value="1">PRIMARY EDUCATION</option>');
           $('#UpdateacadHighestLevel').attr('readonly','readonly');
           $("#UpdateacadYearGraduated").attr('required','required');
+          $("#UpdateacadNameSchool").val('').trigger('change');
           $("#UpdateacadNameSchool").prop('disabled',true);
           $("#UpdateacadNameSchool").attr('required',false);
           $("#txtUpdateFilter").show();
@@ -1703,6 +1707,7 @@ function btnAcadUpdate(getAcads){
           $("#UpdateacadDegree").html('<option value="1">SECONDARY EDUCATION</option>');
           $('#UpdateacadHighestLevel').attr('readonly','readonly');
           $("#UpdateacadYearGraduated").attr('required','required');
+          $("#UpdateacadNameSchool").val('').trigger('change');
           $("#UpdateacadNameSchool").prop('disabled',true);
           $("#UpdateacadNameSchool").attr('required',false);
           $("#txtUpdateFilter").show();
@@ -3405,7 +3410,9 @@ function formatTinNumber(value) {
 // Handle user input formatting
 $(document).on('input', '#tinNo', function () {
   const formattedValue = formatTinNumber($(this).val());
-  $(this).val(formattedValue);
+
+    $(this).val(formattedValue);
+
 });
 
 // Populate TIN number from database and apply formatting

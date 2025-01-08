@@ -186,7 +186,7 @@ $(document).on('submit','#contentsearch',function(event){
           extname : extname
         };
         if(data.count == 0){
-          modalErrorShow("Oops! Invalid Credentials. Please contact Personnel Section.");
+          modalErrorShow("Oops! Invalid Credentials. Please contact HRPPMS-RSP.");
         }else{
             if(data.registered =="No"){ //not yet registered
               $('#FullName').text(fullname);

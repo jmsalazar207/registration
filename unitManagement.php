@@ -38,8 +38,7 @@ require_once('includes/init.php');
   <link rel="stylesheet" href="includes/loader.css?test=<?php echo time()?>">
 
   <!-- Google Font -->
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  
 </head>
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
   <div class="loader-div">
@@ -84,7 +83,7 @@ require_once('includes/init.php');
                           <th> Unit Name </th>
                           <th> Unit Code Name </th>
                           <th> Division Name </th>
-                          <th> Station Name </th>
+                          <!-- <th> Station Name </th> -->
                           <th> Added By </th>
                           <th> Date and Time Added </th>
                           <th> Updated By </th>
@@ -153,7 +152,7 @@ require_once('includes/init.php');
         { data: "unit_name"},
         { data: "unit_name_code"},
         { data: "division_name"},
-        { data: "station_name"},
+        // { data: "station_name"},
         { data: "added_by"},
         { data: "datetime_added"},
         { data: "updated_by"},

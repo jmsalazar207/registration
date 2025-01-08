@@ -1267,14 +1267,14 @@ $.ajax({
               $('#txtUpdateUnitDiv').html(data);
           } 
         });
-        $.ajax({
-          url:"includes/functions.php",
-          method:"POST",
-          data:{update_official_station_id:unitStationCode},
-          success:function(data){
-              $('#txtUpdateUnitOfficialStation').html(data);
-          } 
-        });
+        // $.ajax({
+        //   url:"includes/functions.php",
+        //   method:"POST",
+        //   data:{update_official_station_id:unitStationCode},
+        //   success:function(data){
+        //       $('#txtUpdateUnitOfficialStation').html(data);
+        //   } 
+        // });
         $("#UpdateUnit").modal('show');
       },error: function(xhr, status, error) {
         modalErrorShow("The system encountered an error. Please contact support.");

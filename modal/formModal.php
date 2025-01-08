@@ -1119,7 +1119,7 @@
                                     <small id='checktxtUnitDiv'></small>
                                 </div>
                                 <br>
-                                <div class="col-md-12">
+                                <!-- <div class="col-md-12">
                                     <label 
                                         for="txtUnitOfficialStation" 
                                         class="col-sm-12 requiredField">
@@ -1137,7 +1137,7 @@
                                         </select>
                                     </div>
                                     <small id='checktxtUnitOfficialStation'></small>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -1253,7 +1253,7 @@
                                     <small id='checktxtUpdateUnitDiv'></small>
                                 </div>
                                 <br>
-                                <div class="col-md-12">
+                                <!-- <div class="col-md-12">
                                     <label 
                                         for="txtUpdateUnitOfficialStation" 
                                         class="col-sm-12 requiredField">
@@ -1271,7 +1271,7 @@
                                         </select>
                                     </div>
                                     <small id='checktxtUpdateUnitOfficialStation'></small>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>

@@ -4,18 +4,70 @@ function NumberOnly(evt) {
       return false;
     return true;
 }
-function staticModal(){
+function staticModal() {
+  // Disable all interactions on the page except for the modal
+  $('body').addClass('modal-open-static');
+  
+  // Show the modal with static backdrop and keyboard disabled
   $('#modalDynamic').modal({
     backdrop: 'static', // Prevent close on clicking outside
     keyboard: false     // Prevent close on pressing Esc
   });
+
+  // Add an event listener to re-enable interactions when the modal is hidden
+  $('#modalDynamic').on('hidden.bs.modal', function () {
+    $('body').removeClass('modal-open-static');
+  });
 }
 function staticConfirmModal(){
+  // Disable all interactions on the page except for the modal
+  $('body').addClass('modal-open-static');
+
+  // Show the modal with static backdrop and keyboard disabled
   $('#modalDynamicConfirm').modal({
     backdrop: 'static', // Prevent close on clicking outside
     keyboard: false     // Prevent close on pressing Esc
   });
+
+  // Add an event listener to re-enable interactions when the modal is hidden
+  $('#modalDynamicConfirm').on('hidden.bs.modal', function () {
+    $('body').removeClass('modal-open-static');
+  });
 }
+function staticConfirmLogoutModal(){
+  // Disable all interactions on the page except for the modal
+  $('body').addClass('modal-open-static');
+
+  // Show the modal with static backdrop and keyboard disabled
+  $('#modalDynamicConfirmLogout').modal({
+    backdrop: 'static', // Prevent close on clicking outside
+    keyboard: false     // Prevent close on pressing Esc
+  });
+
+  // Add an event listener to re-enable interactions when the modal is hidden
+  $('#modalDynamicConfirmLogout').on('hidden.bs.modal', function () {
+    $('body').removeClass('modal-open-static');
+  });
+}
+// Add a CSS class to disable interactions when modal is active
+$('<style>')
+  .prop('type', 'text/css')
+  .html(`
+    .modal-open-static {
+      pointer-events: none; /* Disable clicks on the entire page */
+    }
+    .modal-open-static .modal {
+      pointer-events: auto; /* Allow interaction only with the modal */
+    }
+    .modal-open-static input,
+    .modal-open-static textarea {
+      pointer-events: none; /* Disable typing in inputs and textareas */
+    }
+  `)
+  .appendTo('head');
+  
+
+
 let tables = {};
 let isCaptchaValid = false;
 

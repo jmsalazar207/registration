@@ -312,6 +312,7 @@ if(isset($_POST['checkAcademic'])){
           )
       AND NOT (
              acad_to = $acad_PeriodFrom
+             OR acad_from = $acad_PeriodTo
           )
           ";
       $dbConn->findFirstQuery($sql);
@@ -336,6 +337,7 @@ if(isset($_POST['checkAcademic'])){
           )
       AND NOT (
              acad_to = $acad_PeriodFrom
+             OR acad_from = $acad_PeriodTo
           )
           ";
       $dbConn->findFirstQuery($sql);

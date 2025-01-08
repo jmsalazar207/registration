@@ -35,24 +35,24 @@
         }else if (credentialsMatch ==7){
           modalConfirmShow("In compliance with cybersecurity policies and to enhance the security of our systems, you are required to update your password before logging in. Would you like to proceed with changing your password now? Please confirm to continue. We appreciate your cooperation in helping safeguard our digital environment.",mandatoryUpdatePassword,'');
         }else if (credentialsMatch == 3) {
-          modalErrorShow("Your registration has been disapproved by the administrator. Please contact the Personnel Section.");
+          modalErrorShow("Your registration has been disapproved by the administrator. Please contact the HRPPMS-RSP.");
           resetCaptcha();
         } else if (credentialsMatch == 4) {
-          modalErrorShow("Your account has been locked. Please contact the Personnel Section.");
+          modalErrorShow("Your account has been locked. Please contact the HRPPMS-RSP.");
           resetCaptcha();
           sessionStorage.clear();
         } else if (credentialsMatch == 5) {
           handleWrongPassword(employeeNo);
         } else if (credentialsMatch == 0) {
           $('#regRoute').css("display", "inline-flex");
-          modalAlertShow("Oops! Invalid Credentials. Please contact Personnel Section for assistance.",CloseDynamicModal);
+          modalAlertShow("Oops! Invalid Credentials. Please contact HRPPMS-RSP for assistance.",CloseDynamicModal);
           resetCaptcha();
         } else if (credentialsMatch == 1) {
-          modalAlertShow("Your account is pending approval. Please contact the Personnel Section.",CloseDynamicModal);
+          modalAlertShow("Your account is pending approval. Please contact the HRPPMS-RSP.",CloseDynamicModal);
           resetCaptcha();
           sessionStorage.clear();
         } else {
-          modalAlertShow("Oops! Invalid Credentials. Please contact Personnel Section.",CloseDynamicModal);
+          modalAlertShow("Oops! Invalid Credentials. Please contact HRPPMS-RSP.",CloseDynamicModal);
           resetCaptcha();
           sessionStorage.clear();
         }

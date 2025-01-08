@@ -31,11 +31,10 @@ if($searchValue != ''){
             updated.sname LIKE '%".$searchValue."%' OR
             updated.fname LIKE '%".$searchValue."%' OR
             updated.mname LIKE '%".$searchValue."%' OR
-            os.station_name LIKE '%".$searchValue."%' OR
             d.division_name LIKE '%".$searchValue."%')";
 }
 
-
+//  os.station_name LIKE '%".$searchValue."%' OR
 ## Total number of records without filtering
 $records = $dbConn->findFirstQuery("SELECT COUNT(unit_code) as allcount FROM lib_unit");
 $totalRecords = $records['allcount'];
@@ -45,19 +44,19 @@ $totalRecords = $records['allcount'];
 $records = $dbConn->findFirstQuery("SELECT COUNT(u.unit_code) as allcount  
                                     FROM lib_unit u
                                     JOIN lib_division d ON d.division_code = u.division_code
-                                    JOIN lib_official_station os ON os.station_code = u.station_code  
+                                    -- JOIN lib_official_station os ON os.station_code = u.station_code  
                                     LEFT JOIN userprofile added ON added.empno = u.added_by
                                     LEFT JOIN userprofile updated ON updated.empno = u.updated_by"
                                     .$searchQuery);
 $totalRecordwithFilter = $records['allcount'];
 
 ## Fetch records
-$sql = "SELECT u.unit_code, u.unit_name, u.unit_name_code, d.division_name, os.station_name, u.datetime_added, u.datetime_updated,
+$sql = "SELECT u.unit_code, u.unit_name, u.unit_name_code, d.division_name, u.datetime_added, u.datetime_updated,
          CONCAT(added.fname,' ',added.mname,' ',added.sname) AS added_by,
          CONCAT(updated.fname,' ',updated.mname,' ',updated.sname) AS updated_by
          FROM lib_unit u
          JOIN lib_division d ON d.division_code = u.division_code
-         JOIN lib_official_station os ON os.station_code = u.station_code  
+         -- JOIN lib_official_station os ON os.station_code = u.station_code  
          LEFT JOIN userprofile added ON added.empno = u.added_by
          LEFT JOIN userprofile updated ON updated.empno = u.updated_by
          $searchQuery ORDER BY $columnName $columnSortOrder limit $row, $rowperpage";
@@ -83,7 +82,7 @@ if($unitRecords){
       "unit_name" => $row["unit_name"],
       "unit_name_code"=> $row["unit_name_code"],
       "division_name"=> $row["division_name"],
-      "station_name"=> $row["station_name"],
+      // "station_name"=> $row["station_name"],
       "added_by"=> $row["added_by"],
       "datetime_added"=> $row["datetime_added"],
       "updated_by"=> $row["updated_by"],

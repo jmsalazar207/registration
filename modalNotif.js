@@ -86,7 +86,7 @@ function modalErrorShow(msg){
     $('#modalDynamicConfirmLogoutButtonNo').attr('class','btn btn-modalNo btn-sm');
     $('#modalDynamicConfirmLogoutButtonYes').text('Stay logged in');
     $('#modalDynamicConfirmLogoutButtonNo').text('Re-login account');
-    staticConfirmModal();
+    staticConfirmLogoutModal();
       // Remove previous event listeners (to prevent stacking)
       $('#modalDynamicConfirmLogoutButtonYes').off('click');
       $('#modalDynamicConfirmLogoutButtonNo').off('click');

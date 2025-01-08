@@ -16,7 +16,7 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
     $AdminUpdateUnit['unit_name'] = sanitize(strtoupper($_POST['txtUpdateUnitName']));
     $AdminUpdateUnit['unit_name_code'] = sanitize(strtoupper($_POST['txtUpdateUnitNameCode']));
     $AdminUpdateUnit['division_code'] = sanitize(strtoupper($_POST['txtUpdateUnitDiv']));
-    $AdminUpdateUnit['station_code'] = sanitize(strtoupper($_POST['txtUpdateUnitOfficialStation']));
+    // $AdminUpdateUnit['station_code'] = sanitize(strtoupper($_POST['txtUpdateUnitOfficialStation']));
     $AdminUpdateUnit['updated_by'] = $_SESSION['userID'];
     $AdminUpdateUnit['datetime_updated'] = $today;
 

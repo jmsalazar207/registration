@@ -11,7 +11,7 @@ if (isset($_POST['attemptEmpNO'])) {  //Tries
 
   if($sqlUpdateAttempt){
     $dataReturn['status'] = "success";
-    $dataReturn['msg'] = "Oops! Invalid Credentials. Please contact Personnel Section for further assistance in verifying your information."; //success update then notif for error password
+    $dataReturn['msg'] = "Oops! Invalid Credentials. Please contact HRPPMS-RSP for further assistance in verifying your information."; //success update then notif for error password
     echo json_encode($dataReturn);
   }else{
     $dataReturn['status'] = "failed";
