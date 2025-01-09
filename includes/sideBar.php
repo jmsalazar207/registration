@@ -173,6 +173,12 @@
                  Training
               </a>
             </li>
+            <li>
+              <a href="VerifyBankMOV.php">
+                <i class="glyphicon glyphicon-book"></i> 
+                 Bank Details
+              </a>
+            </li>
           </ul>
         </li>
         <li id="genList" hidden>

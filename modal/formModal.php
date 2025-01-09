@@ -4240,7 +4240,7 @@
                                                 required="true" 
                                                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
                                                 title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" 
-                                                tabindex="1">
+                                                tabindex="2">
                                                 <span 
                                                 class="input-group-addon">
                                                     <i 
@@ -4285,7 +4285,7 @@
                                                 required="true" 
                                                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
                                                 title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" 
-                                                tabindex="2">
+                                                tabindex="3">
                                                 <span 
                                                 class="input-group-addon">
                                                     <i 

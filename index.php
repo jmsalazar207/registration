@@ -67,6 +67,15 @@ require_once('includes/init.php');
     <div class="container-fluid">
       <!-- Main content -->
       <section class="content">
+      <div class="row">
+        <!-- <div class="col-xs-12">
+          <div class="box">
+            <div class="box-body text-center">
+              <img src="assets/images/ERM.png"/>
+            </div>
+          </div>
+        </div> -->
+      </div>
       <div class="login-box">
   	<div class="login-logo">
   		<b>ERM</b>
