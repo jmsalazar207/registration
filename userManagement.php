@@ -78,6 +78,11 @@ require_once('includes/init.php');
                         </button>
                     </div>
                   </div>
+                  <div class="col-md-12">
+                      <a class="btn btn-primary btn-sm pull-right" href="generateListNoItem.php">
+                        Account w/o Item Number
+                      </a>
+                  </div>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
