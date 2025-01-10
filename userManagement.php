@@ -83,6 +83,11 @@ require_once('includes/init.php');
                         Account w/o Item Number
                       </a>
                   </div>
+                  <div class="col-md-12">
+                      <a class="btn btn-primary btn-sm pull-right" href="generateAllList.php">
+                        Download All List
+                      </a>
+                  </div>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">

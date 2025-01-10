@@ -160,7 +160,6 @@
     modalConfirmShow('Would you like to confirm and save the changes now?',MandatoryUpdatePassword,PassData);
   });
   function MandatoryUpdatePassword(formData){
-    alert('palit');
     $("#CheckMandatoryUpdateConfirmPassword").html("").css('color', '');
     $("#MandatoryUpdateConfirmPassword").css('border-color','');
       MandatoryUpdateEmpIDValue = $("#mandatoryUpdateUsername").val();
