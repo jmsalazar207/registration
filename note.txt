@@ -400,3 +400,11 @@ GROUP BY u.empno, u.fname, u.mname, u.sname, u.ename, pn.position_name, pos.sala
 SELECT u.empno, u.fname, u.mname, u.sname,l.user_code, ul.description FROM list_user_level l
 JOIN userprofile u ON u.empno = l.empno
 JOIN lib_user_level ul ON ul.user_code = l.user_code;
+
+SELECT h.itemCode, un.unit_name AS unit_created, las.area_assignment_name, d.division_name
+FROM hrppms h
+JOIN lib_unit un ON un.unit_code = h.unit_code
+JOIN lib_area_assignment las ON las.area_assignment_code = h.area_assignment
+JOIN lib_unit u ON u.unit_code = las.unit_code
+JOIN lib_division d ON d.division_code = u.division_code  
+ORDER BY `las`.`area_assignment_name` DESC;
