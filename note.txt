@@ -408,3 +408,28 @@ JOIN lib_area_assignment las ON las.area_assignment_code = h.area_assignment
 JOIN lib_unit u ON u.unit_code = las.unit_code
 JOIN lib_division d ON d.division_code = u.division_code  
 ORDER BY `las`.`area_assignment_name` DESC;
+
+
+
+
+sir kevsss
+SELECT u.empno, u.fname, u.mname, u.sname, u.ename, pos.item_code, pn.position_name, unit.unit_name AS section, d.division_name, las.area_assignment_name
+FROM userprofile u
+LEFT JOIN lib_position pos ON pos.position_id = u.position_id
+LEFT JOIN lib_position_name pn ON pn.position_name_id = pos.position_name_id
+LEFT JOIN lib_area_assignment las ON las.area_assignment_code = pos.area_assignment
+LEFT JOIN lib_unit un ON un.unit_code = las.unit_code
+LEFT JOIN lib_unit unit ON unit.unit_code = pos.unit_code
+LEFT JOIN lib_division d ON un.division_code = d.division_code  
+
+madam roms
+SELECT u.empno, u.fname, u.mname, u.sname, u.ename, pos.item_code, pn.position_name,ce.classification_employment_name,fs.fund_source_name, unit.unit_name, d.division_name, las.area_assignment_name
+FROM userprofile u
+LEFT JOIN lib_position pos ON pos.position_id = u.position_id
+LEFT JOIN lib_classification_employment ce ON ce.position_classification_id = pos.position_classification_id
+LEFT JOIN lib_fund_source fs ON fs.fund_source_code = pos.fund_source_code
+LEFT JOIN lib_position_name pn ON pn.position_name_id = pos.position_name_id
+LEFT JOIN lib_area_assignment las ON las.area_assignment_code = pos.area_assignment
+LEFT JOIN lib_unit un ON un.unit_code = las.unit_code
+LEFT JOIN lib_unit unit ON unit.unit_code = pos.unit_code
+LEFT JOIN lib_division d ON un.division_code = d.division_code  

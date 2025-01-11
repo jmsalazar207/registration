@@ -246,9 +246,9 @@ up.region, up.city, up.province, up.barangay, up.uploaded_id, pn.position_name, 
 FROM userprofile up
 LEFT JOIN lib_position pos ON pos.position_id = up.position_id
 LEFT JOIN lib_position_name pn ON pn.position_name_id = pos.position_name_id
-LEFT JOIN lib_unit un ON un.unit_code = pos.unit_code
+LEFT JOIN lib_area_assignment las ON las.area_assignment_code = pos.area_assignment
+LEFT JOIN lib_unit un ON un.unit_code = las.unit_code
 LEFT JOIN lib_division d ON un.division_code = d.division_code
-LEFT JOIN lib_official_station os ON os.station_code = pos.station_code
 LEFT JOIN lib_regions r on r.region_code = up.region
 LEFT JOIN lib_provinces prov on prov.prov_code = up.province
 LEFT JOIN lib_cities muni on muni.city_code = up.city

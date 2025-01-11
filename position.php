@@ -89,7 +89,7 @@ require_once('includes/init.php');
                               <th> Salary Grade </th>
                               <th> Division </th>
                               <th> Unit </th>
-                              <th> Official Station</th>
+                              <th> Area of Assignment</th>
                               <th> Filled By </th>
                               <th> Date Filled </th>
                           </tr>
@@ -162,7 +162,7 @@ require_once('includes/init.php');
         { data: "salary_history_id"},
         { data: "division_name"},
         { data: "unit_name"},
-        { data: "station_name"},
+        { data: "area_assignment_name"},
         { data: "filled_by"},
         { data: "date_filled"}
       ],

@@ -180,7 +180,7 @@ require_once('includes/init.php');
         { data: "position_name"},
         { data: "division_name"},
         { data: "unit_name"},
-        { data: "station_name"},
+        { data: "area_assignment_name"},
         { data: "date_registered"},
         { data: "account_status_name"}
       ],

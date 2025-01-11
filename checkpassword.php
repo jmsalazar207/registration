@@ -27,14 +27,14 @@ require_once("includes/helper.php");
             $data['credentialsMatch'] = 1; //Pending Approval
         }else if($isApproved== 2) {
             if($credentials['isLog'] == 0){ //Goods
-                if(($credentials['password'] != '') && password_verify($password,$credentials['password'] )){
+                if(($credentials['password'] != '') && password_verify($password,$credentials['password'] )){ //correct password
                     $data['credentialsMatch'] = 2; //Approved and passed
-                    $data['AccountUserLevel'] = $credentials['user_level'];
-                    $data['empno'] = $credentials['empno'];
-                    $data['password'] = $credentials['password'];
-                    $data['date_registered'] = $credentials['date_registered'];
-                    $_SESSION['userID'] = $credentials['empno'];
-                    $_SESSION['userLevel'] = $credentials['user_level'];
+                    $data['AccountUserLevel'] = $credentials['user_level']; //passdata
+                    $data['empno'] = $credentials['empno']; //passdata
+                    $data['password'] = $credentials['password']; //passdata
+                    $data['date_registered'] = $credentials['date_registered']; //passdata
+                    $_SESSION['userID'] = $credentials['empno']; //passdata
+                    $_SESSION['userLevel'] = $credentials['user_level']; //passdata
                 }else{
                     $data['credentialsMatch'] = 5; //wrong password
                     $data['empno'] = $credentials['empno'];

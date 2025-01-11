@@ -142,7 +142,7 @@
           }
         },error: function(xhr, status, error) {
           modalErrorShow("The system encountered an error. Please contact support.");
-          $(".loader-div").hide();s
+          $(".loader-div").hide();
         }
       });
   }

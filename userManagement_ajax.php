@@ -30,7 +30,7 @@ if($searchValue != ''){
             ac.account_status_name LIKE '%".$searchValue."%' OR
             pn.position_name LIKE '%".$searchValue."%' OR
             d.division_name LIKE '%".$searchValue."%' OR
-            os.station_name LIKE '%".$searchValue."%' OR
+            las.area_assignment_name LIKE '%".$searchValue."%' OR
             pos.item_code LIKE '%".$searchValue."%' OR
             un.unit_name LIKE '%".$searchValue."%' )";
 }
@@ -43,24 +43,24 @@ $totalRecords = $records['allcount'];
 
 ## Total number of records with filtering
 $records = $dbConn->findFirstQuery("SELECT COUNT(empno) as allcount
-                                   FROM userprofile u 
-                                    LEFT JOIN lib_position pos ON pos.position_id = u.position_id 
-                                    LEFT JOIN lib_position_name pn ON pos.position_name_id = pn.position_name_id 
-                                    LEFT JOIN lib_unit un ON un.unit_code = pos.area_assignment 
-                                    LEFT JOIN lib_division d ON un.division_code = d.division_code 
-                                    LEFT JOIN lib_official_station os ON os.station_code = pos.station_code 
-                                    JOIN lib_account_status ac ON u.account_status = ac.account_status_code"
+                                    FROM userprofile u 
+            LEFT JOIN lib_position pos ON pos.position_id = u.position_id 
+            LEFT JOIN lib_position_name pn ON pos.position_name_id = pn.position_name_id 
+            LEFT JOIN lib_area_assignment las ON las.area_assignment_code = pos.area_assignment 
+            LEFT JOIN lib_unit un ON un.unit_code = las.unit_code
+            LEFT JOIN lib_division d ON un.division_code = d.division_code             
+            JOIN lib_account_status ac ON u.account_status = ac.account_status_code"
                                     .$searchQuery);
 $totalRecordwithFilter = $records['allcount'];
 
 ## Fetch records
-$sql_emp = "SELECT u.empno, u.sname, u.fname, u.mname, u.ename, u.position_id,u.date_registered, u.emp_status, pos.item_code, pn.position_name, d.division_name, un.unit_name, u.account_status ,os.station_name, ac.account_status_name 
+$sql_emp = "SELECT u.empno, u.sname, u.fname, u.mname, u.ename, u.position_id,u.date_registered, u.emp_status, pos.item_code, pn.position_name, d.division_name, un.unit_name, u.account_status ,las.area_assignment_name, ac.account_status_name 
             FROM userprofile u 
             LEFT JOIN lib_position pos ON pos.position_id = u.position_id 
             LEFT JOIN lib_position_name pn ON pos.position_name_id = pn.position_name_id 
-            LEFT JOIN lib_unit un ON un.unit_code = pos.area_assignment 
-            LEFT JOIN lib_division d ON un.division_code = d.division_code 
-            LEFT JOIN lib_official_station os ON os.station_code = pos.station_code 
+            LEFT JOIN lib_area_assignment las ON las.area_assignment_code = pos.area_assignment 
+            LEFT JOIN lib_unit un ON un.unit_code = las.unit_code
+            LEFT JOIN lib_division d ON un.division_code = d.division_code             
             JOIN lib_account_status ac ON u.account_status = ac.account_status_code
             $searchQuery ORDER BY $columnName $columnSortOrder limit $row, $rowperpage";
 
@@ -147,7 +147,7 @@ if($empRecords){
       "position_name" => $row['position_name'],
       "division_name" => $row['division_name'],
       "unit_name" => $row['unit_name'],
-      "station_name" => $row['station_name'],
+      "area_assignment_name" => $row['area_assignment_name'],
       "date_registered" => $row['date_registered'],
       "account_status_name" => $row['account_status_name']);
       
