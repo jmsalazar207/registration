@@ -11,18 +11,18 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
     $dataReturn['msg'] = "Session has expired. Please relogin your account.";
     echo json_encode($dataReturn);
 }else{  
-                    $id = $_POST['position_id'];
-                    $positionUpdate['area_assignment'] =$_POST['UpdatePositionUnit'];
-                    $positionUpdate['updated_by'] = $_SESSION['userID'];
-                    $positionUpdate['datetime_updated']= $today;
-                    $UpdatePositionQuery = $dbConn->update('lib_position','position_id',$id,$positionUpdate);
-                    if($UpdatePositionQuery){
-                        $dataReturn['status'] = "success";
-                        $dataReturn['msg'] = "Position successfully updated";
-                        echo json_encode($dataReturn);
-                    }else {
-                        $dataReturn['status'] = "failed";
-                        $dataReturn['msg'] = "Oops! Something went wrong. Please try again later.";
-                        echo json_encode($dataReturn);
-                    }
+    $id = $_POST['position_id'];
+    $positionUpdate['area_assignment'] =$_POST['UpdatePositionAreaAssign'];
+    $positionUpdate['updated_by'] = $_SESSION['userID'];
+    $positionUpdate['datetime_updated']= $today;
+    $UpdatePositionQuery = $dbConn->update('lib_position','position_id',$id,$positionUpdate);
+    if($UpdatePositionQuery){
+        $dataReturn['status'] = "success";
+        $dataReturn['msg'] = "Position successfully updated";
+        echo json_encode($dataReturn);
+    }else {
+        $dataReturn['status'] = "failed";
+        $dataReturn['msg'] = "Oops! Something went wrong. Please try again later.";
+        echo json_encode($dataReturn);
+    }
 }

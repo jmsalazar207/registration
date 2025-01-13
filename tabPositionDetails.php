@@ -2,18 +2,17 @@
     <div class="user-block">
         <form id="frmUpdatePosition" name="frmUpdatePosition" autocomplete="off" >
             <div class="box" style="border:0cm" >
-                <div class="header">
-                    <button 
+                <div class="box-body row">
+                    <div class="box-header" >
+                        <button 
                         type="button" 
                         name="btnDeletePosition"
                         id="btnDeletePosition"
                         class="btn btn-danger btn-sm pull-right"
-                        onclick="btnCheckDeletePosition()"
                         >
-                        Abolish Position
-                    </button>
-                </div>
-                <div class="box-body row">
+                            Abolish Position
+                        </button>
+                    </div>
                     <div 
                     class="card col-md-12"
                     style="border-radius: 10px;"
@@ -81,6 +80,25 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label 
+                                    for="UpdatePositionAreaAssign" 
+                                    class="col-sm-12" 
+                                    style="font-size: 15px;">
+                                    Area of Assignment
+                                </label>
+                                <div class="col-sm-12">
+                                    <select 
+                                        class="form-control select2"
+                                        style="width: 100%;"  
+                                        id="UpdatePositionAreaAssign" 
+                                        name="UpdatePositionAreaAssign" 
+                                        tabindex="">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                     <div class="box-footer" style="border:0cm;">
@@ -93,7 +111,7 @@
                         </button>
                         <button 
                             type="submit" 
-                            class="btn btn-primary btn-md pull-right">
+                            class="btn btn-primary btn-sm pull-right">
                             Save
                         </button>
                     </div>

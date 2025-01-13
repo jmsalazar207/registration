@@ -33,9 +33,7 @@
                                             name="addPositionName"
                                             required
                                             tabindex="1">
-                                                <?php
-                                                    echo fill_position_name($dbConn,null);
-                                                ?>
+                                               
                                             </select>
                                         </div>
                                     </div>
@@ -56,11 +54,8 @@
                                             id="addPositionClassification" 
                                             name="addPositionClassification"
                                             required
-                                            tabindex="2"
-                                            onchange="onChangeClassEmployment()">
-                                                <?php
-                                                    echo fill_employment($dbConn,null);
-                                                ?>
+                                            tabindex="2">
+                                               
                                             </select>
                                         </div>
                                     </div>
@@ -82,9 +77,7 @@
                                             name="addPositionSalaryGrade"
                                             required
                                             tabindex="3">
-                                                <?php
-                                                    echo fill_salary_grade($dbConn,null);
-                                                ?>
+                                               
                                             </select>
                                         </div>
                                     </div>
@@ -106,9 +99,7 @@
                                             name="addPositionFundSource"
                                             required
                                             tabindex="4">
-                                                <?php
-                                                    echo fill_fund_source($dbConn,null);
-                                                ?>
+                                                
                                             </select>
                                         </div>
                                     </div>
@@ -194,9 +185,8 @@
                                             id="addPositionAreaAssignment" 
                                             name="addPositionAreaAssignment"
                                             required
-                                            tabindex="8"><?php
-                                                    echo fill_unit($dbConn,null);
-                                                ?>
+                                            tabindex="8">
+                                            <option>SELECT UNIT FIRST</option>
                                             </select>
                                         </div>
                                     </div>
@@ -4138,14 +4128,14 @@
                                         Position History
                                     </a>
                                 </li>
-                                <li id="tabAddPositionHistory"
+                                <!-- <li id="tabAddPositionHistory"
                                     class="">
                                     <a 
                                         href="#AddPositionHistory" 
                                         data-toggle="tab">
                                         Add History
                                     </a>
-                                </li>
+                                </li> -->
                             </ul>
                             <div class="tab-content" style = "background-color:white;">
                                 <?php

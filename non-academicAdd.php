@@ -11,7 +11,6 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
     $dataReturn['msg'] = "Session has expired. Please relogin your account.";
     echo json_encode($dataReturn);
 }else{ 
-
     $id = $_SESSION['userID'];
     $nonAcademicAdd['empno'] = $id;
     $nonAcademicAdd['non_academic_title'] =sanitize(strtoupper($_POST['nonAcademicTitle']));
