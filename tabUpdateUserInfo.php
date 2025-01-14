@@ -227,9 +227,7 @@
                                 name="txtRegion" 
                                 tabindex="10"
                                 required>
-                                <?php
-                                    echo fill_region($dbConn, null);
-                                ?>
+                                
                             </select>
                         </div>
                         <small id='checktxtRegion'></small>

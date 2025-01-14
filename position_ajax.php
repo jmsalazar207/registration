@@ -19,7 +19,7 @@ $searchValue = $_POST['search']['value']; // Search value
 
 
 ## Search 
-$searchQuery = " WHERE pos.position_status <= 2 ";
+$searchQuery = " WHERE pos.position_status <3 ";
 if($searchValue != ''){
    $searchQuery .= "AND (
             pos.item_code LIKE '%".$searchValue."%' OR
@@ -29,7 +29,6 @@ if($searchValue != ''){
             pstat.position_status_description LIKE '%".$searchValue."%' OR
             fs.fund_source_name LIKE '%".$searchValue."%' OR
             pos.date_creation_position LIKE '%".$searchValue."%' OR
-            sh.step_1 LIKE '%".$searchValue."%' OR
             d.division_name LIKE '%".$searchValue."%' OR
             u.unit_name LIKE '%".$searchValue."%' OR
             las.area_assignment_name LIKE '%".$searchValue."%' )";
@@ -50,14 +49,13 @@ JOIN lib_fund_source fs ON fs.fund_source_code = pos.fund_source_code
 JOIN lib_area_assignment las ON las.area_assignment_code = pos.area_assignment
 JOIN lib_unit u ON las.unit_code = u.unit_code
 JOIN lib_division d ON u.division_code = d.division_code
-JOIN lib_position_status pstat ON pstat.position_status = pos.position_status
-JOIN lib_salary_history sh ON sh.salary_history_id = pos.salary_history_id"
+JOIN lib_position_status pstat ON pstat.position_status = pos.position_status"
                                     .$searchQuery);
 $totalRecordwithFilter = $records['allcount'];
 
 ## Fetch records
 $sql = "SELECT pos.position_id, pos.item_code, pn.position_name, cs.classification_employment_name, 
-fs.fund_source_name, pos.date_creation_position, pos.salary_history_id, sh.step_1, d.division_name, 
+fs.fund_source_name, pos.date_creation_position, pos.salary_history_id, d.division_name, 
 u.unit_name, las.area_assignment_name, pstat.position_status, pstat.position_status_description
 FROM lib_position pos
 JOIN lib_position_name pn ON pn.position_name_id = pos.position_name_id
@@ -67,7 +65,6 @@ JOIN lib_area_assignment las ON las.area_assignment_code = pos.area_assignment
 JOIN lib_unit u ON las.unit_code = u.unit_code
 JOIN lib_division d ON u.division_code = d.division_code
 JOIN lib_position_status pstat ON pstat.position_status = pos.position_status
-JOIN lib_salary_history sh ON sh.salary_history_id = pos.salary_history_id
         $searchQuery ORDER BY $columnName $columnSortOrder limit $row, $rowperpage";
 
 $Records = $dbConn->findQuery($sql);
@@ -76,7 +73,7 @@ if($Records){
 	$id = $row['position_id']; 
    $sql_filled_by = "SELECT CONCAT(u.fname,' ',u.mname,' ',u.sname,' ',u.ename) AS filled_by, u.date_filled
                      FROM userprofile u
-                     WHERE u.position_id = '$id'";
+                     WHERE u.position_id = '$id' AND u.emp_status =0";
    $output_filled_by = $dbConn->findFirstQuery($sql_filled_by);
    $filled_by = $output_filled_by['filled_by']= isset($output_filled_by['filled_by']) ? $output_filled_by['filled_by']: '';
    $date_filled = $output_filled_by['date_filled'] = isset($output_filled_by['date_filled'])? $output_filled_by['date_filled']:''; 

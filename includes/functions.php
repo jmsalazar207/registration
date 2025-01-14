@@ -3,22 +3,22 @@
 require_once('init.php');
 
 // LIST OF POSITIONS
-if(isset($_POST["update_position_id"])){ 
-  $update_position_id = $_POST["update_position_id"];
+if(isset($_POST["list_position_id"])){ 
+  $list_position_id = $_POST["list_position_id"];
   $params['fields'] = "position_code, position_name";
   $params['order'] = 'position_name';
   $update_positions=$dbConn->find('lib_position',$params);
   $update_positions_output = '<option value="">SELECT POSITION</option>';
   if($update_positions){
     foreach($update_positions as $update_position){
-      $update_positions_output .= '<option value='.$update_position['position_code']. ($update_position_id==$update_position['position_code']?" selected":"") . ' >' .$update_position['position_name'].'</option>';
+      $update_positions_output .= '<option value='.$update_position['position_code']. ($list_position_id==$update_position['position_code']?" selected":"") . ' >' .$update_position['position_name'].'</option>';
     }
   }
   echo $update_positions_output; 
 }
 // LIST OF DIVISION
-if(isset($_POST["update_division_id"])){ 
-  $update_division_id = $_POST["update_division_id"];
+if(isset($_POST["list_division_id"])){ 
+  $list_division_id = $_POST["list_division_id"];
   $params['fields'] = "division_code, division_name";
   $params["order"] = "division_name";
   $params['multipleconditions']["division_status"] =  ['!=',3];
@@ -26,14 +26,14 @@ if(isset($_POST["update_division_id"])){
   $update_divisions_output = '<option value="">SELECT DIVISION</option>';
   if($update_divisions){
     foreach($update_divisions as $update_division){
-      $update_divisions_output .= '<option value='.$update_division['division_code']. ($update_division_id==$update_division['division_code']?" selected":"") . ' >' .$update_division['division_name'].'</option>';
+      $update_divisions_output .= '<option value='.$update_division['division_code']. ($list_division_id==$update_division['division_code']?" selected":"") . ' >' .$update_division['division_name'].'</option>';
     }
   }
   echo $update_divisions_output; 
 }
 // LIST OF UNIT
-if(isset($_POST["update_unit_id"])&& isset($_POST['Where_division_ID'])){ 
-  $update_unit_id = $_POST["update_unit_id"];
+if(isset($_POST["list_unit_id"])&& isset($_POST['Where_division_ID'])){ 
+  $list_unit_id = $_POST["list_unit_id"];
   $Where_division_ID = $_POST["Where_division_ID"];
   $params['fields'] = "unit_code, unit_name";
   $params['multipleconditions']["unit_status"] =  ['!=',3];
@@ -43,15 +43,15 @@ if(isset($_POST["update_unit_id"])&& isset($_POST['Where_division_ID'])){
   $update_units_output = '<option value="">SELECT UNIT</option>';
   if($update_units){
     foreach($update_units as $update_unit){
-      $update_units_output .= '<option value='.$update_unit['unit_code']. ($update_unit_id==$update_unit['unit_code']?" selected":"") . ' >' .$update_unit['unit_name'].'</option>';
+      $update_units_output .= '<option value='.$update_unit['unit_code']. ($list_unit_id==$update_unit['unit_code']?" selected":"") . ' >' .$update_unit['unit_name'].'</option>';
     }
   }
   echo $update_units_output; 
 }
 
 // LIST OF AREA ASSIGNMENT
-if(isset($_POST["update_assignment_id"])&& isset($_POST['Where_unit_ID'])){ 
-  $update_assignment_id = $_POST["update_assignment_id"];
+if(isset($_POST["list_assignment_id"])&& isset($_POST['Where_unit_ID'])){ 
+  $list_assignment_id = $_POST["list_assignment_id"];
   $Where_unit_ID = $_POST["Where_unit_ID"];
   $params['fields'] = "area_assignment_code, area_assignment_name";
   $params['multipleconditions']["area_assignment_status"] =  ['!=',3];
@@ -61,15 +61,15 @@ if(isset($_POST["update_assignment_id"])&& isset($_POST['Where_unit_ID'])){
   $update_assignments_output = '<option value="">SELECT AREA OF ASSIGNMENT</option>';
   if($update_assignments){
     foreach($update_assignments as $update_assignment){
-      $update_assignments_output .= '<option value='.$update_assignment['area_assignment_code']. ($update_assignment_id==$update_assignment['area_assignment_code']?" selected":"") . ' >' .$update_assignment['area_assignment_name'].'</option>';
+      $update_assignments_output .= '<option value='.$update_assignment['area_assignment_code']. ($list_assignment_id==$update_assignment['area_assignment_code']?" selected":"") . ' >' .$update_assignment['area_assignment_name'].'</option>';
     }
   }
   echo $update_assignments_output; 
 }
 
 // LIST OF OFFICIAL STATION
-if(isset($_POST["update_official_station_id"])){ 
-  $update_official_station_id = $_POST["update_official_station_id"];
+if(isset($_POST["list_official_station_id"])){ 
+  $list_official_station_id = $_POST["list_official_station_id"];
   $params['fields'] = "station_code, station_name";
   $params["order"] = "station_name";
   $params['multipleconditions']["official_station_status"] =  ['!=',3];
@@ -77,7 +77,7 @@ if(isset($_POST["update_official_station_id"])){
   $update_official_stations_output = '<option value="">SELECT OFFICIAL STATION</option>';
   if($update_official_stations){
     foreach($update_official_stations as $update_official_station){
-      $update_official_stations_output .= '<option value='.$update_official_station['station_code']. ($update_official_station_id==$update_official_station['station_code']?" selected":"") . ' >' .$update_official_station['station_name'].'</option>';
+      $update_official_stations_output .= '<option value='.$update_official_station['station_code']. ($list_official_station_id==$update_official_station['station_code']?" selected":"") . ' >' .$update_official_station['station_name'].'</option>';
     }
   }
   echo $update_official_stations_output; 
@@ -143,6 +143,105 @@ if(isset($_POST["list_fund_source"])){
     }
   }
   echo $fund_sources_output; 
+}
+
+// LIST OF MODE SEPERATION
+if(isset($_POST["list_mode_seperation"])){ 
+  $mode_seperation_id = $_POST["list_mode_seperation"];
+  $params['fields'] = "mode_seperation_id, mode_seperation_description";
+  $params["order"] = "mode_seperation_description";
+  $params['multipleconditions']["mode_seperation_status"] =  ['!=',3];
+  $mode_seperations=$dbConn->find('lib_mode_seperation',$params);
+  $mode_seperations_output = '<option value="">SELECT MODE OF SEPERATION</option>';
+  if($mode_seperations){
+    foreach($mode_seperations as $mode_seperation){
+      $mode_seperations_output .= '<option value='.$mode_seperation['mode_seperation_id']. ($mode_seperation_id==$mode_seperation['mode_seperation_id']?" selected":"") . ' >' .$mode_seperation['mode_seperation_description'].'</option>';
+    }
+  }
+  echo $mode_seperations_output; 
+}
+
+// LIST OF UNFILLED ITEM CODE
+if(isset($_POST["list_unfilled_item_code"])){ 
+  $unfilled_item_code_id = $_POST["list_unfilled_item_code"];
+  $sql = "SELECT pos.position_id, pos.item_code, pn.position_name
+  FROM lib_position pos
+  LEFT JOIN lib_position_name pn ON pos.position_name_id = pn.position_name_id
+  WHERE pos.position_status = '0'
+  ORDER BY pos.item_code
+";
+  $unfilled_item_codes=$dbConn->findQuery($sql);
+  $unfilled_item_codes_output = '<option value="">SELECT UNFILLED POSITION</option>';
+  if($unfilled_item_codes){
+    foreach($unfilled_item_codes as $unfilled_item_code){
+      $unfilled_item_codes_output .= '<option value='.$unfilled_item_code['position_id']. ($unfilled_item_code_id==$unfilled_item_code['position_id']?" selected":"") . ' >' .$unfilled_item_code['item_code'].' - '.$unfilled_item_code['position_name'].'</option>';
+    }
+  }
+  echo $unfilled_item_codes_output; 
+}
+// LIST OF REGION
+if(isset($_POST["list_region"])){ 
+  $list_region_id = $_POST["list_region"];
+  $params['fields'] = "region_code, region_name";
+  $list_regions=$dbConn->find('lib_regions',$params);
+  $list_regions_output = '<option value="">SELECT REGION</option>';
+  if($list_regions){
+    foreach($list_regions as $list_region){
+      $list_regions_output .= '<option value='.$list_region['region_code']. ($list_region_id==$list_region['region_code']?" selected":"") . ' >' .$list_region['region_name'].'</option>';
+    }
+  }
+  echo $list_regions_output; 
+}
+// LIST OF PROVICE
+if(isset($_POST["list_province"])&& isset($_POST['Where_region_ID'])){
+  $list_province_id = $_POST["list_province"];
+  $Where_region_id = $_POST["Where_region_ID"];
+  $params['fields'] = "prov_code, prov_name";
+  $params['conditions'] = array("region_code" => $Where_region_id);
+  $params['order'] = 'prov_name';
+  $list_provinces=$dbConn->find('lib_provinces',$params);
+  $list_provinces_output = '<option value="">SELECT PROVINCE</option>';
+  if($list_provinces){
+    foreach($list_provinces as $list_province){
+      $list_provinces_output .= '<option value='.$list_province['prov_code']. ($list_province_id==$list_province['prov_code']?" selected":"") . ' >' .$list_province['prov_name'].'</option>';
+      
+    }
+  }
+  echo $list_provinces_output; 
+}
+// LIST OF CITY
+if(isset($_POST["list_city"])&& isset($_POST['Where_province_ID'])){  
+  $list_city_id = $_POST["list_city"];
+  $Where_province_ID = $_POST["Where_province_ID"];
+  $params['fields'] = "city_code, city_name";
+  $params['conditions'] = array("prov_code" => $Where_province_ID);
+  $params['order'] = 'city_name';
+  $list_cities=$dbConn->find('lib_cities',$params);
+  $list_cities_output = '<option value="">SELECT CITY/MUNICIPALITY</option>';
+  if($list_cities){
+    foreach($list_cities as $list_city){
+      $list_cities_output .= '<option value='.$list_city['city_code']. ($list_city_id==$list_city['city_code']?" selected":"") . ' >' .$list_city['city_name'].'</option>';
+      
+    }
+  }
+  echo $list_cities_output; 
+}
+// LIST OF CITY
+if(isset($_POST["list_brgy"])&& isset($_POST['Where_city_ID'])){  
+  $list_brgy_id = $_POST["list_brgy"];
+  $Where_city_ID = $_POST["Where_city_ID"];
+  $params['fields'] = "brgy_code, brgy_name";
+  $params['conditions'] = array("city_code" => $Where_city_ID);
+  $params['order'] = 'brgy_name';
+  $list_brgys=$dbConn->find('lib_brgy',$params);
+  $list_brgys_output = '<option value="">SELECT BARANGAY</option>';
+  if($list_brgys){
+    foreach($list_brgys as $list_brgy){
+      $list_brgys_output .= '<option value='.$list_brgy['brgy_code']. ($list_brgy_id==$list_brgy['brgy_code']?" selected":"") . ' >' .$list_brgy['brgy_name'].'</option>';
+      
+    }
+  }
+  echo $list_brgys_output; 
 }
 
 
@@ -372,7 +471,7 @@ if(isset($_POST["sessionEmpno"])){ //retrieve data from database based on the lo
   $params = array($empNO);
   $sql = 
   "SELECT up.empno, up.position_id, pos.item_code, up.date_filled, up.sname, up.mname, up.fname, up.ename, up.sex, up.mobile, up.eaddress, up.birthdate, up.street, up.numAdd,
-up.region, up.city, up.province, up.barangay, up.uploaded_id, pn.position_name, pos.unit_code, un.unit_name, un.division_code, d.division_name, up.user_level,
+up.region, up.city, up.province, up.barangay, up.uploaded_id, pn.position_name, las.area_assignment_code, las.area_assignment_name, un.unit_code, un.unit_name, un.division_code, d.division_name, up.user_level,
   IFNULL(r.region_name,'') AS region_name, IFNULL(prov.prov_name,'') AS prov_name, 
   IFNULL(muni.city_name,'') AS city_name, IFNULL(brgy.brgy_name,'') AS brgy_name, up.account_status
 FROM userprofile up
@@ -384,7 +483,7 @@ LEFT JOIN lib_division d ON un.division_code = d.division_code
 LEFT JOIN lib_regions r on r.region_code = up.region
 LEFT JOIN lib_provinces prov on prov.prov_code = up.province
 LEFT JOIN lib_cities muni on muni.city_code = up.city
-LEFT JOIN lib_brgy brgy on brgy.brgy_code = up.barangay
+LEFT JOIN lib_brgy brgy on brgy.brgy_code = up.barangay 
   WHERE up.empno = ?
   ";
   $UpdateInfo=$dbConn->findFirstQuery($sql,$params);
@@ -405,6 +504,7 @@ if(isset($_POST["divisionAction"])){ //ONCHANGE Drop down menu for UNIT
   }
   echo $units_output; 
 }
+
 if(isset($_POST["update_region_id"])){ //retrieve data of selected region from lib_regions
   $update_region_id = $_POST["update_region_id"];
   $params['fields'] = "region_code, region_name";

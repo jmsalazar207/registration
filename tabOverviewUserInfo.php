@@ -88,6 +88,22 @@
         <div class="col-md-12">
             <label 
                 class="col-md-3" 
+                for="infoAreaAssignment"
+                style="color:dimgray;"
+                >
+                Area Assignment
+            </label>
+            <p 
+                class="col-md-8"
+                id="infoAreaAssignment"
+                name = "infoAreaAssignment"
+                >
+                Area Assignment
+            </p>
+        </div>
+        <div class="col-md-12">
+            <label 
+                class="col-md-3" 
                 for="infoAddress"
                 style="color:dimgray;"
                 >

@@ -118,9 +118,7 @@
                                 style="width: 100%;"
                                 id="UpdateReasonVacancy" 
                                 name="UpdateReasonVacancy">
-                                    <?php 
-                                        echo fill_mode_seperation($dbConn,null);
-                                    ?>
+                                    
                                 </select>
                                 <small id='CheckUpdateReasonVacancy'></small>
                             </div>
@@ -141,9 +139,6 @@
                                     id="UpdateNewItemCode" 
                                     name="UpdateNewItemCode"
                                     >
-                                        <?php 
-                                            echo fill_item_code($dbConn,null);
-                                        ?>
                                     </select>
                                     <small id='CheckUpdateNewItemCode'></small>
                                 </div>

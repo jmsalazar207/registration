@@ -5,7 +5,7 @@ $(".loader-div").show();
 $.ajax({
   url:"includes/functions.php",
   method:"POST",
-  data:{update_division_id:0},
+  data:{list_division_id:0},
   success:function(data){
       $(".loader-div").hide(); 
       $('#addPositionDivision').html(data);
@@ -81,7 +81,7 @@ $.ajax({
         $.ajax({
             url:"includes/functions.php",
             method:"POST",
-            data:{update_unit_id:'',Where_division_ID:divisionAction},
+            data:{list_unit_id:'',Where_division_ID:divisionAction},
             success:function(data){
                 $(".loader-div").hide();
                 $('#UpdatePositionAreaAssign').html('<option value="">SELECT UNIT FIRST</option>');
@@ -99,7 +99,7 @@ $.ajax({
         $.ajax({
             url:"includes/functions.php",
             method:"POST",
-            data:{update_assignment_id:'',Where_unit_ID:unitAction},
+            data:{list_assignment_id:'',Where_unit_ID:unitAction},
             success:function(data){
                 $(".loader-div").hide();
                 $('#UpdatePositionAreaAssign').html(data);
@@ -118,7 +118,7 @@ $.ajax({
             $.ajax({
                 url:"includes/functions.php",
                 method:"POST",
-                data:{update_unit_id:'',Where_division_ID:divisionAction},
+                data:{list_unit_id:'',Where_division_ID:divisionAction},
                 success:function(data){
                     $(".loader-div").hide();
                     $('#addPositionAreaAssignment').html('<option value="">SELECT UNIT FIRST</option>');
@@ -139,7 +139,7 @@ $.ajax({
         $.ajax({
             url:"includes/functions.php",
             method:"POST",
-            data:{update_assignment_id:'',Where_unit_ID:unitAction},
+            data:{list_assignment_id:'',Where_unit_ID:unitAction},
             success:function(data){
                 $(".loader-div").hide();
                 $('#addPositionAreaAssignment').html(data);
@@ -177,7 +177,7 @@ $.ajax({
         $.ajax({
           url:"includes/functions.php",
           method:"POST",
-          data:{update_division_id:update_division_id},
+          data:{list_division_id:update_division_id},
           success:function(data){
               $('#UpdatePositionDivision').html(data);
           }
@@ -186,7 +186,7 @@ $.ajax({
         $.ajax({
           url:"includes/functions.php",
           method:"POST",
-          data:{update_unit_id:update_unit_id,Where_division_ID:update_division_id},
+          data:{list_unit_id:update_unit_id,Where_division_ID:update_division_id},
           success:function(data){
               $('#UpdatePositionUnit').html(data);
           }
@@ -195,7 +195,7 @@ $.ajax({
         $.ajax({
             url:"includes/functions.php",
             method:"POST",
-            data:{update_assignment_id:update_assignment_code,Where_unit_ID:update_unit_id},
+            data:{list_assignment_id:update_assignment_code,Where_unit_ID:update_unit_id},
             success:function(data){
                 $('#UpdatePositionAreaAssign').html(data);
             }

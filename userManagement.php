@@ -106,7 +106,7 @@ require_once('includes/init.php');
                           <th> Position </th>
                           <th> Division </th>
                           <th> Unit </th>
-                          <th> Official Station </th>
+                          <th> Area Assignment </th>
                           <th> Date Registered </th>
                           <th> Account Status </th>
                         </tr>

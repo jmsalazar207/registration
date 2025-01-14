@@ -1,96 +1,72 @@
 
   $(function(){
-
+//Initialized
     $('.select2').select2();
-    jQuery("#txtRegion").on('change',function(){
-      var regionAction = jQuery(this).attr("id");
-      var region_id = jQuery(this).val();
-      if(region_id){
-          jQuery.ajax({
-          url:"includes/functions.php",
-          method:"POST",
-          data:{regionAction:regionAction, region_id:region_id},
-          success:function(data){
-
-              jQuery('#txtProvince').html(data);
-              jQuery('#txtCity').html('<option value="">SELECT PROVINCE FIRST</option>');
-              jQuery('#txtBrgy').html('<option value="">SELECT MUNICIPALITY FIRST</option>');  
-          }
-      });
-      }else{
-          jQuery('#txtProvince').html('<option value="">SELECT REGION FIRST</option>');
-          jQuery('#txtCity').html('<option value="">SELECT PROVINCE FIRST</option>');
-          jQuery('#txtBrgy').html('<option value="">SELECT MUNICIPALITY FIRST</option>');
-      }
-  });
-  jQuery("#txtProvince").on('change',function(){
-    var provinceAction = jQuery(this).attr("id");
-    var province_id = jQuery(this).val();
-    if(province_id){
-        jQuery.ajax({
-        url:"includes/functions.php",
-        method:"POST",
-        data:{provinceAction:provinceAction, province_id:province_id},
-        success:function(data){
-            jQuery('#txtCity').html(data);
-            jQuery('#txtBrgy').html('<option value="">SELECT MUNICIPALITY FIRST</option>');  
-        }
+//END Initialized
+//Onchange Dropdown 
+    $(document).on('change','#txtRegion',function(){
+      var update_region_id = $(this).val();
+          $(".loader-div").show();
+          $.ajax({
+            url:"includes/functions.php",
+            method:"POST",
+            data:{list_province:'',Where_region_ID:update_region_id},
+            success:function(data){
+              $(".loader-div").hide(); 
+                $('#txtProvince').html(data);
+                $('#txtCity').html('<option value="">SELECT PROVINCE FIRST</option>');
+                $('#txtBrgy').html('<option value="">SELECT CITY/MUNICIPALITY FIRST</option>');
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            }
+          });
     });
-    }else{
-        jQuery('#txtCity').html('<option value="">SELECT PROVINCE FIRST</option>');
-        jQuery('#txtBrgy').html('<option value="">SELECT MUNICIPALITY FIRST</option>');
-    }
-});
-jQuery("#txtCity").on('change',function(){
-  var cityAction = jQuery(this).attr("id");
-  var city_id = jQuery(this).val();
-  if(city_id){
-      jQuery.ajax({
+    $(document).on('change','#txtProvince',function(){
+      var update_province_id = $(this).val();
+          $(".loader-div").show();
+          $.ajax({
+            url:"includes/functions.php",
+            method:"POST",
+            data:{list_city:'',Where_province_ID:update_province_id},
+            success:function(data){
+              $(".loader-div").hide(); 
+              $('#txtCity').html(data);
+              $('#txtBrgy').html('<option value="">SELECT CITY/MUNICIPALITY FIRST</option>');
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            }
+          });
+    });
+    $(document).on('change','#txtCity',function(){
+      var update_city_id = $(this).val();
+          $(".loader-div").show();
+          $.ajax({
+            url:"includes/functions.php",
+            method:"POST",
+            data:{list_brgy:'',Where_city_ID:update_city_id},
+            success:function(data){
+              $(".loader-div").hide(); 
+                $('#txtBrgy').html(data);
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            }
+          });
+    });
+
+//END Onchange Dropdown 
+// Populate on load
+    $.ajax({ //Populate division dropdown in unit management
       url:"includes/functions.php",
       method:"POST",
-      data:{cityAction:cityAction, city_id:city_id},
+      data:{list_division_id:0},
       success:function(data){
-          jQuery('#txtBrgy').html(data);
-           
-      }
-  });
-  }else{
-      jQuery('#txtBrgy').html('<option value="">SELECT PROVINCE FIRST</option>');
-     
-  }
-});
-jQuery("#txtDivision").on('change',function(){
-  var divisionAction = jQuery(this).attr("id");
-  var division_ids = jQuery(this).val();
-  if(division_ids){
-      jQuery.ajax({
-      url:"includes/functions.php",
-      method:"POST",
-      data:{divisionAction:divisionAction, division_ids:division_ids},
-      success:function(data){
-          jQuery('#txtUnit').html(data);
-      }
-  });
-  }else{
-      jQuery('#txtUnit').html('<option value="">SELECT DIVISION FIRST</option>');
-  }
-});
-$.ajax({
-  url:"includes/functions.php",
-  method:"POST",
-  data:{update_division_id:0},
-  success:function(data){
-      $('#txtUnitDiv').html(data);
-  } 
-});
-$.ajax({
-  url:"includes/functions.php",
-  method:"POST",
-  data:{update_official_station_id:0},
-  success:function(data){
-      $('#txtUnitOfficialStation').html(data);
-  } 
-});
+          $('#txtUnitDiv').html(data);
+      } 
+    });
+//END Populate on load
 
   });
 
@@ -161,12 +137,13 @@ $.ajax({
           $("#txtMobileNumber").val(UpdateInfo["mobile"]); 
           $("#txtEmailAddress").val(UpdateInfo["eaddress"]);
           $("#txtBirthdate").val(UpdateInfo["birthdate"]);
+
           var update_region_id = UpdateInfo["region"];
           $(".loader-div").show();
           $.ajax({
               url:"includes/functions.php",
               method:"POST",
-              data:{update_region_id:update_region_id},
+              data:{list_region:update_region_id},
               success:function(data){
                 $(".loader-div").hide(); 
                   $('#txtRegion').html(data);
@@ -175,12 +152,13 @@ $.ajax({
                 $(".loader-div").hide();
               }
           });
+
           var update_province_id = UpdateInfo["province"];
           $(".loader-div").show();
           $.ajax({
             url:"includes/functions.php",
             method:"POST",
-            data:{update_province_id:update_province_id,Where_region_ID:update_region_id},
+            data:{list_province:update_province_id,Where_region_ID:update_region_id},
             success:function(data){
               $(".loader-div").hide(); 
                 $('#txtProvince').html(data);
@@ -189,23 +167,28 @@ $.ajax({
               $(".loader-div").hide();
             }
           });
+
           var update_city_id = UpdateInfo["city"];
           $(".loader-div").show();
           $.ajax({
             url:"includes/functions.php",
             method:"POST",
-            data:{update_city_id:update_city_id,Where_province_ID:update_province_id},
+            data:{list_city:update_city_id,Where_province_ID:update_province_id},
             success:function(data){
               $(".loader-div").hide(); 
               $('#txtCity').html(data);
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
             }
           });
+          
           var update_barangay_id = UpdateInfo["barangay"];
           $(".loader-div").show();
           $.ajax({
             url:"includes/functions.php",
             method:"POST",
-            data:{update_barangay_id:update_barangay_id,Where_city_ID:update_city_id},
+            data:{list_brgy:update_barangay_id,Where_city_ID:update_city_id},
             success:function(data){
               $(".loader-div").hide(); 
                 $('#txtBrgy').html(data);
@@ -222,6 +205,7 @@ $.ajax({
         $("#infoPosition").text(UpdateInfo['position_name']);
         $("#infoDivision").text(UpdateInfo['division_name']);
         $("#infoUnit").text(UpdateInfo['unit_name']);
+        $("#infoAreaAssignment").text(UpdateInfo['area_assignment_name']);
         $("#infoAddress").text(UpdateInfo['numAdd']+' '+UpdateInfo['street']+' '+UpdateInfo['brgy_name']+' '+UpdateInfo['city_name']+' '+UpdateInfo['prov_name']+' '+UpdateInfo['region_name']);
         $("#infoMobileNo").text(UpdateInfo['mobile']);
         $("#infoEmail").text(UpdateInfo['eaddress']);
@@ -654,10 +638,10 @@ $.ajax({
 
   function reasonVacancy(){ //trigger onchange reason of vacancy
     const reason = $("#UpdateReasonVacancy").val();
-    if(reason !=11){
+    if ((reason != 11) && (reason != 20)) {
       $("#divNewItemCode").hide();
       $("#divNewItemCodeDateFilled").hide();
-    }else{
+    } else {
       $("#divNewItemCode").show();
       $("#divNewItemCodeDateFilled").show();
     }
@@ -1110,7 +1094,36 @@ $.ajax({
         modalErrorShow("The system encountered an error. Please contact support.");
         $(".loader-div").hide();
       }
-    })
+    });
+
+    $(".loader-div").show();
+    $.ajax({
+      url:"includes/functions.php",
+      method:"POST",
+      data:{list_mode_seperation:0},
+      success:function(data){
+          $(".loader-div").hide(); 
+          $('#UpdateReasonVacancy').html(data);
+      },error: function(xhr, status, error) {
+          modalErrorShow("The system encountered an error. Please contact support.");
+          $(".loader-div").hide();
+        }
+    });
+
+    $(".loader-div").show();
+    $.ajax({
+      url:"includes/functions.php",
+      method:"POST",
+      data:{list_unfilled_item_code:0},
+      success:function(data){
+          $(".loader-div").hide(); 
+          $('#UpdateNewItemCode').html(data);
+      },error: function(xhr, status, error) {
+          modalErrorShow("The system encountered an error. Please contact support.");
+          $(".loader-div").hide();
+        }
+    });
+
   });
 
   $(document).on('submit', '#contentAdminUpdatePersonalInfo', function(event) {    //admin update personal info
@@ -1262,19 +1275,11 @@ $.ajax({
         $.ajax({
           url:"includes/functions.php",
           method:"POST",
-          data:{update_division_id:unitDivCode},
+          data:{list_division_id:unitDivCode},
           success:function(data){
               $('#txtUpdateUnitDiv').html(data);
           } 
         });
-        // $.ajax({
-        //   url:"includes/functions.php",
-        //   method:"POST",
-        //   data:{update_official_station_id:unitStationCode},
-        //   success:function(data){
-        //       $('#txtUpdateUnitOfficialStation').html(data);
-        //   } 
-        // });
         $("#UpdateUnit").modal('show');
       },error: function(xhr, status, error) {
         modalErrorShow("The system encountered an error. Please contact support.");

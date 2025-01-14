@@ -1109,25 +1109,7 @@
                                     <small id='checktxtUnitDiv'></small>
                                 </div>
                                 <br>
-                                <!-- <div class="col-md-12">
-                                    <label 
-                                        for="txtUnitOfficialStation" 
-                                        class="col-sm-12 requiredField">
-                                        Official Station
-                                    </label>
-                                    <div class="col-sm-12">
-                                        <select 
-                                            class="form-control select2"
-                                            style="width: 100%;"  
-                                            id="txtUnitOfficialStation" 
-                                            name="txtUnitOfficialStation" 
-                                            tabindex="4"
-                                            required = "true">
-                                                
-                                        </select>
-                                    </div>
-                                    <small id='checktxtUnitOfficialStation'></small>
-                                </div> -->
+                                
                             </div>
                         </div>
                     </div>

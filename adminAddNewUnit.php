@@ -15,7 +15,6 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
     $user['unit_name'] = sanitize(strtoupper($_POST['txtUnitName']));
     $user['unit_name_code'] = sanitize(strtoupper($_POST['txtUnitNameCode']));
     $user['division_code'] = sanitize(strtoupper($_POST['txtUnitDiv']));
-    // $user['station_code'] = sanitize(strtoupper($_POST['txtUnitOfficialStation']));
     $user['added_by'] = $_SESSION['userID'];
     $user['datetime_added'] = $today;
     $user['updated_by'] = '';
