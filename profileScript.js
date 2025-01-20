@@ -203,6 +203,7 @@ $(function(){
           const position = data.position_name;
           const division = data.division_name;
           const unit = data.unit_name;
+          const area_assignment_name = data.area_assignment_name;
           const region = data.region_name;
           const province = data.prov_name;
           const city = data.city_name;
@@ -255,6 +256,7 @@ $(function(){
           $("#infoPosition").text(position);
           $("#infoDivision").text(division);
           $("#infoUnit").text(unit);
+          $("#infoAreaAssignment").text(area_assignment_name);
           $("#infoAddress").text(houseNo+" "+street+" "+brgy+" "+city+" "+province+" "+region);
           $("#infoMobileNo").text(mobileNumber);
           $("#infoEmail").text(email);
