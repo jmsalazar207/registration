@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 20, 2025 at 10:11 AM
+-- Generation Time: Jan 21, 2025 at 09:26 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -393,15 +393,17 @@ CREATE TABLE `lib_bank_details` (
   `bank_account_number` varchar(50) NOT NULL,
   `bank_account_mov` varchar(50) NOT NULL,
   `bank_account_status` int(10) NOT NULL,
-  `bank_account_remarks` varchar(250) NOT NULL
+  `bank_account_remarks` varchar(250) NOT NULL,
+  `updated_by` varchar(20) NOT NULL,
+  `datetime_updated` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `lib_bank_details`
 --
 
-INSERT INTO `lib_bank_details` (`id`, `empno`, `bank_account_number`, `bank_account_mov`, `bank_account_status`, `bank_account_remarks`) VALUES
-(1, '03-10961', '564654654', '03-10961.png', 0, '');
+INSERT INTO `lib_bank_details` (`id`, `empno`, `bank_account_number`, `bank_account_mov`, `bank_account_status`, `bank_account_remarks`, `updated_by`, `datetime_updated`) VALUES
+(1, '03-10961', '2123123123', '03-10961.jpg', 0, 'NOT MATCH ID', '03-10961', '2025-01-21 16:18:23');
 
 -- --------------------------------------------------------
 
@@ -46734,6 +46736,13 @@ CREATE TABLE `lib_eligibility` (
   `updated_by` varchar(20) NOT NULL,
   `datetime_updated` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `lib_eligibility`
+--
+
+INSERT INTO `lib_eligibility` (`id`, `empno`, `eligibility_credentials`, `eligibility_rating`, `eligibility_exam_date`, `eligibility_exam_place`, `eligibility_license`, `eligibility_validity_date`, `eligibility_uploaded_mov`, `eligibility_status`, `eligibility_remarks`, `updated_by`, `datetime_updated`) VALUES
+(1, '03-10961', '3', '81.85', '2023-08-20', 'ANGELES CITY', '', '0000-00-00', '03-10961_Eligibility_0.pdf', 0, '', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -116075,7 +116084,7 @@ ALTER TABLE `lib_division`
 -- AUTO_INCREMENT for table `lib_eligibility`
 --
 ALTER TABLE `lib_eligibility`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `lib_emp_status`

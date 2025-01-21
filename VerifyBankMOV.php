@@ -37,8 +37,15 @@ require_once('includes/init.php');
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
   <!-- Google Font -->
   <link rel="stylesheet" href="includes/add.css?test=<?php echo time()?>">
+  <link rel="stylesheet" href="includes/loader.css?test=<?php echo time()?>">
 </head>
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
+  <div class="loader-div">
+    <img 
+    class="loader-img" 
+    src="images/ajax-loader.gif" 
+    style="height: 50px;width: auto;" />
+  </div>
     <div class="wrapper">
     <?php 
             include "includes/session.php";
@@ -109,8 +116,9 @@ require_once('includes/init.php');
 <!-- page script -->
 <?php
   include "modal/formModal.php";
+  include "modal/modalNotif.php";
 ?>
-<!-- <script src="verifyUploadBank.js?test=<?php //echo time()?>"></script> -->
+<script src="verifyUploadBank.js?test=<?php echo time()?>"></script>
 <script src="panelScript.js?test=<?php echo time()?>"></script>
 <script src="genFunction.js?test=<?php echo time()?>"></script>
 <script src="modalNotif.js?test=<?php echo time()?>"></script>
@@ -135,14 +143,12 @@ require_once('includes/init.php');
       ],
       'columnDefs': [ 
         { "bSortable": false, "aTargets": [0] },
-        { "bSortable": false, "aTargets": [8] },
-        { "width": "100px", "targets": 0 },
-        { "width": "50px", "targets": 1 },
-        { "width": "80px", "targets": 2 }
+        { "bSortable": false, "aTargets": [2] }
       ]
     });
   });
 </script>
+
 
 </body>
 </html>

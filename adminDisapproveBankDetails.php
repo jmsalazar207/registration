@@ -11,14 +11,14 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
     $dataReturn['msg'] = "Session has expired. Please relogin your account.";
     echo json_encode($dataReturn);
 }else{  
-    $id = $_POST['VerifyTrainingID'];
-    $adminDisapproveTrainingUpload['training_status'] =2;
-    $adminDisapproveTrainingUpload['training_remarks'] =strtoupper(sanitize($_POST['VerifyTrainingRemarks']));
-    $adminDisapproveTrainingUpload['updated_by'] = $_SESSION['userID'];
-    $adminDisapproveTrainingUpload['datetime_updated']= $today;
-    $sqlDisapproveTrainingUpload = $dbConn->update('lib_training','id',$id,$adminDisapproveTrainingUpload);
+    $id = $_POST['VerifyBankID'];
+    $adminDisapproveBankDetailsUpload['bank_account_status'] =2;
+    $adminDisapproveBankDetailsUpload['bank_account_remarks'] =strtoupper(sanitize($_POST['VerifyBankDetailsRemarks']));
+    $adminDisapproveBankDetailsUpload['updated_by'] = $_SESSION['userID'];
+    $adminDisapproveBankDetailsUpload['datetime_updated']= $today;
+    $sqlDisapproveBankDetailsUpload = $dbConn->update('lib_bank_details','id',$id,$adminDisapproveBankDetailsUpload);
     
-    if($sqlDisapproveTrainingUpload){
+    if($sqlDisapproveBankDetailsUpload){
         $dataReturn['status'] = "success";
         $dataReturn['msg'] = "Upload Disapproved";
         echo json_encode($dataReturn);

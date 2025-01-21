@@ -4344,3 +4344,129 @@
           </div>
           <!-- /.modal-dialog -->
         </div>
+        <div class="modal fade" id="VerifyBankDetailsUpload">
+           <div class="modal-dialog"  >
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button 
+                            type="button" 
+                            class="close" 
+                            data-dismiss="modal" 
+                            aria-label="Close">
+                                <span aria-hidden="true">
+                                    &times;
+                                </span>
+                        </button>
+                        <h4 class="modal-title">Verify Bank Details</h4>
+                    </div>
+                    <form id="frmBankDetailsVerify" name="frmBankDetailsVerify" autocomplete="off" >
+                        <div class="box" style="border:0cm" >
+                            <div class="box-body row">
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <label 
+                                                for="VerifyBankRequesterName" 
+                                                class="col-sm-12" 
+                                                style="font-size: 15px;">
+                                                Requested By:
+                                            </label>
+                                            <div class="col-sm-12">
+                                                <input
+                                                type="hidden"
+                                                name="VerifyBankID"
+                                                id="VerifyBankID"
+                                                >
+                                                <input 
+                                                type="hidden" 
+                                                name="token" 
+                                                value="<?=$_SESSION["token"]?>">
+                                                <input 
+                                                readonly
+                                                class="form-control" 
+                                                id="VerifyBankRequesterName" 
+                                                name="VerifyBankRequesterName">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <label 
+                                                for="VerifyBankAccountNumber" 
+                                                class="col-sm-12" 
+                                                style="font-size: 15px;">
+                                                Bank Account Number
+                                            </label>
+                                            <div class="col-sm-12">
+                                                <input 
+                                                readonly
+                                                class="form-control" 
+                                                id="VerifyBankAccountNumber" 
+                                                name="VerifyBankAccountNumber">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <label 
+                                                for="VerifyBankUploadedMOV" 
+                                                class="col-sm-12" 
+                                                style="font-size: 15px;">
+                                                Uploaded MOV  
+                                            </label>
+                                            <div class="col-sm-12">
+                                                <img 
+                                                class="img-responsive" 
+                                                src="" 
+                                                alt="No photo available" 
+                                                id="VerifyBankUploadedMOV" 
+                                                name="VerifyBankUploadedMOV" 
+                                                style="width: auto; height:auto;" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <label 
+                                                for="VerifyBankDetailsRemarks" 
+                                                class="col-sm-12" 
+                                                style="font-size: 15px;">
+                                                Verification Remarks  
+                                            </label>
+                                            <div class="col-sm-12">
+                                                <input 
+                                                type="text"
+                                                class="form-control" 
+                                                id="VerifyBankDetailsRemarks" 
+                                                name="VerifyBankDetailsRemarks"
+                                                 style="text-transform: uppercase;"
+                                                tabindex=""
+                                                required>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button 
+                                    type="button" 
+                                    class="btn btn-default pull-left" 
+                                    data-dismiss="modal">
+                                    Close
+                                </button>
+                                <button 
+                                    type="submit" 
+                                    class="btn btn-danger">
+                                    Disapprove
+                                </button>
+                                <button 
+                                    type="button" 
+                                    name ="btnApproveCareerUpload"
+                                    id="btnApproveCareerUpload"
+                                    class="btn btn-primary">
+                                    Approve
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+           </div> 
+        </div>

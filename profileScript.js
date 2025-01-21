@@ -223,7 +223,7 @@ $(function(){
           //bank details
           if(data.bank_account_number){
             $("#addBankAccount").val(data.bank_account_number);
-            if (data.bank_account_status !== 0) {
+            if (data.bank_account_status == 1) {
               $("#btnSaveAccountNumber")
                 .prop('disabled', true)
                 .attr('title', 'Bank details already verified');

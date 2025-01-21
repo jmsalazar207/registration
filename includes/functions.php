@@ -942,4 +942,13 @@ if(isset($_POST["btnAdminUnitUpdate"])){ //retrieved skills details from lib_ski
   $AdminUnitInfo=$dbConn->findFirstQuery($sql);
   echo json_encode($AdminUnitInfo); 
 }
+if(isset($_POST["getBankDetails"])){ 
+  $BDid = $_POST["getBankDetails"];
+  $sql = "SELECT lbd.*, CONCAT(u.fname,' ',u.mname,' ',u.sname,' ',u.ename) as FullName
+          FROM lib_bank_details lbd
+          JOIN userprofile u ON u.empno = lbd.empno
+          WHERE id = '$BDid'";
+  $Bank_Details=$dbConn->findFirstQuery($sql);
+  echo json_encode($Bank_Details); 
+}
 ?>
