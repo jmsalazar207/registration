@@ -124,7 +124,7 @@ require_once('includes/init.php');
 <script src="modalNotif.js?test=<?php echo time()?>"></script>
 <script>
   $(function () {
-    $('#VerifyBankDetails').DataTable({
+    tables['VerifyBankDetails'] = $('#VerifyBankDetails').DataTable({
       ajax: {
           url: 'VerifyBankMOV_ajax.php',
           type: 'POST',

@@ -462,3 +462,37 @@ LEFT JOIN lib_division d ON un.division_code = d.division_code
                 $('#UpdatePositionAreaAssign').html(data);
             }
         });
+
+
+        Selecting filled with no filled by
+SELECT lp.*
+FROM lib_position lp
+LEFT JOIN userprofile up ON lp.position_id = up.position_id
+WHERE lp.position_status = 1 AND up.position_id IS NULL;
+
+
+set position to unfilled those filled position with no employee number
+UPDATE lib_position lp
+SET lp.position_status = 0
+WHERE lp.position_status = 1
+  AND lp.position_id NOT IN (
+    SELECT up.position_id
+    FROM userprofile up
+  );
+  
+ 
+SELECT lp.item_code, lp.position_status, up.empno
+FROM lib_position lp
+LEFT JOIN userprofile up ON lp.position_id = up.position_id
+WHERE lp.position_status = 0 AND up.emp_status =0 AND up.position_id IS NOT NULL;
+
+set position to filled those unfilled with employee number
+UPDATE lib_position lp
+SET lp.position_status = 1
+WHERE lp.position_status = 0 AND up.emp_status = 0
+  AND lp.position_id IN (
+    SELECT up.position_id
+    FROM userprofile up
+  );
+
+
