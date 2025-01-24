@@ -21,7 +21,37 @@
 
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
+          <!-- notification bell -->
+          <!-- notification bell -->
+          <li class="dropdown notifications-menu">
+            <a 
+            href="#" 
+            class="dropdown-toggle" 
+            data-toggle="dropdown">
+              <i class="fa fa-bell-o"></i>
+              <span 
+              id="notifIconNumber" 
+              class="label label-danger"></span>
+            </a>
+            <ul 
+            class="dropdown-menu" 
+            style="background-color: #f0f0f0; border: 1px solid #ccc;">
+              <li 
+              id="notifIconHeader" 
+              class="header"
+              style="background-color: #f0f0f0; border: 1px solid #ccc;">
+                System Notifications
+              </li>
+              <li>
+                <!-- inner menu: contains the actual data -->
+                <ul id="NotifIconMenu" class="menu">
+                  <!-- here is the menu list -->
+                </ul>
+              </li>
+            </ul>
+          </li>
 
+          <!-- end notification bell -->
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">

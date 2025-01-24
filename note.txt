@@ -496,3 +496,12 @@ WHERE lp.position_status = 0 AND up.emp_status = 0
   );
 
 
+                    <li id="notifIconList">
+                    <a id="notifIconMessage" href="profile.php">
+                      <i class="">
+                        <!-- fa fa-info-circle text-red -->
+                      </i>
+                    </a>
+                  </li>
+
+

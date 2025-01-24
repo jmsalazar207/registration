@@ -26,8 +26,71 @@ $(function(){
                 $('#headerFullname').text(sessionFirstName+' '+sessionLastName );
                 $('#dropFullName').text(sessionFirstName+' '+sessionLastName);
                 $('#dropPosition').text(sessionPosition);
+        },error: function(xhr, status, error) {
+            modalErrorShow("The system encountered an error. Please contact support.");
+            $(".loader-div").hide();
+          }
+    });
+    $.ajax({
+        url: "getNotif.php",
+        method: "POST",
+        dataType: 'json',
+        success: function (data) {
+            const total = data.total || 0; // Default to 0 if data.total is null
+            const notifications = [
+                { label: "Training", count: data.training || 0 },
+                { label: "Bank", count: data.bank || 0 },
+                { label: "Career", count: data.career || 0 },
+                { label: "Eligibility", count: data.eligibility || 0 },
+                { label: "Academic", count: data.academic || 0 }
+            ];
+    
+            // Update notification icon with the total count
+            $('#notifIconNumber').text(total);
+    
+            // Clear the existing list items to avoid duplicates
+            $('#NotifIconMenu').empty();
+    
+            // Loop through the notifications array and append <li> items
+            notifications.forEach((notif) => {
+                if (notif.count > 0) { // Only show notifications with a count > 0
+                    $('#NotifIconMenu').append(`
+                        <li>
+                            <a href="profile.php">
+                                <i class="fa fa-info-circle text-red"></i> 
+                                ${notif.label}:${notif.count} Upload Disapproved
+                            </a>
+                        </li>
+                    `);
+                }
+            });
+    
+            // If no notifications, show a message
+            if (total === 0) {
+                $('#NotifIconMenu').append(`
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-check-circle text-green"></i> 
+                            No pending notifications
+                        </a>
+                    </li>
+                `);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX Error: ", status, error);
+            $('#notifIconNumber').text('0'); // Default value in case of error
+            $('#NotifIconMenu').empty().append(`
+                <li>
+                    <a href="#">
+                        <i class="fa fa-exclamation-circle text-yellow"></i> 
+                        Unable to load notifications
+                    </a>
+                </li>
+            `);
         }
-    })
+    });
+    
 })
 
 
