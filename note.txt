@@ -505,3 +505,63 @@ WHERE lp.position_status = 0 AND up.emp_status = 0
                   </li>
 
 
+
+  $.ajax({ //check Academic if existed 
+    url:"checkExist.php",
+    method:"POST",
+    data: {checkAcademic:1,acadEducLevel:acadEducLevel,acadPeriodFrom:acadPeriodFrom,acadPeriodTo:acadPeriodTo},
+    dataType: 'json',
+    success:function(data){
+      $(".loader-div").hide(); 
+      const countEntry = data.Academic;
+      if (countEntry > 0){
+      modalErrorShow('Entry already exists! Ensure the details are unique before proceeding.');
+      } else {
+        if(acadPeriodFrom > acadPeriodTo){
+          $("#CheckacadPeriodTo").html("Date error: Please verify the encoded year").css('color', 'red');
+          $("#acadPeriodTo").css('border-color', 'red');
+          $("#acadPeriodFrom").css('border-color', 'red');
+          $("#acadPeriodTo").focus();
+        }else if(acadLevel ==1 && totalYear<6){
+          $("#CheckacadPeriodTo").html("Date error: Please note that the encoded year of attendance is not equivalent to 6 years.").css('color', 'red');
+          $("#acadPeriodTo").css('border-color', 'red');
+          $("#acadPeriodFrom").css('border-color', 'red');
+        }else if($('#ifGraduated').prop('checked') && acadYearGraduated != acadPeriodTo){
+          $("#CheckacadYearGraduated").html("Date error: Please verify the encoded year").css('color', 'red');
+          $("#acadPeriodTo").css('border-color', 'red');
+          $("#acadYearGraduated").css('border-color', 'red');
+          $("#acadYearGraduated").focus();
+        }else{
+          $(".loader-div").show();
+          $.ajax({
+            url:"academicAdd.php",
+            method:"POST",
+            dataType: "json",
+            data:formData,
+            success:function(data){
+              $(".loader-div").hide(); 
+              const msg = data.msg;
+              const stat = data.status;
+              if(stat === "success"){
+                modalSuccessShow(msg,triggerTableReload,'tblAcads');
+                resetFrmEducBackground();
+                checkAlreadyEncode();
+                $('#acadEducLevel').val('').trigger('change');
+              } else {
+                modalErrorShow(msg);
+              }
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
+            },
+            processData: false,
+            contentType: false
+          });
+        }
+      }
+    },error: function(xhr, status, error) {
+      modalErrorShow("The system encountered an error. Please contact support.");
+      $(".loader-div").hide();
+    }
+  });
+

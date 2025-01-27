@@ -169,10 +169,22 @@ $today = date('Y-m-d');
             <!-- /.box -->
              <!-- Profile Image -->
               <div class="box">
-              <div class="box-header" style="background-color:rgb(255, 255, 255); padding: 10px; border: 1px solid #ddd; border-radius: 5px; text-align: center;">
-                <h4 style="margin: 0; font-size: 18px; color: #333; font-weight: bold;">
-                  Bank Account
-                </h4>
+                <div class="box-header" style="background-color:rgb(255, 255, 255); padding: 10px; border: 1px solid #ddd; border-radius: 5px; text-align: center;">
+                  <h4 style="margin: 0; font-size: 18px; color: #333; font-weight: bold;">
+                    Bank Account
+                  </h4>
+                </div>
+                <div 
+                id="bankStatus" 
+                style="padding: 10px; border-radius: 5px; text-align: left; font-weight: bold;">
+                <!-- Status will be dynamically updated here -->
+                <span id="bankStatusMessage">
+                  Upload status:
+                </span>
+                <span id="bankStatusRemarks">
+                  
+                </span>
+                
               </div>
                 <div class="box-body box-profile">
                   <form id="frmBankDetails" name="frmBankDetails">

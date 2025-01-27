@@ -38,11 +38,11 @@ $(function(){
         success: function (data) {
             const total = data.total || 0; // Default to 0 if data.total is null
             const notifications = [
-                { label: "Training", count: data.training || 0 },
-                { label: "Bank", count: data.bank || 0 },
-                { label: "Career", count: data.career || 0 },
-                { label: "Eligibility", count: data.eligibility || 0 },
-                { label: "Academic", count: data.academic || 0 }
+                { label: "Training ", count: data.training || 0 },
+                { label: "Bank ", count: data.bank || 0 },
+                { label: "Career ", count: data.career || 0 },
+                { label: "Eligibility ", count: data.eligibility || 0 },
+                { label: "Academic ", count: data.academic || 0 }
             ];
     
             // Update notification icon with the total count

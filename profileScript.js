@@ -224,6 +224,7 @@ $(function(){
           if(data.bank_account_number){
             $("#addBankAccount").val(data.bank_account_number);
             if (data.bank_account_status == 1) {
+              $('#bankStatusRemarks').text('VERIFIED').css('color', 'green');
               $("#btnSaveAccountNumber")
                 .prop('disabled', true)
                 .attr('title', 'Bank details already verified');
@@ -233,7 +234,12 @@ $(function(){
                 $("#addBankAccountMOV")
                 .prop('disabled', true)
                 .attr('title', 'Bank details already verified');
+            } else if(data.bank_account_status == 0){
+              $('#bankStatusRemarks').text('PENDING FOR VERIFICATION').css('color', 'blue');
             } else {
+              var remarks = data.bank_account_remarks;
+              $('#bankStatusRemarks').text('FOR COMPLIANCE, '+remarks).css('color', 'red');
+              $('#bankStatusRemarks').css('color', 'red'); // Set text color to red
               $("#btnSaveAccountNumber")
                 .prop('disabled', false)
                 .attr('title', 'Save');
