@@ -1,0 +1,6 @@
+January 29, 2025
+BtnUpdate for update item code, it will show current item code because of not setting to empty
+for not active employee
+
+buttons manage in usermanagement when the employee is not active. it should have button reactivate
+userlevel management for verification process
