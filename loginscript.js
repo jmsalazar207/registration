@@ -28,12 +28,10 @@
         $(".loader-div").hide(); // Hide loader
         const credentialsMatch = data.credentialsMatch;
         const employeeNo = data.empno;
-  
-        // Handle various cases based on `credentialsMatch`
         if (credentialsMatch == 2) {
           resetPasswordAttempt(employeeNo);
         }else if (credentialsMatch ==7){
-          modalConfirmShow("In compliance with cybersecurity policies and to enhance the security of our systems, you are required to update your password before logging in. Would you like to proceed with changing your password now? Please confirm to continue. We appreciate your cooperation in helping safeguard our digital environment.",mandatoryUpdatePassword,'');
+          modalConfirmShow("In compliance with cybersecurity policies and to enhance the security of our systems, you are required to update your password before logging in. Would you like to proceed with changing your password now? Please confirm to continue. We appreciate your cooperation in helping safeguard our digital environment.",RedirectmandatoryUpdatePassword,'');
         }else if (credentialsMatch == 3) {
           modalErrorShow("Your registration has been disapproved by the administrator. Please contact the HRPPMS-RSP.");
           resetCaptcha();
@@ -150,7 +148,7 @@
   function redirectPage(){
     window.location.href = "homePage.php";
   }
-  function mandatoryUpdatePassword(){
+  function RedirectmandatoryUpdatePassword(){
     window.location.href = "updatePassword.php";
   }
 
@@ -159,6 +157,7 @@
     var PassData  = new FormData(frmMandatoryUpdatePassword);
     modalConfirmShow('Would you like to confirm and save the changes now?',MandatoryUpdatePassword,PassData);
   });
+
   function MandatoryUpdatePassword(formData){
     $("#CheckMandatoryUpdateConfirmPassword").html("").css('color', '');
     $("#MandatoryUpdateConfirmPassword").css('border-color','');
@@ -241,6 +240,7 @@
       });
       }
   }
+
   function resetMandatoryUpdatePage(){
     $('#frmMandatoryUpdatePassword')[0].reset();
     window.location.href = "index.php"; 

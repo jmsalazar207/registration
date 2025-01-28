@@ -27,7 +27,7 @@
     modalConfirmShow('Are you sure you want to disapprove this upload?',DisapproveBankDetails,PassData);
   });
 
-  $(document).on('click', '#btnApproveCareerUpload', function() { 
+  $(document).on('click', '#btnApproveBankUpload', function() { 
     var PassData = new FormData(frmBankDetailsVerify);
     modalConfirmShow('Are you sure you want to approve this upload?',ApproveBankDetails,PassData);
   });
@@ -68,7 +68,7 @@
     dataType: "json",
     data:formData,
     success:function(data){
-	$(".loader-div").hide(); 
+	  $(".loader-div").hide(); 
     const msg = data.msg;
     const stat = data.status;
         if(stat === "success"){

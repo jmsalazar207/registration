@@ -540,7 +540,7 @@ WHERE lp.position_status = 0 AND up.emp_status = 0
             data:formData,
             success:function(data){
               $(".loader-div").hide(); 
-              const msg = data.msg;
+              const msg = data.msg;s
               const stat = data.status;
               if(stat === "success"){
                 modalSuccessShow(msg,triggerTableReload,'tblAcads');
@@ -564,4 +564,6 @@ WHERE lp.position_status = 0 AND up.emp_status = 0
       $(".loader-div").hide();
     }
   });
+
+  $('#VerifyAcadsUpload').hide();
 

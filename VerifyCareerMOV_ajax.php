@@ -17,9 +17,9 @@ $columnName = $_POST['columns'][$columnIndex]['data']; // Column name
 $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
 $searchValue = $_POST['search']['value']; // Search value
 
-
+$EmpID = $_SESSION['userID'];
 ## Search 
-$searchQuery = " WHERE c.career_status !=4 ";
+$searchQuery = " WHERE c.career_status !=4 AND c.empno != '$EmpID'";
 if($searchValue != ''){
    $searchQuery .= "AND (c.empno LIKE '%".$searchValue."%' OR
             c.career_date_from LIKE '%".$searchValue."%' OR
@@ -75,7 +75,7 @@ if($empRecords){
         $career_status = "<span class='badge bg-light-blue'>PENDING FOR VERIFICATION</span>";
         $action = "
         <td>
-            <button class='' id = 'btnVerifyCareerUpload' name ='btnVerifyCareerUpload' onclick ='btnVerifyCareerUpload(this.value)' value = '$requestID'  title='View' >
+            <button class='' id = 'btnVerifyCareerUpload' name ='btnVerifyCareerUpload' value = '$requestID'  title='View' >
                 View
             </button>
         </td>

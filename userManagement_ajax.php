@@ -19,7 +19,7 @@ $searchValue = $_POST['search']['value']; // Search value
 
 
 ## Search 
-$searchQuery = " WHERE u.emp_status =0 ";
+$searchQuery = " WHERE 1 ";
 if($searchValue != ''){
    $searchQuery .= "AND (u.empno LIKE '%".$searchValue."%' OR
             u.sname LIKE '%".$searchValue."%' OR
@@ -32,6 +32,7 @@ if($searchValue != ''){
             d.division_name LIKE '%".$searchValue."%' OR
             las.area_assignment_name LIKE '%".$searchValue."%' OR
             pos.item_code LIKE '%".$searchValue."%' OR
+            es.status_description LIKE '%".$searchValue."%' OR
             un.unit_name LIKE '%".$searchValue."%' )";
 }
 
@@ -44,17 +45,18 @@ $totalRecords = $records['allcount'];
 ## Total number of records with filtering
 $records = $dbConn->findFirstQuery("SELECT COUNT(empno) as allcount
                                     FROM userprofile u 
-            LEFT JOIN lib_position pos ON pos.position_id = u.position_id 
-            LEFT JOIN lib_position_name pn ON pos.position_name_id = pn.position_name_id 
-            LEFT JOIN lib_area_assignment las ON las.area_assignment_code = pos.area_assignment 
-            LEFT JOIN lib_unit un ON un.unit_code = las.unit_code
-            LEFT JOIN lib_division d ON un.division_code = d.division_code             
-            JOIN lib_account_status ac ON u.account_status = ac.account_status_code"
+                                    LEFT JOIN lib_position pos ON pos.position_id = u.position_id 
+                                    LEFT JOIN lib_position_name pn ON pos.position_name_id = pn.position_name_id 
+                                    LEFT JOIN lib_area_assignment las ON las.area_assignment_code = pos.area_assignment 
+                                    LEFT JOIN lib_unit un ON un.unit_code = las.unit_code
+                                    LEFT JOIN lib_division d ON un.division_code = d.division_code             
+                                    JOIN lib_account_status ac ON u.account_status = ac.account_status_code
+                                    JOIN lib_emp_status es ON es.emp_status_id = u.emp_status"
                                     .$searchQuery);
 $totalRecordwithFilter = $records['allcount'];
 
 ## Fetch records
-$sql_emp = "SELECT u.empno, u.sname, u.fname, u.mname, u.ename, u.position_id,u.date_registered, u.emp_status, pos.item_code, pn.position_name, d.division_name, un.unit_name, u.account_status ,las.area_assignment_name, ac.account_status_name 
+$sql_emp = "SELECT u.empno, u.sname, u.fname, u.mname, u.ename, u.position_id,u.date_registered, u.emp_status, pos.item_code, pn.position_name, d.division_name, un.unit_name, u.account_status ,las.area_assignment_name, ac.account_status_name,es.status_description
             FROM userprofile u 
             LEFT JOIN lib_position pos ON pos.position_id = u.position_id 
             LEFT JOIN lib_position_name pn ON pos.position_name_id = pn.position_name_id 
@@ -62,6 +64,7 @@ $sql_emp = "SELECT u.empno, u.sname, u.fname, u.mname, u.ename, u.position_id,u.
             LEFT JOIN lib_unit un ON un.unit_code = las.unit_code
             LEFT JOIN lib_division d ON un.division_code = d.division_code             
             JOIN lib_account_status ac ON u.account_status = ac.account_status_code
+            JOIN lib_emp_status es ON es.emp_status_id = u.emp_status
             $searchQuery ORDER BY $columnName $columnSortOrder limit $row, $rowperpage";
 
 $empRecords = $dbConn->findQuery($sql_emp);
@@ -70,7 +73,7 @@ if($empRecords){
 	$empno = $row['empno']; 
    $url = "adminDeleteUser.php";
    $acc_status = $row['account_status'];
-   if($acc_status ==1 || $acc_status ==3){
+   if($acc_status ==1 || $acc_status ==3){ //Pending registration and disapproved
       $action = "<td>
                   <button class='btn btn-primary btn-sm' id = 'btnAdminUpdate' name ='btnAdminUpdate'  value = '$empno'  title='View' >
                      Update
@@ -87,7 +90,7 @@ if($empRecords){
                </td>
                "; 
    
-   }else if($acc_status == 2){
+   }else if($acc_status == 2){ //Approved
       $action = "<td>
                   <button class='btn btn-primary btn-sm' id = 'btnAdminUpdate' name ='btnAdminUpdate'  value = '$empno'  title='View' >
                      Update
@@ -102,7 +105,7 @@ if($empRecords){
                      Inactive
                   </button>
                </td>";
-   }else if($acc_status == 4){
+   }else if($acc_status == 4){ //acount locked
       $action = "<td>
                   <button class='btn btn-info btn-sm' id = 'btnAdminUpdate' name ='btnAdminUpdate'  value = '$empno'  title='View' >
                      Update
@@ -117,7 +120,7 @@ if($empRecords){
                      Inactive
                   </button>
                 </td>";
-   }else{
+   }else{ //unregistered
       $action =   "<td>
                      <button class='btn btn-primary btn-sm' id = 'btnAdminUpdate' name ='btnAdminUpdate'  value = '$empno'  title='View' >
                         Update
@@ -149,7 +152,8 @@ if($empRecords){
       "unit_name" => $row['unit_name'],
       "area_assignment_name" => $row['area_assignment_name'],
       "date_registered" => $row['date_registered'],
-      "account_status_name" => $row['account_status_name']);
+      "account_status_name" => $row['account_status_name'],
+      "status_description" => $row['status_description']);
       
    }
 }

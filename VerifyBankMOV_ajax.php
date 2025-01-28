@@ -17,9 +17,9 @@ $columnName = $_POST['columns'][$columnIndex]['data']; // Column name
 $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
 $searchValue = $_POST['search']['value']; // Search value
 
-
+$EmpID = $_SESSION['userID'];
 ## Search 
-$searchQuery = " WHERE lbd.bank_account_status !=4 ";
+$searchQuery = " WHERE lbd.bank_account_status !=4 AND lbd.empno != '$EmpID'";
 if($searchValue != ''){
    $searchQuery .= "AND (lbd.empno LIKE '%".$searchValue."%' OR
             lbd.bank_account_number LIKE '%".$searchValue."%' OR

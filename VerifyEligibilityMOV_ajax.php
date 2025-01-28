@@ -17,9 +17,9 @@ $columnName = $_POST['columns'][$columnIndex]['data']; // Column name
 $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
 $searchValue = $_POST['search']['value']; // Search value
 
-
+$EmpID = $_SESSION['userID'];
 ## Search 
-$searchQuery = " WHERE e.eligibility_status != 4";
+$searchQuery = " WHERE e.eligibility_status != 4 AND e.empno != '$EmpID'";
 if($searchValue != ''){
    $searchQuery .= " AND (e.empno LIKE '%".$searchValue."%' OR
             le.elibility_title LIKE '%".$searchValue."%' OR
@@ -66,7 +66,7 @@ if($empRecords){
         $eligibility_status = "<span class='badge bg-light-blue'>PENDING FOR VERIFICATION</span>";
         $action = "
         <td>
-            <button class='' id = 'btnVerifyEligibilityUpload' name ='btnVerifyEligibilityUpload' onclick ='btnVerifyEligibilityUpload(this.value)' value = '$requestID'  title='View' >
+            <button class='' id = 'btnVerifyEligibilityUpload' name ='btnVerifyEligibilityUpload' value = '$requestID'  title='View' >
                 View
             </button>
         </td>

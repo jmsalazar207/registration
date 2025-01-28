@@ -17,9 +17,10 @@ $columnName = $_POST['columns'][$columnIndex]['data']; // Column name
 $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
 $searchValue = $_POST['search']['value']; // Search value
 
-
+$EmpID = $_SESSION['userID'];
 ## Search 
-$searchQuery = " WHERE a.acad_status != 5 AND a.acad_status != 4";
+ $searchQuery = " WHERE a.acad_status != 5 AND a.acad_status != 4 AND a.empno != '$EmpID'";
+//$searchQuery = " WHERE a.acad_status != 5 AND a.acad_status != 4";
 if($searchValue != ''){
    $searchQuery .= " AND (a.empno LIKE '%".$searchValue."%' OR
             cs.college_school_title LIKE '%".$searchValue."%' OR
@@ -86,7 +87,7 @@ if($empRecords){
         $acad_status = "<span class='badge bg-light-blue'>PENDING FOR VERIFICATION</span>";
         $action = "
         <td>
-            <button class='' id = 'btnVerifyUpload' name ='btnVerifyUpload' onclick ='btnVerifyUpload(this.value)' value = '$requestID'  title='View' >
+            <button class='' id = 'btnVerifyUpload' name ='btnVerifyUpload' value = '$requestID'  title='View' >
                 View
             </button>
         </td>
@@ -101,7 +102,7 @@ if($empRecords){
         $acad_status = 'REQUESTED CHANGES';
         $action = "
         <td>
-            <button class='' id = 'btnConfirmRequest' name ='btnConfirmRequest' onclick ='btnConfirmRequest(this.value)' value = '$requestID'  title='View' >
+            <button class='' id = 'btnConfirmRequest' name ='btnConfirmRequest' value = '$requestID'  title='View' >
                 Confirm Request
             </button>
         </td>

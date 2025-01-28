@@ -1,9 +1,23 @@
-function btnVerifyEligibilityUpload(getReqestEligibilityVerification){
+$(document).on("click",'#btnApproveEligibilityUpload',function(){ //Approve upload
+  var PassData = new FormData(frmEligibilitydVerify);
+  modalConfirmShow('Are you sure you want to approve this upload?',ApprovedEligibilityUpload,PassData);
+});
+
+$(document).on('submit','#frmEligibilitydVerify',function(event){
+  event.preventDefault();
+  var PassData = new FormData(frmEligibilitydVerify);
+  modalConfirmShow('Are you sure you want to disapprove this upload?',DisapproveEligibilityUpload,PassData);
+});
+
+$(document).on('click','#btnVerifyEligibilityUpload',function(){
+  var getReqestEligibilityVerification = $(this).attr('value');
+  $(".loader-div").show();
     $.ajax({
         url:"includes/functions.php",
         method:"POST",
         data:{getReqestEligibilityVerification:getReqestEligibilityVerification},
         success:function(data){
+          $(".loader-div").hide();
           const EligibilityUploadData = JSON.parse(data);
           $('#VerifyEligibilityid').val(EligibilityUploadData['id']);
           $('#VerifyeligibilityCredentials').val(EligibilityUploadData['elibility_title']);
@@ -17,57 +31,63 @@ function btnVerifyEligibilityUpload(getReqestEligibilityVerification){
           const iframeVefiyEligibilityPDF = document.getElementById('VerifyUploadedEligibilityMOV'); //iframe id
           iframeVefiyEligibilityPDF.src = `${pdfVerifyEligibilityURL}?t=${new Date().getTime()}`; //embed the url pdf to iframe with time value to get the latest version
           $('#VerifyEligibilityUpload').modal('show');
+        },error: function(xhr, status, error) {
+          modalErrorShow("The system encountered an error. Please contact support.");
+          $(".loader-div").hide();
         }
   });
-  };
-  $("#btnApproveEligibilityUpload").on("click",function(){ //Approve upload
-    var EligibilityUploadID = $('#VerifyEligibilityid').val();
-    $.ajax({
+});
+
+function ApprovedEligibilityUpload(){
+  $(".loader-div").show();
+  var EligibilityUploadID = $('#VerifyEligibilityid').val();
+  var TableID ='VerifyEligibility';
+    $.ajax({  
       url:"adminApproveEligibilityUpload.php",
       method:"POST",
       data:{btnApproveEligibilityUpload:EligibilityUploadID},
       dataType: 'json',
       success:function(data){
+        $(".loader-div").hide();
         const msg = data.msg;
         const stat = data.status;  
-        if(stat === "success"){ 
-        $('#VerifyEligibilityUpload').hide();
-          $('#modalNotif-header').text('Great! Success.');
-          $('#modalNotif-message').text(msg);
-          $('#modalNotif').modal('show');
+        if(stat === "success"){
+          $('#VerifyEligibilityUpload').modal('hide');
+          modalSuccessShow(msg,triggerTableReload,TableID);
+        } else {
+          modalErrorShow(msg);
         }
-        else{
-          $('#alertMessage').text(msg);
-          $('#modalAlert').modal('show'); 
-        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
       }
     });
-  });
-  $("#frmEligibilitydVerify").on("submit",function(event){ //Disapprove upload
-    event.preventDefault();
-    var formData = new FormData(frmEligibilitydVerify);
-    $.ajax({
-      url:"adminDisapproveEligibilityUpload.php",
-              method:"POST",
-              dataType: "json",
-              data:formData,
-              success:function(data){
-                $('#VerifyEligibilityUpload').modal('hide');
-                const msg = data.msg;
-                const stat = data.status;
-                if(stat == "success"){
-                    $('#modalNotif-header').text('Great! Success.');
-                    $('#modalNotif-message').text(msg);
-                     $('#modalNotif').modal('show');
-                }
-                else{
-                    $('#alertMessage').text(msg);
-                    $('#modalAlert').modal('show'); 
-                }
-              },
-              processData: false,
-              contentType: false
+}
+function DisapproveEligibilityUpload(formData){
+  $(".loader-div").show();
+  var TableID ='VerifyEligibility';
+  $.ajax({
+    url:"adminDisapproveEligibilityUpload.php",
+    method:"POST",
+    dataType: "json",
+    data:formData,
+    success:function(data){
+      $(".loader-div").hide();
+      const msg = data.msg;
+      const stat = data.status;
+      if(stat === "success"){
+        $('#VerifyEligibilityUpload').modal('hide');
+        modalSuccessShow(msg,triggerTableReload,TableID);
+      } else {
+        modalErrorShow(msg);
+      }
+    },error: function(xhr, status, error) {
+      modalErrorShow("The system encountered an error. Please contact support.");
+      $(".loader-div").hide();
+    },
+    processData: false,
+    contentType: false
 
-    });
   });
+}
   

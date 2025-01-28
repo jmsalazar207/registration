@@ -9,10 +9,12 @@ $dataReturn = [];
 
 // Validate session tokens
 if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["token-expire"])) {
-    $dataReturn['status'] = "failed";
-    $dataReturn['msg'] = "Session has expired. Please relogin your account.";
+    $dataReturn = [
+        'status' => "failed",
+        'msg' => "Session has expired. Please relogin your account."
+    ];
     echo json_encode($dataReturn);
-    exit; // Exit script to prevent further execution
+    exit; // Prevent further execution
 }
 
 // Sanitize input data
@@ -35,37 +37,57 @@ if (!empty($CurrentItemCode)) {
         'reason_for_end_of_appointment' => $ReasonEndAppointment
     ];
     $insertTblHistory = $dbConn->insert('tbl_employee_appointment_history', $insertHistory);
+
+    if (!$insertTblHistory) {
+        $dataReturn = [
+            'status' => "failed",
+            'msg' => "Failed to record appointment history."
+        ];
+        echo json_encode($dataReturn);
+        exit;
+    }
 }
 
-// Update based on reason for end of appointment
+// Process based on reason for end of appointment
 if (in_array($ReasonEndAppointment, [11, 20])) {
-    // Promoted or change item code
-    $updateUserprofileItemCode = [
+    // Promoted or changed item code
+    $updateUserProfile = [
         'position_id' => $NewItemCode,
         'date_filled' => $NewDateFilled
     ];
-    $updateUserprofile = $dbConn->update('userprofile', 'empno', $EmployeeNumber, $updateUserprofileItemCode);
+    $updateUserprofileStatus = $dbConn->update('userprofile', 'empno', $EmployeeNumber, $updateUserProfile);
 
-    $updateNewPositionItemCode = ['position_status' => '1'];
-    $updateNewLibPosition = $dbConn->update('lib_position', 'position_id', $NewItemCode, $updateNewPositionItemCode);
+    $updateNewPositionStatus = ['position_status' => '1'];
+    $updateNewLibPosition = $dbConn->update('lib_position', 'position_id', $NewItemCode, $updateNewPositionStatus);
 
-    $updateCurrentPositionItemCode = ['position_status' => '0'];
-    $updateCurrentLibPosition = $dbConn->update('lib_position', 'position_id', $CurrentPositionID, $updateCurrentPositionItemCode);
+    $updateCurrentPositionStatus = ['position_status' => '0'];
+    $updateCurrentLibPosition = $dbConn->update('lib_position', 'position_id', $CurrentPositionID, $updateCurrentPositionStatus);
 } else {
-    // Set employee to inactive
-    $updateUserprofileItemCode = ['emp_status' => $ReasonEndAppointment];
-    $updateUserprofile = $dbConn->update('userprofile', 'empno', $EmployeeNumber, $updateUserprofileItemCode);
+    // Set employee to inactive and lock account
+    $updateUserProfile = [
+        'emp_status' => $ReasonEndAppointment,
+        'account_status' => '4' // locked account
+    ];
+    $updateUserprofileStatus = $dbConn->update('userprofile', 'empno', $EmployeeNumber, $updateUserProfile);
 
-    $updateCurrentPositionItemCode = ['position_status' => '0'];
-    $updateCurrentLibPosition = $dbConn->update('lib_position', 'position_id', $CurrentPositionID, $updateCurrentPositionItemCode);
+    $updateCurrentPositionStatus = ['position_status' => '0'];
+    $updateCurrentLibPosition = $dbConn->update('lib_position', 'position_id', $CurrentPositionID, $updateCurrentPositionStatus);
 }
 
 // Validate the updates
-if ($updateUserprofile && (!empty($updateNewLibPosition) || $ReasonEndAppointment != 11 && $ReasonEndAppointment != 20) && $updateCurrentLibPosition) {
-    $dataReturn['status'] = "success";
-    $dataReturn['msg'] = "Item Code Successfully Updated";
+if (
+    $updateUserprofileStatus &&
+    (($ReasonEndAppointment == 11 || $ReasonEndAppointment == 20) ? $updateNewLibPosition : true) &&
+    $updateCurrentLibPosition
+) {
+    $dataReturn = [
+        'status' => "success",
+        'msg' => "Item Code Successfully Updated"
+    ];
 } else {
-    $dataReturn['status'] = "failed";
-    $dataReturn['msg'] = "Oops! Something went wrong. Please try again later.";
+    $dataReturn = [
+        'status' => "failed",
+        'msg' => "Oops! Something went wrong. Please try again later."
+    ];
 }
 echo json_encode($dataReturn);

@@ -109,6 +109,7 @@ require_once('includes/init.php');
                           <th> Area Assignment </th>
                           <th> Date Registered </th>
                           <th> Account Status </th>
+                          <th> Employee Status </th>
                         </tr>
                     </thead>
                 </table>
@@ -182,7 +183,8 @@ require_once('includes/init.php');
         { data: "unit_name"},
         { data: "area_assignment_name"},
         { data: "date_registered"},
-        { data: "account_status_name"}
+        { data: "account_status_name"},
+        { data: "status_description"}
       ],
       'columnDefs': [ 
         { "bSortable": false, "aTargets": [0] },
@@ -197,7 +199,8 @@ require_once('includes/init.php');
         { "width": "140px", "targets": 8 },
         { "width": "90px", "targets": 9 },
         { "width": "90px", "targets": 10 },
-        { "width": "90px", "targets": 11 }
+        { "width": "90px", "targets": 11 },
+        { "width": "90px", "targets": 12 }
       ]
     });
   });

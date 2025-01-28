@@ -22,8 +22,9 @@ $trainingTypeMap = [
     'SUPERVISORY' => 2,
     'TECHNICAL' => 3,
  ];
+ $EmpID = $_SESSION['userID'];
 ## Search 
-$searchQuery = " WHERE t.training_status != 4 ";
+$searchQuery = " WHERE t.training_status != 4 AND t.empno != '$EmpID'";
 if ($searchValue != '') {
     // Map the search value to a training type if applicable
     $trainingTypeCondition = '';
@@ -86,7 +87,7 @@ if($empRecords){
         $training_status = "<span class='badge bg-light-blue'>PENDING FOR VERIFICATION</span>";
         $action = "
         <td>
-            <button class='' id = 'btnVerifyTrainingUpload' name ='btnVerifyTrainingUpload' onclick ='btnVerifyTrainingUpload(this.value)' value = '$requestID'  title='View' >
+            <button class='' id = 'btnVerifyTrainingUpload' name ='btnVerifyTrainingUpload'  value = '$requestID'  title='View' >
                 View
             </button>
         </td>
@@ -101,7 +102,7 @@ if($empRecords){
         $training_status = 'REQUESTED CHANGES';
         $action = "
         <td>
-            <button class='' id = 'btnConfirmRequest' name ='btnConfirmRequest' onclick ='btnConfirmRequest(this.value)' value = '$requestID'  title='View' >
+            <button class='' id = 'btnConfirmRequest' name ='btnConfirmRequest'  value = '$requestID'  title='View' >
                 Confirm Request
             </button>
         </td>

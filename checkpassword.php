@@ -2,13 +2,6 @@
 session_start();
 require_once("includes/init.php");
 require_once("includes/helper.php");
-//include 'modal/registermodal.php';
-//if(isset($_POST['btn_search'])){
-    // 1 registered ok password match
-    // 0 registered wrong password
-    // 2 not yet registered hihi
-    // 3 no data in the database call personnel
-    // 4 registered ok password match but not approved
     $data = [];
     $user = []; 
     if(isset($_POST['username'])){

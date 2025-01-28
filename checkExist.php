@@ -557,7 +557,45 @@ if(isset($_POST["inUsedUnit"])){ //retrieved skills details from lib_skill
         $dbConn->findFirstQuery($sql);
         $count['inUsedUnit'] = $dbConn->count();
         echo json_encode($count);
- }
+}
+if(isset($_POST['checkEligibility'])){
+   $type = $_POST['checkEligibility'];
+   if($type==1){  //insert
+      $ID = $_SESSION['userID'];
+      $eligibilityCredentials = $_POST['eligibilityCredentials'];
+      $eligibilityExamDate = $_POST['eligibilityExamDate'];
+      
+      $sql = "SELECT * FROM lib_eligibility 
+      WHERE empno = '$ID'
+      AND eligibility_credentials = '$eligibilityCredentials'
+      AND eligibility_exam_date = '$eligibilityExamDate'
+      AND eligibility_status != '4'";
+
+      $dbConn->findFirstQuery($sql);
+      $count['Eligibility'] = $dbConn->count();
+      echo json_encode($count);
+
+   }else{   //update
+      $ID = $_SESSION['userID'];
+      $UpdateeligibilityCredentials = $_POST['UpdateeligibilityCredentials'];
+      $UpdateeligibilityExamDate = $_POST['UpdateeligibilityExamDate'];
+      $Eligibilityid = $_POST['Eligibilityid'];
+      
+      $sql = "SELECT * FROM lib_eligibility 
+      WHERE empno = '$ID'
+      AND eligibility_credentials = '$UpdateeligibilityCredentials'
+      AND eligibility_exam_date = '$UpdateeligibilityExamDate'
+      AND id != '$Eligibilityid'
+      AND eligibility_status != '4'";
+
+      $dbConn->findFirstQuery($sql);
+      $count['Eligibility'] = $dbConn->count();
+      echo json_encode($count);
+
+   }
+
+}
+
  
  
  

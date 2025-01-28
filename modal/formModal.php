@@ -2604,7 +2604,7 @@
                                 Disapprove
                             </button>
                             <button 
-                                type="button" 
+                                type="button"
                                 name ="btnApproveEligibilityUpload"
                                 id="btnApproveEligibilityUpload"
                                 class="btn btn-primary">
@@ -4459,8 +4459,8 @@
                                 </button>
                                 <button 
                                     type="button" 
-                                    name ="btnApproveCareerUpload"
-                                    id="btnApproveCareerUpload"
+                                    name ="btnApproveBankUpload"
+                                    id="btnApproveBankUpload"
                                     class="btn btn-primary">
                                     Approve
                                 </button>

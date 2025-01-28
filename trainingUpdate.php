@@ -12,12 +12,17 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
     echo json_encode($dataReturn);
 }else{  
                     if(empty($_FILES['UpdateTrainingMOV']['tmp_name'])){
-                        $id = $_POST['TrainingID'];;
+                        $id = $_POST['TrainingID'];
+                        $empid = $_SESSION['userID'];  
                         $trainingUpdate['training_title'] =sanitize(strtoupper($_POST['updatetrainingTitle']));
                         $trainingUpdate['training_date_from'] = $_POST['updatetrainingDateFrom'];
                         $trainingUpdate['training_date_to'] = $_POST['updatetrainingDateTo'];
                         $trainingUpdate['training_hours'] = sanitize(strtoupper($_POST['updatetrainingHours']));
                         $trainingUpdate['training_type'] = $_POST['updatetrainingType'];
+                        $trainingUpdate['training_status'] = 0;
+                        $trainingUpdate['training_remarks'] = '';
+                        $trainingUpdate['updated_by'] = $empid;
+                        $trainingUpdate['datetime_updated'] = $today;
                         $trainingUpdate['training_conducted_by'] = sanitize(strtoupper($_POST['updatetrainingConductedBy']));
                         
                         $UpdateTrainingQuery = $dbConn->update('lib_training','id',$id,$trainingUpdate);

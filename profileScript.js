@@ -1875,6 +1875,7 @@ function UserAcadsUpdate(formData){
               if(stat === "success"){ 
                 modalSuccessShow(msg,triggerTableReload,'tblAcads');
                 checkAlreadyEncode();
+                loadPanelScript();
               } else {
                 modalErrorShow(msg);
               }
@@ -1897,30 +1898,50 @@ function UserAcadsUpdate(formData){
 
 function UserEligibilitydAdd(formData){
   $(".loader-div").show();
-  $.ajax({
-    url:"eligibilityAdd.php",
+  const eligibilityCredentials = $('#eligibilityCredentials').val();
+  const eligibilityExamDate = $('#eligibilityExamDate').val();
+  $.ajax({ //check Academic if existed 
+    url:"checkExist.php",
     method:"POST",
-    dataType: "json",
-    data:formData,
+    data: {checkEligibility:1,eligibilityCredentials:eligibilityCredentials,eligibilityExamDate:eligibilityExamDate},
+    dataType: 'json',
     success:function(data){
       $(".loader-div").hide(); 
-      const msg = data.msg;
-      const stat = data.status;
-      if(stat === "success"){
-        modalSuccessShow(msg,triggerTableReload,'tblEligibility');
-        $('#frmUserEligibilitydAdd')[0].reset();
-        $('#eligibilityCredentials').val('').trigger('change');
-
+      const countEntry = data.Eligibility;
+      if (countEntry > 0){
+      modalErrorShow('Entry already exists! Ensure the details are unique before proceeding.');
       } else {
-        modalErrorShow(msg);
+        $(".loader-div").show();
+        $.ajax({
+          url:"eligibilityAdd.php",
+          method:"POST",
+          dataType: "json",
+          data:formData,
+          success:function(data){
+            $(".loader-div").hide(); 
+            const msg = data.msg;
+            const stat = data.status;
+            if(stat === "success"){
+              modalSuccessShow(msg,triggerTableReload,'tblEligibility');
+              $('#frmUserEligibilitydAdd')[0].reset();
+              $('#eligibilityCredentials').val('').trigger('change');
+            } else {
+              modalErrorShow(msg);
+            }
+          },error: function(xhr, status, error) {
+            modalErrorShow("The system encountered an error. Please contact support.");
+            $(".loader-div").hide();
+          },
+          processData: false,
+          contentType: false
+        });
       }
     },error: function(xhr, status, error) {
       modalErrorShow("The system encountered an error. Please contact support.");
       $(".loader-div").hide();
-    },
-    processData: false,
-    contentType: false
+    }
   });
+
 }
 
 function btnAcadViewUploaded(uploadedAcadMOV){
@@ -1998,29 +2019,57 @@ function btnEligibilityUpdate(getEligibility){
 
 function UserEligibilitydUpdate(formData){
   $(".loader-div").show();
-  $.ajax({
-    url:"eligibilityUpdate.php",
+  const UpdateeligibilityCredentials = $('#UpdateeligibilityCredentials').val();
+  const UpdateeligibilityExamDate = $('#UpdateeligibilityExamDate').val();
+  const Eligibilityid = $('#Eligibilityid').val();
+  $.ajax({ //check Academic if existed 
+    url:"checkExist.php",
     method:"POST",
-    dataType: "json",
-    data:formData,
+    data: {
+      checkEligibility:2,
+      Eligibilityid:Eligibilityid,
+      UpdateeligibilityCredentials:UpdateeligibilityCredentials,
+      UpdateeligibilityExamDate:UpdateeligibilityExamDate},
+    dataType: 'json',
     success:function(data){
-      $(".loader-div").hide();
-      $('#updateEligibility').modal('hide');
-      const msg = data.msg;
-      const stat = data.status;
-      if(stat === "success"){ 
-        modalSuccessShow(msg,triggerTableReload,'tblEligibility');
+      $(".loader-div").hide(); 
+      const countEntry = data.Eligibility;
+      if (countEntry > 0){
+      modalErrorShow('Entry already exists! Ensure the details are unique before proceeding.');
       } else {
-        modalErrorShow(msg);
+        modalErrorShow('prcess.');
+        $(".loader-div").show();
+        $.ajax({
+          url:"eligibilityUpdate.php",
+          method:"POST",
+          dataType: "json",
+          data:formData,
+          success:function(data){
+            $(".loader-div").hide();
+            $('#updateEligibility').modal('hide');
+            const msg = data.msg;
+            const stat = data.status;
+            if(stat === "success"){ 
+              modalSuccessShow(msg,triggerTableReload,'tblEligibility');
+              loadPanelScript();
+            } else {
+              modalErrorShow(msg);
+            }
+          },error: function(xhr, status, error) {
+            modalErrorShow("The system encountered an error. Please contact support.");
+            $(".loader-div").hide();
+          },
+          processData: false,
+          contentType: false
+      
+        });
       }
     },error: function(xhr, status, error) {
       modalErrorShow("The system encountered an error. Please contact support.");
       $(".loader-div").hide();
-    },
-    processData: false,
-    contentType: false
-
+    }
   });
+
 }
 
 function validateCareer(){
@@ -2176,6 +2225,7 @@ function UserCareerUpdate(formData){
               const stat = data.status;
               if(stat === "success"){
               modalSuccessShow(msg,triggerTableReload,'tblcareer');
+              loadPanelScript();
             } else {
               modalErrorShow(msg);
             }
@@ -2466,6 +2516,7 @@ function UserTrainingdUpdate(formData){
               const stat = data.status;
               if(stat === "success"){
                 modalSuccessShow(msg,triggerTableReload,'tbltraining');
+                loadPanelScript();
                 $('#frmUserTrainingdUpdate')[0].reset();
               } else {
                 modalErrorShow(msg);
@@ -2654,6 +2705,7 @@ function UsernonAcademicAdd(formData){
               if(stat === "success"){
                 modalSuccessShow(msg,triggerTableReload,'tblnonAcademic');
                 $('#frmUsernonAcademicAdd')[0].reset();
+
               } else {
                 modalErrorShow(msg);
               }
@@ -3147,6 +3199,7 @@ function BankDetails(formData){
       const stat = data.status;
       if(stat === "success"){
         modalSuccessShow(msg,refreshPage,'');
+        loadPanelScript();
       } else {
         modalErrorShow(msg);
       }

@@ -94,7 +94,16 @@ function resetCaptcha() {
     // When the user clicks outside of the password field, hide the message box
     document.getElementById(hideID).style.display = "none";
   }
+function getTodayDate() {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0'); // Ensure day is 2 digits
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Month is 0-based, so add 1
+    const year = today.getFullYear();
+    return `${year}/${month}/${day}`; // Format: YYYY/MM/DD
+}
 
+// Example usage:
+console.log(getTodayDate());
   function StrongPassword(inputID){
     var myInput = document.getElementById(inputID);
     var letter = document.getElementById("letter");
@@ -244,7 +253,7 @@ function deleteData(PassData){ //dynamic delete details
           PassData.ActionAfter2();
         }
           modalSuccessShow(msg,triggerTableReload,TableID);
-         
+          loadPanelScript();
       } else {
         modalErrorShow(msg);
       }
@@ -273,6 +282,13 @@ function triggerTableReload(tableId) {
 function clearForm() {
   $('#yourFormID').find('input, textarea, select').val(''); // Clear all fields
   $('#yourFormID').find('input:checkbox, input:radio').prop('checked', false); // Uncheck checkboxes and radio buttons
+}
+
+function loadPanelScript() {
+  $('script[src^="panelScript.js"]').remove();
+  const script = document.createElement("script");
+  script.src = `panelScript.js?test=${Date.now()}`;
+  document.body.appendChild(script);
 }
 
 
