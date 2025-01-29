@@ -567,3 +567,50 @@ WHERE lp.position_status = 0 AND up.emp_status = 0
 
   $('#VerifyAcadsUpload').hide();
 
+Result 14 
+SELECT raw_permanent.empno AS unmatched_empno, raw_permanent.fullname
+FROM raw_permanent
+LEFT JOIN userprofile ON userprofile.empno = raw_permanent.empno
+WHERE userprofile.empno IS NULL; 
+
+result 1
+SELECT raw_moa.empno AS unmatched_empno, raw_moa.fullname
+FROM raw_moa
+LEFT JOIN userprofile ON userprofile.empno = raw_moa.empno
+WHERE userprofile.empno IS NULL;
+
+result 0
+SELECT raw_contractual.empno AS unmatched_empno, raw_contractual.fullname
+FROM raw_contractual
+LEFT JOIN userprofile ON userprofile.empno = raw_contractual.empno
+WHERE userprofile.empno IS NULL
+
+Totalt Result 15 
+SELECT raw_consolidated.empno AS raw_empno, raw_consolidated.fullname
+FROM raw_consolidated
+LEFT JOIN userprofile ON userprofile.empno = raw_consolidated.empno
+WHERE userprofile.empno IS NULL;
+
+result 1
+SELECT raw_permanent.item_number AS unmatched_itemnumber,raw_permanent.empno
+FROM raw_permanent
+LEFT JOIN lib_position ON raw_permanent.item_number = lib_position.item_code
+WHERE lib_position.item_code IS NULL;
+
+result 3
+SELECT raw_contractual.item_number AS unmatched_itemnumber,raw_contractual.empno
+FROM raw_contractual
+LEFT JOIN lib_position ON raw_contractual.item_number = lib_position.item_code
+WHERE lib_position.item_code IS NULL;
+
+result 27
+SELECT raw_moa.item_number AS unmatched_itemnumber,raw_moa.empno
+FROM raw_moa
+LEFT JOIN lib_position ON raw_moa.item_number = lib_position.item_code
+WHERE lib_position.item_code IS NULL;
+
+result 31
+SELECT raw_consolidated.item_number AS unmatched_itemnumber,raw_consolidated.empno
+FROM raw_consolidated
+LEFT JOIN lib_position ON raw_consolidated.item_number = lib_position.item_code
+WHERE lib_position.item_code IS NULL;
