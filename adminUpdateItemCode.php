@@ -14,7 +14,7 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
         'msg' => "Session has expired. Please relogin your account."
     ];
     echo json_encode($dataReturn);
-    exit; // Prevent further execution
+    exit;
 }
 
 // Sanitize input data
@@ -27,7 +27,7 @@ $ReasonEndAppointment = $_POST['UpdateReasonVacancy'] ?? null;
 $NewItemCode = $_POST['UpdateNewItemCode'] ?? null;
 $NewDateFilled = $_POST['UpdateNewDatefilled'] ?? null;
 
-// Insert into employee appointment history if CurrentItemCode exists
+// If CurrentItemCode exists, insert into history table
 if (!empty($CurrentItemCode)) {
     $insertHistory = [
         'empno' => $EmployeeNumber,
@@ -39,16 +39,43 @@ if (!empty($CurrentItemCode)) {
     $insertTblHistory = $dbConn->insert('tbl_employee_appointment_history', $insertHistory);
 
     if (!$insertTblHistory) {
-        $dataReturn = [
+        echo json_encode([
             'status' => "failed",
             'msg' => "Failed to record appointment history."
-        ];
-        echo json_encode($dataReturn);
+        ]);
         exit;
     }
 }
 
-// Process based on reason for end of appointment
+// **If there is NO CurrentItemCode, update only the new item code and date_filled**
+if (empty($CurrentItemCode)) {
+    $updateNewUserProfile = [
+        'position_id' => $NewItemCode,
+        'date_filled' => $NewDateFilled
+    ];
+    $updateNewUserProfileStatus = $dbConn->update('userprofile', 'empno', $EmployeeNumber, $updateNewUserProfile);
+
+    $updatePositionStatus = ['position_status' => '1'];
+    $updateLibPosition = $dbConn->update('lib_position', 'position_id', $NewItemCode, $updatePositionStatus);
+    if (!$updateNewUserProfileStatus || !$updateLibPosition) {
+        echo json_encode([
+            'status' => "failed",
+            'msg' => "Failed to update new Item Code."
+        ]);
+        exit;
+    }
+
+    echo json_encode([
+        'status' => "success",
+        'msg' => "New Item Code and Date Filled Successfully Updated."
+    ]);
+    exit;
+}
+// Initialize variables to prevent undefined variable errors
+$updateUserprofileStatus = false;
+$updateNewLibPosition = false;
+$updateCurrentLibPosition = false;
+// **Process if the user has a current item code and needs an update**
 if (in_array($ReasonEndAppointment, [11, 20])) {
     // Promoted or changed item code
     $updateUserProfile = [
@@ -62,7 +89,7 @@ if (in_array($ReasonEndAppointment, [11, 20])) {
 
     $updateCurrentPositionStatus = ['position_status' => '0'];
     $updateCurrentLibPosition = $dbConn->update('lib_position', 'position_id', $CurrentPositionID, $updateCurrentPositionStatus);
-} else {
+} else if(!empty($ReasonEndAppointment) && !in_array($ReasonEndAppointment, [11, 20])){
     // Set employee to inactive and lock account
     $updateUserProfile = [
         'emp_status' => $ReasonEndAppointment,
@@ -74,20 +101,19 @@ if (in_array($ReasonEndAppointment, [11, 20])) {
     $updateCurrentLibPosition = $dbConn->update('lib_position', 'position_id', $CurrentPositionID, $updateCurrentPositionStatus);
 }
 
-// Validate the updates
+// **Validate the updates**
 if (
     $updateUserprofileStatus &&
     (($ReasonEndAppointment == 11 || $ReasonEndAppointment == 20) ? $updateNewLibPosition : true) &&
     $updateCurrentLibPosition
 ) {
-    $dataReturn = [
+    echo json_encode([
         'status' => "success",
         'msg' => "Item Code Successfully Updated"
-    ];
+    ]);
 } else {
-    $dataReturn = [
+    echo json_encode([
         'status' => "failed",
         'msg' => "Oops! Something went wrong. Please try again later."
-    ];
+    ]);
 }
-echo json_encode($dataReturn);

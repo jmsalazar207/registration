@@ -5,6 +5,7 @@ $dataReturn = [];
 if (isset($_POST['btnAdminTagInactiveEmpno'])) {
   $empno = $_POST['btnAdminTagInactiveEmpno'];
   $adminUserInactive['emp_status'] = 1;
+  $adminUserInactive['account_status'] = 4;
   $adminUserInactive['updated_by'] = $_SESSION['userID'];
   
   

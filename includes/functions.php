@@ -473,7 +473,7 @@ if(isset($_POST["sessionEmpno"])){ //retrieve data from database based on the lo
   "SELECT up.empno, up.position_id, pos.item_code, up.date_filled, up.sname, up.mname, up.fname, up.ename, up.sex, up.mobile, up.eaddress, up.birthdate, up.street, up.numAdd,
 up.region, up.city, up.province, up.barangay, up.uploaded_id, pn.position_name, las.area_assignment_code, las.area_assignment_name, un.unit_code, un.unit_name, un.division_code, d.division_name, up.user_level,
   IFNULL(r.region_name,'') AS region_name, IFNULL(prov.prov_name,'') AS prov_name, 
-  IFNULL(muni.city_name,'') AS city_name, IFNULL(brgy.brgy_name,'') AS brgy_name, up.account_status
+  IFNULL(muni.city_name,'') AS city_name, IFNULL(brgy.brgy_name,'') AS brgy_name, up.account_status,up.emp_status
 FROM userprofile up
 LEFT JOIN lib_position pos ON pos.position_id = up.position_id
 LEFT JOIN lib_position_name pn ON pn.position_name_id = pos.position_name_id
