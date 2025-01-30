@@ -81,6 +81,7 @@ $(document).on('click','#btnVerifyUpload',function(){
         $('#VerifyacadHighestLevel').val(EducUploadData['acad_highest_level']);
         $('#VerifyacadYearGraduated').val(EducUploadData['acad_year_graduated']);
         $('#VerifyacadHonors').val(EducUploadData['acad_honors']);
+        $('#VerifyacadRemarks').val('');
         const VerifyuploadedMOV = EducUploadData['acad_uploaded_mov']; //retrieve file name
         var pdfVerifyAcadsURL = 'uploadedMOV/'+VerifyuploadedMOV; //pdf directory 
         const iframeVefiyAcadsPDF = document.getElementById('VerifyUploadedMOV'); //iframe id

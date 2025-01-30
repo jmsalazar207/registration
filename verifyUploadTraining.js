@@ -22,6 +22,7 @@
             $('#VerifytrainingHours').val(TrainingUploadData['training_hours']);
             $('#VerifytrainingType').val(TrainingUploadData['training_type']).trigger("change");
             $('#VerifytrainingConductedBy').val(TrainingUploadData['training_conducted_by']);
+            $('#VerifyTrainingRemarks').val('');
             const uploadedTrainingMOV = TrainingUploadData['training_uploaded_mov']; //retrieve file name
             var pdfURL = 'uploadedMOV/'+uploadedTrainingMOV; //pdf directory 
             const iframeTrainingPDF = document.getElementById('VerifyUploadedTrainingMOV'); //iframe id

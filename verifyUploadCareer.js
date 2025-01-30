@@ -23,6 +23,7 @@ $(document).on('click','#btnVerifyCareerUpload',function(){
       $('#VerifycareerSalary').val(CareerUploadData['career_salary']);
       $('#VerifycareerCompensention').val(CareerUploadData['career_compensention_level']);
       $('#VerifycareerStatusAppointment').val(CareerUploadData['career_status_appointment']);
+      $('#VerifyCareerRemarks').val('');
       const uploadedMOV = CareerUploadData['career_uploaded_mov']; //retrieve file name
       var pdfURL = 'uploadedMOV/'+uploadedMOV; //pdf directory 
       const iframeCareerPDF = document.getElementById('VerifyUploadedCareerMOV'); //iframe id

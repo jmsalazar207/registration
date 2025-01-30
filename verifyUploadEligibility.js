@@ -26,6 +26,7 @@ $(document).on('click','#btnVerifyEligibilityUpload',function(){
           $('#VerifyeligibilityPlaceExamination').val(EligibilityUploadData['eligibility_exam_place']);
           $('#VerifyeligibilityNumber').val(EligibilityUploadData['eligibility_license']);
           $('#VerifyeligibilityValidityDate').val(EligibilityUploadData['eligibility_validity_date']);
+          $('#VerifyEligibilityRemarks').val('');
           const VerifyuploadedMOV = EligibilityUploadData['eligibility_uploaded_mov']; //retrieve file name
           var pdfVerifyEligibilityURL = 'uploadedMOV/'+VerifyuploadedMOV; //pdf directory 
           const iframeVefiyEligibilityPDF = document.getElementById('VerifyUploadedEligibilityMOV'); //iframe id

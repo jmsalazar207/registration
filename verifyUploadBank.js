@@ -11,6 +11,7 @@
           $('#VerifyBankRequesterName').val(BankDetails.FullName);
           $('#VerifyBankAccountNumber').val(BankDetails.bank_account_number);
           $('#VerifyBankID').val(BankDetails.id);
+          $('#VerifyBankDetailsRemarks').val('');
           const uploadedMOV = BankDetails.bank_account_mov; //retrieve file name
           $("#VerifyBankUploadedMOV").attr('src', 'uploadedBankMOV/' + uploadedMOV);
           $('#VerifyBankDetailsUpload').modal('show');
