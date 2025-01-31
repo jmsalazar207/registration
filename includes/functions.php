@@ -132,14 +132,14 @@ if(isset($_POST["list_salary_grade"])){
 // LIST OF FUND SOURCE
 if(isset($_POST["list_fund_source"])){ 
   $fund_source_id = $_POST["list_fund_source"];
-  $params['fields'] = "fund_source_code, fund_source_name";
+  $params['fields'] = "fund_source_code, fund_source_name, fund_source_initial";
   $params["order"] = "fund_source_name";
   $params['multipleconditions']["status"] =  ['!=',3];
   $fund_sources=$dbConn->find('lib_fund_source',$params);
   $fund_sources_output = '<option value="">SELECT FUND SOURCE</option>';
   if($fund_sources){
     foreach($fund_sources as $fund_source){
-      $fund_sources_output .= '<option value='.$fund_source['fund_source_code']. ($fund_source_id==$fund_source['fund_source_code']?" selected":"") . ' >' .$fund_source['fund_source_name'].'</option>';
+      $fund_sources_output .= '<option value='.$fund_source['fund_source_code']. ($fund_source_id==$fund_source['fund_source_code']?" selected":"") . ' >' .$fund_source['fund_source_name'].' - '.$fund_source['fund_source_initial'].'</option>';
     }
   }
   echo $fund_sources_output; 

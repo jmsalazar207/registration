@@ -126,7 +126,7 @@ function Reset(formData){
                 }else{
                   $(".loader-div").show()
                     $.ajax({
-                    url:"profileResetPassword.php",
+                    url:"profileResetPassword.php", //Forgot password reset
                     method:"POST",
                     dataType: "json",
                     data:formData,

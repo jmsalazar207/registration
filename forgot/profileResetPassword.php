@@ -11,9 +11,11 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
 }else{              
     $id = '03-'.$_POST['resetUsername'];
     $profileResetPassword['password'] = password_hash($_POST['resetConfirmPassword'], PASSWORD_DEFAULT);
+    $profileResetPassword['password_md5'] = '';
     $profileResetPassword['last_update'] = $today;
     $profileResetPassword['temp_password'] = '';
     $profileResetPassword['is_reset'] = '0';
+    $profileResetPassword['isLog']='0';
     $profileQueryResetPassword = $dbConn->update('userprofile', 'empno', $id, $profileResetPassword);
     if($profileQueryResetPassword){
         $dataReturn['status'] = '1';

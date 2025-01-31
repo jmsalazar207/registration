@@ -13,6 +13,8 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
 }else{              
     $id = $_SESSION['userID'];
     $profileUpdatePassword['password'] = password_hash($_POST['ConfirmPassword'], PASSWORD_DEFAULT);
+    $profileUpdatePasswor['password_md5'] = '';
+    $profileUpdatePassword['isLog'] = '0';
     $profileUpdatePassword['last_update'] = $today;
 
     $profileUpdatePasswordQuery = $dbConn->update('userprofile', 'empno', $id, $profileUpdatePassword);

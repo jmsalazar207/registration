@@ -6,6 +6,7 @@ $dataReturn = [];
 if (isset($_POST['btnResetPassword'])) {
   $empno = $_POST['btnResetPassword'];
   $resetPassword['password'] = password_hash("P@ssw0rd", PASSWORD_DEFAULT);
+  $resetPassword['password_md5'] = '';
   $resetPassword['isLog'] = 0;
 
   $sqlResetPassword = $dbConn->update('userprofile', 'empno', $empno, $resetPassword);
