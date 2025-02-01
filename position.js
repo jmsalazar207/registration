@@ -397,7 +397,6 @@ function btnGenerateItemNumber(formData){ //generate item number based on positi
     const positionNameID = $("#addPositionName").val();
     const ClassificationID = $("#addPositionClassification").val();
     const FundSourceID = $("#addPositionFundSource").val();
-    alert(FundSourceID);
     //item code = FO3-Unit Initial-Classi  fication initial-position initial-series xxx
 		$(".loader-div").show();
     $.ajax({

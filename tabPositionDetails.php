@@ -21,7 +21,7 @@
                             <div class="col-md-12">
                                 <label 
                                     for="UpdatePositionItemCode" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Item Number
                                 </label>
@@ -38,7 +38,8 @@
                                     class="form-control" 
                                     id="UpdatePositionItemCode" 
                                     name="UpdatePositionItemCode"
-                                    readonly>
+                                    readonly
+                                    required>
                                 </div>
                             </div>
                         </div>
@@ -46,7 +47,7 @@
                             <div class="col-md-12">
                                 <label 
                                     for="UpdatePositionDivision" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Division
                                 </label>
@@ -55,8 +56,9 @@
                                         class="form-control select2"
                                         style="width: 100%;"  
                                         id="UpdatePositionDivision" 
-                                        name="UpdatePositionDivision" 
-                                        tabindex="">
+                                        name="UpdatePositionDivision"
+                                        required 
+                                        tabindex="1">
                                     </select>
                                 </div>
                             </div>
@@ -65,7 +67,7 @@
                             <div class="col-md-12">
                                 <label 
                                     for="UpdatePositionUnit" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Unit
                                 </label>
@@ -75,7 +77,8 @@
                                         style="width: 100%;"  
                                         id="UpdatePositionUnit" 
                                         name="UpdatePositionUnit" 
-                                        tabindex="">
+                                        required
+                                        tabindex="2">
                                     </select>
                                 </div>
                             </div>
@@ -84,7 +87,7 @@
                             <div class="col-md-12">
                                 <label 
                                     for="UpdatePositionAreaAssign" 
-                                    class="col-sm-12" 
+                                    class="col-sm-12 requiredField" 
                                     style="font-size: 15px;">
                                     Area of Assignment
                                 </label>
@@ -94,7 +97,8 @@
                                         style="width: 100%;"  
                                         id="UpdatePositionAreaAssign" 
                                         name="UpdatePositionAreaAssign" 
-                                        tabindex="">
+                                        required
+                                        tabindex="3">
                                     </select>
                                 </div>
                             </div>
@@ -104,14 +108,15 @@
                     <div class="box-footer" style="border:0cm;">
                         <button 
                         type="button" 
-                        class="btn btn-default pull-left" 
+                        class="btn btn-default btn-sm pull-left" 
                         data-dismiss="modal"
-                        tabindex="11">
+                        tabindex="5">
                             Close
                         </button>
                         <button 
                             type="submit" 
-                            class="btn btn-primary btn-sm pull-right">
+                            class="btn btn-primary btn-sm pull-right"
+                            tabindex="4">
                             Save
                         </button>
                     </div>

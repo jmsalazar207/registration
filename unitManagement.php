@@ -134,7 +134,7 @@ require_once('includes/init.php');
 <script src="panelScript.js?test=<?php echo time()?>"></script>
 <script src="genFunction.js?test=<?php echo time()?>"></script>
 <script src="modalNotif.js?test=<?php echo time()?>"></script>
-<script src="manageScript.js?test=<?php echo time()?>"></script>
+<script src="unitManagement.js?test=<?php echo time()?>"></script>
 <script>
   $(function () {
     tables['tblUnit'] = $('#tblUnit').DataTable({

@@ -1,4 +1,4 @@
- <?php
+<?php
 // include 'conn_to_ctris.php';
 require_once('init.php');
 
@@ -654,13 +654,15 @@ if(isset($_POST["getPositionNameDetails"])){ //retrieve position name details fr
 }
 if(isset($_POST["checkInUsedPositionName"])){ //check position name if used
   $PositionNameID = $_POST["checkInUsedPositionName"];
-  $params['conditions'] = array("position_name_id" => $PositionNameID);
+  $params['multipleconditions']["position_name_id"] =  ['=',$PositionNameID];
+  $params['multipleconditions']["position_status"] =  ['!=',3];
   $CheckInUsedPosName=$dbConn->findFirst('lib_position',$params);
   echo json_encode($CheckInUsedPosName); 
 }
-if(isset($_POST["checkInUsedPosition"])){ //check position name if used
+if(isset($_POST["checkInUsedPosition"])){ //check position if used
   $PositionID = $_POST["checkInUsedPosition"];
-  $params['conditions'] = array("position_id" => $PositionID);
+  $params['multipleconditions']["position_id"] =  ['=',$PositionID];
+  $params['multipleconditions']["emp_status"] =  ['=',0];
   $dbConn->findFirst('userprofile',$params);
   $count['position_id'] = $dbConn->count();
   echo json_encode($count); 

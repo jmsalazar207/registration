@@ -1,4 +1,21 @@
-  $(document).on('submit', '#formAdminUnitUpdate', function(event) {    //admin update personal info
+$(function(){
+  //Initialized
+      $('.select2').select2();
+  //END Initialized
+  
+    });
+
+// Populate on load
+$.ajax({ //Populate division dropdown in unit management
+  url:"includes/functions.php",
+  method:"POST",
+  data:{list_division_id:0},
+  success:function(data){
+      $('#txtUnitDiv').html(data);
+  } 
+});
+//END Populate on load
+$(document).on('submit', '#formAdminUnitUpdate', function(event) {    //admin update personal info
     event.preventDefault(); // Prevent the default form submission
     var PassData = new FormData(formAdminUnitUpdate);
     modalConfirmShow('Would you like to confirm and save the changes now?',AdminUnitUpdate,PassData);

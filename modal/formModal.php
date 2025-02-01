@@ -21,7 +21,7 @@
                                     <div class="col-md-12">
                                         <label 
                                             for="addPositionName" 
-                                            class="col-sm-12" 
+                                            class="col-sm-12 requiredField" 
                                             style="font-size: 15px;">
                                             Position Name
                                         </label>
@@ -42,7 +42,7 @@
                                     <div class="col-md-12">
                                         <label 
                                             for="addPositionClassification" 
-                                            class="col-sm-12" 
+                                            class="col-sm-12 requiredField" 
                                             style="font-size: 15px;">
                                             Employment Classification
                                         </label>
@@ -64,7 +64,7 @@
                                     <div class="col-md-12">
                                         <label 
                                             for="addPositionSalaryGrade" 
-                                            class="col-sm-12" 
+                                            class="col-sm-12 requiredField" 
                                             style="font-size: 15px;">
                                             Salary Grade
                                         </label>
@@ -86,7 +86,7 @@
                                     <div class="col-md-12">
                                         <label 
                                             for="addPositionFundSource" 
-                                            class="col-sm-12" 
+                                            class="col-sm-12 requiredField" 
                                             style="font-size: 15px;">
                                             Fund Source
                                         </label>
@@ -108,7 +108,7 @@
                                     <div class="col-md-12">
                                         <label 
                                             for="addPositionDateCreated" 
-                                            class="col-sm-12" 
+                                            class="col-sm-12 requiredField" 
                                             style="font-size: 15px;">
                                             Date Created
                                         </label>
@@ -129,7 +129,7 @@
                                     <div class="col-md-12">
                                         <label 
                                             for="addPositionDivision" 
-                                            class="col-sm-12" 
+                                            class="col-sm-12 requiredField" 
                                             style="font-size: 15px;">
                                             Division
                                         </label>
@@ -151,7 +151,7 @@
                                     <div class="col-md-12">
                                         <label 
                                             for="addPositionUnit" 
-                                            class="col-sm-12" 
+                                            class="col-sm-12 requiredField" 
                                             style="font-size: 15px;">
                                             Section / Unit
                                         </label>
@@ -173,7 +173,7 @@
                                     <div class="col-md-12">
                                         <label 
                                             for="addPositionAreaAssignment" 
-                                            class="col-sm-12" 
+                                            class="col-sm-12 requiredField" 
                                             style="font-size: 15px;">
                                             Area Of Assignment
                                         </label>
@@ -195,7 +195,7 @@
                                     <div class="col-md-12">
                                         <label 
                                             for="addPositionItemCode" 
-                                            class="col-sm-12" 
+                                            class="col-sm-12 requiredField" 
                                             style="font-size: 15px;">
                                             Item Code
                                         </label>
@@ -248,7 +248,7 @@
             <div class="modal-content">
                 <form 
                     method="POST" 
-                    id="positionNameAdd" 
+                    id="frmPositionNameAdd" 
                     autocomplete="off">
                     <div class="modal-header">
                         <button 
@@ -266,7 +266,7 @@
                                     <div class="col-md-12">
                                         <label 
                                             for="addLPNPositionName" 
-                                            class="col-sm-12" 
+                                            class="col-sm-12 requiredField" 
                                             style="font-size: 15px;">
                                             Position Name
                                         </label>
@@ -292,7 +292,7 @@
                                     <div class="col-md-12">
                                         <label 
                                             for="addLPNPositionInitial" 
-                                            class="col-sm-12" 
+                                            class="col-sm-12 requiredField" 
                                             style="font-size: 15px;">
                                             Position Initial
                                         </label>
@@ -315,16 +315,16 @@
                     <div class="modal-footer">
                         <button 
                             type="button" 
-                            class="btn btn-default pull-left" 
+                            class="btn btn-default btn-sm pull-left" 
                             data-dismiss="modal"
-                            tabindex="10">
+                            tabindex="4">
                             Close
                         </button>
                         <button 
                             type="submit" 
                             class="btn btn-primary"
-                            tabindex="9">
-                            Save changes
+                            tabindex="3">
+                            Save
                         </button>
                     </div>
                 </form>
@@ -338,10 +338,10 @@
             <div class="modal-content">
                 <form 
                     method="POST" 
-                    id="positionNameUpdate" 
+                    id="frmPositionNameUpdate" 
                     autocomplete="off">
                     <div class="modal-header">
-                        <button 
+                        <!-- <button 
                             type="button" 
                             name="btnDeletePositionName"
                             id="btnDeletePositionName"
@@ -349,7 +349,7 @@
                             onclick="btnCheckDeletePositionName()"
                             >
                             Delete
-                        </button>
+                        </button> -->
                         <h4 class="modal-title">Update Position Name</h4>
                     </div>
                     <div class="modal-body">
@@ -359,7 +359,7 @@
                                     <div class="col-md-12">
                                         <label 
                                             for="updateLPNPositionName" 
-                                            class="col-sm-12" 
+                                            class="col-sm-12 requiredField" 
                                             style="font-size: 15px;">
                                             Position Name
                                         </label>
@@ -388,7 +388,7 @@
                                     <div class="col-md-12">
                                         <label 
                                             for="updateLPNPositionInitial" 
-                                            class="col-sm-12" 
+                                            class="col-sm-12 requiredField" 
                                             style="font-size: 15px;">
                                             Position Initial
                                         </label>
@@ -411,15 +411,15 @@
                     <div class="modal-footer">
                         <button 
                             type="button" 
-                            class="btn btn-default pull-left" 
+                            class="btn btn-default btn-sm pull-left" 
                             data-dismiss="modal"
-                            tabindex="10">
+                            tabindex="4">
                             Close
                         </button>
                         <button 
                             type="submit" 
                             class="btn btn-primary"
-                            tabindex="9">
+                            tabindex="3">
                             Update
                         </button>
                     </div>
@@ -464,7 +464,7 @@
                                       tabindex="1"
                                       required>
                                           <option value="1" selected>Auto Generate</option>
-                                          <option value="2">Manual Entry</option>
+                                          <!-- <option value="2">Manual Entry</option> -->
                                   </select>
                               </div>
                           </div>

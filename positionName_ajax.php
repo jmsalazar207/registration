@@ -63,13 +63,17 @@ $Records = $dbConn->findQuery($sql);
 if($Records){
    foreach($Records as $row){
 	$id = $row['position_name_id']; 
+   $url = 'positionNameDelete.php';
     $action =
             "
-                <td>
-                <button class='btn btn-primary btn-sm' id = 'btnUpdatePositionName' name ='btnUpdatePositionName' onclick ='btnUpdatePositionName(this.value)' value = '$id'  title='View' >
-                    Update
-                </button>
-                </td>
+               <td>
+                  <button class='btn btn-primary btn-sm' id = 'btnUpdatePositionName' name ='btnUpdatePositionName' value = '$id'  title='View' >
+                     Update
+                  </button>
+                  <button class='btn btn-danger btn-sm' id = 'btnDeletePositionName' name ='btnDeletePositionName' data-valueURL= '$url' data-valueID = '$id'  title='View' >
+                     Delete
+                  </button>
+               </td>
             "; 
    $data[] = array(
       "Action" => $action,

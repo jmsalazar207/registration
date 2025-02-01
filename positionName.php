@@ -75,7 +75,7 @@ require_once('includes/init.php');
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                  <table id="tblManagePosition" class="table table-bordered table-striped table-responsive" style="text-align:center; width:100%">
+                  <table id="tblManagePositionName" class="table table-bordered table-striped table-responsive" style="text-align:center; width:100%">
                       <thead class="bg-primary">
                           <tr>
                               <th> Action </th> <!-- details on position history -->
@@ -129,12 +129,12 @@ require_once('includes/init.php');
   include "modal/modalNotif.php";
 ?>
 <script src="panelScript.js?test=<?php echo time()?>"></script>
-<script src="position.js?test=<?php echo time()?>"></script>
+<script src="positionName.js?test=<?php echo time()?>"></script>
 <script src="genFunction.js?test=<?php echo time()?>"></script>
 <script src="modalNotif.js?test=<?php echo time()?>"></script>
 <script>
   $(function () {
-    $('#tblManagePosition').DataTable({ //retrieve data position name
+    tables['tblManagePositionName'] = $('#tblManagePositionName').DataTable({ //retrieve data position name
       ajax: {
           url: 'positionName_ajax.php',
           type: 'POST',

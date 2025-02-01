@@ -56,17 +56,7 @@
           });
     });
 
-//END Onchange Dropdown 
-// Populate on load
-    $.ajax({ //Populate division dropdown in unit management
-      url:"includes/functions.php",
-      method:"POST",
-      data:{list_division_id:0},
-      success:function(data){
-          $('#txtUnitDiv').html(data);
-      } 
-    });
-//END Populate on load
+
 
   });
 
@@ -217,19 +207,19 @@
         
 
         //Condition in Update Item Code 
-            const CurrentPosition = UpdateInfo['position_id'];
-            const EmpStatus = UpdateInfo['emp_status'];
-            if(CurrentPosition !='' && EmpStatus ==0){ //Atin neng current position
-              $("#UpdateItemCode").val(UpdateInfo['item_code']);
-              $("#UpdateDateFilled").val(UpdateInfo['date_filled']);
-              $("#divCurrentItemCode").show();
-              $("#divDateFilled").show();
-              $("#divDateVacated").show();
-              $("#divReasonVacancy").show();
-            } else { //No current position is set
-              $("#divNewItemCode").show(); //show New Item code
-              $("#divNewItemCodeDateFilled").show();  //show Date Filled
-            }
+        const CurrentPosition = UpdateInfo['position_id'];
+        const EmpStatus = UpdateInfo['emp_status'];
+        if(CurrentPosition !='' && EmpStatus ==0){ //Atin neng current position
+          $("#UpdateItemCode").val(UpdateInfo['item_code']);
+          $("#UpdateDateFilled").val(UpdateInfo['date_filled']);
+          $("#divCurrentItemCode").show();
+          $("#divDateFilled").show();
+          $("#divDateVacated").show();
+          $("#divReasonVacancy").show();
+        } else { //No current position is set
+          $("#divNewItemCode").show(); //show New Item code
+          $("#divNewItemCodeDateFilled").show();  //show Date Filled
+        }
             
       }
   }
@@ -355,6 +345,7 @@
       }
     });
   }
+
   function adminTagReEngage(btnAdminReengage){
     $(".loader-div").show();
     var TableID ='userManage';
@@ -378,6 +369,7 @@
       }
     });
   }
+  
   function resetPassword(btnResetPassword){
     $(".loader-div").show();
     var TableID = 'userManage';
@@ -470,11 +462,13 @@
     $("#txtEmpno").css('border-color', 'red');
     $("#txtEmpno").focus();
 
-  }else if(adminEmpNo > 12636){
-    $("#checkTxtEmpno").html("Invalid input. Employee number must not exceed the allowed limit.").css('color', 'red');
-    $("#txtEmpno").css('border-color', 'red');
-    $("#txtEmpno").focus();
-  }else{
+  }
+  // else if(adminEmpNo > 12636){
+  //   $("#checkTxtEmpno").html("Invalid input. Employee number must not exceed the allowed limit.").css('color', 'red');
+  //   $("#txtEmpno").css('border-color', 'red');
+  //   $("#txtEmpno").focus();
+  // }
+  else{
     $(".loader-div").show();
     $.ajax({ //check empno
       url:"checkExist.php",
@@ -670,70 +664,6 @@
     }
   }
 
-  function AdminDivisionAdd(formData){
-    const DivisionName = $('#txtDivName').val();
-    const DivisionNameCode = $('#txtDivNameCode').val();
-    const Cluster = $('#txtCluster').val();
-
-    $("#txtDivName").css('border-color', '');
-    $("#checktxtDivName").html("");
-
-    $("#txtDivNameCode").css('border-color', '');
-    $("#checktxtDivNameCode").html("");
-
-    if(DivisionName.length <2){
-      $("#checktxtDivName").html("Please enter a Division Name with at least 2 characters.").css('color', 'red');
-      $("#txtDivName").css('border-color', 'red');
-      $("#txtDivName").focus();
-    }else if(DivisionNameCode.length <2){
-      $("#checktxtDivNameCode").html("Please enter a Division Name Code with at least 2 characters.").css('color', 'red');
-      $("#txtDivNameCode").css('border-color', 'red');
-      $("#txtDivNameCode").focus();
-    }else{
-      $(".loader-div").show();
-      $.ajax({ //check empno
-        url:"checkExist.php",
-        method:"POST",
-        data: {type:1,adminDivision:DivisionName,DivisionNameCode:DivisionNameCode},
-        dataType: 'json',
-        success:function(data){
-          $(".loader-div").hide(); 
-            const uniqueDivName = data.divName;
-            if(uniqueDivName){
-              modalErrorShow("Apologies for the inconvenience. It appears that the division details you provided already exists. Please verify the information and try again, or reach out to support for further assistance.");
-            } else {
-              $(".loader-div").show();
-                $.ajax({
-                  url:"adminAddNewDivision.php",
-                  method:"POST",
-                  dataType: "json",
-                  data:formData,
-                  success:function(data){
-                    $(".loader-div").hide(); 
-                    const msg = data.msg;
-                    const stat = data.status;
-                    if(stat === "success"){ 
-                      modalSuccessShow(msg,refreshPage)
-                    } else {
-                      modalErrorShow(msg);
-                    }
-                  },error: function(xhr, status, error) {
-                    modalErrorShow("The system encountered an error. Please contact support.");
-                    $(".loader-div").hide();
-                  },
-                  processData: false,
-                  contentType: false
-                }); 
-            }
-        },error: function(xhr, status, error) {
-          modalErrorShow("The system encountered an error. Please contact support.");
-          $(".loader-div").hide();
-        },
-        });
-    }
-
-  }
-
   function insertNewUser(){
   const addSelectMode = $('#txtSelectMode').val();
   const addEmpNo = $('#txtAddEmpno').val();
@@ -770,11 +700,13 @@
         $("#checkTxtAddEmpno").html("Invalid Employee number. Please enter a number with a minimum of 4 digits and a maximum of 5 digits.").css('color', 'red');
         $("#txtAddEmpno").css('border-color', 'red');
         $("#txtAddEmpno").focus();
-      }else if(addEmpNo > 12636){
-        $("#checkTxtAddEmpno").html("Invalid input. Employee number must not exceed the allowed limit.").css('color', 'red');
-        $("#txtAddEmpno").css('border-color', 'red');
-        $("#txtAddEmpno").focus();
-      }else{
+      }
+      // else if(addEmpNo > 12636){
+      //   $("#checkTxtAddEmpno").html("Invalid input. Employee number must not exceed the allowed limit.").css('color', 'red');
+      //   $("#txtAddEmpno").css('border-color', 'red');
+      //   $("#txtAddEmpno").focus();
+      // }
+      else{
         $(".loader-div").show();
         $.ajax({ //check empno
           url:"checkExist.php",
@@ -875,133 +807,6 @@
     $('#txtAddEmpno').attr('readonly',false);
   }
   }
-
-  function AdminDivisionUpdate(formData){
-    const DivisionName = $('#txtUpdateDivName').val();
-    const DivisionNameCode = $('#txtUpdateDivNameCode').val();
-    const DivisionID = $('#txtUpdateDivID').val();
-
-    $("#txtUpdateDivName").css('border-color', '');
-    $("#checktxtUpdateDivName").html("");
-
-    $("#txtUpdateDivNameCode").css('border-color', '');
-    $("#checktxUpdatetDivNameCode").html("");
-
-    if(DivisionName.length <2){
-      $("#checktxtUpdateDivName").html("Please enter a Division Name with at least 2 characters.").css('color', 'red');
-      $("#txtUpdateDivName").css('border-color', 'red');
-      $("#txtUpdateDivName").focus();
-    }else if(DivisionNameCode.length <2){
-      $("#checktxUpdatetDivNameCode").html("Please enter a Division Name Code with at least 2 characters.").css('color', 'red');
-      $("#txtUpdateDivNameCode").css('border-color', 'red');
-      $("#txtUpdateDivNameCode").focus();
-    }else{
-      $(".loader-div").show();
-      $.ajax({ //check empno
-        url:"checkExist.php",
-        method:"POST",
-        data: {type:2,adminDivision:DivisionName,DivisionNameCode:DivisionNameCode,DivisionID:DivisionID},
-        dataType: 'json',
-        success:function(data){
-          $(".loader-div").hide(); 
-            const uniqueDivName = data.divName;
-            if(uniqueDivName){
-                modalAlertShow("Apologies for the inconvenience. It appears that the division details you provided already exists. Please verify the information and try again, or reach out to support for further assistance.");
-            } else {
-              $(".loader-div").show();
-                $.ajax({
-                  url:"adminUpdateDivision.php",
-                  method:"POST",
-                  dataType: "json",
-                  data:formData,
-                  success:function(data){
-                    $(".loader-div").hide(); 
-                    const msg = data.msg;
-                    const stat = data.status;
-                    if(stat === "success"){ 
-                      modalSuccessShow(msg,refreshPage)
-                    } else {
-                      modalErrorShow(msg);
-                    }
-                  },error: function(xhr, status, error) {
-                    modalErrorShow("The system encountered an error. Please contact support.");
-                    $(".loader-div").hide();
-                  },
-                  processData: false,
-                  contentType: false
-                }); 
-            }
-        },error: function(xhr, status, error) {
-          modalErrorShow("The system encountered an error. Please contact support.");
-          $(".loader-div").hide();
-        },
-        });
-    }
-
-  }
-
-  function AdminUnitAdd(formData){
-    const UnitName = $('#txtUnitName').val();
-    const UnitNameCode = $('#txtUnitNameCode').val();
-
-    $("#txtUnitName").css('border-color', '');
-    $("#checktxtUnitName").html("");
-
-    $("#txtUnitNameCode").css('border-color', '');
-    $("#checktxtUnitNameCode").html("");
-
-    if(UnitName.length <2){
-      $("#checktxtUnitName").html("Please enter a Unit Name with at least 2 characters.").css('color', 'red');
-      $("#txtUnitName").css('border-color', 'red');
-      $("#txtUnitName").focus();
-    }else if(UnitNameCode.length <2){
-      $("#checktxtUnitName").html("Please enter a Unit Name Code with at least 2 characters.").css('color', 'red');
-      $("#txtUnitNameCode").css('border-color', 'red');
-      $("#txtUnitNameCode").focus();
-    }else{
-      $(".loader-div").show();
-      $.ajax({ //check empno
-        url:"checkExist.php",
-        method:"POST",
-        data: {type:1,adminUnitName:UnitName,adminUnitNameCode:UnitNameCode},
-        dataType: 'json',
-        success:function(data){
-          $(".loader-div").hide(); 
-            const uniqueUnitDetails = data.UnitDetails;
-            if(uniqueUnitDetails){
-                modalAlertShow('Apologies for the inconvenience. It appears that the unit details you provided already exists. Please verify the information and try again, or reach out to support for further assistance.')
-            } else {
-              $(".loader-div").show();
-                $.ajax({
-                  url:"adminAddNewUnit.php",
-                  method:"POST",
-                  dataType: "json",
-                  data:formData,
-                  success:function(data){
-                    $(".loader-div").hide(); 
-                    const msg = data.msg;
-                    const stat = data.status;
-                    if(stat === "success"){ 
-                      modalSuccessShow(msg,refreshPage)
-                    } else {
-                      modalErrorShow(msg);
-                    }
-                  },error: function(xhr, status, error) {
-                    modalErrorShow("The system encountered an error. Please contact support.");
-                    $(".loader-div").hide();
-                  },
-                  processData: false,
-                  contentType: false
-                }); 
-            }
-        },error: function(xhr, status, error) {
-          modalErrorShow("The system encountered an error. Please contact support.");
-          $(".loader-div").hide();
-        },
-        });
-    }
-
-  }
   
   $(document).on('change','#UpdateNewItemCode', function(){ //onchange ning New Item Code
     ValidatePositionDateCreated();
@@ -1091,6 +896,7 @@
     PassData = $(this).attr('value');
     modalConfirmShow('Do you want to proceed with reengaging this account?',adminTagReEngage,PassData);
   });
+
   $(document).on('click', '#btnAdminDelete', function() {    //delete user acount action
     const valueID = $(this).attr('data-valueID');
     const valueURL = $(this).attr('data-valueURL');
@@ -1170,219 +976,6 @@
     modalConfirmShow('Would you like to confirm and save the new user details now?',insertNewUser,PassData); 
   });
 
-  $(document).on("submit",'#frmAdminDivisionAdd', function(event){ //trigger add division
-    event.preventDefault(); // Prevent the default form submission
-    var PassData = new FormData(frmAdminDivisionAdd);
-    modalConfirmShow('Would you like to confirm and save the new user details now?',AdminDivisionAdd,PassData);
-  });
-
-  $(document).on('click', '#btnAdminDivisionUpdate', function() {   //open admin Update modal with populated information
-    var btnAdminDivisionUpdate = $(this).attr('value');
-    $(".loader-div").show();
-    $.ajax({
-      url:"includes/functions.php",
-      method:"POST",
-      data:{btnAdminDivisionUpdate:btnAdminDivisionUpdate},
-      success:function(data){
-        $(".loader-div").hide(); 
-        AdminDivisionUpdateInfo = JSON.parse(data);
-        $("#txtUpdateDivName").val(AdminDivisionUpdateInfo['division_name']);
-        $("#txtUpdateDivNameCode").val(AdminDivisionUpdateInfo['division_name_code']);
-        $("#txtUpdateDivID").val(AdminDivisionUpdateInfo['division_code']);
-        $("#UpdateDivision").modal('show');
-        const clusterID = AdminDivisionUpdateInfo['cluster_code'];
-        $.ajax({
-          url:"includes/functions.php",
-          method:"POST",
-          data:{clusterID:clusterID},
-          success:function(data){
-            $(".loader-div").hide(); 
-            $('#txtUpdateCluster').html(data);
-          },error: function(xhr, status, error) {
-            modalErrorShow("The system encountered an error. Please contact support.");
-            $(".loader-div").hide();
-          }
-      });
-      },error: function(xhr, status, error) {
-        modalErrorShow("The system encountered an error. Please contact support.");
-        $(".loader-div").hide();
-      }
-    })
-  });
- 
-  $(document).on('submit', '#formAdminDivisionUpdate', function(event) {    //admin update personal info
-    event.preventDefault(); // Prevent the default form submission
-    var PassData = new FormData(formAdminDivisionUpdate);
-    modalConfirmShow('Would you like to confirm and save the changes now?',AdminDivisionUpdate,PassData);
-  });
-
-  $(document).on('click', '#btnAdminDivisionDelete', function() {    //delete user acount action
-    const valueID = $(this).attr('data-valueID');
-    const valueURL = $(this).attr('data-valueURL');
-    const TableID = 'tblDivision';
-    var PassData = {
-      valueID:valueID,
-      valueURL:valueURL,
-      TableID:TableID
-    };
-    $(".loader-div").show();
-    $.ajax({ //check empno
-      url:"checkExist.php",
-      method:"POST",
-      data: {inUsedDivision:valueID},
-      dataType: 'json',
-      success:function(data){
-        $(".loader-div").hide(); 
-          const inUsedDivision = data.inUsedDivision;
-          if(inUsedDivision){
-            modalAlertShow('Oops! Unable to remove division information as it is currently in use.');
-          } else {
-            modalConfirmShow('Would you like to permanently delete this information? This action cannot be undone.',deleteData,PassData);
-          }
-      },error: function(xhr, status, error) {
-        modalErrorShow("The system encountered an error. Please contact support.");
-        $(".loader-div").hide();
-      },
-      });
-  });
-
-  $(document).on("submit",'#frmAdminUnitAdd', function(event){ //trigger add division
-    event.preventDefault(); // Prevent the default form submission
-    var PassData = new FormData(frmAdminUnitAdd);
-    modalConfirmShow('Would you like to confirm and save the new user details now?',AdminUnitAdd,PassData);
-  });
-
-  $(document).on('click', '#btnAdminUnitDelete', function() {    //delete user acount action
-    const valueID = $(this).attr('data-valueID');
-    const valueURL = $(this).attr('data-valueURL');
-    const TableID = 'tblUnit';
-    var PassData = {
-      valueID:valueID,
-      valueURL:valueURL,
-      TableID:TableID
-    };
-    $(".loader-div").show();
-    $.ajax({ //check empno
-      url:"checkExist.php",
-      method:"POST",
-      data: {inUsedUnit:valueID},
-      dataType: 'json',
-      success:function(data){
-        $(".loader-div").hide(); 
-          const inUsedUnit = data.inUsedUnit;
-          if(inUsedUnit){
-            modalAlertShow('Oops! Unable to remove division information as it is currently in use.');
-          } else {
-            modalConfirmShow('Would you like to permanently delete this information? This action cannot be undone.',deleteData,PassData);
-          }
-      },error: function(xhr, status, error) {
-        modalErrorShow("The system encountered an error. Please contact support.");
-        $(".loader-div").hide();
-      },
-      });
-  });
-
-  $(document).on('click', '#btnAdminUnitUpdate', function() {   //open admin Update modal with populated information
-    var btnAdminUnitUpdate = $(this).attr('value');
-    $(".loader-div").show();
-    $.ajax({
-      url:"includes/functions.php",
-      method:"POST",
-      data:{btnAdminUnitUpdate:btnAdminUnitUpdate},
-      success:function(data){
-        $(".loader-div").hide(); 
-        AdminUnitUpdateInfo = JSON.parse(data);
-        $("#txtUpdateUnitID").val(AdminUnitUpdateInfo['unit_code']);
-        $("#txtUpdateUnitName").val(AdminUnitUpdateInfo['unit_name']);
-        $("#txtUpdateUnitNameCode").val(AdminUnitUpdateInfo['unit_name_code']);
-
-        const unitDivCode = AdminUnitUpdateInfo['division_code'];
-        const unitStationCode = AdminUnitUpdateInfo['station_code'];
-        $.ajax({
-          url:"includes/functions.php",
-          method:"POST",
-          data:{list_division_id:unitDivCode},
-          success:function(data){
-              $('#txtUpdateUnitDiv').html(data);
-          } 
-        });
-        $("#UpdateUnit").modal('show');
-      },error: function(xhr, status, error) {
-        modalErrorShow("The system encountered an error. Please contact support.");
-        $(".loader-div").hide();
-      }
-    })
-  });
-  
-  $(document).on('submit', '#formAdminUnitUpdate', function(event) {    //admin update personal info
-    event.preventDefault(); // Prevent the default form submission
-    var PassData = new FormData(formAdminUnitUpdate);
-    modalConfirmShow('Would you like to confirm and save the changes now?',AdminUnitUpdate,PassData);
-  });
-
-  function AdminUnitUpdate(formData){
-    const UnitName = $('#txtUpdateUnitName').val();
-    const UnitNameCode = $('#txtUpdateUnitNameCode').val();
-    const UnitID = $('#txtUpdateUnitID').val();
-
-    $("#txtUpdateUnitName").css('border-color', '');
-    $("#checktxtUpdateUnitName").html("");
-
-    $("#txtUpdateUnitNameCode").css('border-color', '');
-    $("#checktxtUpdateUnitNameCode").html("");
-
-    if(UnitName.length <2){
-      $("#checktxtUnitName").html("Please enter a Unit Name with at least 2 characters.").css('color', 'red');
-      $("#txtUnitName").css('border-color', 'red');
-      $("#txtUnitName").focus();
-    }else if(UnitNameCode.length <2){
-      $("#checktxtUnitName").html("Please enter a Unit Name Code with at least 2 characters.").css('color', 'red');
-      $("#txtUnitNameCode").css('border-color', 'red');
-      $("#txtUnitNameCode").focus();
-    }else{
-      $(".loader-div").show();
-      $.ajax({ //check empno
-        url:"checkExist.php",
-        method:"POST",
-        data: {type:2,adminUnitName:UnitName,adminUnitNameCode:UnitNameCode,UnitID:UnitID},
-        dataType: 'json',
-        success:function(data){
-          $(".loader-div").hide(); 
-            const uniqueUnitDetails = data.UnitDetails;
-            if(uniqueUnitDetails){
-                modalAlertShow('Apologies for the inconvenience. It appears that the unit details you provided already exists. Please verify the information and try again, or reach out to support for further assistance.')
-            } else {
-              $(".loader-div").show();
-                $.ajax({
-                  url:"adminUpdateUnit.php",
-                  method:"POST",
-                  dataType: "json",
-                  data:formData,
-                  success:function(data){
-                    $(".loader-div").hide(); 
-                    const msg = data.msg;
-                    const stat = data.status;
-                    if(stat === "success"){ 
-                      modalSuccessShow(msg,refreshPage);
-                    } else {
-                      modalErrorShow(msg);
-                    }
-                  },error: function(xhr, status, error) {
-                    modalErrorShow("The system encountered an error. Please contact support.");
-                    $(".loader-div").hide();
-                  },
-                  processData: false,
-                  contentType: false
-                }); 
-            }
-        },error: function(xhr, status, error) {
-          modalErrorShow("The system encountered an error. Please contact support.");
-          $(".loader-div").hide();
-        },
-        });
-    }
-  }
- 
 
 
   

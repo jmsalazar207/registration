@@ -1,4 +1,11 @@
-  $(document).on('click', '#btnAdminDivisionUpdate', function() {   //open admin Update modal with populated information
+
+$(function(){
+  //Initialized
+      $('.select2').select2();
+  //END Initialized
+  
+    });
+$(document).on('click', '#btnAdminDivisionUpdate', function() {   //open admin Update modal with populated information
     var btnAdminDivisionUpdate = $(this).attr('value');
     $(".loader-div").show();
     $.ajax({
@@ -168,7 +175,7 @@
           $(".loader-div").hide(); 
             const uniqueDivName = data.divName;
             if(uniqueDivName){
-              modalErrorShow("Apologies for the inconvenience. It appears that the division details you provided already exists. Please verify the information and try again, or reach out to support for further assistance.");
+              modalAlertShow("Apologies for the inconvenience. It appears that the division details you provided already exists. Please verify the information and try again, or reach out to support for further assistance.");
             } else {
               $(".loader-div").show();
                 $.ajax({

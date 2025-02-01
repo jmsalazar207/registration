@@ -62,6 +62,7 @@ function ApproveEducUpload(){
     }
   });
 }
+
 $(document).on('click','#btnVerifyUpload',function(){
   var getReqestVerification = $(this).attr('value');
   $(".loader-div").show();
