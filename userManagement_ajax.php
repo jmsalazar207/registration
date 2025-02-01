@@ -73,70 +73,85 @@ if($empRecords){
 	$empno = $row['empno']; 
    $url = "adminDeleteUser.php";
    $acc_status = $row['account_status'];
-   if($acc_status ==1 || $acc_status ==3){ //Pending registration and disapproved
-      $action = "<td>
-                  <button class='btn btn-primary btn-sm' id = 'btnAdminUpdate' name ='btnAdminUpdate'  value = '$empno'  title='View' >
-                     Update
-                  </button>
-                  <button class='btn btn-warning btn-sm' id='btnAdminReview' name= 'btnAdminReview' value = '$empno'  title='Review' >
-                  Review
-                  </button>
-                  <button class = 'btn btn-default btn-sm' type = 'button' id = 'btnResetPassword' name = 'btnResetPassword'  class = '' value = '$empno'  title='Reset Password'>
-                     Reset
-                  </button>
-                  <button class = 'btn btn-warning btn-sm' type = 'button' id = 'btnInactive' name = 'btnInactive'  class = '' value = '$empno'  title='Inactive'>
-                     Inactive
+   $emp_status = $row['emp_status'];
+   if($emp_status !=0){ //Not Active
+      // <td>
+      //             <button class='btn btn-primary btn-sm' id = 'btnAdminReactivate' name ='btnAdminReactivate'  value = '$empno'  title='Reactivate' >
+      //                Reactivate
+      //             </button>
+      $action = "
+                   <button class='btn btn-info btn-sm' id = 'btnAdminReengage' name ='btnAdminReengage'  value = '$empno'  title='Re-Engage' >
+                     Re-Engage
                   </button>
                </td>
                "; 
-   
-   }else if($acc_status == 2){ //Approved
-      $action = "<td>
-                  <button class='btn btn-primary btn-sm' id = 'btnAdminUpdate' name ='btnAdminUpdate'  value = '$empno'  title='View' >
-                     Update
-                  </button>
-                  <button class='btn btn-danger btn-sm' id='btnAdminLock' name= 'btnAdminLock' value = '$empno'  title='View' >
-                  Lock Account
-                  </button>
-                  <button class = 'btn btn-default btn-sm' type = 'button' id = 'btnResetPassword' name = 'btnResetPassword' class = '' value = '$empno'  title='Reset Password'>
-                     Reset
-                  </button>
-                  <button class = 'btn btn-warning btn-sm' type = 'button' id = 'btnInactive' name = 'btnInactive'  class = '' value = '$empno'  title='Inactive'>
-                     Inactive
-                  </button>
-               </td>";
-   }else if($acc_status == 4){ //acount locked
-      $action = "<td>
-                  <button class='btn btn-info btn-sm' id = 'btnAdminUpdate' name ='btnAdminUpdate'  value = '$empno'  title='View' >
-                     Update
-                  </button>
-                  <button class='btn btn-warning btn-sm' id='btnAdminUnlock' name= 'btnAdminUnlock' value = '$empno'  title='View' >
-                  Unlock Account
-                  </button>
-                  <button class = 'btn btn-default btn-sm' type = 'button' id = 'btnResetPassword' name = 'btnResetPassword'  class = '' value = '$empno'  title='Reset Password'>
-                     Reset
-                  </button>
-                  <button class = 'btn btn-warning btn-sm' type = 'button' id = 'btnInactive' name = 'btnInactive'  class = '' value = '$empno'  title='Inactive'>
-                     Inactive
-                  </button>
-                </td>";
-   }else{ //unregistered
-      $action =   "<td>
+   }else{
+      if($acc_status ==1 || $acc_status ==3){ //Pending registration and disapproved
+         $action = "<td>
                      <button class='btn btn-primary btn-sm' id = 'btnAdminUpdate' name ='btnAdminUpdate'  value = '$empno'  title='View' >
                         Update
                      </button>
+                     <button class='btn btn-warning btn-sm' id='btnAdminReview' name= 'btnAdminReview' value = '$empno'  title='Review' >
+                     Review
+                     </button>
+                     <button class = 'btn btn-default btn-sm' type = 'button' id = 'btnResetPassword' name = 'btnResetPassword'  class = '' value = '$empno'  title='Reset Password'>
+                        Reset
+                     </button>
+                     <button class = 'btn btn-warning btn-sm' type = 'button' id = 'btnInactive' name = 'btnInactive'  class = '' value = '$empno'  title='Inactive'>
+                        Inactive
+                     </button>
                   </td>
-            <td>
-               <button class='btn btn-danger btn-sm' id = 'btnAdminDelete' name ='btnAdminDelete' data-valueID = '$empno' data-valueURL = '$url'  title='Remove Information' >
-                  Remove
-               </button>
-               <button class = 'btn btn-warning btn-sm' type = 'button' id = 'btnInactive' name = 'btnInactive'  class = '' value = '$empno'  title='Inactive'>
-                     Inactive
+                  "; 
+      
+      }else if($acc_status == 2){ //Approved
+         $action = "<td>
+                     <button class='btn btn-primary btn-sm' id = 'btnAdminUpdate' name ='btnAdminUpdate'  value = '$empno'  title='View' >
+                        Update
+                     </button>
+                     <button class='btn btn-danger btn-sm' id='btnAdminLock' name= 'btnAdminLock' value = '$empno'  title='View' >
+                     Lock Account
+                     </button>
+                     <button class = 'btn btn-default btn-sm' type = 'button' id = 'btnResetPassword' name = 'btnResetPassword' class = '' value = '$empno'  title='Reset Password'>
+                        Reset
+                     </button>
+                     <button class = 'btn btn-warning btn-sm' type = 'button' id = 'btnInactive' name = 'btnInactive'  class = '' value = '$empno'  title='Inactive'>
+                        Inactive
+                     </button>
+                  </td>";
+      }else if($acc_status == 4){ //acount locked
+         $action = "<td>
+                     <button class='btn btn-info btn-sm' id = 'btnAdminUpdate' name ='btnAdminUpdate'  value = '$empno'  title='View' >
+                        Update
+                     </button>
+                     <button class='btn btn-warning btn-sm' id='btnAdminUnlock' name= 'btnAdminUnlock' value = '$empno'  title='View' >
+                     Unlock Account
+                     </button>
+                     <button class = 'btn btn-default btn-sm' type = 'button' id = 'btnResetPassword' name = 'btnResetPassword'  class = '' value = '$empno'  title='Reset Password'>
+                        Reset
+                     </button>
+                     <button class = 'btn btn-warning btn-sm' type = 'button' id = 'btnInactive' name = 'btnInactive'  class = '' value = '$empno'  title='Inactive'>
+                        Inactive
+                     </button>
+                   </td>";
+      }else{ //unregistered
+         $action =   "<td>
+                        <button class='btn btn-primary btn-sm' id = 'btnAdminUpdate' name ='btnAdminUpdate'  value = '$empno'  title='View' >
+                           Update
+                        </button>
+                     </td>
+               <td>
+                  <button class='btn btn-danger btn-sm' id = 'btnAdminDelete' name ='btnAdminDelete' data-valueID = '$empno' data-valueURL = '$url'  title='Remove Information' >
+                     Remove
                   </button>
-            </td>
-
-                  ";
+                  <button class = 'btn btn-warning btn-sm' type = 'button' id = 'btnInactive' name = 'btnInactive'  class = '' value = '$empno'  title='Inactive'>
+                        Inactive
+                     </button>
+               </td>
+   
+                     ";
+      }
    }
+
      
    
    $data[] = array(

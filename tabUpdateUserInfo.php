@@ -40,6 +40,7 @@
                                 value="" 
                                 style="text-transform: uppercase;" 
                                 required="true" 
+                                readonly
                                 onkeypress="return NumberOnly(event)" 
                                 tabindex="1">
                         </div>

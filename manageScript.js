@@ -218,7 +218,8 @@
 
         //Condition in Update Item Code 
             const CurrentPosition = UpdateInfo['position_id'];
-            if(CurrentPosition !=''){ //Atin neng current position
+            const EmpStatus = UpdateInfo['emp_status'];
+            if(CurrentPosition !='' && EmpStatus ==0){ //Atin neng current position
               $("#UpdateItemCode").val(UpdateInfo['item_code']);
               $("#UpdateDateFilled").val(UpdateInfo['date_filled']);
               $("#divCurrentItemCode").show();
@@ -354,7 +355,29 @@
       }
     });
   }
-
+  function adminTagReEngage(btnAdminReengage){
+    $(".loader-div").show();
+    var TableID ='userManage';
+    $.ajax({
+      url:"adminTagReEngage.php",
+      method:"POST",
+      data:{btnAdminReengage:btnAdminReengage},
+      dataType: 'json',
+      success:function(data){
+        $(".loader-div").hide();
+        const msg = data.msg;
+        const stat = data.status;  
+        if(stat === "success"){ 
+          modalSuccessShow(msg,triggerTableReload,TableID);
+        } else {
+         modalErrorShow(msg);
+        }
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();s
+      }
+    });
+  }
   function resetPassword(btnResetPassword){
     $(".loader-div").show();
     var TableID = 'userManage';
@@ -1064,7 +1087,10 @@
     modalConfirmShow('Do you want to proceed with deactivating this account?',adminTagInactive,PassData);
   });
   
-
+  $(document).on('click', '#btnAdminReengage', function() {   //reset password to default action
+    PassData = $(this).attr('value');
+    modalConfirmShow('Do you want to proceed with reengaging this account?',adminTagReEngage,PassData);
+  });
   $(document).on('click', '#btnAdminDelete', function() {    //delete user acount action
     const valueID = $(this).attr('data-valueID');
     const valueURL = $(this).attr('data-valueURL');
