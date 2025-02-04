@@ -1,3 +1,7 @@
+bc22f04e7a0fce802570bf35d6bb3aff C@pitaliz3d - md5          
+          
+          
+          
           <link rel="stylesheet" href="../includes/loader.css">
 		<div class="loader-div">
           <img 
