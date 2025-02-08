@@ -250,15 +250,6 @@ if(isset($_POST['PositionName'])){ //Check exist add
 
    echo json_encode($count);
 }
-//  if(isset($_POST['resetUsername'])){
-
-//    $ID = $_POST['resetUsername'];
-//    $TempPassword = password_hash($_POST['resetTempPassword'], PASSWORD_DEFAULT);
-//    $sql_validate = "SELECT * FROM userprofile WHERE empno = '$ID' AND temp_password = '$TempPassword' AND emp_status <= 1";
-//    $dbConn->findFirstQuery($sql_validate);
-//    $count['EmpID'] = $dbConn->count();
-//    echo json_encode($count);
-// }
 
 if(isset($_POST['attemptEmpNO'])){
     $attemptEmpNO = $_POST['attemptEmpNO'];
@@ -266,6 +257,7 @@ if(isset($_POST['attemptEmpNO'])){
     $count_attempt = $dbConn->findFirstQuery($sql_count_attempt);
     echo json_encode($count_attempt);
 }
+
 if(isset($_POST['checkFamilyBackground'])){
    $type = $_POST['checkFamilyBackground'];
    if($type==1){  //insert
@@ -292,7 +284,6 @@ if(isset($_POST['checkFamilyBackground'])){
       $count['FamilyBackground'] = $dbConn->count();
       echo json_encode($count);
    }
-
 }
 if(isset($_POST['checkAcademic'])){
    $type = $_POST['checkAcademic'];

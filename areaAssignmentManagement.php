@@ -2,7 +2,6 @@
 <html>
 <head>
 <?php
-  $today = date('Y-m-d');
   session_start();
   $UL = $_SESSION['userLevel'];
   if(($UL !=1)&&($UL != 2)){
@@ -10,14 +9,14 @@
   }
 	$_SESSION["token"] = bin2hex(random_bytes(32));
 	$_SESSION["token-expire"] = time() + 3600; // 1 hour = 3600 secs
-  include 'includes/session.php';
+// include 'includes/conn_to_ctris.php';
 require_once('includes/init.php');
    include 'includes/functions.php'; 
 ?>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="shortcut icon" href="images/logo.png">
-  <title>Verification - Employee's Registration Module</title>
+  <title>Area Assignment Management - Employee's Registration Module</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -35,18 +34,19 @@ require_once('includes/init.php');
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
-  <!-- Google Font -->
   <link rel="stylesheet" href="includes/add.css?test=<?php echo time()?>">
   <link rel="stylesheet" href="includes/loader.css?test=<?php echo time()?>">
+
+  <!-- Google Font -->
+  
 </head>
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
-<div class="loader-div">
+  <div class="loader-div">
     <img 
     class="loader-img" 
     src="images/ajax-loader.gif" 
     style="height: 50px;width: auto;" />
   </div>
-
     <div class="wrapper">
     <?php 
             include "includes/session.php";
@@ -60,26 +60,41 @@ require_once('includes/init.php');
                   <div class="row">
                     <div class="col-md-12">
                       <h3 class="box-title">
-                        Verification of Uploaded MOV - Eligibility
+                        Management for List of Area of Assignment
                       </h3>
+                    </div>
+                    &nbsp;
+                    <div class="col-md-12">
+                        <button 
+                        type="submit" 
+                        id="btnAdd" 
+                        name="btnAdd" 
+                        class="btn btn-info btn-sm" 
+                        data-toggle="modal" 
+                        data-target="#addAreaAssignment">
+                          <span class="glyphicon glyphicon-plus"></span>
+                            <span class="glyphicon-class">
+                              Add Area of Assignment
+                            </span>
+                        </button>
                     </div>
                   </div>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body">
-                <table id="VerifyEligibility" class="table table-bordered table-striped table-responsive" style="text-align:center; width:100%">
+                <div class="box-body"> 
+                <table id="tblAreaAssignment" class="table table-bordered table-striped table-responsive" style="text-align:center; width:100%">
                     <thead class="bg-primary">
                         <tr>
                           <th> Action </th>
-                          <th> Requester </th>
-                          <th> Credentials </th>
-                          <th> Rating </th>
-                          <th> Date of Exam </th>
-                          <th> Place of Exam </th>
-                          <th> License Number </th>
-                          <th> License Validity </th>
-                          <th> Request Status </th>
-                          <th> Uploaded Remarks </th>
+                          <th> Area Assignment Name </th>
+                          <th> Office Location </th>
+                          <th> Unit Name  </th>
+                          <th> Division Name </th>
+                          <th> Added By </th>
+                          <th> Date and Time Added </th>
+                          <th> Updated By </th>
+                          <th> Date and Time Updated </th>
+                        
                         </tr>
                     </thead>
                 </table>
@@ -89,11 +104,12 @@ require_once('includes/init.php');
             <!-- /.box -->
         </div>
         <!-- /.content-wrapper -->
+
+    <!-- Add the sidebar's background. This div must be placedimmediately after the control sidebar -->
+        <div class="control-sidebar-bg"></div>
         <?php
           include "includes/footer.php";
         ?>
-    <!-- Add the sidebar's background. This div must be placedimmediately after the control sidebar -->
-        <div class="control-sidebar-bg"></div>
     </div>
 
 <!-- ./wrapper -->
@@ -105,19 +121,16 @@ require_once('includes/init.php');
 <!-- DataTables -->
 <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<!-- Select2 -->
-<script src="bower_components/select2/dist/js/select2.full.min.js"></script>
-
 <!-- SlimScroll -->
 <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
-<!-- bootstrap datepicker -->
-<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+<!-- Select2 -->
+<script src="bower_components/select2/dist/js/select2.full.min.js"></script>
 
 <!-- page script -->
 <?php
@@ -127,12 +140,15 @@ require_once('includes/init.php');
 <script src="panelScript.js?test=<?php echo time()?>"></script>
 <script src="genFunction.js?test=<?php echo time()?>"></script>
 <script src="modalNotif.js?test=<?php echo time()?>"></script>
-<script src="verifyUploadEligibility.js?test=<?php echo time()?>"></script>
+<script src="areaAssignmentManagement.js?test=<?php echo time()?>"></script>
 <script>
   $(function () {
-    tables['VerifyEligibility'] = $('#VerifyEligibility').DataTable({
+    // if ($.fn.DataTable.isDataTable('#tblAreaAssignment')) {
+    //     $('#tblAreaAssignment').DataTable().destroy();
+    // }
+    $('#tblAreaAssignment').DataTable({
       ajax: {
-          url: 'VerifyEligibilityMOV_ajax.php',
+          url: 'areaAssignmentManagement_ajax.php',
           type: 'POST',
           'data': function(data){
           }
@@ -142,32 +158,20 @@ require_once('includes/init.php');
       "order": [[ 1, "desc" ]],
       columns: [
         { data: "Action"},
-        { data: "fullname"},
-        { data: "elibility_title"},
-        { data: "eligibility_rating"},
-        { data: "eligibility_exam_date"},
-        { data: "eligibility_exam_place"},
-        { data: "eligibility_license"},
-        { data: "eligibility_validity_date"},
-        { data: "eligibility_status"},
-        { data: "eligibility_remarks"}
+        { data: "area_assignment_name"},
+        { data: "office_location_name"},
+        { data: "unit_name"},
+        { data: "division_name"},
+        { data: "added_by_name"},
+        { data: "datetime_added"},
+        { data: "updated_by_name"},
+        { data: "datetime_updated"}
       ],
       'columnDefs': [ 
-        { "bSortable": false, "aTargets": [0] },
-        { "width": "70px", "targets": 0 },
-        { "width": "90px", "targets": 1 },
-        { "width": "90px", "targets": 2 },
-        { "width": "60px", "targets": 3 },
-        { "width": "50px", "targets": 4 },
-        { "width": "10px", "targets": 5 },
-        { "width": "60px", "targets": 6 },
-        { "width": "100px", "targets": 7 },
-        { "width": "140px", "targets": 8 },
-        { "width": "100px", "targets": 9 }
-      
+        { "bSortable": false, "aTargets": [0] }
       ]
     });
-  });
+  })
 </script>
 
 </body>

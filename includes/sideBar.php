@@ -94,6 +94,12 @@
                  Position Name
               </a>
             </li>
+            <li>
+              <a href="areaAssignmentManagement.php">
+                <i class="glyphicon glyphicon-folder-open"></i> 
+                 Area Assignment
+              </a>
+            </li>
           </ul>
         </li><li class="treeview" id="sysAdmin" hidden>
           <a href="#">
