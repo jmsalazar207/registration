@@ -244,7 +244,21 @@ if(isset($_POST["list_brgy"])&& isset($_POST['Where_city_ID'])){
   echo $list_brgys_output; 
 }
 
-
+// LIST OF OFFICE STATION
+if(isset($_POST["list_office_location_id"])){ 
+  $list_office_location_id = $_POST["list_office_location_id"];
+  $params['fields'] = "office_location_code, office_location_name";
+  $params["order"] = "office_location_name";
+  $params['multipleconditions']["office_location_status"] =  ['!=',3];
+  $update_list_office_locations=$dbConn->find('lib_office_location',$params);
+  $update_list_office_locations_output = '<option value="">SELECT OFFICE LOCATION</option>';
+  if($update_list_office_locations){
+    foreach($update_list_office_locations as $list_office_location){
+      $update_list_office_locations_output .= '<option value='.$list_office_location['office_location_code']. ($list_office_location_id==$list_office_location['office_location_code']?" selected":"") . ' >' .$list_office_location['office_location_name'].'</option>';
+    }
+  }
+  echo $update_list_office_locations_output; 
+}
 
 function fill_cluster($dbConn,$cluster_id=0){ //Drop down ning Cluster
   $params['fields'] = "cluster_code, cluster_name";
