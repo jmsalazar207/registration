@@ -673,10 +673,10 @@ if(isset($_POST["checkInUsedPositionName"])){ //check position name if used
   $CheckInUsedPosName=$dbConn->findFirst('lib_position',$params);
   echo json_encode($CheckInUsedPosName); 
 }
-if(isset($_POST["checkInUsedPosition"])){ //check position if used
+if(isset($_POST["checkInUsedPosition"])){ //check position name if used
   $PositionID = $_POST["checkInUsedPosition"];
-  $params['multipleconditions']["position_id"] =  ['=',$PositionID];
   $params['multipleconditions']["emp_status"] =  ['=',0];
+  $params['multipleconditions']["position_id"] =  ['=', $PositionID];
   $dbConn->findFirst('userprofile',$params);
   $count['position_id'] = $dbConn->count();
   echo json_encode($count); 
