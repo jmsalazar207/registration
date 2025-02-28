@@ -967,4 +967,54 @@ if(isset($_POST["getBankDetails"])){
   $Bank_Details=$dbConn->findFirstQuery($sql);
   echo json_encode($Bank_Details); 
 }
+if(isset($_POST["getTotalPos"])){ //TotalPosition not abolished
+  $sql = "SELECT COUNT(pos.position_id) AS total_positions
+          FROM lib_position pos
+          WHERE pos.position_status != 3";
+  $TotalPos=$dbConn->findFirstQuery($sql);
+  echo json_encode($TotalPos); 
+}
+if(isset($_POST["getFilled"])){ //Total Filled
+  $sql = "SELECT COUNT(pos.position_id) AS total_filled_positions
+          FROM lib_position pos
+          WHERE pos.position_status = 1";
+  $FilledPos=$dbConn->findFirstQuery($sql);
+  echo json_encode($FilledPos); 
+}
+if(isset($_POST["getPercentFilled"])){ //percent filled
+  $sql = "SELECT 
+          (filled_positions * 100.0 / total_positions) AS filled_percentage
+          FROM (
+            SELECT 
+                (SELECT COUNT(pos.position_id) FROM lib_position pos WHERE pos.position_status = 1) AS filled_positions,
+                (SELECT COUNT(pos.position_id) FROM lib_position pos WHERE pos.position_status != 3) AS total_positions
+          ) AS subquery";
+  $PercentFilledPos=$dbConn->findFirstQuery($sql);
+  echo json_encode($PercentFilledPos); 
+}
+if(isset($_POST["getUnFilled"])){ //total unfilled
+  $sql = "SELECT COUNT(pos.position_id) AS total_unfilled_positions
+          FROM lib_position pos
+          WHERE pos.position_status = 0";
+  $FilledPos=$dbConn->findFirstQuery($sql);
+  echo json_encode($FilledPos); 
+}
+if(isset($_POST["getPercentUnFilled"])){  //percent unfilled
+  $sql = "SELECT 
+          (unfilled_positions * 100.0 / total_positions) AS unfilled_percentage
+          FROM (
+              SELECT 
+                  (SELECT COUNT(pos.position_id) FROM lib_position pos WHERE pos.position_status = 0) AS unfilled_positions,
+                  (SELECT COUNT(pos.position_id) FROM lib_position pos WHERE pos.position_status != 3) AS total_positions
+          ) AS subquery";
+  $PercentUnFilledPos=$dbConn->findFirstQuery($sql);
+  echo json_encode($PercentUnFilledPos); 
+}
+if(isset($_POST["getTotalAbolishedPos"])){ //TotalPosition that abolished
+  $sql = "SELECT COUNT(pos.position_id) AS total_abolished_positions
+          FROM lib_position pos
+          WHERE pos.position_status = 3";
+  $TotalAbolishedPos=$dbConn->findFirstQuery($sql);
+  echo json_encode($TotalAbolishedPos); 
+}
 ?>

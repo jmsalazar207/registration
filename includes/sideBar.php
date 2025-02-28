@@ -21,6 +21,14 @@
               </span>
           </a>
         </li>
+        <li id="dashboardPage" >
+          <a href="dashboard.php">
+            <i class="glyphicon glyphicon-dashboard"></i> 
+              <span>
+                Dashboard
+              </span>
+          </a>
+        </li>
         <li class="treeview" id="Services" hidden>
           <a href="#">
             <i class="glyphicon glyphicon-th"></i> 
@@ -146,7 +154,7 @@
         </li>
         <li class="treeview" id="verifyUploads" hidden>
           <a href="#">
-            <i class="glyphicon glyphicon-cog"></i> 
+            <i class="glyphicon glyphicon-check"></i> 
               <span>
                 Verify Uploads
               </span>
