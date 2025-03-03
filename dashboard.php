@@ -217,7 +217,36 @@ $today = date('Y-m-d');
         </div>
         <!-- /.col -->
       </div>
-      <!-- /.row -->
+        <div class="col-md-4">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">
+                Employee Classification
+              </h3>
+              <div class="box-tools pull-right">
+                <button 
+                type="button" 
+                class="btn btn-box-tool" 
+                data-widget="collapse">
+                  <i class="fa fa-minus">
+                  </i>
+                </button>
+              </div>
+            </div>
+            <div class="box-body">
+              <div class="chart">
+                <canvas id="DivisionBarChart" style="height:230px"></canvas>
+              </div>
+            </div>
+            
+            <div class="box-footer text-center">
+              <p style="margin-bottom: 0;">
+                Filled and Unfilled Positions
+              </p>
+            </div>
+            <!-- /.box-footer -->
+          </div>
+        </div>
     </section>
     <!-- /.content -->
   </div>
@@ -248,6 +277,8 @@ include "includes/footer.php";
 <script src="bower_components/select2/dist/js/select2.full.min.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
+<!-- ChartJS -->
+<script src="bower_components/chart.js/Chart.js"></script>
   
   <!-- bootstrap datepicker -->
 <script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
@@ -261,7 +292,50 @@ include "includes/footer.php";
 <script>
   $(document).ready(function () {
     $('.sidebar-menu').tree()
-  })
+    $.ajax({
+        url: "getPositionPerDiv.php",
+        method: "GET",
+        dataType: "json",
+        success: function (response) {
+            if (response.error) {
+                console.error(response.error);
+                return;
+            }
+
+            var ctx = $("#DivisionBarChart").get(0).getContext("2d");
+
+            var chartData = {
+                labels: response.labels,
+                datasets: response.datasets
+            };
+
+            var chartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            };
+
+            // Destroy previous chart instance if it exists
+            if (window.myBarChart instanceof Chart) {
+                window.myBarChart.destroy();
+            }
+
+            // Create new chart instance
+            window.myBarChart = new Chart(ctx, {
+                type: "bar",
+                data: chartData,
+                options: chartOptions
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error("Error fetching data:", error);
+        }
+    });
+        });
 </script>
 
 <?php

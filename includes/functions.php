@@ -1017,4 +1017,18 @@ if(isset($_POST["getTotalAbolishedPos"])){ //TotalPosition that abolished
   $TotalAbolishedPos=$dbConn->findFirstQuery($sql);
   echo json_encode($TotalAbolishedPos); 
 }
+if(isset($_POST["getPositionPerDivision"])){ //TotalPosition that abolished
+  $sql = "SELECT  d.division_name,
+    SUM(CASE WHEN lps.position_status = 1 THEN 1 ELSE 0 END) AS filled_count,
+    SUM(CASE WHEN lps.position_status = 0 THEN 1 ELSE 0 END) AS unfilled_count
+    FROM lib_position pos
+    JOIN lib_position_status lps ON lps.position_status = pos.position_status
+    JOIN lib_area_assignment las ON las.area_assignment_code = pos.area_assignment
+    JOIN lib_unit u ON u.unit_code = las.unit_code
+    JOIN lib_division d ON u.division_code = d.division_code
+    GROUP BY d.division_name
+    ORDER BY d.division_name";
+  $TotalPositionPerDivision=$dbConn->findQuery($sql);
+  echo json_encode($TotalPositionPerDivision); 
+}
 ?>
