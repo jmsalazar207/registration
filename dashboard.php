@@ -217,11 +217,11 @@ $today = date('Y-m-d');
         </div>
         <!-- /.col -->
       </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <div class="box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title">
-                Employee Classification
+                Positions Per Division
               </h3>
               <div class="box-tools pull-right">
                 <button 
@@ -235,7 +235,7 @@ $today = date('Y-m-d');
             </div>
             <div class="box-body">
               <div class="chart">
-                <canvas id="DivisionBarChart" style="height:230px"></canvas>
+                <canvas id="DivisionBarChart"></canvas>
               </div>
             </div>
             
@@ -278,7 +278,9 @@ include "includes/footer.php";
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
 <!-- ChartJS -->
-<script src="bower_components/chart.js/Chart.js"></script>
+<script src="bower_components/chart.js/npmChart.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+
   
   <!-- bootstrap datepicker -->
 <script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>

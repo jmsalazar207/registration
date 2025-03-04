@@ -85,14 +85,14 @@ if(isset($_POST["list_official_station_id"])){
 // LIST OF POSITION NAME
 if(isset($_POST["list_position_name"])){ 
   $position_name_id = $_POST["list_position_name"];
-  $params['fields'] = "position_name_id, position_name";
+  $params['fields'] = "position_name_id, position_name, position_initial";
   $params["order"] = "position_name";
   $params['multipleconditions']["status"] =  ['!=',3];
   $position_names=$dbConn->find('lib_position_name',$params);
   $position_names_output = '<option value="">SELECT POSITION NAME</option>';
   if($position_names){
     foreach($position_names as $position_name){
-      $position_names_output .= '<option value='.$position_name['position_name_id']. ($position_name_id==$position_name['position_name_id']?" selected":"") . ' >' .$position_name['position_name'].'</option>';
+      $position_names_output .= '<option value='.$position_name['position_name_id']. ($position_name_id==$position_name['position_name_id']?" selected":"") . ' >' .$position_name['position_name'].' - '.$position_name['position_initial'].'</option>';
     }
   }
   echo $position_names_output; 
