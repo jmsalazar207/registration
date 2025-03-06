@@ -221,7 +221,7 @@ $today = date('Y-m-d');
           <div class="box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title">
-                Positions Per Division
+                
               </h3>
               <div class="box-tools pull-right">
                 <button 
@@ -279,6 +279,8 @@ include "includes/footer.php";
 <script src="dist/js/adminlte.min.js"></script>
 <!-- ChartJS -->
 <script src="bower_components/chart.js/npmChart.js"></script>
+<script src="bower_components/chart.js/chartjs-plugin-datalabels.js"></script>
+
 <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
 
   
@@ -293,7 +295,8 @@ include "includes/footer.php";
 
 <script>
   $(document).ready(function () {
-    $('.sidebar-menu').tree()
+    $('.sidebar-menu').tree();
+
     $.ajax({
         url: "getPositionPerDiv.php",
         method: "GET",
@@ -308,36 +311,96 @@ include "includes/footer.php";
 
             var chartData = {
                 labels: response.labels,
-                datasets: response.datasets
+                datasets: [
+                    {
+                        label: "Filled Positions",
+                        backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        data: response.datasets[0].data
+                    },
+                    {
+                        label: "Unfilled Positions",
+                        backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        data: response.datasets[1].data
+                    }
+                ]
             };
 
             var chartOptions = {
                 responsive: true,
                 maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
+                indexAxis: 'y',
+                scales: { 
+                    x: { stacked: true, beginAtZero: true },
+                    y: { stacked: true }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Position Status per Division'
+                    },
+                    datalabels: {
+                        color: 'black', 
+                        font: { weight: 'bold', size: 12 },
+                        formatter: function(value) {
+                            return value > 0 ? value : ''; 
+                        }
                     }
                 }
             };
 
-            // Destroy previous chart instance if it exists
-            if (window.myBarChart instanceof Chart) {
+           
+            var totalLabelPlugin = {
+              id: 'totalLabels',
+              afterDatasetsDraw(chart) {
+                  const ctx = chart.ctx;
+                  ctx.save();
+                  ctx.font = "bold 14px Arial";
+                  ctx.fillStyle = "black";
+                  ctx.textAlign = "left"; 
+
+                  chart.data.labels.forEach((label, index) => {
+                      let total = response.total_positions[index]; 
+
+                      // 🔹 Get bar position
+                      let datasetMeta = chart.getDatasetMeta(chart.data.datasets.length - 1); 
+                      let lastBarElement = datasetMeta.data[index]; 
+
+                      if (lastBarElement) {
+                          let xPos = lastBarElement.x + 10; 
+                          let yPos = lastBarElement.y + lastBarElement.height / 8; 
+
+                          ctx.fillText(total, xPos, yPos); 
+                      }
+                  });
+
+                  ctx.restore();
+              }
+          };
+
+
+            
+            if (window.myBarChart) {
                 window.myBarChart.destroy();
             }
+
+            Chart.register(ChartDataLabels);
 
             // Create new chart instance
             window.myBarChart = new Chart(ctx, {
                 type: "bar",
                 data: chartData,
-                options: chartOptions
+                options: chartOptions,
+                plugins: [ChartDataLabels, totalLabelPlugin] 
             });
         },
         error: function (xhr, status, error) {
             console.error("Error fetching data:", error);
         }
     });
-        });
+});
+
 </script>
 
 <?php
