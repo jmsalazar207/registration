@@ -221,7 +221,7 @@ $today = date('Y-m-d');
           <div class="box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title">
-                
+                <!-- title here -->
               </h3>
               <div class="box-tools pull-right">
                 <button 
@@ -241,7 +241,37 @@ $today = date('Y-m-d');
             
             <div class="box-footer text-center">
               <p style="margin-bottom: 0;">
-                Filled and Unfilled Positions
+                Division (Filled and Unfilled Positions)
+              </p>
+            </div>
+            <!-- /.box-footer -->
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">
+                <!-- title here -->
+              </h3>
+              <div class="box-tools pull-right">
+                <button 
+                type="button" 
+                class="btn btn-box-tool" 
+                data-widget="collapse">
+                  <i class="fa fa-minus">
+                  </i>
+                </button>
+              </div>
+            </div>
+            <div class="box-body">
+              <div class="chart">
+                <canvas id="ClassificationBarChart"></canvas>
+              </div>
+            </div>
+            
+            <div class="box-footer text-center">
+              <p style="margin-bottom: 0;">
+                Employee Classification (Filled and Unfilled Position) 
               </p>
             </div>
             <!-- /.box-footer -->
@@ -293,113 +323,6 @@ include "includes/footer.php";
 <script src="validate.js"></script>
 <script src="dist/js/demo.js"></script>
 
-<script>
-  $(document).ready(function () {
-    $('.sidebar-menu').tree();
-
-    $.ajax({
-        url: "getPositionPerDiv.php",
-        method: "GET",
-        dataType: "json",
-        success: function (response) {
-            if (response.error) {
-                console.error(response.error);
-                return;
-            }
-
-            var ctx = $("#DivisionBarChart").get(0).getContext("2d");
-
-            var chartData = {
-                labels: response.labels,
-                datasets: [
-                    {
-                        label: "Filled Positions",
-                        backgroundColor: 'rgba(75, 192, 192, 0.7)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        data: response.datasets[0].data
-                    },
-                    {
-                        label: "Unfilled Positions",
-                        backgroundColor: 'rgba(255, 99, 132, 0.7)',
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        data: response.datasets[1].data
-                    }
-                ]
-            };
-
-            var chartOptions = {
-                responsive: true,
-                maintainAspectRatio: false,
-                indexAxis: 'y',
-                scales: { 
-                    x: { stacked: true, beginAtZero: true },
-                    y: { stacked: true }
-                },
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Position Status per Division'
-                    },
-                    datalabels: {
-                        color: 'black', 
-                        font: { weight: 'bold', size: 12 },
-                        formatter: function(value) {
-                            return value > 0 ? value : ''; 
-                        }
-                    }
-                }
-            };
-
-           
-            var totalLabelPlugin = {
-              id: 'totalLabels',
-              afterDatasetsDraw(chart) {
-                  const ctx = chart.ctx;
-                  ctx.save();
-                  ctx.font = "bold 14px Arial";
-                  ctx.fillStyle = "black";
-                  ctx.textAlign = "left"; 
-
-                  chart.data.labels.forEach((label, index) => {
-                      let total = response.total_positions[index]; 
-
-                      // 🔹 Get bar position
-                      let datasetMeta = chart.getDatasetMeta(chart.data.datasets.length - 1); 
-                      let lastBarElement = datasetMeta.data[index]; 
-
-                      if (lastBarElement) {
-                          let xPos = lastBarElement.x + 10; 
-                          let yPos = lastBarElement.y + lastBarElement.height / 8; 
-
-                          ctx.fillText(total, xPos, yPos); 
-                      }
-                  });
-
-                  ctx.restore();
-              }
-          };
-
-
-            
-            if (window.myBarChart) {
-                window.myBarChart.destroy();
-            }
-
-            Chart.register(ChartDataLabels);
-
-            // Create new chart instance
-            window.myBarChart = new Chart(ctx, {
-                type: "bar",
-                data: chartData,
-                options: chartOptions,
-                plugins: [ChartDataLabels, totalLabelPlugin] 
-            });
-        },
-        error: function (xhr, status, error) {
-            console.error("Error fetching data:", error);
-        }
-    });
-});
 
 </script>
 
