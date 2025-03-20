@@ -31,6 +31,7 @@ $(function(){
               }
         }); 
     });
+    
     $(".loader-div").show();
     $.ajax({
     url:"includes/functions.php",
