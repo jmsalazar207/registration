@@ -94,7 +94,6 @@ require_once('includes/init.php');
                           <th> Date and Time Added </th>
                           <th> Updated By </th>
                           <th> Date and Time Updated </th>
-                        
                         </tr>
                     </thead>
                 </table>

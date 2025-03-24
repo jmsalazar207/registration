@@ -1,4 +1,5 @@
 $(function(){
+    
     $('.select2').select2()
     
     $(".loader-div").show();
@@ -45,4 +46,5 @@ $(function(){
         $(".loader-div").hide();
         }
     });
+
 });
