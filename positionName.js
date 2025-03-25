@@ -122,7 +122,7 @@ function AdminAddPositionName(formData){
     $("#CheckaddLPNPositionInitial").html("");
     $("#addLPNPositionInitial").css('border-color', '');
     $(".loader-div").show();
-    $.ajax({ //getInfo session
+    $.ajax({ 
         url:"checkExist.php",
         method:"POST",
         data:{PositionName:PositionName,PositionInitial:PositionInitial},

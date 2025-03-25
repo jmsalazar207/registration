@@ -586,7 +586,21 @@ if(isset($_POST['checkEligibility'])){
    }
 
 }
+if(isset($_POST['checkAddAreaAssignment'])){ //Check exist add
+   $AreaAssignName = $_POST['AreaAssignName'];
+   $AreaAssignUnit = $_POST['AreaAssignUnit'];
+   $AreaAssignOfficeLoc = $_POST['AreaAssignOfficeLoc'];
 
+   $params['multipleconditions']["position_name"] =  ['=',$AreaAssignName];
+   $params['multipleconditions']["unit_code"] =  ['=',$AreaAssignUnit];
+   $params['multipleconditions']["office_location_code"] =  ['=',$AreaAssignOfficeLoc];
+   $params['multipleconditions']["area_assignment_status"] =  ['=',0];
+
+   $dbConn->findFirst('lib_area_assignment',$param);
+   $count['AddAreaAssignment'] = $dbConn->count();
+
+   echo json_encode($count);
+}
  
  
  
