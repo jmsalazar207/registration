@@ -1268,7 +1268,7 @@
         </div>
 
 
-    <!-- MODAL AREA ASSIGNMENT -->
+    <!-- MODAL ADD AREA ASSIGNMENT -->
         <div class="modal fade" id="addAreaAssignment">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -1312,8 +1312,9 @@
                                             style="text-transform: uppercase;" 
                                             required="true" 
                                             tabindex="1">
+                                            <small id='checktxtAreaAssignmentName'></small>
                                     </div>
-                                    <small id='checktxtAreaAssignmentName'></small>
+                                    
                                 </div>
                                 <br>                                
                                 <div class="col-md-12">
@@ -1396,8 +1397,140 @@
           </div>
           <!-- /.modal-dialog -->
         </div>
-         <!-- END MODAL AREA ASSIGNMENT -->
-
+         <!-- END ADD MODAL AREA ASSIGNMENT -->
+    <!-- MODAL UPDATE AREA ASSIGNMENT -->
+    <div class="modal fade" id="UpdateAreaAssignment">
+          <div class="modal-dialog">
+            <div class="modal-content">
+                <form 
+                    method="POST" 
+                    id="frmAdminAreaAssignmentUpdate" 
+                    autocomplete="off">
+                    <div class="modal-header">
+                        <button 
+                            type="button" 
+                            class="close" 
+                            data-dismiss="modal" 
+                            aria-label="Close">
+                                <span aria-hidden="true">
+                                    &times;
+                                </span>
+                        </button>
+                        <h4 class="modal-title">Update Area of Assignment Information</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="card col-md-12">
+                                <div class="col-md-12">
+                                    <label 
+                                        for="txtUnitName" 
+                                        class="col-sm-12 requiredField">
+                                        Area assignment name:
+                                    </label>
+                                    <div class="col-sm-12">
+                                        <input 
+                                            type="hidden" 
+                                            name="token" 
+                                            value="<?=$_SESSION["token"]?>"> 
+                                            <input type="hidden"
+                                            name="txtUpdateAreaAssignmentCode"
+                                            id="txtUpdateAreaAssignmentCode">
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            name="txtUpdateAreaAssignmentName" 
+                                            id="txtUpdateAreaAssignmentName" 
+                                            placeholder="Area Assignment Name" 
+                                            value="" 
+                                            style="text-transform: uppercase;" 
+                                            required="true" 
+                                            tabindex="1">
+                                            <small id='checktxtUpdateAreaAssignmentName'></small>
+                                    </div>
+                                    
+                                </div>
+                                <br>                                
+                                <div class="col-md-12">
+                                    <label 
+                                        for="txtUpdateAreaAssignmentDiv" 
+                                        class="col-sm-12 requiredField">
+                                        Division
+                                    </label>
+                                    <div class="col-sm-12">
+                                        <select 
+                                            class="form-control select2"
+                                            style="width: 100%;"  
+                                            id="txtUpdateAreaAssignmentDiv" 
+                                            name="txtUpdateAreaAssignmentDiv" 
+                                            tabindex="2"
+                                            required = "true">
+                                                
+                                        </select>
+                                    </div>
+                                    <small id='checkUpdateAreaAssignmentDiv'></small>
+                                </div>
+                                <br>                                
+                                <div class="col-md-12">
+                                    <label 
+                                        for="txtUpdateAreaAssignmentUnit" 
+                                        class="col-sm-12 requiredField">
+                                        Unit
+                                    </label>
+                                    <div class="col-sm-12">
+                                        <select 
+                                            class="form-control select2"
+                                            style="width: 100%;"  
+                                            id="txtUpdateAreaAssignmentUnit" 
+                                            name="txtUpdateAreaAssignmentUnit" 
+                                            tabindex="3"
+                                            required = "true">
+                                            <option>SELECT DIVISION FIRST</option>
+                                        </select>
+                                    </div>
+                                    <small id='checktxttxtUpdateAreaAssignmentUnit'></small>
+                                </div>
+                                <br>                                
+                                <div class="col-md-12">
+                                    <label 
+                                        for="txtUpdateAreaAssignmentOfficeLocation" 
+                                        class="col-sm-12 requiredField">
+                                        Office Location
+                                    </label>
+                                    <div class="col-sm-12">
+                                        <select 
+                                            class="form-control select2"
+                                            style="width: 100%;"  
+                                            id="txtUpdateAreaAssignmentOfficeLocation" 
+                                            name="txtUpdateAreaAssignmentOfficeLocation" 
+                                            tabindex="4"
+                                            required = "true">
+                                        </select>
+                                    </div>
+                                    <small id='checktxtUpdateAreaAssignmentOfficeLocation'></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button 
+                            type="button" 
+                            class="btn btn-default pull-left" 
+                            data-dismiss="modal">
+                            Close
+                        </button>
+                        <button 
+                            type="submit" 
+                            class="btn btn-primary">
+                            Update
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+         <!-- END MODAL UPDATE AREA ASSIGNMENT -->
         <!-- modal Notif -->
         <div class="modal fade" id="modalNotif">
           <div class="modal-dialog modal-sm">

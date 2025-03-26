@@ -586,20 +586,41 @@ if(isset($_POST['checkEligibility'])){
    }
 
 }
-if(isset($_POST['checkAddAreaAssignment'])){ //Check exist add
-   $AreaAssignName = $_POST['AreaAssignName'];
-   $AreaAssignUnit = $_POST['AreaAssignUnit'];
-   $AreaAssignOfficeLoc = $_POST['AreaAssignOfficeLoc'];
+if(isset($_POST['checkAreaAssignment'])){ 
+   $type = $_POST['checkAreaAssignment'];
+   if($type ==1){
+      $AreaAssignName = $_POST['AreaAssignName'];
 
-   $params['multipleconditions']["position_name"] =  ['=',$AreaAssignName];
-   $params['multipleconditions']["unit_code"] =  ['=',$AreaAssignUnit];
-   $params['multipleconditions']["office_location_code"] =  ['=',$AreaAssignOfficeLoc];
-   $params['multipleconditions']["area_assignment_status"] =  ['=',0];
-
-   $dbConn->findFirst('lib_area_assignment',$param);
-   $count['AddAreaAssignment'] = $dbConn->count();
-
-   echo json_encode($count);
+      $params['multipleconditions']["area_assignment_name"] =  ['=',$AreaAssignName];
+      $params['multipleconditions']["area_assignment_status"] =  ['=',0];
+   
+      $dbConn->findFirst('lib_area_assignment',$params);
+      $count['AddAreaAssignment'] = $dbConn->count();
+   
+      echo json_encode($count);
+   }else{
+      $AreaAssignName = $_POST['AreaAssignName'];
+      $AreaAssignCode = $_POST['AreaAssignCode'];
+      $params['multipleconditions']["area_assignment_name"] =  ['=',$AreaAssignName];
+      $params['multipleconditions']["area_assignment_code"] =  ['!=',$AreaAssignCode];
+      $params['multipleconditions']["area_assignment_status"] =  ['=',0];
+   
+      $dbConn->findFirst('lib_area_assignment',$params);
+      $count['UpdateAreaAssignment'] = $dbConn->count();
+   
+      echo json_encode($count);
+   }
+   
+}
+if(isset($_POST["inUsedAreaAssign"])){
+   $inUsedAreaAssign = $_POST["inUsedAreaAssign"];
+   $sql = "SELECT pos.position_id
+           FROM lib_position pos
+           WHERE pos.area_assignment = '$inUsedAreaAssign' 
+           AND pos.position_status != 3;";
+        $dbConn->findFirstQuery($sql);
+        $count['inUsedAreaAssign'] = $dbConn->count();
+        echo json_encode($count);
 }
  
  

@@ -27,7 +27,7 @@ $(document).on('submit', '#formAdminUnitUpdate', function(event) {    //admin up
     modalConfirmShow('Would you like to confirm and save the new user details now?',AdminUnitAdd,PassData);
   });
 
-  $(document).on('click', '#btnAdminUnitDelete', function() {    //delete user acount action
+  $(document).on('click', '#btnAdminUnitDelete', function() {   
     const valueID = $(this).attr('data-valueID');
     const valueURL = $(this).attr('data-valueURL');
     const TableID = 'tblUnit';

@@ -11,14 +11,16 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
     $dataReturn['msg'] = "Session has expired. Please relogin your account.";
     echo json_encode($dataReturn);
 }else{           
-    $AreaAssignmentAdd['area_assignment_name'] = sanitize(strtoupper($_POST['addLPNPositionName']));
-    $AreaAssignmentAdd['unit_code'] = sanitize(strtoupper($_POST['addLPNPositionInitial']));
+    $AreaAssignmentAdd['area_assignment_name'] = sanitize(strtoupper($_POST['txtAreaAssignmentName']));
+    $AreaAssignmentAdd['unit_code'] = sanitize(strtoupper($_POST['txtAreaAssignmentUnit']));
+    $AreaAssignmentAdd['office_location_code'] = sanitize(strtoupper($_POST['txtAreaAssignmentOfficeLocation']));
+    $AreaAssignmentAdd['area_assignment_status'] = 0;
     $AreaAssignmentAdd['added_by'] = $_SESSION['userID'];
     $AreaAssignmentAdd['datetime_added']= $today;
-    $AddPositionNameQuery = $dbConn->insert('lib_position_name',$positionNameAdd);
-    if($AddPositionNameQuery){
+    $AddAreaAssignQuery = $dbConn->insert('lib_area_assignment',$AreaAssignmentAdd);
+    if($AddAreaAssignQuery){
         $dataReturn['status'] = "success";
-        $dataReturn['msg'] = "Position Name successfully added";
+        $dataReturn['msg'] = "Area Assignment successfully added";
         echo json_encode($dataReturn);
     }else {
         $dataReturn['status'] = "failed";

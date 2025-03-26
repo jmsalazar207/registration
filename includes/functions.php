@@ -1031,4 +1031,16 @@ if(isset($_POST["getPositionPerDivision"])){ //TotalPosition that abolished
   $TotalPositionPerDivision=$dbConn->findQuery($sql);
   echo json_encode($TotalPositionPerDivision); 
 }
+if(isset($_POST["getAreaAssignmentDetails"])){
+  $assignment_code = $_POST["getAreaAssignmentDetails"];
+  $params = array($assignment_code);
+  $sql = "SELECT las.*, d.division_code
+          FROM lib_area_assignment las
+          JOIN lib_unit u ON u.unit_code = las.unit_code
+          JOIN lib_division d ON d.division_code = u.division_code
+          WHERE las.area_assignment_code = ?";
+  $AssignmentDetails=$dbConn->findFirstQuery($sql,$params);
+  echo json_encode($AssignmentDetails); 
+}
+
 ?>

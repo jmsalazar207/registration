@@ -145,7 +145,7 @@ require_once('includes/init.php');
     // if ($.fn.DataTable.isDataTable('#tblAreaAssignment')) {
     //     $('#tblAreaAssignment').DataTable().destroy();
     // }
-    $('#tblAreaAssignment').DataTable({
+    tables['tblAreaAssignment'] = $('#tblAreaAssignment').DataTable({
       ajax: {
           url: 'areaAssignmentManagement_ajax.php',
           type: 'POST',

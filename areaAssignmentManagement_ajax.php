@@ -61,8 +61,8 @@ FROM lib_area_assignment las
 JOIN lib_office_location lol ON lol.office_location_code = las.office_location_code
 JOIN lib_unit u ON u.unit_code = las.unit_code
 JOIN lib_division d ON d.division_code = u.division_code
-LEFT JOIN userprofile added ON added.empno = u.added_by
-LEFT JOIN userprofile updated ON updated.empno = u.updated_by
+LEFT JOIN userprofile added ON added.empno = las.added_by
+LEFT JOIN userprofile updated ON updated.empno = las.updated_by
          $searchQuery ORDER BY $columnName $columnSortOrder limit $row, $rowperpage";
 
 $AreaAssignmentRecords = $dbConn->findQuery($sql);
