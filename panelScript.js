@@ -12,16 +12,16 @@
                 const sessionUserLevel = data.sessionUserlevel;
                 const sessionPosition = data.sessionPosition;
 
-                if (sessionUserLevel == 1) {
-                    $('#sysAdmin').show();
-                    $('#genList').show();
-                    $('#superAdmin').show();
-                    $('#verifyUploads').show();
-                } else if (sessionUserLevel == 2) {
-                    $('#sysAdmin').show();
-                } else if (sessionUserLevel == 3) {
-                    $('#genList').show();
-                }
+                // if (sessionUserLevel == 1) {
+                //     $('#sysAdmin').show();
+                //     $('#genList').show();
+                //     $('#superAdmin').show();
+                //     $('#verifyUploads').show();
+                // } else if (sessionUserLevel == 2) {
+                //     $('#sysAdmin').show();
+                // } else if (sessionUserLevel == 3) {
+                //     $('#genList').show();
+                // }
                 $('#headerFullname').text(sessionFirstName + ' ' + sessionLastName);
                 $('#dropFullName').text(sessionFirstName + ' ' + sessionLastName);
                 $('#dropPosition').text(sessionPosition);

@@ -29,7 +29,6 @@
 <!-- Site wrapper -->
 <div class="wrapper">
   <?php 
-       
         include "includes/headerIn.php";
         include "includes/sideBar.php";
     ?>

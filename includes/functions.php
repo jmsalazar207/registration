@@ -1042,5 +1042,4 @@ if(isset($_POST["getAreaAssignmentDetails"])){
   $AssignmentDetails=$dbConn->findFirstQuery($sql,$params);
   echo json_encode($AssignmentDetails); 
 }
-
 ?>

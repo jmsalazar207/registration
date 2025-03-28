@@ -29,39 +29,9 @@
               </span>
           </a>
         </li>
-        <li class="treeview" id="Services" hidden>
-          <a href="#">
-            <i class="glyphicon glyphicon-th"></i> 
-              <span>
-                Services
-              </span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li>
-              <a href="underconstruction.php">
-                <i class="glyphicon glyphicon-list-alt"></i> 
-                 E-PDS
-              </a>
-            </li>
-            <li>
-              <a href="underconstruction.php">
-                <i class="glyphicon glyphicon-duplicate"></i> 
-                 Generate DTR
-              </a>
-            </li>
-            <li>
-              <a href="underconstruction.php">
-                <i class="glyphicon glyphicon-file"></i> 
-                 File Leave
-              </a>
-            </li>
-          </ul>
-        </li>
+
         <li>
-        <li class="treeview" id="sysAdmin" hidden>
+        <li class="treeview" id="sysAdmin" >
           <a href="#">
             <i class="glyphicon glyphicon-cog"></i> 
               <span>
@@ -109,7 +79,67 @@
               </a>
             </li>
           </ul>
-        </li><li class="treeview" id="sysAdmin" hidden>
+        </li>
+        <li class="treeview" id="verifyUploads" >
+          <a href="#">
+            <i class="glyphicon glyphicon-check"></i> 
+              <span>
+                Verify Uploads
+              </span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li>
+              <a href="VerifyEducMOV.php">
+                <i class="glyphicon glyphicon-book"></i> 
+                 Education
+              </a>
+            </li>
+            <li>
+              <a href="VerifyEligibilityMOV.php">
+                <i class="glyphicon glyphicon-book"></i> 
+                 Eligibility
+              </a>
+            </li>
+            <li>
+              <a href="VerifyCareerMOV.php">
+                <i class="glyphicon glyphicon-book"></i> 
+                 Work Experience
+              </a>
+            </li>
+            <li>
+              <a href="VerifyTrainingMOV.php">
+                <i class="glyphicon glyphicon-book"></i> 
+                 Training
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li id="genList" >
+              <a href="generateList.php">
+                <i class="glyphicon glyphicon-list-alt"></i> 
+                <span>
+                  Generate List
+                </span>
+              </a>
+        </li>
+        <li id="superAdmin" >
+              <a href="superAdmin.php">
+                <i class="glyphicon glyphicon glyphicon-alert"></i> 
+                <span>
+                  Super Admin
+                </span>
+              </a>
+        </li>
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+
+  <!-- <li class="treeview" id="sysAdmin" >
           <a href="#">
             <i class="glyphicon glyphicon-cog"></i> 
               <span>
@@ -151,12 +181,12 @@
               </a>
             </li>
           </ul>
-        </li>
-        <li class="treeview" id="verifyUploads" hidden>
+        </li> 
+                <li class="treeview" id="Services" >
           <a href="#">
-            <i class="glyphicon glyphicon-check"></i> 
+            <i class="glyphicon glyphicon-th"></i> 
               <span>
-                Verify Uploads
+                Services
               </span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
@@ -164,62 +194,22 @@
           </a>
           <ul class="treeview-menu">
             <li>
-              <a href="VerifyEducMOV.php">
-                <i class="glyphicon glyphicon-book"></i> 
-                 Education
+              <a href="underconstruction.php">
+                <i class="glyphicon glyphicon-list-alt"></i> 
+                 E-PDS
               </a>
             </li>
             <li>
-              <a href="VerifyEligibilityMOV.php">
-                <i class="glyphicon glyphicon-book"></i> 
-                 Eligibility
+              <a href="underconstruction.php">
+                <i class="glyphicon glyphicon-duplicate"></i> 
+                 Generate DTR
               </a>
             </li>
             <li>
-              <a href="VerifyCareerMOV.php">
-                <i class="glyphicon glyphicon-book"></i> 
-                 Work Experience
-              </a>
-            </li>
-            <li>
-              <a href="VerifyTrainingMOV.php">
-                <i class="glyphicon glyphicon-book"></i> 
-                 Training
-              </a>
-            </li>
-            <li>
-              <a href="VerifyBankMOV.php">
-                <i class="glyphicon glyphicon-book"></i> 
-                 Bank Details
+              <a href="underconstruction.php">
+                <i class="glyphicon glyphicon-file"></i> 
+                 File Leave
               </a>
             </li>
           </ul>
-        </li>
-        <li id="genList" hidden>
-              <a href="generateList.php">
-                <i class="glyphicon glyphicon-list-alt"></i> 
-                <span>
-                  Generate List
-                </span>
-              </a>
-        </li>
-        <li id="superAdmin" hidden>
-              <a href="superAdmin.php">
-                <i class="glyphicon glyphicon glyphicon-alert"></i> 
-                <span>
-                  Super Admin
-                </span>
-              </a>
-        </li>
-        <li>
-          <a href="includes/logout.php">
-            <i class ="glyphicon glyphicon-log-out"></i>   
-              <span>
-                Logout
-              </span>   
-          </a>
-        </li>
-      </ul>
-    </section>
-    <!-- /.sidebar -->
-  </aside>
+        </li>-->

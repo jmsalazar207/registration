@@ -7,6 +7,14 @@ $today = date('Y-m-d');
   	$_SESSION["token"] = bin2hex(random_bytes(32));
     $_SESSION["token-expire"] = time() + 5; // 1 hour = 3600 secs
  include "includes/session.php";
+ include "includes/getUserAccess.php";
+ $current_page = basename($_SERVER['PHP_SELF']);
+ $page = '/' . $current_page;
+
+ if (!hasAccess($dbConn, $_SESSION['userID'], $page)) {
+  http_response_code(403);
+  die("403 Forbidden: You do not have access to this page.");
+}
   ?>
   <style>
     /* Formatting search box */
@@ -54,6 +62,7 @@ $today = date('Y-m-d');
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="shortcut icon" href="images/logo.png">
+  <script src="includes/scripts.js" async defer></script>
   <title>Dashboard - Employee's Registration Module</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">

@@ -5,18 +5,24 @@
   $today = date('Y-m-d');
   session_start();
   $UL = $_SESSION['userLevel'];
-  if(($UL !=1)&&($UL != 2)){
-    header('location: homePage.php');
-  }
+  include "includes/getUserAccess.php";
+  $current_page = basename($_SERVER['PHP_SELF']);
+  $page = '/' . $current_page;
+ 
+  if (!hasAccess($dbConn, $_SESSION['userID'], $page)) {
+   http_response_code(403);
+   die("403 Forbidden: You do not have access to this page.");
+ }
 	$_SESSION["token"] = bin2hex(random_bytes(32));
 	$_SESSION["token-expire"] = time() + 3600; // 1 hour = 3600 secs
   include 'includes/session.php';
-require_once('includes/init.php');
+  require_once('includes/init.php');
    include 'includes/functions.php'; 
 ?>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="shortcut icon" href="images/logo.png">
+  <script src="includes/scripts.js" async defer></script>
   <title>User Management - Employee's Registration Module</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">

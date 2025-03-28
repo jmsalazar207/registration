@@ -622,6 +622,7 @@ if(isset($_POST["inUsedAreaAssign"])){
         $count['inUsedAreaAssign'] = $dbConn->count();
         echo json_encode($count);
 }
+
  
  
  

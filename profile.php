@@ -7,6 +7,7 @@ $today = date('Y-m-d');
   	$_SESSION["token"] = bin2hex(random_bytes(32));
     $_SESSION["token-expire"] = time() + 5; // 1 hour = 3600 secs
  include "includes/session.php";
+
   ?>
   <style>
     /* Formatting search box */
@@ -51,6 +52,7 @@ $today = date('Y-m-d');
         background: #CCCCCC;
     }
   </style>
+    <script src="includes/scripts.js" async defer></script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="shortcut icon" href="images/logo.png">
