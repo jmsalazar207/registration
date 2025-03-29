@@ -1042,4 +1042,25 @@ if(isset($_POST["getAreaAssignmentDetails"])){
   $AssignmentDetails=$dbConn->findFirstQuery($sql,$params);
   echo json_encode($AssignmentDetails); 
 }
+if(isset($_POST["getUserAccess"])){ 
+  $UserAccess = $_POST["getUserAccess"];
+
+  // Fetch all possible access controls
+  $sqlAll = "SELECT page_access_code, page_access_name, page_access_set_name FROM tbl_page_access WHERE page_access_code NOT IN (1,2) ORDER BY page_access_set_name";
+  $allAccess = $dbConn->findQuery($sqlAll); 
+
+  // Fetch user's assigned access
+  $sqlUser = "SELECT page_access_code FROM tbl_access_level WHERE access_level_empno = ?";
+  $params = array($UserAccess);
+  $userAccess = $dbConn->findQuery($sqlUser, $params);
+
+  // Ensure userAccess is an array before using array_column
+  $userAccessCodes = ($userAccess && is_array($userAccess)) ? array_column($userAccess, 'page_access_code') : [];
+
+  echo json_encode(["allAccess" => $allAccess, "userAccess" => $userAccessCodes]);
+  exit;
+}
+
+
+
 ?>

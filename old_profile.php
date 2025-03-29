@@ -176,6 +176,18 @@ $today = date('Y-m-d');
                     Bank Account
                   </h4>
                 </div>
+                <div 
+                id="bankStatus" 
+                style="padding: 10px; border-radius: 5px; text-align: left; font-weight: bold;">
+                <!-- Status will be dynamically updated here -->
+                <span id="bankStatusMessage">
+                  Upload status:
+                </span>
+                <span id="bankStatusRemarks">
+                  
+                </span>
+                
+              </div>
                 <div class="box-body box-profile">
                   <form id="frmBankDetails" name="frmBankDetails">
                     <div class="form-group">
@@ -207,6 +219,27 @@ $today = date('Y-m-d');
                               aria-label="Toggle password visibility">
                             </i>
                           </span>
+                        </div>
+                      </div>  
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md-12">
+                        <label 
+                          for="addBankAccountMOV" 
+                          class="col-sm-12 requiredField" 
+                          style="font-size: 15px;">
+                          Upload MOV
+                        </label>
+                        <div class="input-group has-feedback col-sm-12" style="margin-bottom: 15px;">
+                          <input 
+                            type="file"
+                            class="form-control" 
+                            id="addBankAccountMOV" 
+                            name="addBankAccountMOV"
+                            value="" 
+                            required
+                            tabindex="2"
+                            accept="image/jpeg, image/png">
                         </div>
                       </div>  
                     </div>

@@ -4734,3 +4734,50 @@
                 </div>
            </div> 
         </div>
+        <!-- Bootstrap Modal -->
+        <div 
+        class="modal fade" 
+        id="userAccessModal" 
+        tabindex="-1" 
+        role="dialog" 
+        aria-labelledby="modalTitle" 
+        aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form id="userAccessForm">
+                        <div class="modal-header">
+                            <button 
+                                type="button" 
+                                class="close" 
+                                data-dismiss="modal" 
+                                aria-label="Close">
+                                    <span aria-hidden="true">
+                                        &times;
+                                    </span>
+                            </button>
+                            <h4 class="modal-title">Set Page Access Control</h4>
+                        </div>
+                        <div class="modal-body">
+                        <input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>">
+                            <div id="accessControlList">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button 
+                            type="button" 
+                            class="btn btn-secondary pull-left btn-sm" 
+                            data-dismiss="modal">
+                                Close
+                            </button>
+                            <button 
+                            type="submit" 
+                            class="btn btn-primary btn-sm" 
+                            id="saveUserAccess">
+                                Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+

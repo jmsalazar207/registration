@@ -2,7 +2,6 @@
 session_start();
 require_once("includes/init.php");
 require_once("includes/helper.php");
-require_once("includes/dencryption.php");
 date_default_timezone_set('Asia/Manila');
 
 $today = date('Y-m-d H:i:s');
@@ -16,7 +15,13 @@ if (!isset($_POST["token"]) || !isset($_SESSION["token"]) || !isset($_SESSION["t
 }
 
 $empno = $_SESSION['userID']; 
-$bank_info['bank_account_number_hash'] = encryptData($_POST['addBankAccount']);
+$target_dir = "uploadedBankMOV/";
+$fileExt = pathinfo($_FILES['addBankAccountMOV']['name'], PATHINFO_EXTENSION);
+$UploadFile = $empno . '.' . $fileExt;
+$target_file = $target_dir . $UploadFile;
+$uploadOk = 1;
+$bank_info['bank_account_number'] = $_POST['addBankAccount'];
+$bank_info['bank_account_mov'] = $UploadFile;
 $bank_info['bank_account_status'] = 0;
 $bank_info['empno'] = $empno;
 
@@ -27,8 +32,13 @@ $param['conditions'] = ['empno' => $empno];
 $output = $dbConn->findFirst('lib_bank_details', $param);
 
 $message = "";
-$bank_info_insert = false;
+$bank_info_insert = false; // Ensure this variable is always defined
 
+if (move_uploaded_file($_FILES["addBankAccountMOV"]["tmp_name"], $target_file)) {
+    // if ($dbConn->count() > 0 && isset($output['bank_account_status']) && $output['bank_account_status'] > 0) { // Verified
+    //     $dataReturn['status'] = "failed";
+    //     $dataReturn['msg'] = "Oops! Bank details already verified.";
+    // } else 
     if ($dbConn->count() > 0) {
         $message = "updated";
         $bank_info_insert = $dbConn->update('lib_bank_details', 'empno', $empno, $bank_info);
@@ -44,4 +54,9 @@ $bank_info_insert = false;
         $dataReturn['status'] = "failed";
         $dataReturn['msg'] = "Oops! Something went wrong. Please try again later.";
     }
+} else {
+    $dataReturn['status'] = "failed";
+    $dataReturn['msg'] = "Oops! Something went wrong. Uploading failed.";
+}
+
 echo json_encode($dataReturn);

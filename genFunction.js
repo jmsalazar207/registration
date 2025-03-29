@@ -290,3 +290,4 @@ function loadPanelScript() {
   script.src = `panelScript.js?test=${Date.now()}`;
   document.body.appendChild(script);
 }
+

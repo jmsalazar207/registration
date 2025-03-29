@@ -269,7 +269,7 @@
 
 	
 	//=======================================delete========================================
-	public function delete($table, $column, $id){
+	public function delete($table, $columwn, $id){
 		$sql = "DELETE FROM {$table} WHERE {$column} = '{$id}'";
 		if(!$this->query($sql)->error()){
 			return true;

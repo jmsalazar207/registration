@@ -221,33 +221,33 @@ $(function(){
           const zip_code = data.zip_code;
 
           //bank details
-          if(data.bank_account_number){
-            $("#addBankAccount").val(data.bank_account_number);
-            if (data.bank_account_status == 1) {
-              $('#bankStatusRemarks').text('VERIFIED').css('color', 'green');
-              $("#btnSaveAccountNumber")
-                .prop('disabled', true)
-                .attr('title', 'Bank details already verified');
-                $("#addBankAccount")
-                .prop('disabled', true)
-                .attr('title', 'Bank details already verified');
-                $("#addBankAccountMOV")
-                .prop('disabled', true)
-                .attr('title', 'Bank details already verified');
-            } else if(data.bank_account_status == 0){
-              $('#bankStatusRemarks').text('PENDING FOR VERIFICATION').css('color', 'blue');
-            } else {
-              var remarks = data.bank_account_remarks;
-              $('#bankStatusRemarks').text('FOR COMPLIANCE, '+remarks).css('color', 'red');
-              $('#bankStatusRemarks').css('color', 'red'); // Set text color to red
-              $("#btnSaveAccountNumber")
-                .prop('disabled', false)
-                .attr('title', 'Save');
-                $("#addBankAccount")
-                .prop('disabled', false)
-                $("#addBankAccountMOV")
-                .prop('disabled', false)
-            }
+          if(data.bankNumber){
+            $("#addBankAccount").val(data.bankNumber);
+            // if (data.bank_account_status == 1) {
+            //   $('#bankStatusRemarks').text('VERIFIED').css('color', 'green');
+            //   $("#btnSaveAccountNumber")
+            //     .prop('disabled', true)
+            //     .attr('title', 'Bank details already verified');
+            //     $("#addBankAccount")
+            //     .prop('disabled', true)
+            //     .attr('title', 'Bank details already verified');
+            //     $("#addBankAccountMOV")
+            //     .prop('disabled', true)
+            //     .attr('title', 'Bank details already verified');
+            // } else if(data.bank_account_status == 0){
+            //   $('#bankStatusRemarks').text('PENDING FOR VERIFICATION').css('color', 'blue');
+            // } else {
+            //   var remarks = data.bank_account_remarks;
+            //   $('#bankStatusRemarks').text('FOR COMPLIANCE, '+remarks).css('color', 'red');
+            //   $('#bankStatusRemarks').css('color', 'red'); // Set text color to red
+            //   $("#btnSaveAccountNumber")
+            //     .prop('disabled', false)
+            //     .attr('title', 'Save');
+            //     $("#addBankAccount")
+            //     .prop('disabled', false)
+            //     $("#addBankAccountMOV")
+            //     .prop('disabled', false)
+            // }
           }
           
           
@@ -3186,6 +3186,21 @@ function resetFormOtherInfo2(){
   getInfo();
 }
 
+function encryptData($data) {
+  $encryption_key = "y0u3nd@iY"; // Use a strong key and store it securely
+  $iv = openssl_random_pseudo_bytes(16); // Generate a random IV
+  $encrypted = openssl_encrypt($data, "AES-256-CBC", $encryption_key, 0, $iv);
+  return base64_encode($iv . $encrypted); // Store IV with encrypted data
+}
+
+function decryptData($data) {
+  $encryption_key = "y0u3nd@iY"; // Use the same key as encryption
+  $data = base64_decode($data);
+  $iv = substr($data, 0, 16);
+  $encryptedData = substr($data, 16);
+  return openssl_decrypt($encryptedData, "AES-256-CBC", $encryption_key, 0, $iv);
+}
+
 function BankDetails(formData){
   $(".loader-div").show();
   $.ajax({
@@ -3209,7 +3224,6 @@ function BankDetails(formData){
     },
     processData: false,
     contentType: false
-
   });
 }
 
