@@ -7,19 +7,7 @@ $today = date('Y-m-d');
   	$_SESSION["token"] = bin2hex(random_bytes(32));
     $_SESSION["token-expire"] = time() + 5; // 1 hour = 3600 secs
  include "includes/session.php";
- include "includes/getUserAccess.php";
- $current_page = basename($_SERVER['PHP_SELF']);
- $page = '/' . $current_page;
- 
- if (!isset($_SESSION['userID'])) {
-  header("Location: includes/logout.php"); // Redirect to logout (or login)
-  exit();
-}
-
- if (!hasAccess($dbConn, emp_no: $_SESSION['userID'], page_url: $page)) {
-  http_response_code(403);
-  die("403 Forbidden: You do not have access to this page.");
-}
+ include "includes/checkAccess.php";
   ?>
   <style>
     /* Formatting search box */

@@ -5,25 +5,12 @@
   $today = date('Y-m-d');
   session_start();
   $UL = $_SESSION['userLevel'];
-  include "includes/getUserAccess.php";
-  $current_page = basename($_SERVER['PHP_SELF']);
-  $page = '/' . $current_page;
-  
-  if (!isset($_SESSION['userID'])) {
-    header("Location: includes/logout.php"); // Redirect to logout (or login)
-    exit();
-  }
-  
-  if (!hasAccess($dbConn, emp_no: $_SESSION['userID'], page_url: $page)) {
-   http_response_code(403);
-   die("403 Forbidden: You do not have access to this page.");
- }
-
 	$_SESSION["token"] = bin2hex(random_bytes(32));
 	$_SESSION["token-expire"] = time() + 3600; // 1 hour = 3600 secs
   include 'includes/session.php';
 require_once('includes/init.php');
    include 'includes/functions.php'; 
+   include "includes/checkAccess.php";
 ?>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">

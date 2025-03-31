@@ -72,7 +72,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-md-12">
+                        <div class="col-md-4">
                             <label 
                                 for="PlaceOfBirth" 
                                 class="col-sm-12 requiredField" 
@@ -80,19 +80,24 @@
                                 Place of Birth
                             </label>
                             <div class="col-sm-12">
-                                <select 
+                                <input type="text"
+                                class="form-control"   
+                                id="PlaceOfBirth" 
+                                name="PlaceOfBirth" 
+                                required="true" 
+                                tabindex="5"
+                                style="text-transform: uppercase;">
+                                <!-- <select 
                                 class="form-control select2" 
                                 style="width: 100%;"  
                                 id="PlaceOfBirth" 
                                 name="PlaceOfBirth" 
                                 required="true" 
                                 tabindex="5">
-                                </select>
+                                </select> -->
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label 
                                 for="CivilStatus" 
                                 class="col-sm-12 requiredField" 
@@ -116,7 +121,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label 
                                 for="OthersCivilStatus" 
                                 class="col-sm-12" 

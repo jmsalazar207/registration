@@ -450,6 +450,7 @@ $(function(){
       $("#pagibigNo").val(PAGIBIG);
       $("#philhealthNo").val(PHILHEALTH);
       $("#sssNo").val(SSS);
+      $("#PlaceOfBirth").val(birth_place);
       if(TIN){
         populateTinNumber(TIN);
       }
@@ -1984,11 +1985,13 @@ function checkUpdateEligibility(eligibilityValue){
 }
 
 function btnEligibilityUpdate(getEligibility){
+  $(".loader-div").show();
   $.ajax({
       url:"includes/functions.php",
       method:"POST",
       data:{getEligibility:getEligibility},
       success:function(data){
+        $(".loader-div").hide();
         const EligibilityData = JSON.parse(data);
         $('#Eligibilityid').val(EligibilityData['id']);
         const credit_eligibility = EligibilityData['eligibility_credentials'];
@@ -1999,6 +2002,9 @@ function btnEligibilityUpdate(getEligibility){
           data:{eligibility:credit_eligibility},
           success:function(data){
               $('#UpdateeligibilityCredentials').html(data);
+            },error: function(xhr, status, error) {
+              modalErrorShow("The system encountered an error. Please contact support.");
+              $(".loader-div").hide();
             }
           });
         $('#UpdateeligibilityCredentials').attr('disabled','disabled')
@@ -2013,6 +2019,9 @@ function btnEligibilityUpdate(getEligibility){
         const iframeEligibilityPDF = document.getElementById('UploadedEligibilityMOV'); //iframe id
         iframeEligibilityPDF.src = `${pdfEligibilityURL}?t=${new Date().getTime()}`; //embed the url pdf to iframe with time value to get the latest version
         $('#updateEligibility').modal('show');
+      },error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
       }
 });
 }

@@ -1,4 +1,5 @@
 $(function(){
+    
     $(document).on('click', '#btnSetUserAccess', function () {
         var btnValue = $(this).attr('value');
         $(".loader-div").show();

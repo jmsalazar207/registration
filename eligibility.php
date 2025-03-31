@@ -131,6 +131,7 @@
                                     id="eligibilityValidityDate" 
                                     name="eligibilityValidityDate"
                                     tabindex="6"
+                                    min="<?=$today?>"
                                     readonly>
                                 </div>
                             </div>
