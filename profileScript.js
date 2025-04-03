@@ -2,6 +2,23 @@
 
   //Kapag meg select Region
   jQuery(document).ready(function() {
+    $("#careerDateFrom").on("change", function () {
+      let selectedDate = new Date($(this).val());
+      let selectedYear = selectedDate.getFullYear();
+      
+      if (!isNaN(selectedYear)) {
+          let minDate = $(this).val(); // The selected "Date From"
+          let maxDate = selectedYear + "-12-31"; // End of the same year
+
+          $("#careerDateTo").attr("min", minDate).attr("max", maxDate);
+
+          // Reset Date To if it's outside the allowed range
+          let dateToValue = new Date($("#careerDateTo").val());
+          if ($("#careerDateTo").val() && (dateToValue < selectedDate || dateToValue.getFullYear() !== selectedYear)) {
+              $("#careerDateTo").val("");
+          }
+      }
+  });
     $('.search-box input[type="text"]').on("keyup input", function(){
       /* Get input value on change */
       var inputVal = $(this).val();
