@@ -1557,6 +1557,12 @@
               <div class="modal-footer">
                 <button 
                     type="button" 
+                    class="btn btn-default pull-left" 
+                    data-dismiss="modal">
+                    Close
+                </button>
+                <button 
+                    type="button" 
                     class="btn btn-default" 
                     onclick="javascript:window.location.reload();" 
                     data-dismiss="modal">
@@ -4538,13 +4544,19 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                                <button 
-                                    type="submit"
-                                    id="btnSubmit" 
-                                    name="btnSubmit"
-                                    class="btn btn-primary btn-md pull-right">
-                                    Change Password
-                                </button>
+                            <button 
+                                type="button" 
+                                class="btn btn-default pull-left" 
+                                data-dismiss="modal">
+                                Close
+                            </button>
+                            <button 
+                                type="submit"
+                                id="btnSubmit" 
+                                name="btnSubmit"
+                                class="btn btn-primary btn-md pull-right">
+                                Change Password
+                            </button>
                         </div>
                     </form>
                 </div>

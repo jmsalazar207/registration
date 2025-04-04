@@ -75,7 +75,7 @@ if($empRecords){
         $career_status = "<span class='badge bg-light-blue'>PENDING FOR VERIFICATION</span>";
         $action = "
         <td>
-            <button class='' id = 'btnVerifyCareerUpload' name ='btnVerifyCareerUpload' value = '$requestID'  title='View' >
+            <button class='btn btn-info btn-sm' id = 'btnVerifyCareerUpload' name ='btnVerifyCareerUpload' value = '$requestID'  title='View' >
                 View
             </button>
         </td>

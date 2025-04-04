@@ -66,7 +66,7 @@ if($empRecords){
         $eligibility_status = "<span class='badge bg-light-blue'>PENDING FOR VERIFICATION</span>";
         $action = "
         <td>
-            <button class='' id = 'btnVerifyEligibilityUpload' name ='btnVerifyEligibilityUpload' value = '$requestID'  title='View' >
+            <button class='btn btn-info btn-sm' id = 'btnVerifyEligibilityUpload' name ='btnVerifyEligibilityUpload' value = '$requestID'  title='View' >
                 View
             </button>
         </td>

@@ -87,7 +87,7 @@ if($empRecords){
         $training_status = "<span class='badge bg-light-blue'>PENDING FOR VERIFICATION</span>";
         $action = "
         <td>
-            <button class='' id = 'btnVerifyTrainingUpload' name ='btnVerifyTrainingUpload'  value = '$requestID'  title='View' >
+            <button class='btn btn-info btn-sm' id = 'btnVerifyTrainingUpload' name ='btnVerifyTrainingUpload'  value = '$requestID'  title='View' >
                 View
             </button>
         </td>

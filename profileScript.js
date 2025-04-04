@@ -2,23 +2,33 @@
 
   //Kapag meg select Region
   jQuery(document).ready(function() {
+    let currentYear = new Date().getFullYear();
+
     $("#careerDateFrom").on("change", function () {
-      let selectedDate = new Date($(this).val());
-      let selectedYear = selectedDate.getFullYear();
-      
-      if (!isNaN(selectedYear)) {
-          let minDate = $(this).val(); // The selected "Date From"
-          let maxDate = selectedYear + "-12-31"; // End of the same year
+        let selectedDate = new Date($(this).val());
+        let selectedYear = selectedDate.getFullYear();
+        
+        if (!isNaN(selectedYear)) {
+            let minDate = $(this).val(); // The selected "Date From"
+            let maxDate = selectedYear + "-12-31"; // End of the same year
 
-          $("#careerDateTo").attr("min", minDate).attr("max", maxDate);
+            $("#dateTo").attr("min", minDate).attr("max", maxDate);
 
-          // Reset Date To if it's outside the allowed range
-          let dateToValue = new Date($("#careerDateTo").val());
-          if ($("#careerDateTo").val() && (dateToValue < selectedDate || dateToValue.getFullYear() !== selectedYear)) {
-              $("#careerDateTo").val("");
-          }
-      }
-  });
+            // Reset Date To if it's outside the allowed range
+            let dateToValue = new Date($("#careerDateTo").val());
+            if ($("#careerDateTo").val() && (dateToValue < selectedDate || dateToValue.getFullYear() !== selectedYear)) {
+                $("#careerDateTo").val("");
+            }
+
+            // Show "PRESENT" checkbox only if "Date From" is the current year
+            if (selectedYear === currentYear) {
+                $("#labelCareerPresent").show();
+            } else {
+                $("#labelCareerPresent").hide();
+                $("#careerPresent").prop("checked", false); // Uncheck if hidden
+            }
+        }
+    });
     $('.search-box input[type="text"]').on("keyup input", function(){
       /* Get input value on change */
       var inputVal = $(this).val();
@@ -1918,7 +1928,7 @@ function UserEligibilitydAdd(formData){
   $(".loader-div").show();
   const eligibilityCredentials = $('#eligibilityCredentials').val();
   const eligibilityExamDate = $('#eligibilityExamDate').val();
-  $.ajax({ //check Academic if existed 
+  $.ajax({
     url:"checkExist.php",
     method:"POST",
     data: {checkEligibility:1,eligibilityCredentials:eligibilityCredentials,eligibilityExamDate:eligibilityExamDate},
