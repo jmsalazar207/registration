@@ -962,7 +962,7 @@ function checkAlreadyEncode(){
           if(secondary){
             $("#optSecondary").remove();
           }else{
-            if ($("#optElementary").length === 0) {
+            if ($("#optSecondary").length === 0) {
             $("#acadEducLevel").append('<option name = "optSecondary" id="optSecondary" value="2">Secondary</option>');
             }
           }
@@ -976,6 +976,8 @@ function checkAlreadyEncode(){
 
 function resetFormFamilyBackground() {
   $('#frmUserFamilyBackgroundAdd')[0].reset(); // Reset all inputs in the form
+  $('#FBExtName').val('').trigger('change');
+  $('#relation').val('').trigger('change');
   var selectRelation = 0;
   FBMember(selectRelation);
 }
@@ -1491,6 +1493,7 @@ function EducLevel(selectLevelValue){
     $("#acadYearGraduated").attr('required','required'); // set year graduated to required field
     $("#acadNameSchool").prop('disabled', true);
     $("#acadNameSchool").attr('required',false);
+    $("#txtFilter").val('');
     $("#txtFilter").attr('required','required');
     $("#txtFilter").show();
   }else if(selectLevelValue ==2){
@@ -1505,6 +1508,7 @@ function EducLevel(selectLevelValue){
     $("#acadYearGraduated").attr('required','required'); // set year graduated to required field
     $("#acadNameSchool").prop('disabled', true);
     $("#acadNameSchool").attr('required',false);
+    $("#txtFilter").val('');
     $("#txtFilter").attr('required','required');
     $("#txtFilter").show();
   }else if(selectLevelValue ==3){

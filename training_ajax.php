@@ -18,31 +18,27 @@ $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
 $searchValue = $_POST['search']['value']; // Search value
 
 
-## Search Mapping
-$trainingTypeMap = [
-   'MANAGERIAL' => 1,
-   'SUPERVISORY' => 2,
-   'TECHNICAL' => 3,
-];
+
 $session_empno = $_SESSION['userID'];
 $searchQuery = " WHERE empno = '$session_empno' AND training_status !=4 ";
 
 if ($searchValue != '') {
-    // Map the search value to a training type if applicable
-    $trainingTypeCondition = '';
-    $mappedTrainingType = array_search(strtoupper($searchValue), array_keys($trainingTypeMap));
-    if ($mappedTrainingType !== false) {
-        $trainingTypeCondition = " OR training_type = " . $trainingTypeMap[array_keys($trainingTypeMap)[$mappedTrainingType]];
-    }
-
-    // Build the search query
     $searchQuery .= " AND (empno LIKE '%" . $searchValue . "%' 
                     OR training_title LIKE '%" . $searchValue . "%' 
                     OR training_date_from LIKE '%" . $searchValue . "%' 
                     OR training_date_to LIKE '%" . $searchValue . "%' 
                     OR training_hours LIKE '%" . $searchValue . "%' 
                     OR training_conducted_by LIKE '%" . $searchValue . "%'
-                    $trainingTypeCondition)";
+                    OR training_remarks LIKE '%" . $searchValue . "%'
+                    OR (
+                        CASE 
+                            WHEN training_type = 1 THEN 'MANAGERIAL'
+                            WHEN training_type = 2 THEN 'SUPERVISORY'
+                            WHEN training_type = 3 THEN 'TECHNICAL'
+                            ELSE 'OTHER'
+                        END
+                    ) LIKE '%$searchValue%'
+                    )";
 }
 
 ## Total number of records without filtering

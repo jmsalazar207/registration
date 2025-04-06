@@ -28,6 +28,7 @@ if($searchValue != ''){
                e.eligibility_exam_date LIKE '%".$searchValue."%' OR
                e.eligibility_exam_place LIKE '%".$searchValue."%' OR
                e.eligibility_license LIKE '%".$searchValue."%' OR
+               e.eligibility_remarks LIKE '%".$searchValue."%' OR
                e.eligibility_validity_date LIKE '%".$searchValue."%')";
 }
 

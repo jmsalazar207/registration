@@ -74,9 +74,18 @@ if($Records){
    $sql_filled_by = "SELECT CONCAT(u.fname,' ',u.mname,' ',u.sname,' ',u.ename) AS filled_by, u.date_filled
                      FROM userprofile u
                      WHERE u.position_id = '$id' AND u.emp_status =0";
-   $output_filled_by = $dbConn->findFirstQuery($sql_filled_by);
-   $filled_by = $output_filled_by['filled_by']= isset($output_filled_by['filled_by']) ? $output_filled_by['filled_by']: '';
-   $date_filled = $output_filled_by['date_filled'] = isset($output_filled_by['date_filled'])? $output_filled_by['date_filled']:''; 
+$output_filled_by = $dbConn->findFirstQuery($sql_filled_by);
+
+// Ensure $output_filled_by is an array before accessing its keys
+if (is_array($output_filled_by)) {
+    $filled_by = isset($output_filled_by['filled_by']) ? $output_filled_by['filled_by'] : '';
+    $date_filled = isset($output_filled_by['date_filled']) ? $output_filled_by['date_filled'] : '';
+} else {
+    // Handle the case where no data is returned (e.g., set default values)
+    $filled_by = '';
+    $date_filled = '';
+}
+
     $action =
             "
                <td>

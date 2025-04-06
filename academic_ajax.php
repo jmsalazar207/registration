@@ -19,38 +19,52 @@ $searchValue = $_POST['search']['value']; // Search value
 
 
 ## Search 
-## Search Mapping
-$AcadsLevelMap = [
-   'ELEMENTARY' => 1,
-   'SECONDARY' => 2,
-   'COLLEGE' => 3,
-   'VOCATIONAL / TRADE COURSE' => 4,
-   'GRADUATE STUDIES' => 5,
-];
 $session_empno = $_SESSION['userID'];
 $searchQuery = " WHERE empno = '$session_empno' AND acad_status !=4 ";
 
 if ($searchValue != '') {
-    // Map the search value to a academic type if applicable
-    $AcadsLevelCondition = '';
-    $mappedAcadsLevel = array_search(strtoupper($searchValue), array_keys($AcadsLevelMap));
-    if ($mappedAcadsLevel !== false) {
-        $AcadsLevelCondition = " OR acad_level = " . $AcadsLevelMap[array_keys($AcadsLevelMap)[$mappedAcadsLevel]];
-    }
+   $searchQuery .= " AND (
+       a.empno LIKE '%$searchValue%' OR
+       a.acad_level LIKE '%$searchValue%' OR
+       CONCAT(a.acad_from, '-', a.acad_to) LIKE '%$searchValue%' OR
+       a.acad_highest_level LIKE '%$searchValue%' OR
+       a.acad_year_graduated LIKE '%$searchValue%' OR
+       a.acad_remarks LIKE '%$searchValue%' OR
+       a.acad_honors LIKE '%$searchValue%' OR
+       
+       -- Match school title based on acad_level
+       (
+           CASE 
+               WHEN a.acad_level = 1 THEN ps.primary_school_title
+               WHEN a.acad_level = 2 THEN ps.primary_school_title
+               ELSE cs.college_school_title
+         END
+       ) LIKE '%$searchValue%' OR
 
-    // Build the search query
-    $searchQuery .= "AND (empno LIKE '%".$searchValue."%' OR
-                    acad_level LIKE '%".$searchValue."%' OR
-                    acad_school LIKE '%".$searchValue."%' OR
-                    acad_degree LIKE '%".$searchValue."%' OR
-                    acad_from LIKE '%".$searchValue."%' OR
-                    acad_to LIKE '%".$searchValue."%' OR
-                    acad_highest_level LIKE '%".$searchValue."%' OR
-                    acad_year_graduated LIKE '%".$searchValue."%' OR
-                    acad_remarks LIKE '%".$searchValue."%' OR
-                    acad_honors LIKE '%".$searchValue."%'
-                     $AcadsLevelCondition)";
+       -- Match degree/course title based on acad_level
+       (
+           CASE 
+               WHEN a.acad_level = 1 THEN 'PRIMARY EDUCATION'
+               WHEN a.acad_level = 2 THEN 'SECONDARY EDUCATION'
+               WHEN a.acad_level = 3 THEN cc.college_course_title
+               WHEN a.acad_level = 4 THEN tc.training_course_title
+               ELSE gs.graduate_study_title
+           END
+       ) LIKE '%$searchValue%' OR
+
+       -- Human-readable acad_level
+       (
+           CASE 
+               WHEN a.acad_level = 1 THEN 'ELEMENTARY'
+               WHEN a.acad_level = 2 THEN 'SECONDARY'
+               WHEN a.acad_level = 3 THEN 'COLLEGE'
+               WHEN a.acad_level = 4 THEN 'VOCATIONAL / TRADE CORSE'
+               ELSE 'GRADUATE STUDIES'
+           END
+       ) LIKE '%$searchValue%'
+   )";
 }
+
 
 ## Total number of records without filtering
 $records = $dbConn->findFirstQuery("SELECT COUNT(a.empno) as allcount FROM lib_academic a");
@@ -58,8 +72,17 @@ $totalRecords = $records['allcount'];
 
 
 ## Total number of records with filtering
-$records = $dbConn->findFirstQuery("SELECT COUNT(a.empno) as allcount FROM lib_academic a"
-                                    .$searchQuery);
+$records = $dbConn->findFirstQuery("
+SELECT COUNT(a.empno) as allcount 
+FROM lib_academic a
+LEFT JOIN lib_primary_school ps ON a.acad_school = ps.id
+LEFT JOIN lib_secondary_school ss ON a.acad_school = ss.id
+LEFT JOIN lib_college_school cs ON a.acad_school = cs.id
+LEFT JOIN lib_college_course cc ON a.acad_degree = cc.id
+LEFT JOIN lib_graduate_studies gs ON a.acad_degree = gs.id
+LEFT JOIN lib_training_course tc ON a.acad_degree = tc.id
+$searchQuery
+");
 $totalRecordwithFilter = $records['allcount'];
 
 ## Fetch records

@@ -24,12 +24,20 @@ $searchQuery = " WHERE empno = '$session_empno' AND career_status !=4 ";
 if($searchValue != ''){
    $searchQuery .= "AND (empno LIKE '%".$searchValue."%' OR
                     career_date_from LIKE '%".$searchValue."%' OR
-                    career_date_from LIKE '%".$searchValue."%' OR
+                    career_date_to LIKE '%".$searchValue."%' OR
                     career_position_title LIKE '%".$searchValue."%' OR
+                    career_remarks LIKE '%".$searchValue."%' OR
                     career_organization LIKE '%".$searchValue."%' OR
                     career_salary LIKE '%".$searchValue."%' OR
                     career_compensention_level LIKE '%".$searchValue."%' OR
-                    career_status_appointment LIKE '%".$searchValue."%')";
+                    career_status_appointment LIKE '%".$searchValue."%' OR
+                     (
+                           CASE 
+                              WHEN career_govt_service = 1 THEN 'YES'
+                              ELSE 'NO'
+                           END
+                     ) LIKE '%$searchValue%'
+                  )";   
 }
 
 

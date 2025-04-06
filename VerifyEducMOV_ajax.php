@@ -17,24 +17,9 @@ $columnName = $_POST['columns'][$columnIndex]['data']; // Column name
 $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
 $searchValue = $_POST['search']['value']; // Search value
 
-$AcadLevelMap = [
-    'ELEMENTARY EDUCATION' => 1,
-    'SECONDARY EDUCATION' => 2,
-    'TERTIARY EDUCATION' => 3,
-    'VOCATIONAL / TRADE CORSE' => 4,
-    'GRADUATE STUDIES' => 5,
- ];
-
 $EmpID = $_SESSION['userID'];
 ## Search 
  $searchQuery = " WHERE a.acad_status != 5 AND a.acad_status != 4 AND a.empno != '$EmpID'";
-     // Map the search value to a training type if applicable
-    $AcadLevelCondition = '';
-    $mappedAcadLevel = array_search(strtoupper($searchValue), array_keys($AcadLevelMap));
-    if ($mappedAcadLevel !== false) {
-        $AcadLevelCondition = " OR acad_level = " . $AcadLevelMap[array_keys($AcadLevelMap)[$mappedAcadLevel]];
-    }
-
 if($searchValue != ''){
    $searchQuery .= " AND (a.empno LIKE '%".$searchValue."%' OR
             cs.college_school_title LIKE '%".$searchValue."%' OR
@@ -51,8 +36,17 @@ if($searchValue != ''){
             u.fname LIKE '%".$searchValue."%' OR
             u.mname LIKE '%".$searchValue."%' OR
             u.sname LIKE '%".$searchValue."%' OR
-            u.ename LIKE '%".$searchValue."%'
-            $AcadLevelCondition)";
+            u.ename LIKE '%".$searchValue."%'OR
+            (
+            CASE 
+                WHEN a.acad_level = 1 THEN 'ELEMENTARY EDUCATION'
+                WHEN a.acad_level = 2 THEN 'SECONDARY EDUCATION'
+                WHEN a.acad_level = 3 THEN 'TERTIARY EDUCATION'
+                WHEN a.acad_level = 4 THEN 'VOCATIONAL / TRADE CORSE'
+                ELSE 'GRADUATE STUDIES'
+            END
+        ) LIKE '%$searchValue%'
+            )";
 }
 
 

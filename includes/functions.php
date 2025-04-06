@@ -595,9 +595,11 @@ if(isset($_POST["UserLevel"])){ //retrieve data of user level from lib_user_leve
 }
 if(isset($_POST["pob"])){ //retieved data of place of birth (Municipality) from lib_cities
   $update_pob_id = $_POST["pob"];
-  $params['fields'] = "city_code, city_name";
-  // $params['conditions'] = array("region_code" => $update_region);
-  $update_pobs=$dbConn->find('lib_cities',$params);
+  $sql = "SELECT city_code, city_name 
+          FROM lib_cities 
+          WHERE city_name != ''
+          GROUP BY city_name";
+  $update_pobs=$dbConn->findQuery($sql);
   $update_pob_output = '<option value="">SELECT ONE</option>';
   if($update_pobs){
     foreach($update_pobs as $update_pob){

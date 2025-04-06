@@ -142,7 +142,7 @@ require_once('includes/init.php');
   $(function () {
     $('#userManage').DataTable({ //retrieve data position
       ajax: {
-          url: 'position_ajax.php',
+          url: 'position_ajax_copy.php',
           type: 'POST',
           'data': function(data){
           }
