@@ -2,123 +2,187 @@
 session_start();
 header('Content-Type: application/json');
 require_once('includes/init.php');
+// ini_set('display_errors', 0); // Don't show on screen
+// ini_set('log_errors', 1);     // Force logging
+// ini_set('error_reporting', E_ALL); // Log everything
+// ini_set('error_log', __DIR__ . '/debug.log'); // Write to a local log file
 
-$data = array(); //array return value
-$totalRecords = 0; // total number of records
-$totalRecordwithFilter = 0; // result of filter
+$data = array();
 
+// Read values
+$draw = isset($_POST['draw']) ? intval($_POST['draw']) : 1;
+$row = isset($_POST['start']) ? intval($_POST['start']) : 0;
+$rowperpage = isset($_POST['length']) ? intval($_POST['length']) : 10;
+$columnIndex = isset($_POST['order'][0]['column']) ? intval($_POST['order'][0]['column']) : 0;
+$columnName = isset($_POST['columns'][$columnIndex]['data']) ? $_POST['columns'][$columnIndex]['data'] : 'position_id';
+$columnSortOrder = isset($_POST['order'][0]['dir']) ? ($_POST['order'][0]['dir'] === 'asc' ? 'ASC' : 'DESC') : 'ASC';
+$searchValue = isset($_POST['search']['value']) ? $_POST['search']['value'] : '';
 
-## Read value
-$draw = $_POST['draw'];
-$row = $_POST['start'];
-$rowperpage = $_POST['length']; // Rows display per page
-$columnIndex = $_POST['order'][0]['column']; // Column index
-$columnName = $_POST['columns'][$columnIndex]['data']; // Column name
-$columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
-$searchValue = $_POST['search']['value']; // Search value
+// 1. Fast count for total records
+$totalRecords = $dbConn->findFirstQuery("SELECT COUNT(*) as allcount FROM lib_position")['allcount'];
 
-
-## Search 
-$searchQuery = " WHERE pos.position_status <3 ";
-if($searchValue != ''){
-   $searchQuery .= "AND (
-            pos.item_code LIKE '%".$searchValue."%' OR
-            pn.position_name LIKE '%".$searchValue."%' OR
-            pos.position_id LIKE '%".$searchValue."%' OR
-            cs.classification_employment_name LIKE '%".$searchValue."%' OR
-            pstat.position_status_description LIKE '%".$searchValue."%' OR
-            fs.fund_source_name LIKE '%".$searchValue."%' OR
-            pos.date_creation_position LIKE '%".$searchValue."%' OR
-            d.division_name LIKE '%".$searchValue."%' OR
-            u.unit_name LIKE '%".$searchValue."%' OR
-            las.area_assignment_name LIKE '%".$searchValue."%' )";
+// 2. Get all position_ids that match the search in userprofile
+$matchingUserProfileIds = [];
+if (!empty($searchValue)) {
+    $userProfileSql = "SELECT DISTINCT position_id FROM userprofile
+                        WHERE emp_status = 0 AND
+                        (CONCAT(fname, ' ', COALESCE(mname, ''), ' ', sname, ' ', COALESCE(ename, '')) LIKE '%$searchValue%'
+                         OR date_filled LIKE '%$searchValue%')";
+    $userProfiles = $dbConn->findQuery($userProfileSql);
+    if ($userProfiles && is_array($userProfiles)) {
+        foreach ($userProfiles as $profile) {
+            $matchingUserProfileIds[] = $profile['position_id'];
+        }
+    }
 }
 
+// Limit the number of IDs in the IN clause to prevent potential errors
+$max_in_clause = 500; // Adjust this value as needed
+$limitedUserProfileIds = array_slice($matchingUserProfileIds, 0, $max_in_clause);
 
-## Total number of records without filtering
-$records = $dbConn->findFirstQuery("SELECT COUNT(position_id) as allcount FROM lib_position");
-$totalRecords = $records['allcount'];
-
-
-## Total number of records with filtering
-$records = $dbConn->findFirstQuery("SELECT COUNT(pos.position_id) as allcount 
-                                   FROM lib_position pos
-JOIN lib_position_name pn ON pn.position_name_id = pos.position_name_id
-JOIN lib_classification_employment cs ON cs.position_classification_id = pos.position_classification_id
-JOIN lib_fund_source fs ON fs.fund_source_code = pos.fund_source_code
-JOIN lib_area_assignment las ON las.area_assignment_code = pos.area_assignment
-JOIN lib_unit u ON las.unit_code = u.unit_code
-JOIN lib_division d ON u.division_code = d.division_code
-JOIN lib_position_status pstat ON pstat.position_status = pos.position_status"
-                                    .$searchQuery);
-$totalRecordwithFilter = $records['allcount'];
-
-## Fetch records
-$sql = "SELECT pos.position_id, pos.item_code, pn.position_name, cs.classification_employment_name, 
-fs.fund_source_name, pos.date_creation_position, pos.salary_history_id, d.division_name, 
-u.unit_name, las.area_assignment_name, pstat.position_status, pstat.position_status_description
+// 3. Build the main query
+$mainQuery = "
 FROM lib_position pos
 JOIN lib_position_name pn ON pn.position_name_id = pos.position_name_id
-JOIN lib_classification_employment cs ON cs.position_classification_id = pos.position_classification_id
-JOIN lib_fund_source fs ON fs.fund_source_code = pos.fund_source_code
-JOIN lib_area_assignment las ON las.area_assignment_code = pos.area_assignment
-JOIN lib_unit u ON las.unit_code = u.unit_code
-JOIN lib_division d ON u.division_code = d.division_code
 JOIN lib_position_status pstat ON pstat.position_status = pos.position_status
-        $searchQuery ORDER BY $columnName $columnSortOrder limit $row, $rowperpage";
+LEFT JOIN lib_classification_employment cs ON cs.position_classification_id = pos.position_classification_id
+LEFT JOIN lib_fund_source fs ON fs.fund_source_code = pos.fund_source_code
+LEFT JOIN lib_area_assignment las ON las.area_assignment_code = pos.area_assignment
+LEFT JOIN lib_unit u ON las.unit_code = u.unit_code
+LEFT JOIN lib_division d ON u.division_code = d.division_code
+WHERE pos.position_status < 3";
 
-$Records = $dbConn->findQuery($sql);
-if($Records){
-   foreach($Records as $row){
-	$id = $row['position_id']; 
-   $sql_filled_by = "SELECT CONCAT(u.fname,' ',u.mname,' ',u.sname,' ',u.ename) AS filled_by, u.date_filled
-                     FROM userprofile u
-                     WHERE u.position_id = '$id' AND u.emp_status =0";
-$output_filled_by = $dbConn->findFirstQuery($sql_filled_by);
+$searchConditions = [];
+$searchParams = [];
 
-// Ensure $output_filled_by is an array before accessing its keys
-if (is_array($output_filled_by)) {
-    $filled_by = isset($output_filled_by['filled_by']) ? $output_filled_by['filled_by'] : '';
-    $date_filled = isset($output_filled_by['date_filled']) ? $output_filled_by['date_filled'] : '';
-} else {
-    // Handle the case where no data is returned (e.g., set default values)
-    $filled_by = '';
-    $date_filled = '';
+if (!empty($searchValue)) {
+    // Build LIKE conditions with bindable parameters
+    $likeFields = [
+        "pos.item_code",
+        "pn.position_name",
+        "pos.position_id",
+        "cs.classification_employment_name",
+        "pstat.position_status_description",
+        "fs.fund_source_name",
+        "d.division_name",
+        "u.unit_name",
+        "las.area_assignment_name"
+    ];
+
+    foreach ($likeFields as $field) {
+        $searchConditions[] = "$field LIKE ?";
+        $searchParams[] = "%$searchValue%";
+    }
+
+    // Add position_id IN (...) only if there are matched IDs
+    if (!empty($limitedUserProfileIds)) {
+        $placeholders = implode(',', array_fill(0, count($limitedUserProfileIds), '?'));
+        $searchConditions[] = "pos.position_id IN ($placeholders)";
+        $searchParams = array_merge($searchParams, $limitedUserProfileIds);
+    }
+
+    // Append to main query
+    $mainQuery .= " AND (" . implode(" OR ", $searchConditions) . ")";
 }
 
-    $action =
-            "
-               <td>
-                  <button class='btn btn-primary btn-sm' id = 'btnPositionHistory' name ='btnPositionHistory' value = '$id'  title='Update' >
-                     Update
-                  </button>
-               </td>
-            "; 
-   $data[] = array(
-      "Action" => $action,
-      "item_code" => $row['item_code'],
-      "position_name" => $row['position_name'],
-      "position_status_description" => $row['position_status_description'],
-      "classification_employment_name" => $row['classification_employment_name'],
-      "fund_source_name" => $row['fund_source_name'],
-      "date_creation_position" => $row['date_creation_position'],
-      "salary_history_id" => $row['salary_history_id'],
-      "division_name" => $row['division_name'],
-      "unit_name" => $row['unit_name'],
-      "area_assignment_name" => $row['area_assignment_name'],
-      "filled_by" => $filled_by,
-      "date_filled" => $date_filled
-   );
-      
-   }
+
+// 5. Get filtered count
+$totalRecordwithFilter = $dbConn->findFirstQuery("SELECT COUNT(pos.position_id) as allcount " . $mainQuery, $searchParams)['allcount'];
+
+
+// 6. Get required records with minimal fields
+$sql = "SELECT
+    pos.position_id,
+    pos.item_code,
+    pn.position_name,
+    cs.classification_employment_name,
+    fs.fund_source_name,
+    pos.date_creation_position,
+    pos.salary_history_id,
+    d.division_name,
+    u.unit_name,
+    las.area_assignment_name,
+    pstat.position_status_description
+" . $mainQuery . "
+ORDER BY " . ($columnName == "Action" ? "pos.position_id" : $columnName) . " $columnSortOrder
+LIMIT $row, $rowperpage";
+
+// error_log("Final SQL Query: " . $sql); // logs to PHP error log
+
+// OR for quick display in response (for debugging only):
+
+
+$Records = $dbConn->findQuery($sql, $searchParams);
+
+// 7. Collect all position IDs for a single efficient query
+$positionIds = [];
+if ($Records && is_array($Records)) {
+    foreach ($Records as $record) {
+        $positionIds[] = $record['position_id'];
+    }
 }
 
-   ## Response
-   $response = array(
-   "draw" => intval($draw),
-   "iTotalRecords" => $totalRecords,
-   "iTotalDisplayRecords" => $totalRecordwithFilter,
-   "aaData" => $data
-   );
+// 8. Get user profiles in a single query
+$filledBy = [];
+if (!empty($positionIds)) {
+    $positionIdsStr = implode(',', $positionIds);
+    $userSql = "SELECT
+        position_id,
+        CONCAT(fname, ' ', COALESCE(mname, ''), ' ', sname, ' ', COALESCE(ename, '')) AS filled_by,
+        date_filled
+    FROM userprofile
+    WHERE position_id IN ($positionIdsStr) AND emp_status = 0";
 
-   echo json_encode($response);
+    $userRecords = $dbConn->findQuery($userSql);
+    if ($userRecords && is_array($userRecords)) {
+        foreach ($userRecords as $user) {
+            $filledBy[$user['position_id']] = [
+                'filled_by' => $user['filled_by'],
+                'date_filled' => $user['date_filled']
+            ];
+        }
+    }
+}
+
+// 9. Combine the data
+if ($Records && is_array($Records)) {
+    foreach ($Records as $row) {
+        $id = $row['position_id'];
+        $action = "<td><button class='btn btn-primary btn-sm' id='btnPositionHistory' name='btnPositionHistory' value='$id' title='Update'>Update</button></td>";
+
+        // Get user info from lookup array
+        $filled_by = '';
+        $date_filled = '';
+        if (isset($filledBy[$id])) {
+            $filled_by = $filledBy[$id]['filled_by'];
+            $date_filled = $filledBy[$id]['date_filled'];
+        }
+
+        $data[] = array(
+            "Action" => $action,
+            "item_code" => $row['item_code'],
+            "position_name" => $row['position_name'],
+            "position_status_description" => $row['position_status_description'],
+            "classification_employment_name" => $row['classification_employment_name'],
+            "fund_source_name" => $row['fund_source_name'],
+            "date_creation_position" => $row['date_creation_position'],
+            "salary_history_id" => $row['salary_history_id'],
+            "division_name" => $row['division_name'],
+            "unit_name" => $row['unit_name'],
+            "area_assignment_name" => $row['area_assignment_name'],
+            "filled_by" => $filled_by,
+            "date_filled" => $date_filled
+        );
+    }
+}
+
+// Response
+$response = array(
+    "draw" => $draw,
+    "iTotalRecords" => $totalRecords,
+    "iTotalDisplayRecords" => $totalRecordwithFilter,
+    "aaData" => $data
+);
+
+echo json_encode($response);
+?>

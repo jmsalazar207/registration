@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="includes/add.css?test=<?php echo time()?>">
   <link rel="stylesheet" href="includes/loader.css?test=<?php echo time()?>">
         
-</head>
+</head> 
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
   <div class="loader-div">
     <img 
@@ -54,40 +54,48 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <div class="box">
-                <div class="box-header">
-                  <div class="row">
+              <div class="box-header">
+                <div class="row">
                     <div class="col-md-12">
-                      <h3 class="box-title">
-                        User Management Module
-                      </h3>
+                      <h3 class="box-title mr-auto">User Management Module</h3>
                     </div>
-                    &nbsp;
-                    <div class="col-md-12">
-                        <button 
-                        type="submit" 
-                        id="btnAdd" 
-                        name="btnAdd" 
-                        class="btn btn-info btn-sm" 
-                        data-toggle="modal" 
-                        data-target="#AdminAddNewUser">
-                          <span class="glyphicon glyphicon-plus"></span>
-                            <span class="glyphicon-class">
-                              Add New User
-                            </span>
+                    <div class="col-md-7">
+                        <button
+                            type="submit"
+                            id="btnAdd"
+                            name="btnAdd"
+                            class="btn btn-info btn-sm"
+                            data-toggle="modal"
+                            data-target="#AdminAddNewUser"
+                            title="Add New User">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            <span class="glyphicon-class">Add New User</span>
                         </button>
                     </div>
-                  </div>
-                  <div class="col-md-12">
-                      <a class="btn btn-primary btn-sm pull-right" href="generateListNoItem.php">
-                        Account w/o Item Number
-                      </a>
-                  </div>
-                  <div class="col-md-12">
-                      <a class="btn btn-primary btn-sm pull-right" href="generateAllList.php">
-                        Download All List
-                      </a>
-                  </div>
+                    <div class="col-md-5 d-flex justify-content-end align-items-center">
+                      <div class="margin pull-right">
+                        <div class="btn-group">
+                          <button 
+                          class="btn btn-primary btn-sm" 
+                          id="downloadListWNINhref" 
+                          title="Download list of account without Item Number">
+                          <span class="glyphicon glyphicon-download-alt"></span>
+                          <span class="glyphicon-class">No Item Number</span>
+                          </button>
+                        </div>
+                        <div class="btn-group">
+                          <button 
+                          class="btn btn-primary btn-sm" 
+                          id="downloadAllListBtn" 
+                          title="Download All List">
+                          <span class="glyphicon glyphicon-download-alt"></span>
+                          <span class="glyphicon-class">All List</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                 </div>
+              </div>
                 <!-- /.box-header -->
                 <div class="box-body">
                 <table id="userManage" 

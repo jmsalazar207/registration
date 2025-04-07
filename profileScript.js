@@ -1,5 +1,3 @@
-// const { ajax } = require("jquery");
-
   //Kapag meg select Region
   jQuery(document).ready(function() {
     let currentYear = new Date().getFullYear();
@@ -12,7 +10,7 @@
             let minDate = $(this).val(); // The selected "Date From"
             let maxDate = selectedYear + "-12-31"; // End of the same year
 
-            $("#dateTo").attr("min", minDate).attr("max", maxDate);
+            $("#careerDateTo").attr("min", minDate).attr("max", maxDate);
 
             // Reset Date To if it's outside the allowed range
             let dateToValue = new Date($("#careerDateTo").val());
@@ -29,6 +27,34 @@
             }
         }
     });
+    
+    $("#UpdatecareerDateFrom").on("change", function () {
+      let selectedDate = new Date($(this).val());
+      let selectedYear = selectedDate.getFullYear();
+      
+      if (!isNaN(selectedYear)) {
+          let minDate = $(this).val(); // The selected "Date From"
+          let maxDate = selectedYear + "-12-31"; // End of the same year
+
+          $("#UpdatecareerDateTo").attr("min", minDate).attr("max", maxDate);
+
+          // Reset Date To if it's outside the allowed range
+          let dateToValue = new Date($("#UpdatecareerDateTo").val());
+          if ($("#UpdatecareerDateTo").val() && (dateToValue < selectedDate || dateToValue.getFullYear() !== selectedYear)) {
+              $("#UpdatecareerDateTo").val("");
+          }
+
+          // Show "PRESENT" checkbox only if "Date From" is the current year
+          if (selectedYear === currentYear) {
+              $("#UpdatelabelCareerPresent").show();
+              $("#UpdatecareerPresent").show();
+          } else {
+              $("#UpdatelabelCareerPresent").hide();
+              $("#UpdatecareerPresent").prop("checked", false); // Uncheck if hidden
+          }
+      }
+  });
+
     $('.search-box input[type="text"]').on("keyup input", function(){
       /* Get input value on change */
       var inputVal = $(this).val();
@@ -693,6 +719,33 @@ $(function(){
       }
   });
   }
+  let currentYear = new Date().getFullYear();
+  function updateCareerDateLimits() {
+    let val = $("#UpdatecareerDateFrom").val();
+    let selectedDate = new Date(val);
+    let selectedYear = selectedDate.getFullYear();
+
+    if (!isNaN(selectedYear)) {
+        let minDate = val;
+        let maxDate = selectedYear + "-12-31";
+
+        $("#UpdatecareerDateTo").attr("min", minDate).attr("max", maxDate);
+
+        let dateToValue = new Date($("#UpdatecareerDateTo").val());
+        if ($("#UpdatecareerDateTo").val() && (dateToValue < selectedDate || dateToValue.getFullYear() !== selectedYear)) {
+            $("#UpdatecareerDateTo").val("");
+        }
+
+        if (selectedYear === currentYear) {
+            $("#UpdatelabelCareerPresent").show();
+            $("#UpdatecareerPresent").show();
+        } else {
+            $("#UpdatelabelCareerPresent").hide();
+            $("#UpdatecareerPresent").prop("checked", false);
+        }
+    }
+  }
+
 
   function populateTinNumber(TIN) {
     $("#tinNo").val(TIN).trigger('input'); // Set the value and trigger the input event
@@ -2208,6 +2261,7 @@ function btnCareerUpdate(getCareer){
         $('#UpdatecareerDateTo').val(CareerData['career_date_to']);
         
         $('#UpdatecareerDateFrom').val(CareerData['career_date_from']);
+        updateCareerDateLimits();
         $('#UpdatecareerPosition').val(CareerData['career_position_title']);      
         $('#UpdatecareerOrganization').val(CareerData['career_organization']);
         $('#UpdatecareerSalary').val(CareerData['career_salary']);

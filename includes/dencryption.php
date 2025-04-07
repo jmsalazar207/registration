@@ -7,9 +7,20 @@ function encryptData($data) {
 }
 
 function decryptData($data) {
+  if (empty($data)) {
+      return null; // or handle it in a way that suits your app
+  }
+
   $encryption_key = "y0u3nd@iY"; // Use the same key as encryption
   $data = base64_decode($data);
+
+  if ($data === false || strlen($data) < 16) {
+      return null; // Invalid or corrupted data
+  }
+
   $iv = substr($data, 0, 16);
   $encryptedData = substr($data, 16);
+
   return openssl_decrypt($encryptedData, "AES-256-CBC", $encryption_key, 0, $iv);
 }
+

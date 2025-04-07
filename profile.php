@@ -74,8 +74,6 @@ $today = date('Y-m-d');
 
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
   <link rel="stylesheet" href="includes/add.css?test=<?php echo time()?>">
   <link rel="stylesheet" href="includes/loader.css?test=<?php echo time()?>">

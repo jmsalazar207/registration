@@ -808,6 +808,56 @@
   }
   }
   
+  function downloadAllList(){
+    $(".loader-div").show();
+    $.ajax({
+      url: 'generateAllList.php',
+      type: 'GET', 
+      success: function(response) {
+        // Hide loader
+        $(".loader-div").hide();
+
+        // Parse the JSON response
+        const data = JSON.parse(response);
+
+        // Trigger the download by creating an invisible link
+        var link = document.createElement('a');
+        link.href = data.downloadUrl; // The file URL returned from the server
+        link.download = ''; // The file will be downloaded with the name from the server
+        link.click(); // Trigger the download
+      },
+      error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
+    });
+  }
+
+  function downloadListWNIN(){
+    $(".loader-div").show();
+    $.ajax({
+      url: 'generateListNoItem.php',
+      type: 'GET', 
+      success: function(response) {
+        // Hide loader
+        $(".loader-div").hide();
+
+        // Parse the JSON response
+        const data = JSON.parse(response);
+
+        // Trigger the download by creating an invisible link
+        var link = document.createElement('a');
+        link.href = data.downloadUrl; // The file URL returned from the server
+        link.download = ''; // The file will be downloaded with the name from the server
+        link.click(); // Trigger the download
+      },
+      error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
+    });
+  }
+  
   $(document).on('change','#UpdateNewItemCode', function(){ //onchange ning New Item Code
     ValidatePositionDateCreated();
   });
@@ -974,6 +1024,18 @@
     event.preventDefault(); // Prevent the default form submission
     var PassData = '';
     modalConfirmShow('Would you like to confirm and save the new user details now?',insertNewUser,PassData); 
+  });
+
+  $(document).on('click', '#downloadAllListBtn', function(e) {   //unlock account action
+    e.preventDefault();
+    PassData = '';
+    modalConfirmShow('Would you like to download all the list?',downloadAllList,PassData);
+  });
+
+  $(document).on('click', '#downloadListWNINhref', function(e) {   //unlock account action
+    e.preventDefault();
+    PassData = '';
+    modalConfirmShow('Would you like to download the list of accounts without the Item Number?',downloadListWNIN,PassData);
   });
 
 

@@ -33,10 +33,17 @@ require_once('includes/init.php');
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
   <!-- Google Font -->
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <link rel="stylesheet" href="includes/add.css?test=<?php echo time()?>">
+  <link rel="stylesheet" href="includes/loader.css?test=<?php echo time()?>">
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
+<div class="loader-div">
+    <img 
+    class="loader-img" 
+    src="images/ajax-loader.gif" 
+    style="height: 50px;width: auto;" />
+  </div>
     <div class="wrapper">
     <?php 
             include "includes/session.php";
@@ -55,18 +62,18 @@ require_once('includes/init.php');
                     </div>
                     &nbsp;
                     <div class="col-md-12">
-                        <a class="btn btn-info btn-sm" href="generateReport.php">
-                          Download Registered
-                        </a>
-                        <a class="btn btn-primary btn-sm" href="generateListPayroll.php">
-                          For Payroll Template
+                        <a class="btn btn-primary btn-sm"  id="downloadforPayrollList" title="Download list for payroll preparation">
+                          <span class="glyphicon glyphicon-download-alt"></span>
+                          <span class="glyphicon-class">
+                            For Payroll
+                          </span>
                         </a>
                     </div>
                   </div>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                <table id="userManage" class="table table-bordered table-striped table-responsive" style="text-align:center; width:100%">
+                <table id="tblFMDGenerateList" class="table table-bordered table-striped table-responsive" style="text-align:center; width:100%">
                     <thead class="bg-primary">
                         <tr>
                           <th> Employee Number </th>
@@ -118,12 +125,46 @@ require_once('includes/init.php');
 <!-- page script -->
 <?php
   include "modal/formModal.php";
+  include "modal/modalNotif.php";
 ?>
 <script src="panelScript.js?test=<?php echo time()?>"></script>
-<script src="manageScript.js?test=<?php echo time()?>"></script>
+<script src="genFunction.js?test=<?php echo time()?>"></script>
+<script src="modalNotif.js?test=<?php echo time()?>"></script>
 <script>
   $(function () {
-    $('#userManage').DataTable({
+    $(document).on('click', '#downloadforPayrollList', function(e) {   //unlock account action
+    e.preventDefault();
+    PassData = '';
+    modalConfirmShow('Would you like to download the list for payroll preparation?',downloadforPayrollList,PassData);
+  });
+  
+  function downloadforPayrollList(){
+   
+    $(".loader-div").show();
+    $.ajax({
+      url: 'generateListPayroll.php',
+      type: 'GET', 
+      success: function(response) {
+        // Hide loader
+        $(".loader-div").hide();
+
+        // Parse the JSON response
+        const data = JSON.parse(response);
+
+        // Trigger the download by creating an invisible link
+        var link = document.createElement('a');
+        link.href = data.downloadUrl; // The file URL returned from the server
+        link.download = ''; // The file will be downloaded with the name from the server
+        link.click(); // Trigger the download
+      },
+      error: function(xhr, status, error) {
+        modalErrorShow("The system encountered an error. Please contact support.");
+        $(".loader-div").hide();
+      }
+    });
+
+  }
+    $('#tblFMDGenerateList').DataTable({
       ajax: {
           url: 'generateList_ajax.php',
           type: 'POST',
@@ -145,9 +186,6 @@ require_once('includes/init.php');
         { data: "division_name"},
         { data: "unit_name"}
       ],
-      // 'columnDefs': [ 
-      //   { "bSortable": false, "aTargets": [2] }
-      // ]
     });
   })
 </script>

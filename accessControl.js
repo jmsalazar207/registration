@@ -32,33 +32,60 @@ $(function(){
         modalConfirmShow("Would you like to proceed with removing the user's access? Only the default pages will be retained",RemoveAccessControl,btnValue); 
     });
     
-    function generateCheckboxes(allAccess, userAccess) {
-        let checkboxHtml = '<div class="row">';
-    
-        allAccess.forEach((access, index) => {
-            let isChecked = userAccess.includes(access.page_access_code) ? "checked" : "";
-    
-            checkboxHtml += `
-                <div class="col-md-6"> <!-- Adjust column width -->
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="access_${access.page_access_code}" 
-                               value="${access.page_access_code}" ${isChecked}>
-                        <label class="flat-red" for="access_${access.page_access_code}">
-                            ${access.page_access_set_name}
-                        </label>
-                    </div>
+function generateCheckboxes(allAccess, userAccess) {
+    let checkboxHtml = `
+        <div class="row">
+            <div class="col-12">
+                <div class="form-check mb-2 ms-4"> <!-- added ms-3 -->
+                    <input type="checkbox" class="form-check-input" id="selectAllAccess">
+                    <label class="form-check-label" for="selectAllAccess">Select All</label>
                 </div>
-            `;
-    
-            // Start a new row after every 4 checkboxes
-            if ((index + 1) % 2 === 0) {
-                checkboxHtml += '</div><div class="row">';
-            }
-        });
-    
-        checkboxHtml += '</div>'; // Close the last row
-        $("#accessControlList").html(checkboxHtml);
-    }
+            </div>
+        </div>
+        <div class="row">
+    `;
+
+    allAccess.forEach((access, index) => {
+        let isChecked = userAccess.includes(access.page_access_code) ? "checked" : "";
+
+        checkboxHtml += `
+            <div class="col-md-6">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="access_${access.page_access_code}" 
+                           value="${access.page_access_code}" ${isChecked}>
+                    <label class="flat-red" for="access_${access.page_access_code}">
+                        ${access.page_access_set_name}
+                    </label>
+                </div>
+            </div>
+        `;
+
+        if ((index + 1) % 2 === 0) {
+            checkboxHtml += '</div><div class="row">';
+        }
+    });
+
+    checkboxHtml += '</div>';
+
+    $("#accessControlList").html(checkboxHtml);
+
+    // Select All checkbox toggle
+    $("#selectAllAccess").on("change", function () {
+        const isChecked = $(this).is(":checked");
+        $("#accessControlList input[type='checkbox']")
+            .not("#selectAllAccess")
+            .prop("checked", isChecked);
+    });
+
+    // Keep Select All in sync
+    $("#accessControlList").on("change", "input[type='checkbox']:not(#selectAllAccess)", function () {
+        const total = $("#accessControlList input[type='checkbox']").not("#selectAllAccess").length;
+        const checked = $("#accessControlList input[type='checkbox']:checked").not("#selectAllAccess").length;
+
+        $("#selectAllAccess").prop("checked", total === checked);
+    });
+}
+
 
     function saveAccessControl(){
         let selectedAccess = [];

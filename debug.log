@@ -1,0 +1,24 @@
+[07-Apr-2025 04:09:57 Europe/Berlin] Final SQL Query: SELECT
+    pos.position_id,
+    pos.item_code,
+    pn.position_name,
+    cs.classification_employment_name,
+    fs.fund_source_name,
+    pos.date_creation_position,
+    pos.salary_history_id,
+    d.division_name,
+    u.unit_name,
+    las.area_assignment_name,
+    pstat.position_status_description
+
+FROM lib_position pos
+JOIN lib_position_name pn ON pn.position_name_id = pos.position_name_id
+JOIN lib_position_status pstat ON pstat.position_status = pos.position_status
+LEFT JOIN lib_classification_employment cs ON cs.position_classification_id = pos.position_classification_id
+LEFT JOIN lib_fund_source fs ON fs.fund_source_code = pos.fund_source_code
+LEFT JOIN lib_area_assignment las ON las.area_assignment_code = pos.area_assignment
+LEFT JOIN lib_unit u ON las.unit_code = u.unit_code
+LEFT JOIN lib_division d ON u.division_code = d.division_code
+WHERE pos.position_status < 3
+ORDER BY unit_name DESC
+LIMIT 0, 10
